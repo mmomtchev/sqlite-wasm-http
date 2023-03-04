@@ -1,0 +1,31 @@
+{
+  "name": "sqlite-wasm-http",
+  "version": "1.0.0",
+  "description": "HTTP backend for SQLite3-WASM VFS",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --mode=development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmomtchev/sqlite-wasm-http.git"
+  },
+  "keywords": [
+    "sqlite",
+    "http",
+    "vfs"
+  ],
+  "author": "Momtchil Momtchev <momtchil@momtchev.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmomtchev/sqlite-wasm-http/issues"
+  },
+  "homepage": "https://github.com/mmomtchev/sqlite-wasm-http#readme",
+  "devDependencies": {
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
