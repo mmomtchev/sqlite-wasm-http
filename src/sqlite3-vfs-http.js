@@ -3,6 +3,8 @@ const timeoutBackend = 10000;
 if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
   throw new Error('This script must run in a WebWorker');
 
+const openFiles = {};
+
 export function installhttpVfs(sqlite3, options) {
   if (typeof SharedArrayBuffer === 'undefined') {
     throw new Error('SharedArrayBuffer is not available. ' +
@@ -44,7 +46,7 @@ export function installhttpVfs(sqlite3, options) {
     console.log('Received new work reply', data);
   };
 
-  const sendAndWait = (msg, err) => {
+  const sendAndWait = (msg) => {
     Atomics.store(lock, 0, 0xffff);
     backend.port.postMessage(msg);
     const r = Atomics.wait(lock, 0, 0xffff, timeoutBackend);
@@ -73,9 +75,12 @@ export function installhttpVfs(sqlite3, options) {
     },
     xFileSize: function (fid, size) {
       console.log('xFileSize', fid, size);
-      const r = sendAndWait({ msg: 'filesize', fid });
+      if (!openFiles[fid]) {
+        return capi.SQLITE_NOTFOUND;
+      }
+      const r = sendAndWait({ msg: 'xFilesize', name: openFiles[fid].filename });
       if (r !== 0) {
-        return capi.SQLITE_IOERR_READ;
+        return capi.SQLITE_IOERR;
       }
       const sz = new BigUint64Array(backend.shm, 0, 1)[0];
       console.log('file size is ', sz);
@@ -91,9 +96,12 @@ export function installhttpVfs(sqlite3, options) {
       if (Number(offset) > Number.MAX_SAFE_INTEGER) {
         return capi.SQLITE_TOOBIG;
       }
-      const r = sendAndWait({ msg: 'read', fid, n, offset });
+      if (!openFiles[fid]) {
+        return capi.SQLITE_NOTFOUND;
+      }
+      const r = sendAndWait({ msg: 'xRead', name: openFiles[fid].filename, n, offset });
       if (r !== 0) {
-        return capi.SQLITE_IOERR_READ;
+        return capi.SQLITE_IOERR;
       }
       console.log(shm.subarray(0, n), dest);
       wasm.heap8u().set(shm.subarray(0, n), dest);
@@ -121,7 +129,7 @@ export function installhttpVfs(sqlite3, options) {
     xAccess: function (vfs, name, flags, out) {
       console.log('xAccess', vfs, name, flags, out);
       name = wasm.cstrToJs(name);
-      const r = sendAndWait({ msg: 'access', name });
+      const r = sendAndWait({ msg: 'xAccess', name });
       if (r !== 0)
         return capi.SQLITE_IOERR;
       const result = new Uint32Array(backend.shm, 0, 1)[0];
@@ -168,8 +176,9 @@ export function installhttpVfs(sqlite3, options) {
       fh.sq3File = new sqlite3_file(fid);
       fh.sq3File.$pMethods = httpIoMethods.pointer;
       fh.lockType = capi.SQLITE_LOCK_NONE;
+      openFiles[fid] = fh;
 
-      const r = sendAndWait({ msg: 'open', name, fid });
+      const r = sendAndWait({ msg: 'xOpen', name, fid });
       if (r < 0)
         return capi.SQLITE_IOERR;
       if (r !== 0)

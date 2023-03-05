@@ -4,86 +4,68 @@ if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalSc
 const pageSize = 1024;
 
 const consumers = {};
-const openFiles = {};
+const cache = {};
 
-async function open(msg) {
-  if (openFiles[msg.fid])
-    throw new Error(`File ${msg.fid} already open`);
+const backendAsyncMethods = {
+  xOpen: async function (msg) {
+    if (cache[msg.name])
+      return 0;
 
-  const head = await fetch(msg.name, { method: 'HEAD' });
-  if (head.headers.get('Accept-Ranges') !== 'bytes') {
-    console.warn(`Server for ${msg.name} does not advertise 'Accept-Ranges'. ` +
-      'If the server supports it, in order to remove this message, add "Accept-Ranges: bytes". ' +
-      'Additionally, if using CORS, add "Access-Control-Expose-Headers: *".');
-  }
-  openFiles[msg.fid] = {
-    fid: msg.fid,
-    url: msg.name,
-    size: BigInt(head.headers.get('Content-Length'))
-  };
-
-  return 0;
-}
-
-async function access(msg, dest) {
-  const result = new Uint32Array(dest, 0, 1);
-  try {
     const head = await fetch(msg.name, { method: 'HEAD' });
     if (head.headers.get('Accept-Ranges') !== 'bytes') {
       console.warn(`Server for ${msg.name} does not advertise 'Accept-Ranges'. ` +
         'If the server supports it, in order to remove this message, add "Accept-Ranges: bytes". ' +
         'Additionally, if using CORS, add "Access-Control-Expose-Headers: *".');
     }
-    result[0] = 1;
-  } catch {
-    result[0] = 0;
-  }
+    cache[msg.name] = {
+      size: BigInt(head.headers.get('Content-Length'))
+    };
 
-  return 0;
-}
+    return 0;
+  },
 
-async function read(msg, dest) {
-  if (!openFiles[msg.fid])
-    throw new Error(`File ${msg.fid} not open`);
-
-  const resp = await fetch(openFiles[msg.fid].url, {
-    method: 'GET',
-    headers: {
-      'Range': `bytes=${Number(msg.offset)}-${Number(msg.offset) + msg.n - 1}`
+  xAccess: async function (msg, consumer) {
+    const result = new Uint32Array(consumer.shm, 0, 1);
+    const r = backendAsyncMethods.xOpen(msg);
+    if (r === 0) {
+      result[0] = 1;
+    } else {
+      result[0] = 0;
     }
-  });
 
-  const data = new Uint8Array(await resp.arrayBuffer());
-  dest.set(data);
-  return 0;
-}
+    return 0;
+  },
 
-function filesize(msg, shm) {
-  if (!openFiles[msg.fid])
-    throw new Error(`File ${msg.fid} not open`);
+  xRead: async function (msg, consumer) {
+    if (!cache[msg.name])
+      throw new Error(`File ${msg.name} not open`);
 
-  (new BigInt64Array(shm, 0, 1))[0] = openFiles[msg.fid].size;
-  return 0;
-}
+    const resp = await fetch(msg.name, {
+      method: 'GET',
+      headers: {
+        'Range': `bytes=${Number(msg.offset)}-${Number(msg.offset) + msg.n - 1}`
+      }
+    });
+
+    const data = new Uint8Array(await resp.arrayBuffer());
+    consumer.buffer.set(data);
+    return 0;
+  },
+
+  xFilesize: async function (msg, consumer) {
+    if (!cache[msg.name])
+      throw new Error(`File ${msg.fid} not open`);
+
+    (new BigInt64Array(consumer.shm, 0, 1))[0] = cache[msg.name].size;
+    return 0;
+  }
+};
 
 async function workMessage({ data }) {
   console.log('Received new work message', this, data);
   let r;
   try {
-    switch (data.msg) {
-      case 'open':
-        r = await open(data);
-        break;
-      case 'access':
-        r = await access(data, this.shm);
-        break;
-      case 'read':
-        r = await read(data, this.buffer);
-        break;
-      case 'filesize':
-        r = await filesize(data, this.shm);
-        break;
-    }
+    r = await backendAsyncMethods[data.msg](data, this);
 
     console.log('operation successful', this, r);
     Atomics.store(this.lock, 0, r);
