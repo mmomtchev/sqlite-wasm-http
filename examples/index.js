@@ -22,6 +22,15 @@ const promiser = sqlite3Worker1Promiser({
       })
       .then((msg) => {
         console.log(msg);
+        return promiser('exec', {
+          sql: 'select * from tiles where zoom_level = 1',
+          callback: function (row) {
+            console.log('got row', row);
+          }
+        });
+      })
+      .then((msg) => {
+        console.log(msg);
       });
   },
   worker: () => {

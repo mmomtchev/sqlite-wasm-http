@@ -50,7 +50,8 @@ export function installhttpVfs(sqlite3, options) {
     Atomics.store(lock, 0, 0xffff);
     backend.port.postMessage(msg);
     const r = Atomics.wait(lock, 0, 0xffff, timeoutBackend);
-    if (r !== 'ok') {
+    if (r === 'timed-out') {
+      console.error('Backend timeout', r, lock, msg);
       return -1;
     }
     return Atomics.load(lock, 0);
@@ -101,6 +102,7 @@ export function installhttpVfs(sqlite3, options) {
       }
       const r = sendAndWait({ msg: 'xRead', name: openFiles[fid].filename, n, offset });
       if (r !== 0) {
+        console.error('xRead', r);
         return capi.SQLITE_IOERR;
       }
       console.log(shm.subarray(0, n), dest);
@@ -130,8 +132,10 @@ export function installhttpVfs(sqlite3, options) {
       console.log('xAccess', vfs, name, flags, out);
       name = wasm.cstrToJs(name);
       const r = sendAndWait({ msg: 'xAccess', name });
-      if (r !== 0)
+      if (r !== 0) {
+        console.error('xAccess', r);
         return capi.SQLITE_IOERR;
+      }
       const result = new Uint32Array(backend.shm, 0, 1)[0];
       wasm.poke(out, result, 'i32');
       return capi.SQLITE_OK;
@@ -179,10 +183,14 @@ export function installhttpVfs(sqlite3, options) {
       openFiles[fid] = fh;
 
       const r = sendAndWait({ msg: 'xOpen', name, fid });
-      if (r < 0)
+      if (r < 0) {
+        console.error('xOpen', r);
         return capi.SQLITE_IOERR;
-      if (r !== 0)
+      }
+      if (r !== 0) {
+        console.error('xOpen', r);
         return capi.SQLITE_CANTOPEN;
+      }
       return capi.SQLITE_OK;
     }
   };

@@ -1,3 +1,5 @@
+import LRUCache from 'lru-cache';
+
 if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
   throw new Error('This script must run in a WebWorker');
 
@@ -18,7 +20,10 @@ const backendAsyncMethods = {
         'Additionally, if using CORS, add "Access-Control-Expose-Headers: *".');
     }
     cache[msg.name] = {
-      size: BigInt(head.headers.get('Content-Length'))
+      size: BigInt(head.headers.get('Content-Length')),
+      pageCache: new LRUCache({
+        max: 1024
+      })
     };
 
     return 0;
@@ -26,10 +31,14 @@ const backendAsyncMethods = {
 
   xAccess: async function (msg, consumer) {
     const result = new Uint32Array(consumer.shm, 0, 1);
-    const r = backendAsyncMethods.xOpen(msg);
-    if (r === 0) {
-      result[0] = 1;
-    } else {
+    try {
+      const r = await backendAsyncMethods.xOpen(msg);
+      if (r === 0) {
+        result[0] = 1;
+      } else {
+        result[0] = 0;
+      }
+    } catch {
       result[0] = 0;
     }
 
@@ -37,18 +46,36 @@ const backendAsyncMethods = {
   },
 
   xRead: async function (msg, consumer) {
-    if (!cache[msg.name])
+    const entry = cache[msg.name];
+
+    if (!entry)
       throw new Error(`File ${msg.name} not open`);
+    const offset = Number(msg.offset);
 
-    const resp = await fetch(msg.name, {
-      method: 'GET',
-      headers: {
-        'Range': `bytes=${Number(msg.offset)}-${Number(msg.offset) + msg.n - 1}`
-      }
-    });
+    const page = Math.floor(offset / pageSize);
+    if (page * pageSize !== offset)
+      console.warn(`Read chunk ${msg.offset} is not page-aligned`);
+    const pageStart = page * pageSize;
+    if (pageStart + pageSize < offset + msg.n)
+      throw new Error(`Read chunk ${offset}:${msg.n} spans across a page-boundary`);
+    let data = entry.pageCache.get(page);
 
-    const data = new Uint8Array(await resp.arrayBuffer());
-    consumer.buffer.set(data);
+    if (!data) {
+      console.log(`cache miss for ${msg.name}:${page}`);
+      const resp = await fetch(msg.name, {
+        method: 'GET',
+        headers: {
+          'Range': `bytes=${pageStart}-${pageStart + pageSize - 1}`
+        }
+      });
+      data = new Uint8Array(await resp.arrayBuffer());
+      entry.pageCache.set(page, data);
+    } else {
+      console.log(`cache hit for ${msg.name}:${page}`);
+    }
+
+    const pageOffset = offset - pageStart;
+    consumer.buffer.set(data.subarray(pageOffset, msg.n));
     return 0;
   },
 
