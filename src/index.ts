@@ -2,6 +2,7 @@
 import '../deps/sqlite/ext/wasm/jswasm/sqlite3-bundler-friendly.mjs';
 import '../deps/sqlite/ext/wasm/jswasm/sqlite3-worker1-promiser-bundler-friendly.js'; 
 import { Promiser } from 'types/sqlite3-promiser';
+import { defaultOptions } from './defaultOptions';
 
 export interface SQLiteOptions {
   http?: VFSHTTP.Backend;
@@ -39,12 +40,12 @@ export function createSQLiteThread(options?: SQLiteOptions): Promise<Promiser.Pr
 }
 
 // HTTP backend multiplexer
-const timeoutBackend = 2000;
-
-export function createHttpBackend(): VFSHTTP.Backend {
+export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
   console.log('Creating new HTTP VFS backend thread');
   let nextId = 1;
   const worker = new Worker(new URL('./vfs-http-worker.ts', import.meta.url));
+  options = defaultOptions(options);
+  worker.postMessage({msg: 'init', options});
 
   const consumers = {};
 
@@ -79,7 +80,7 @@ export function createHttpBackend(): VFSHTTP.Backend {
         const timeout = setTimeout(() => {
           delete consumers[id];
           reject('Timeout while waiting on backend');
-        }, timeoutBackend);
+        }, options.timeout);
         consumers[id] = { id, channel, resolve, timeout };
       });
     }

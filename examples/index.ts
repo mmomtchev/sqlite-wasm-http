@@ -1,7 +1,10 @@
 import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
 
 (async function main() {
-  const httpBackend = createHttpBackend();
+  const httpBackend = createHttpBackend({
+    maxPageSize: 1024,
+    timeout: 10000
+  });
   const promiser = await createSQLiteThread({ http: httpBackend });
 
   console.log(promiser('config-get', {}));

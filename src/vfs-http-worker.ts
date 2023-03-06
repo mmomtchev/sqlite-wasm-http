@@ -4,10 +4,10 @@
 import LRUCache from 'lru-cache';
 import { ntoh16 } from './endianness';
 
-const maxPageSize = 16384;
-
 if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
   throw new Error('This script must run in a WebWorker');
+
+let options: VFSHTTP.Options;
 
 // This identifies an SQLite worker thread
 interface Consumer {
@@ -95,8 +95,8 @@ const backendAsyncMethods:
         console.warn(`Page size for ${msg.url} is ${entry.pageSize}, recommended size is 1024`);
         entry.pageCache.delete(0);
       }
-      if (entry.pageSize > maxPageSize)
-        throw new Error(`${entry.pageSize} is over the maximum supported ${maxPageSize}`);
+      if (entry.pageSize > options.maxPageSize)
+        throw new Error(`${entry.pageSize} is over the maximum configured ${options.maxPageSize}`);
     }
 
     const page = Math.floor(offset / entry.pageSize);
@@ -156,13 +156,16 @@ onmessage = ({ data }) => {
   console.log('Received new control message', data);
   switch (data.msg) {
     case 'handshake':
-      const shm = new SharedArrayBuffer(maxPageSize + Int32Array.BYTES_PER_ELEMENT);
-      const lock = new Int32Array(shm, maxPageSize);
-      const buffer = new Uint8Array(shm, 0, maxPageSize);
+      const shm = new SharedArrayBuffer(options.maxPageSize + Int32Array.BYTES_PER_ELEMENT);
+      const lock = new Int32Array(shm, options.maxPageSize);
+      const buffer = new Uint8Array(shm, 0, options.maxPageSize);
       lock[0] = 0xffff;
       consumers[data.id] = { id: data.id, port: data.port, shm, lock, buffer };
       postMessage({ msg: 'ack', id: data.id, shm, lock });
       data.port.onmessage = workMessage.bind(consumers[data.id]);
+      break;
+    case 'init':
+      options = data.options;
       break;
   }
 };

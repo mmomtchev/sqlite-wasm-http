@@ -11,7 +11,7 @@ onmessage = ({ data }) => {
     console.log('SQLite init');
     sqlite3.initWorker1API();
     if (msg.httpChannel) {
-      installHttpVfs(sqlite3, { backend: msg.httpChannel });
+      installHttpVfs(sqlite3, msg.httpChannel, {});
     }
   });
 };

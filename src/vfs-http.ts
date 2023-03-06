@@ -1,7 +1,5 @@
 import { SQLite } from "types/sqlite3";
 
-const timeoutBackend = 10000;
-
 if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
   throw new Error('This script must run in a WebWorker');
 
@@ -13,14 +11,13 @@ interface FileDescriptor {
 };
 const openFiles: Record<Internal.FH, FileDescriptor> = {};
 
-export function installHttpVfs(sqlite3: SQLite, options: VFSHTTP.Options) {
+export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel, options: VFSHTTP.Options) {
   if (typeof SharedArrayBuffer === 'undefined') {
     throw new Error('SharedArrayBuffer is not available. ' +
       'If your browser supports it, the webserver must send ' +
       '"Cross-Origin-Opener-Policy: same-origin"' +
       'and "Cross-Origin-Embedder-Policy: require-corp" headers.');
   }
-  const backend = options.backend;
   if (!backend ||
     !(backend.port instanceof MessagePort) ||
     !(backend.shm instanceof SharedArrayBuffer))
@@ -57,7 +54,7 @@ export function installHttpVfs(sqlite3: SQLite, options: VFSHTTP.Options) {
   const sendAndWait = (msg: VFSHTTP.Message) => {
     Atomics.store(lock, 0, 0xffff);
     backend.port.postMessage(msg);
-    const r = Atomics.wait(lock, 0, 0xffff, timeoutBackend);
+    const r = Atomics.wait(lock, 0, 0xffff, options.timeout);
     if (r === 'timed-out') {
       console.error('Backend timeout', r, lock, msg);
       return -1;
