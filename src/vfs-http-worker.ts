@@ -22,19 +22,25 @@ interface Consumer {
 const consumers: Record<string, Consumer> = {};
 
 // The list of known URLs and retrieved pages
-interface CacheEntry {
+interface FileEntry {
+  id: number;
+  url: string;
   size: bigint;
   pageSize: number | null;
-  pageCache: LRUCache<number, Uint8Array>;
 };
-const cache: Record<string, CacheEntry> = {};
+const files = new LRUCache<string, FileEntry>({
+  max: 32
+});
+let cache: LRUCache<string, Uint8Array>;
+
+let nextId = 1;
 
 const backendAsyncMethods:
   Record<VFSHTTP.Operation,
     (msg: VFSHTTP.Message, consumer: Consumer) => Promise<number>> = {
   // HTTP is a stateless protocol, so xOpen means verify if the URL is valid
   xOpen: async function (msg) {
-    if (cache[msg.url])
+    if (files.has(msg.url))
       return 0;
 
     const head = await fetch(msg.url, { method: 'HEAD' });
@@ -43,14 +49,13 @@ const backendAsyncMethods:
         'If the server supports it, in order to remove this message, add "Accept-Ranges: bytes". ' +
         'Additionally, if using CORS, add "Access-Control-Expose-Headers: *".');
     }
-    cache[msg.url] = {
+    files.set(msg.url, {
+      url: msg.url,
+      id: nextId++,
       size: BigInt(head.headers.get('Content-Length')),
       // This will be determined on the first read
-      pageSize: null,
-      pageCache: new LRUCache<number, Uint8Array>({
-        max: 1024
-      })
-    };
+      pageSize: null
+    });
 
     return 0;
   },
@@ -73,7 +78,7 @@ const backendAsyncMethods:
   },
 
   xRead: async function (msg, consumer) {
-    const entry = cache[msg.url];
+    const entry = files.get(msg.url);
 
     if (!entry)
       throw new Error(`File ${msg.url} not open`);
@@ -94,7 +99,7 @@ const backendAsyncMethods:
       if (entry.pageSize != 1024) {
         // If the page size is not 1024 we can't keep this "page" in the cache
         console.warn(`Page size for ${msg.url} is ${entry.pageSize}, recommended size is 1024`);
-        entry.pageCache.delete(0);
+        cache.delete(entry.id + '|0');
       }
       if (entry.pageSize > options.maxPageSize)
         throw new Error(`${entry.pageSize} is over the maximum configured ${options.maxPageSize}`);
@@ -106,7 +111,7 @@ const backendAsyncMethods:
     const pageStart = page * entry.pageSize;
     if (pageStart + entry.pageSize < offset + msg.n)
       throw new Error(`Read chunk ${offset}:${msg.n} spans across a page-boundary`);
-    let data = entry.pageCache.get(page);
+    let data = cache.get(entry.id + '|' + page);
 
     if (!data) {
       console.log(`cache miss for ${msg.url}:${page}`);
@@ -117,7 +122,7 @@ const backendAsyncMethods:
         }
       });
       data = new Uint8Array(await resp.arrayBuffer());
-      entry.pageCache.set(page, data);
+      cache.set(entry.id + '|' + page, data);
     } else {
       console.log(`cache hit for ${msg.url}:${page}`);
     }
@@ -129,11 +134,12 @@ const backendAsyncMethods:
 
   // This is cached
   xFilesize: async function (msg, consumer) {
-    if (!cache[msg.url])
+    const entry = files.get(msg.url);
+    if (!entry)
       throw new Error(`File ${msg.fid} not open`);
 
     const out = new BigInt64Array(consumer.shm, 0, 1);
-    out[0] = cache[msg.url].size;
+    out[0] = entry.size;
     return 0;
   }
 };
@@ -145,6 +151,7 @@ async function workMessage({ data }) {
     r = await backendAsyncMethods[data.msg](data, this);
 
     console.log('operation successful', this, r);
+    console.log(cache.size, cache);
     Atomics.store(this.lock, 0, r);
   } catch (e) {
     console.error(e);
@@ -167,6 +174,10 @@ onmessage = ({ data }) => {
       break;
     case 'init':
       options = data.options;
+      cache = new LRUCache<string, Uint8Array>({
+        maxSize: options.cacheSize * 1024,
+        sizeCalculation: (value) => value.byteLength
+      });
       break;
   }
 };

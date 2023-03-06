@@ -22,7 +22,7 @@ import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
   }));
 
   console.log(await promiser('exec', {
-    sql: 'SELECT * FROM tiles WHERE zoom_level = 1',
+    sql: 'SELECT * FROM tiles WHERE zoom_level = 0',
     callback: function (row) {
       console.log('got row', row);
     }
