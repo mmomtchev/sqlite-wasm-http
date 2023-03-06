@@ -1,4 +1,5 @@
 import { SQLite } from "types/sqlite3";
+import * as VFSHTTP from './vfs-http-types';
 
 if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
   throw new Error('This script must run in a WebWorker');
@@ -63,7 +64,7 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
   };
 
   const ioSyncWrappers = {
-    xCheckReservedLock: function (fid: Internal.FH, out: Internal.Pointer): number {
+    xCheckReservedLock: function (fid: Internal.FH, out: Internal.CPointer): number {
       console.log('xCheckReservedLock', fid, out);
       return 0;
     },
@@ -79,7 +80,7 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
       console.log('xFileControl', fid, op, arg);
       return 0;
     },
-    xFileSize: function (fid: Internal.FH, size: Internal.Pointer) {
+    xFileSize: function (fid: Internal.FH, size: Internal.CPointer) {
       console.log('xFileSize', fid, size);
       if (!openFiles[fid]) {
         return capi.SQLITE_NOTFOUND;
@@ -93,11 +94,11 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
       wasm.poke(size, sz, 'i64');
       return 0;
     },
-    xLock: function (file, lock) {
-      console.log('xLock', file, lock);
+    xLock: function (fid: Internal.FH, lock: number) {
+      console.log('xLock', fid, lock);
       return 0;
     },
-    xRead: function (fid, dest, n, offset) {
+    xRead: function (fid: Internal.FH, dest: Uint8Array, n: number, offset: bigint) {
       console.log('xRead', fid, dest, n, offset);
       if (Number(offset) > Number.MAX_SAFE_INTEGER) {
         return capi.SQLITE_TOOBIG;
@@ -110,30 +111,32 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
         console.error('xRead', r);
         return capi.SQLITE_IOERR;
       }
-      console.log(shm.subarray(0, n), dest);
       wasm.heap8u().set(shm.subarray(0, n), dest);
       return capi.SQLITE_OK;
     },
-    xSync: function (file, flags) {
-      console.log('xSync', file, flags);
+    xSync: function (fid: Internal.FH, flags: number) {
+      console.log('xSync', fid, flags);
       return 0;
     },
-    xTruncate: function (file, size) {
-      console.log('xTruncate', file, size);
+    xTruncate: function (fid: Internal.FH, size: number) {
+      console.log('xTruncate', fid, size);
       return 0;
     },
-    xUnlock: function (file, lock) {
-      console.log('xUnlock', file, lock);
+    xUnlock: function (fid: Internal.FH, lock: number) {
+      console.log('xUnlock', fid, lock);
       return 0;
     },
-    xWrite: function (file, src, n, offset) {
-      console.log('xWrite', file, src, n, offset);
+    xWrite: function (fid: Internal.FH, src: Uint8Array, n: number, offset: bigint) {
+      console.log('xWrite', fid, src, n, offset);
       return 0;
     }
   };
 
   const vfsSyncWrappers = {
-    xAccess: function (vfs, name, flags, out) {
+    xAccess: function (vfs: Internal.CPointer,
+      name: Internal.CPointer,
+      flags: number,
+      out: Internal.CPointer) {
       console.log('xAccess', vfs, name, flags, out);
       const url = wasm.cstrToJs(name);
       const r = sendAndWait({ msg: 'xAccess', url });
@@ -145,32 +148,38 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
       wasm.poke(out, result, 'i32');
       return capi.SQLITE_OK;
     },
-    xCurrentTime: function (vfs, out) {
+    xCurrentTime: function (vfs: Internal.CPointer, out: Internal.CPointer) {
       console.log('xCurrentTime', vfs, out);
       return 0;
     },
-    xCurrentTimeInt64: function (vfs, out) {
+    xCurrentTimeInt64: function (vfs: Internal.CPointer, out: Internal.CPointer) {
       console.log('xCurrentTimeInt64', vfs, out);
       return 0;
     },
-    xDelete: function (vfs, name, doSyncDir) {
+    xDelete: function (vfs: Internal.CPointer, name: Internal.CPointer, doSyncDir) {
       console.log('xDelete', vfs, name, doSyncDir);
       return 0;
     },
-    xFullPathname: function (vfs, name, nOut, pOut) {
+    xFullPathname: function (vfs: Internal.CPointer,
+      name: Internal.CPointer,
+      nOut: number,
+      pOut: Internal.CPointer) {
       console.log('xFullPathname', vfs, name, nOut, pOut);
       const i = wasm.cstrncpy(pOut, name, nOut);
       return i < nOut ? 0 : capi.SQLITE_CANTOPEN;
     },
-    xGetLastError: function (vfs, out, pout) {
-      console.log('xGetLastError', vfs, out, pout);
+    xGetLastError: function (vfs: Internal.CPointer,
+      nOut: number,
+      pout: Internal.CPointer) {
+      console.log('xGetLastError', vfs, nOut, pout);
       return 0;
     },
-    xOpen: function (vfs, name, fid, flags, outflags) {
-      console.log('xOpen', vfs, name, fid, flags, outflags);
-      if ((flags & capi.SQLITE_OPEN_READONLY as number) === 0) {
-        return capi.SQLITE_READONLY;
-      }
+    xOpen: function (vfs: Internal.CPointer,
+      name: Internal.CPointer,
+      fid: Internal.FH,
+      flags: number,
+      pOutFlags: number) {
+      console.log('xOpen', vfs, name, fid, flags, pOutFlags);
       if (name === 0) {
         console.error('HTTP VFS does not support anonymous files');
         return capi.SQLITE_CANTOPEN;
@@ -178,6 +187,7 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
       if (typeof name !== 'number') {
         return capi.SQLITE_ERROR;
       }
+      wasm.poke(pOutFlags, capi.SQLITE_OPEN_READONLY, 'i32');
       const url = wasm.cstrToJs(name);
       const fh = Object.create(null) as FileDescriptor;
       fh.fid = fid;

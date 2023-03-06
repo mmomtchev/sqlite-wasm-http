@@ -2,7 +2,7 @@
 import '../deps/sqlite/ext/wasm/jswasm/sqlite3-bundler-friendly.mjs';
 import '../deps/sqlite/ext/wasm/jswasm/sqlite3-worker1-promiser-bundler-friendly.js'; 
 import { Promiser } from 'types/sqlite3-promiser';
-import { defaultOptions } from './defaultOptions';
+import * as VFSHTTP from './vfs-http-types';
 
 export interface SQLiteOptions {
   http?: VFSHTTP.Backend;
@@ -44,7 +44,7 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
   console.log('Creating new HTTP VFS backend thread');
   let nextId = 1;
   const worker = new Worker(new URL('./vfs-http-worker.ts', import.meta.url));
-  options = defaultOptions(options);
+  options = VFSHTTP.defaultOptions(options);
   worker.postMessage({msg: 'init', options});
 
   const consumers = {};

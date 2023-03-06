@@ -23,8 +23,13 @@ export interface CAPI {
 }
 
 export interface WASM {
-  poke: ((ptr: Internal.Pointer, val: BigInt, size: 'i64') => void) &
-  ((ptr: Internal.Pointer, val: number, size: 'i32') => void);
+  poke: ((ptr: Internal.CPointer, val: BigInt, size: 'i64') => void) &
+  ((ptr: Internal.CPointer, val: number, size: 'i32') => void);
+  cstrToJs: (ptr: Internal.CPointer) => string;
+  cstrncpy: (dst: Internal.CPointer, src: Internal.CPointer, len: number) => number;
+  heap8u: () => {
+    set: (src: Uint8Array, dest: Uint8Array) => void;
+  };
 
   [fn: string]: Function;
 }

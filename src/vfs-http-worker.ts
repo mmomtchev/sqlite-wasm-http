@@ -2,6 +2,7 @@
 // It can serve multiple SQLite worker threads
 
 import LRUCache from 'lru-cache';
+import * as VFSHTTP from './vfs-http-types';
 import { ntoh16 } from './endianness';
 
 if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
@@ -46,7 +47,7 @@ const backendAsyncMethods:
       size: BigInt(head.headers.get('Content-Length')),
       // This will be determined on the first read
       pageSize: null,
-      pageCache: new LRUCache({
+      pageCache: new LRUCache<number, Uint8Array>({
         max: 1024
       })
     };

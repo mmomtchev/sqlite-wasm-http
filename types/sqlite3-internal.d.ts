@@ -1,6 +1,6 @@
 declare namespace Internal {
   // Opaque C pointer type
-  export type Pointer = symbol;
+  export type CPointer = unknown;
   // Opaque file descriptor type
   export type FH = symbol;
 
@@ -12,16 +12,5 @@ declare namespace Internal {
     }
 
     [prop: string]: unknown;
-  }
-}
-
-declare namespace VFSHTTP {
-  export type Operation = 'xOpen' | 'xAccess' | 'xRead' | 'xFilesize';
-  export interface Message {
-    msg: Operation;
-    url: string;
-    offset?: BigInt;
-    n?: number;
-    [key: string]: string | number | BigInt;
   }
 }
