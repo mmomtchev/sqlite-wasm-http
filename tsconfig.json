@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "es2020",
+    "target": "es6",
+    "lib": [ "webWorker" ],
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "paths": {
+      "sqlite-wasm-http": [
+        "./src"
+      ]
+    },
+    "baseUrl": "."
+  },
+  "include": [
+    "./src", "./examples", "./types"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

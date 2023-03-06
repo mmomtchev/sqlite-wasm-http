@@ -1,8 +1,9 @@
 const path = require('path');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './examples/index.js',
+  entry: './examples/index.ts',
   module: {
     rules: [
       {
@@ -15,6 +16,10 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       }
     ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+    plugins: [new TsconfigPathsPlugin()]
   },
   output: {
     filename: 'bundle.js',

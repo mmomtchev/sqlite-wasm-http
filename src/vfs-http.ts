@@ -1,11 +1,19 @@
+import { SQLite } from "types/sqlite3";
+
 const timeoutBackend = 10000;
 
 if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
   throw new Error('This script must run in a WebWorker');
 
-const openFiles = {};
+interface FileDescriptor {
+  fid: Internal.FH;
+  url: string;
+  sq3File: Internal.CStruct;
+  lockType: number;
+};
+const openFiles: Record<Internal.FH, FileDescriptor> = {};
 
-export function installhttpVfs(sqlite3, options) {
+export function installHttpVfs(sqlite3: SQLite, options: VFSHTTP.Options) {
   if (typeof SharedArrayBuffer === 'undefined') {
     throw new Error('SharedArrayBuffer is not available. ' +
       'If your browser supports it, the webserver must send ' +
@@ -46,7 +54,7 @@ export function installhttpVfs(sqlite3, options) {
     console.log('Received new work reply', data);
   };
 
-  const sendAndWait = (msg) => {
+  const sendAndWait = (msg: VFSHTTP.Message) => {
     Atomics.store(lock, 0, 0xffff);
     backend.port.postMessage(msg);
     const r = Atomics.wait(lock, 0, 0xffff, timeoutBackend);
@@ -58,28 +66,28 @@ export function installhttpVfs(sqlite3, options) {
   };
 
   const ioSyncWrappers = {
-    xCheckReservedLock: function (file, out) {
-      console.log('xCheckReservedLock', file, out);
+    xCheckReservedLock: function (fid: Internal.FH, out: Internal.Pointer): number {
+      console.log('xCheckReservedLock', fid, out);
       return 0;
     },
-    xClose: function (file) {
-      console.log('xClose', file);
+    xClose: function (fid: Internal.FH): number {
+      console.log('xClose', fid);
       return 0;
     },
-    xDeviceCharacteristics: function (file) {
-      console.log('xDeviceCharacteristics', file);
+    xDeviceCharacteristics: function (fid: Internal.FH): number {
+      console.log('xDeviceCharacteristics', fid);
       return capi.SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN;
     },
-    xFileControl: function (file, op, arg) {
-      console.log('xFileControl', file, op, arg);
+    xFileControl: function (fid: Internal.FH, op: number, arg: number): number {
+      console.log('xFileControl', fid, op, arg);
       return 0;
     },
-    xFileSize: function (fid, size) {
+    xFileSize: function (fid: Internal.FH, size: Internal.Pointer) {
       console.log('xFileSize', fid, size);
       if (!openFiles[fid]) {
         return capi.SQLITE_NOTFOUND;
       }
-      const r = sendAndWait({ msg: 'xFilesize', name: openFiles[fid].filename });
+      const r = sendAndWait({ msg: 'xFilesize', url: openFiles[fid].url });
       if (r !== 0) {
         return capi.SQLITE_IOERR;
       }
@@ -100,7 +108,7 @@ export function installhttpVfs(sqlite3, options) {
       if (!openFiles[fid]) {
         return capi.SQLITE_NOTFOUND;
       }
-      const r = sendAndWait({ msg: 'xRead', name: openFiles[fid].filename, n, offset });
+      const r = sendAndWait({ msg: 'xRead', url: openFiles[fid].url, n, offset });
       if (r !== 0) {
         console.error('xRead', r);
         return capi.SQLITE_IOERR;
@@ -130,8 +138,8 @@ export function installhttpVfs(sqlite3, options) {
   const vfsSyncWrappers = {
     xAccess: function (vfs, name, flags, out) {
       console.log('xAccess', vfs, name, flags, out);
-      name = wasm.cstrToJs(name);
-      const r = sendAndWait({ msg: 'xAccess', name });
+      const url = wasm.cstrToJs(name);
+      const r = sendAndWait({ msg: 'xAccess', url });
       if (r !== 0) {
         console.error('xAccess', r);
         return capi.SQLITE_IOERR;
@@ -163,7 +171,7 @@ export function installhttpVfs(sqlite3, options) {
     },
     xOpen: function (vfs, name, fid, flags, outflags) {
       console.log('xOpen', vfs, name, fid, flags, outflags);
-      if (flags & capi.SQLITE_OPEN_READONLY === 0) {
+      if ((flags & capi.SQLITE_OPEN_READONLY as number) === 0) {
         return capi.SQLITE_READONLY;
       }
       if (name === 0) {
@@ -173,16 +181,16 @@ export function installhttpVfs(sqlite3, options) {
       if (typeof name !== 'number') {
         return capi.SQLITE_ERROR;
       }
-      name = wasm.cstrToJs(name);
-      const fh = Object.create(null);
+      const url = wasm.cstrToJs(name);
+      const fh = Object.create(null) as FileDescriptor;
       fh.fid = fid;
-      fh.filename = name;
+      fh.url = url;
       fh.sq3File = new sqlite3_file(fid);
       fh.sq3File.$pMethods = httpIoMethods.pointer;
       fh.lockType = capi.SQLITE_LOCK_NONE;
       openFiles[fid] = fh;
 
-      const r = sendAndWait({ msg: 'xOpen', name, fid });
+      const r = sendAndWait({ msg: 'xOpen', url });
       if (r < 0) {
         console.error('xOpen', r);
         return capi.SQLITE_IOERR;

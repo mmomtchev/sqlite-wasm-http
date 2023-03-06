@@ -4,7 +4,7 @@ export namespace Promiser {
     worker: Worker | (() => void);
     generateMessageId?: (msg: Message) => MessageId;
     debug?: (...args: unknown[]) => void;
-    onunhandled?: (e: Event) => void;
+    onunhandled?: (e: unknown) => void;
   }
 
   export interface Row {

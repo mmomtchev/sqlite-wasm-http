@@ -1,3 +1,6 @@
+// This is the entry point for an HTTP backend thread
+// It can serve multiple SQLite worker threads
+
 import LRUCache from 'lru-cache';
 import { ntoh16 } from './endianness';
 
@@ -6,25 +9,40 @@ const maxPageSize = 16384;
 if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
   throw new Error('This script must run in a WebWorker');
 
+// This identifies an SQLite worker thread
+interface Consumer {
+  id: number;
+  port: MessagePort;
+  shm: SharedArrayBuffer;
+  lock: Int32Array;
+  buffer: Uint8Array;
+};
 // The set of sqlite Workers that use this backend
-const consumers = {};
+const consumers: Record<string, Consumer> = {};
 
 // The list of known URLs and retrieved pages
-const cache = {};
+interface CacheEntry {
+  size: bigint;
+  pageSize: number | null;
+  pageCache: LRUCache<number, Uint8Array>;
+};
+const cache: Record<string, CacheEntry> = {};
 
-const backendAsyncMethods = {
+const backendAsyncMethods:
+  Record<VFSHTTP.Operation,
+    (msg: VFSHTTP.Message, consumer: Consumer) => Promise<number>> = {
   // HTTP is a stateless protocol, so xOpen means verify if the URL is valid
   xOpen: async function (msg) {
-    if (cache[msg.name])
+    if (cache[msg.url])
       return 0;
 
-    const head = await fetch(msg.name, { method: 'HEAD' });
+    const head = await fetch(msg.url, { method: 'HEAD' });
     if (head.headers.get('Accept-Ranges') !== 'bytes') {
-      console.warn(`Server for ${msg.name} does not advertise 'Accept-Ranges'. ` +
+      console.warn(`Server for ${msg.url} does not advertise 'Accept-Ranges'. ` +
         'If the server supports it, in order to remove this message, add "Accept-Ranges: bytes". ' +
         'Additionally, if using CORS, add "Access-Control-Expose-Headers: *".');
     }
-    cache[msg.name] = {
+    cache[msg.url] = {
       size: BigInt(head.headers.get('Content-Length')),
       // This will be determined on the first read
       pageSize: null,
@@ -40,7 +58,7 @@ const backendAsyncMethods = {
   xAccess: async function (msg, consumer) {
     const result = new Uint32Array(consumer.shm, 0, 1);
     try {
-      const r = await backendAsyncMethods.xOpen(msg);
+      const r = await backendAsyncMethods.xOpen(msg, consumer);
       if (r === 0) {
         result[0] = 1;
       } else {
@@ -54,10 +72,10 @@ const backendAsyncMethods = {
   },
 
   xRead: async function (msg, consumer) {
-    const entry = cache[msg.name];
+    const entry = cache[msg.url];
 
     if (!entry)
-      throw new Error(`File ${msg.name} not open`);
+      throw new Error(`File ${msg.url} not open`);
     const offset = Number(msg.offset);
 
     if (!entry.pageSize) {
@@ -65,8 +83,8 @@ const backendAsyncMethods = {
       // It is in two big-endian bytes at offset 16 in what is always the first page
       entry.pageSize = 1024;
       const pageDataBuffer = new ArrayBuffer(2);
-      const r = await backendAsyncMethods.xRead({ name: msg.name, offset: 16, n: 2 },
-        { buffer: new Uint8Array(pageDataBuffer) });
+      const r = await backendAsyncMethods.xRead({ msg: 'xRead', url: msg.url, offset: BigInt(16), n: 2 },
+        { buffer: new Uint8Array(pageDataBuffer) } as Consumer);
       const pageData = new Uint16Array(pageDataBuffer);
       if (r !== 0)
         return r;
@@ -74,7 +92,7 @@ const backendAsyncMethods = {
       entry.pageSize = pageData[0];
       if (entry.pageSize != 1024) {
         // If the page size is not 1024 we can't keep this "page" in the cache
-        console.warn(`Page size for ${msg.name} is ${entry.pageSize}, recommended size is 1024`);
+        console.warn(`Page size for ${msg.url} is ${entry.pageSize}, recommended size is 1024`);
         entry.pageCache.delete(0);
       }
       if (entry.pageSize > maxPageSize)
@@ -90,8 +108,8 @@ const backendAsyncMethods = {
     let data = entry.pageCache.get(page);
 
     if (!data) {
-      console.log(`cache miss for ${msg.name}:${page}`);
-      const resp = await fetch(msg.name, {
+      console.log(`cache miss for ${msg.url}:${page}`);
+      const resp = await fetch(msg.url, {
         method: 'GET',
         headers: {
           'Range': `bytes=${pageStart}-${pageStart + entry.pageSize - 1}`
@@ -100,7 +118,7 @@ const backendAsyncMethods = {
       data = new Uint8Array(await resp.arrayBuffer());
       entry.pageCache.set(page, data);
     } else {
-      console.log(`cache hit for ${msg.name}:${page}`);
+      console.log(`cache hit for ${msg.url}:${page}`);
     }
 
     const pageOffset = offset - pageStart;
@@ -110,10 +128,11 @@ const backendAsyncMethods = {
 
   // This is cached
   xFilesize: async function (msg, consumer) {
-    if (!cache[msg.name])
+    if (!cache[msg.url])
       throw new Error(`File ${msg.fid} not open`);
 
-    (new BigInt64Array(consumer.shm, 0, 1))[0] = cache[msg.name].size;
+    const out = new BigInt64Array(consumer.shm, 0, 1);
+    out[0] = cache[msg.url].size;
     return 0;
   }
 };
