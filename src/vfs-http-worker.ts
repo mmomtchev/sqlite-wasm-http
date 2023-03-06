@@ -31,7 +31,10 @@ interface FileEntry {
 const files = new LRUCache<string, FileEntry>({
   max: 32
 });
-let cache: LRUCache<string, Uint8Array>;
+
+// The entry for a given page can be either the page itself
+// or the number of the page that has the parent super-page
+let cache: LRUCache<string, Uint8Array | number>;
 
 let nextId = 1;
 
@@ -108,21 +111,45 @@ const backendAsyncMethods:
     const page = Math.floor(offset / entry.pageSize);
     if (page * entry.pageSize !== offset)
       console.warn(`Read chunk ${msg.offset} is not page-aligned`);
-    const pageStart = page * entry.pageSize;
+    let pageStart = page * entry.pageSize;
     if (pageStart + entry.pageSize < offset + msg.n)
       throw new Error(`Read chunk ${offset}:${msg.n} spans across a page-boundary`);
     let data = cache.get(entry.id + '|' + page);
 
     if (!data) {
       console.log(`cache miss for ${msg.url}:${page}`);
+
+      let chunkSize = entry.pageSize;
+      // If the previous page is in the cache, we double the page size
+      // This was the original page merging algorithm implemented by @phiresky
+      let prev = page > 0 && cache.get(entry.id + '|' + (page - 1));
+      if (prev) {
+        if (typeof prev === 'number')
+          prev = cache.get(entry.id + '|' + prev) as Uint8Array;
+        chunkSize = prev.byteLength * 2;
+        console.log(`downloading super page of size ${chunkSize}`);
+      }
+
       const resp = await fetch(msg.url, {
         method: 'GET',
         headers: {
-          'Range': `bytes=${pageStart}-${pageStart + entry.pageSize - 1}`
+          'Range': `bytes=${pageStart}-${pageStart + chunkSize - 1}`
         }
       });
       data = new Uint8Array(await resp.arrayBuffer());
+
+      // This is the parent super-page
       cache.set(entry.id + '|' + page, data);
+
+      // These point to the parent super-page
+      const pages = chunkSize / entry.pageSize;
+      for (let i = page + 1; i < page + pages; i++) {
+        cache.set(entry.id + '|' + i, page);
+      }
+    } else if (typeof data === 'number') {
+      // This page is present as a segment of a super-page
+      pageStart = data * entry.pageSize;
+      data = cache.get(entry.id + '|' + data) as Uint8Array;
     } else {
       console.log(`cache hit for ${msg.url}:${page}`);
     }
@@ -151,7 +178,6 @@ async function workMessage({ data }) {
     r = await backendAsyncMethods[data.msg](data, this);
 
     console.log('operation successful', this, r);
-    console.log(cache.size, cache);
     Atomics.store(this.lock, 0, r);
   } catch (e) {
     console.error(e);
@@ -176,7 +202,7 @@ onmessage = ({ data }) => {
       options = data.options;
       cache = new LRUCache<string, Uint8Array>({
         maxSize: options.cacheSize * 1024,
-        sizeCalculation: (value) => value.byteLength
+        sizeCalculation: (value) => value.byteLength ?? 4
       });
       break;
   }
