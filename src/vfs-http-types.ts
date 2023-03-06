@@ -38,7 +38,7 @@ export type Operation = 'xOpen' | 'xAccess' | 'xRead' | 'xFilesize';
 export interface Message {
   msg: Operation;
   url: string;
-  offset?: BigInt;
+  offset?: bigint;
   n?: number;
   [key: string]: string | number | BigInt;
 }
