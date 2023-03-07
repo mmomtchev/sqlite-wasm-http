@@ -37,7 +37,7 @@ var sqlite3InitModule = (() => {
   var _scriptDir = import.meta.url;
   
   return (
-function(sqlite3InitModule = {})  {
+async function(sqlite3InitModule = {})  {
 
 // include: shell.js
 // The Module object: Our interface to the outside world. We import
@@ -169,6 +169,108 @@ var read_,
     readAsync,
     readBinary,
     setWindowTitle;
+
+// Normally we don't log exceptions but instead let them bubble out the top
+// level where the embedding environment (e.g. the browser) can handle
+// them.
+// However under v8 and node we sometimes exit the process direcly in which case
+// its up to use us to log the exception before exiting.
+// If we fix https://github.com/emscripten-core/emscripten/issues/15080
+// this may no longer be needed under node.
+function logExceptionOnExit(e) {
+  if (e instanceof ExitStatus) return;
+  let toLog = e;
+  if (e && typeof e == 'object' && e.stack) {
+    toLog = [e, e.stack];
+  }
+  err('exiting due to exception: ' + toLog);
+}
+
+if (ENVIRONMENT_IS_NODE) {
+  // `require()` is no-op in an ESM module, use `createRequire()` to construct
+  // the require()` function.  This is only necessary for multi-environment
+  // builds, `-sENVIRONMENT=node` emits a static import declaration instead.
+  // TODO: Swap all `require()`'s with `import()`'s?
+  const { createRequire } = await import('module');
+  /** @suppress{duplicate} */
+  var require = createRequire(import.meta.url);
+  // These modules will usually be used on Node.js. Load them eagerly to avoid
+  // the complexity of lazy-loading.
+  var fs = require('fs');
+  var nodePath = require('path');
+
+  if (ENVIRONMENT_IS_WORKER) {
+    scriptDirectory = nodePath.dirname(scriptDirectory) + '/';
+  } else {
+    // EXPORT_ES6 + ENVIRONMENT_IS_NODE always requires use of import.meta.url,
+    // since there's no way getting the current absolute path of the module when
+    // support for that is not available.
+    scriptDirectory = require('url').fileURLToPath(new URL('./', import.meta.url)); // includes trailing slash
+  }
+
+// include: node_shell_read.js
+read_ = (filename, binary) => {
+  // We need to re-wrap `file://` strings to URLs. Normalizing isn't
+  // necessary in that case, the path should already be absolute.
+  filename = isFileURI(filename) ? new URL(filename) : nodePath.normalize(filename);
+  return fs.readFileSync(filename, binary ? undefined : 'utf8');
+};
+
+readBinary = (filename) => {
+  var ret = read_(filename, true);
+  if (!ret.buffer) {
+    ret = new Uint8Array(ret);
+  }
+  return ret;
+};
+
+readAsync = (filename, onload, onerror) => {
+  // See the comment in the `read_` function.
+  filename = isFileURI(filename) ? new URL(filename) : nodePath.normalize(filename);
+  fs.readFile(filename, function(err, data) {
+    if (err) onerror(err);
+    else onload(data.buffer);
+  });
+};
+
+// end include: node_shell_read.js
+  if (process.argv.length > 1) {
+    thisProgram = process.argv[1].replace(/\\/g, '/');
+  }
+
+  arguments_ = process.argv.slice(2);
+
+  // MODULARIZE will export the module in the proper place outside, we don't need to export here
+
+  process.on('uncaughtException', function(ex) {
+    // suppress ExitStatus exceptions from showing an error
+    if (!(ex instanceof ExitStatus)) {
+      throw ex;
+    }
+  });
+
+  // Without this older versions of node (< v15) will log unhandled rejections
+  // but return 0, which is not normally the desired behaviour.  This is
+  // not be needed with node v15 and about because it is now the default
+  // behaviour:
+  // See https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode
+  var nodeMajor = process.versions.node.split(".")[0];
+  if (nodeMajor < 15) {
+    process.on('unhandledRejection', function(reason) { throw reason; });
+  }
+
+  quit_ = (status, toThrow) => {
+    if (keepRuntimeAlive()) {
+      process.exitCode = status;
+      throw toThrow;
+    }
+    logExceptionOnExit(toThrow);
+    process.exit(status);
+  };
+
+  Module['inspect'] = function () { return '[Emscripten Module object]'; };
+
+} else
 
 // Note that this includes Node.js workers when relevant (pthreads is enabled).
 // Node.js workers are detected as a combination of ENVIRONMENT_IS_WORKER and
@@ -819,6 +921,13 @@ function instantiateAsync(binary, binaryFile, imports, callback) {
   if (!binary &&
       typeof WebAssembly.instantiateStreaming == 'function' &&
       !isDataURI(binaryFile) &&
+      // Avoid instantiateStreaming() on Node.js environment for now, as while
+      // Node.js v18.1.0 implements it, it does not have a full fetch()
+      // implementation yet.
+      //
+      // Reference:
+      //   https://github.com/emscripten-core/emscripten/pull/16917
+      !ENVIRONMENT_IS_NODE &&
       typeof fetch == 'function') {
     return fetch(binaryFile, { credentials: 'same-origin' }).then(function(response) {
       // Suppress closure warning here since the upstream definition for
@@ -1036,6 +1145,16 @@ var tempI64;
         var randomBuffer = new Uint8Array(1);
         return () => { crypto.getRandomValues(randomBuffer); return randomBuffer[0]; };
       } else
+      if (ENVIRONMENT_IS_NODE) {
+        // for nodejs with or without crypto support included
+        try {
+          var crypto_module = require('crypto');
+          // nodejs has crypto support
+          return () => crypto_module['randomBytes'](1)[0];
+        } catch (e) {
+          // nodejs doesn't have crypto support
+        }
+      }
       // we couldn't find a proper implementation, as Math.random() is not suitable for /dev/random, see emscripten-core/emscripten/pull/7096
       return () => abort("randomDevice");
     }
@@ -1177,6 +1296,27 @@ var tempI64;
         }},default_tty_ops:{get_char:function(tty) {
           if (!tty.input.length) {
             var result = null;
+            if (ENVIRONMENT_IS_NODE) {
+              // we will read data by chunks of BUFSIZE
+              var BUFSIZE = 256;
+              var buf = Buffer.alloc(BUFSIZE);
+              var bytesRead = 0;
+  
+              try {
+                bytesRead = fs.readSync(process.stdin.fd, buf, 0, BUFSIZE, -1);
+              } catch(e) {
+                // Cross-platform differences: on Windows, reading EOF throws an exception, but on other OSes,
+                // reading EOF returns 0. Uniformize behavior by treating the EOF exception to return 0.
+                if (e.toString().includes('EOF')) bytesRead = 0;
+                else throw e;
+              }
+  
+              if (bytesRead > 0) {
+                result = buf.slice(0, bytesRead).toString('utf-8');
+              } else {
+                result = null;
+              }
+            } else
             if (typeof window != 'undefined' &&
               typeof window.prompt == 'function') {
               // Browser.
@@ -3626,7 +3766,12 @@ var tempI64;
       return Date.now();
     }
 
-  var _emscripten_get_now;_emscripten_get_now = () => performance.now();
+  var _emscripten_get_now;if (ENVIRONMENT_IS_NODE) {
+    _emscripten_get_now = () => {
+      var t = process.hrtime();
+      return t[0] * 1e3 + t[1] / 1e6;
+    };
+  } else _emscripten_get_now = () => performance.now();
   ;
 
   function getHeapMax() {
@@ -14135,9 +14280,9 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 sqlite3.initWorker1API = function(){
   'use strict';
   const toss = (...args)=>{throw new Error(args.join(' '))};
-  if('function' !== typeof importScripts){
-    toss("initWorker1API() must be run from a Worker thread.");
-  }
+  //if('function' !== typeof importScripts){
+  //  toss("initWorker1API() must be run from a Worker thread.");
+  //}
   const self = this.self;
   const sqlite3 = this.sqlite3 || toss("Missing this.sqlite3 object.");
   const DB = sqlite3.oo1.DB;
@@ -15278,7 +15423,7 @@ const installOpfsVfs = function callee(options){
   if(!options || 'object'!==typeof options){
     options = Object.create(null);
   }
-  const urlParams = new URL(self.location.href).searchParams;
+  const urlParams = self.location?.href ? new URL(self.location.href).searchParams : new URLSearchParams()
   if(undefined===options.verbose){
     options.verbose = urlParams.has('opfs-verbose')
       ? (+urlParams.get('opfs-verbose') || 2) : 1;
@@ -16625,7 +16770,7 @@ const toExportForESM =
     moduleScript: self?.document?.currentScript,
     isWorker: ('undefined' !== typeof WorkerGlobalScope),
     location: self.location,
-    urlParams:  new URL(self.location.href).searchParams
+    urlParams: self.location?.href ? new URL(self.location.href).searchParams : new URLSearchParams()
   });
   initModuleState.debugModule =
     initModuleState.urlParams.has('sqlite3.debugModule')
@@ -16647,7 +16792,7 @@ const toExportForESM =
          (EmscriptenModule['ENVIRONMENT_IS_PTHREAD']
           || EmscriptenModule['_pthread_self']
           || 'function'===typeof threadAlert
-          || self.location.pathname.endsWith('.worker.js')
+          || self.location?.pathname?.endsWith?.('.worker.js')
          )){
         /** Workaround for wasmfs-generated worker, which calls this
             routine from each individual thread and requires that its

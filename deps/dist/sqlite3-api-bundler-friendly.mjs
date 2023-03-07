@@ -8859,9 +8859,9 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 sqlite3.initWorker1API = function(){
   'use strict';
   const toss = (...args)=>{throw new Error(args.join(' '))};
-  if('function' !== typeof importScripts){
-    toss("initWorker1API() must be run from a Worker thread.");
-  }
+  //if('function' !== typeof importScripts){
+  //  toss("initWorker1API() must be run from a Worker thread.");
+  //}
   const self = this.self;
   const sqlite3 = this.sqlite3 || toss("Missing this.sqlite3 object.");
   const DB = sqlite3.oo1.DB;
@@ -10002,7 +10002,7 @@ const installOpfsVfs = function callee(options){
   if(!options || 'object'!==typeof options){
     options = Object.create(null);
   }
-  const urlParams = new URL(self.location.href).searchParams;
+  const urlParams = self.location?.href ? new URL(self.location.href).searchParams : new URLSearchParams()
   if(undefined===options.verbose){
     options.verbose = urlParams.has('opfs-verbose')
       ? (+urlParams.get('opfs-verbose') || 2) : 1;

@@ -1,0 +1,201 @@
+Index: ext/wasm/GNUmakefile
+==================================================================
+--- ext/wasm/GNUmakefile
++++ ext/wasm/GNUmakefile
+@@ -435,11 +435,11 @@
+ emcc.jsflags += -sIMPORTED_MEMORY
+ emcc.jsflags += -sSTRICT_JS=0
+ # STRICT_JS disabled due to:
+ #   https://github.com/emscripten-core/emscripten/issues/18610
+ # TL;DR: does not work with MODULARIZE or EXPORT_ES6 as of version 3.1.31.
+-emcc.environment := -sENVIRONMENT=web,worker
++emcc.environment := -sENVIRONMENT=web,worker,node
+ ########################################################################
+ # -sINITIAL_MEMORY: How much memory we need to start with is governed
+ # at least in part by whether -sALLOW_MEMORY_GROWTH is enabled. If so,
+ # we can start with less. If not, we need as much as we'll ever
+ # possibly use (which, of course, we can't know for sure).  Note,
+
+Index: ext/wasm/api/extern-post-js.c-pp.js
+==================================================================
+--- ext/wasm/api/extern-post-js.c-pp.js
++++ ext/wasm/api/extern-post-js.c-pp.js
+@@ -43,11 +43,11 @@
+   */
+   const initModuleState = self.sqlite3InitModuleState = Object.assign(Object.create(null),{
+     moduleScript: self?.document?.currentScript,
+     isWorker: ('undefined' !== typeof WorkerGlobalScope),
+     location: self.location,
+-    urlParams:  new URL(self.location.href).searchParams
++    urlParams: self.location?.href ? new URL(self.location.href).searchParams : new URLSearchParams()
+   });
+   initModuleState.debugModule =
+     initModuleState.urlParams.has('sqlite3.debugModule')
+     ? (...args)=>console.warn('sqlite3.debugModule:',...args)
+     : ()=>{};
+@@ -65,11 +65,11 @@
+     return originalInit(...args).then((EmscriptenModule)=>{
+       if(self.window!==self &&
+          (EmscriptenModule['ENVIRONMENT_IS_PTHREAD']
+           || EmscriptenModule['_pthread_self']
+           || 'function'===typeof threadAlert
+-          || self.location.pathname.endsWith('.worker.js')
++          || self.location?.pathname?.endsWith?.('.worker.js')
+          )){
+         /** Workaround for wasmfs-generated worker, which calls this
+             routine from each individual thread and requires that its
+             argument be returned. All of the criteria above are fragile,
+             based solely on inspection of the offending code, not public
+
+Index: ext/wasm/api/sqlite3-api-prologue.js
+==================================================================
+--- ext/wasm/api/sqlite3-api-prologue.js
++++ ext/wasm/api/sqlite3-api-prologue.js
+@@ -1914,11 +1914,11 @@
+           delete sqlite3.util;
+           /* It's conceivable that we might want to expose
+              StructBinder to client-side code, but it's only useful if
+              clients build their own sqlite3.wasm which contains their
+              one C struct types. */
+-          delete sqlite3.StructBinder;
++          //delete sqlite3.StructBinder;
+         }
+         return sqlite3;
+       };
+       if(1){
+         /* Run all initializers in sequence. The advantage is that it
+
+Index: ext/wasm/api/sqlite3-api-worker1.js
+==================================================================
+--- ext/wasm/api/sqlite3-api-worker1.js
++++ ext/wasm/api/sqlite3-api-worker1.js
+@@ -315,13 +315,13 @@
+ */
+ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
+ sqlite3.initWorker1API = function(){
+   'use strict';
+   const toss = (...args)=>{throw new Error(args.join(' '))};
+-  if('function' !== typeof importScripts){
+-    toss("initWorker1API() must be run from a Worker thread.");
+-  }
++  //if('function' !== typeof importScripts){
++  //  toss("initWorker1API() must be run from a Worker thread.");
++  //}
+   const self = this.self;
+   const sqlite3 = this.sqlite3 || toss("Missing this.sqlite3 object.");
+   const DB = sqlite3.oo1.DB;
+ 
+   /**
+
+Index: ext/wasm/api/sqlite3-vfs-opfs.c-pp.js
+==================================================================
+--- ext/wasm/api/sqlite3-vfs-opfs.c-pp.js
++++ ext/wasm/api/sqlite3-vfs-opfs.c-pp.js
+@@ -98,11 +98,11 @@
+     );
+   }
+   if(!options || 'object'!==typeof options){
+     options = Object.create(null);
+   }
+-  const urlParams = new URL(self.location.href).searchParams;
++  const urlParams = self.location?.href ? new URL(self.location.href).searchParams : new URLSearchParams()
+   if(undefined===options.verbose){
+     options.verbose = urlParams.has('opfs-verbose')
+       ? (+urlParams.get('opfs-verbose') || 2) : 1;
+   }
+   if(undefined===options.sanityChecks){
+
+Index: ext/wasm/api/sqlite3-worker1-promiser.c-pp.js
+==================================================================
+--- ext/wasm/api/sqlite3-worker1-promiser.c-pp.js
++++ ext/wasm/api/sqlite3-worker1-promiser.c-pp.js
+@@ -247,11 +247,11 @@
+       src.pop();
+       theJs = src.join('/')+'/' + theJs;
+       //sqlite3.config.warn("promiser currentScript, theJs =",this.currentScript,theJs);
+     }else{
+       //sqlite3.config.warn("promiser self.location =",self.location);
+-      const urlParams = new URL(self.location.href).searchParams;
++      const urlParams = self.location?.href ? new URL(self.location.href).searchParams : new URLSearchParams()
+       if(urlParams.has('sqlite3.dir')){
+         theJs = urlParams.get('sqlite3.dir') + '/' + theJs;
+       }
+     }
+     return new Worker(theJs + self.location.search);
+
+Index: ext/wasm/api/sqlite3-worker1.c-pp.js
+==================================================================
+--- ext/wasm/api/sqlite3-worker1.c-pp.js
++++ ext/wasm/api/sqlite3-worker1.c-pp.js
+@@ -34,11 +34,11 @@
+ "use strict";
+ (()=>{
+ //#if target=es6-bundler-friendly
+   importScripts('sqlite3.js');
+ //#else
+-  const urlParams = new URL(self.location.href).searchParams;
++  const urlParams = self.location?.href ? new URL(self.location.href).searchParams : new URLSearchParams()
+   let theJs = 'sqlite3.js';
+   if(urlParams.has('sqlite3.dir')){
+     theJs = urlParams.get('sqlite3.dir') + '/' + theJs;
+   }
+   //console.warn("worker1 theJs =",theJs);
+
+Index: ext/wasm/batch-runner.js
+==================================================================
+--- ext/wasm/batch-runner.js
++++ ext/wasm/batch-runner.js
+@@ -16,11 +16,11 @@
+ 'use strict';
+ (function(){
+   const toss = function(...args){throw new Error(args.join(' '))};
+   const warn = console.warn.bind(console);
+   let sqlite3;
+-  const urlParams = new URL(self.location.href).searchParams;
++  const urlParams = self.location?.href ? new URL(self.location.href).searchParams : new URLSearchParams();
+   const cacheSize = (()=>{
+     if(urlParams.has('cachesize')) return +urlParams.get('cachesize');
+     return 200;
+   })();
+ 
+
+Index: ext/wasm/wasmfs.make
+==================================================================
+--- ext/wasm/wasmfs.make
++++ ext/wasm/wasmfs.make
+@@ -23,19 +23,19 @@
+     $(sqlite3-wasmfs.mjs) \
+     $(subst .mjs,.worker.mjs,$(sqlite3-wasmfs.mjs))
+ 
+ ########################################################################
+ # emcc flags for .c/.o.
+-cflags.sqlite3-wasmfs :=
++cflags.sqlite3-wasmfs := -Wbad-function-cast -Wcast-function-type
+ cflags.sqlite3-wasmfs += -std=c99 -fPIC
+ cflags.sqlite3-wasmfs += -pthread
+ cflags.sqlite3-wasmfs += $(cflags.speedtest1)
+ cflags.sqlite3-wasmfs += $(SQLITE_OPT) -DSQLITE_ENABLE_WASMFS
+ 
+ ########################################################################
+ # emcc flags specific to building the final .js/.wasm file...
+-emcc.flags.sqlite3-wasmfs := -fPIC
++emcc.flags.sqlite3-wasmfs := -fPIC -Wbad-function-cast -Wcast-function-type
+ emcc.flags.sqlite3-wasmfs += --no-entry
+ emcc.flags.sqlite3-wasmfs += --minify 0
+ emcc.flags.sqlite3-wasmfs += -sMODULARIZE
+ emcc.flags.sqlite3-wasmfs += -sEXPORT_NAME=$(sqlite3.js.init-func)
+ emcc.flags.sqlite3-wasmfs += -sSTRICT_JS
+@@ -55,11 +55,11 @@
+ emcc.flags.sqlite3-wasmfs += -sMEMORY64=0
+ emcc.flags.sqlite3-wasmfs += -sIMPORTED_MEMORY
+ emcc.flags.sqlite3-wasmfs += -sINITIAL_MEMORY=$(emcc.INITIAL_MEMORY.128)
+ # ^^^^ 64MB is not enough for WASMFS/OPFS test runs using batch-runner.js
+ sqlite3-wasmfs.fsflags := -pthread -sWASMFS \
+-    -sPTHREAD_POOL_SIZE=2 -sENVIRONMENT=web,worker \
++    -sPTHREAD_POOL_SIZE=2 -sENVIRONMENT=web,worker,node \
+     -sERROR_ON_UNDEFINED_SYMBOLS=0 -sLLD_REPORT_UNDEFINED 
+ # ^^^^^ why undefined symbols are necessary for the wasmfs build is anyone's guess.
+ emcc.flags.sqlite3-wasmfs += $(sqlite3-wasmfs.fsflags)
+ #emcc.flags.sqlite3-wasmfs += -sALLOW_MEMORY_GROWTH
+ #^^^ using ALLOW_MEMORY_GROWTH produces a warning from emcc:
+

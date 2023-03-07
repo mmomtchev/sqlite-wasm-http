@@ -246,7 +246,7 @@ self.sqlite3Worker1Promiser.defaultConfig = {
       //sqlite3.config.warn("promiser currentScript, theJs =",this.currentScript,theJs);
     }else{
       //sqlite3.config.warn("promiser self.location =",self.location);
-      const urlParams = new URL(self.location.href).searchParams;
+      const urlParams = self.location?.href ? new URL(self.location.href).searchParams : new URLSearchParams()
       if(urlParams.has('sqlite3.dir')){
         theJs = urlParams.get('sqlite3.dir') + '/' + theJs;
       }

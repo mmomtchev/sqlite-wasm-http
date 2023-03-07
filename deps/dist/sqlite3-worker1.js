@@ -33,7 +33,7 @@
 */
 "use strict";
 (()=>{
-  const urlParams = new URL(self.location.href).searchParams;
+  const urlParams = self.location?.href ? new URL(self.location.href).searchParams : new URLSearchParams()
   let theJs = 'sqlite3.js';
   if(urlParams.has('sqlite3.dir')){
     theJs = urlParams.get('sqlite3.dir') + '/' + theJs;
