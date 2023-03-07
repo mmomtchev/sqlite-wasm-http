@@ -67,6 +67,7 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
   const ioSyncWrappers = {
     xCheckReservedLock: function (fid: Internal.FH, out: Internal.CPointer): number {
       debug['vfs']('xCheckReservedLock', fid, out);
+      wasm.poke(out, 0, 'i32');
       return 0;
     },
     xClose: function (fid: Internal.FH): number {
@@ -79,7 +80,7 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
     },
     xDeviceCharacteristics: function (fid: Internal.FH): number {
       debug['vfs']('xDeviceCharacteristics', fid);
-      return capi.SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN;
+      return capi.SQLITE_IOCAP_IMMUTABLE;
     },
     xFileControl: function (fid: Internal.FH, op: number, arg: number): number {
       debug['vfs']('xFileControl', fid, op, arg);
@@ -133,7 +134,7 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
     },
     xWrite: function (fid: Internal.FH, src: Uint8Array, n: number, offset: bigint) {
       debug['vfs']('xWrite', fid, src, n, offset);
-      return 0;
+      return capi.SQLITE_READONLY;
     }
   };
 
@@ -155,15 +156,17 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
     },
     xCurrentTime: function (vfs: Internal.CPointer, out: Internal.CPointer) {
       debug['vfs']('xCurrentTime', vfs, out);
+      wasm.poke(out, 2440587.5 + (new Date().getTime() / 86400000), 'double');
       return 0;
     },
     xCurrentTimeInt64: function (vfs: Internal.CPointer, out: Internal.CPointer) {
       debug['vfs']('xCurrentTimeInt64', vfs, out);
+      wasm.poke(out, (BigInt(2440587.5) * BigInt(86400000)) + BigInt(new Date().getTime()), 'i64');
       return 0;
     },
     xDelete: function (vfs: Internal.CPointer, name: Internal.CPointer, doSyncDir) {
       debug['vfs']('xDelete', vfs, name, doSyncDir);
-      return 0;
+      return capi.SQLITE_READONLY;
     },
     xFullPathname: function (vfs: Internal.CPointer,
       name: Internal.CPointer,

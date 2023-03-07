@@ -19,12 +19,14 @@ export interface CAPI {
 
   readonly SQLITE_OPEN_READONLY: number;
   readonly SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN: number;
+  readonly SQLITE_IOCAP_IMMUTABLE: number;
   readonly SQLITE_LOCK_NONE: number;
 }
 
 export interface WASM {
   poke: ((ptr: Internal.CPointer, val: BigInt, size: 'i64') => void) &
-  ((ptr: Internal.CPointer, val: number, size: 'i32') => void);
+  ((ptr: Internal.CPointer, val: number, size: 'i32') => void) &
+  ((ptr: Internal.CPointer, val: number, size: 'double') => void);
   cstrToJs: (ptr: Internal.CPointer) => string;
   cstrncpy: (dst: Internal.CPointer, src: Internal.CPointer, len: number) => number;
   heap8u: () => {
