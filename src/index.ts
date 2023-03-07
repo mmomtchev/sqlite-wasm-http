@@ -3,13 +3,14 @@ import '../deps/sqlite/ext/wasm/jswasm/sqlite3-bundler-friendly.mjs';
 import '../deps/sqlite/ext/wasm/jswasm/sqlite3-worker1-promiser-bundler-friendly.js'; 
 import { Promiser } from 'types/sqlite3-promiser';
 import * as VFSHTTP from './vfs-http-types';
+import { debug } from './vfs-http-types';
 
 export interface SQLiteOptions {
   http?: VFSHTTP.Backend;
 };
 
 export function createSQLiteThread(options?: SQLiteOptions): Promise<Promiser.Promiser> {
-  console.log('Creating new SQLite thread', options);
+  debug['threads']('Creating new SQLite thread', options);
   const r = new Promise<Promiser.Promiser>((resolve, reject) => {
     const promiser = sqlite3Worker1Promiser({
       onready: () => {
@@ -41,7 +42,7 @@ export function createSQLiteThread(options?: SQLiteOptions): Promise<Promiser.Pr
 
 // HTTP backend multiplexer
 export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
-  console.log('Creating new HTTP VFS backend thread');
+  debug['threads']('Creating new HTTP VFS backend thread');
   let nextId = 1;
   const worker = new Worker(new URL('./vfs-http-worker.ts', import.meta.url));
   options = VFSHTTP.defaultOptions(options);
@@ -50,14 +51,14 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
   const consumers = {};
 
   worker.onmessage = ({ data }) => {
-    console.log('Received control message reply', data);
+    debug['threads']('Received control message reply', data);
     switch (data.msg) {
       case 'ack':
         if (!consumers[data.id]) {
           console.error('Invalid response received from backend', data);
           return;
         }
-        console.log('New HTTP VFS channel created', consumers);
+        debug['threads']('New HTTP VFS channel created', consumers);
         consumers[data.id].resolve({
           port: consumers[data.id].channel.port2,
           shm: data.shm
@@ -72,7 +73,7 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
   return {
     worker,
     createNewChannel: (): Promise<VFSHTTP.BackendChannel> => {
-      console.log('Creating new HTTP VFS channel');
+      debug['threads']('Creating new HTTP VFS channel');
       const channel = new MessageChannel();
       const id = nextId++;
       worker.postMessage({ msg: 'handshake', port: channel.port1, id }, [channel.port1]);

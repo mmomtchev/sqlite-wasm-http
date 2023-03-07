@@ -24,13 +24,15 @@ export interface Options {
    * @default 1024
    */
   cacheSize?: number;
+  debug?: string[];
 }
 
 export function defaultOptions(options?: Options): Options {
   return {
     timeout: options?.timeout ?? 20000,
     maxPageSize: options?.maxPageSize ?? 4096,
-    cacheSize: options.cacheSize ?? 1024
+    cacheSize: options.cacheSize ?? 1024,
+    debug: []
   };
 }
 
@@ -41,4 +43,12 @@ export interface Message {
   offset?: bigint;
   n?: number;
   [key: string]: string | number | BigInt;
+}
+
+export const debugSys = ['threads', 'vfs', 'cache'] as const;
+export const debug = {} as Record<typeof debugSys[number], (...args: any[]) => void>;
+for (const d of debugSys) {
+  debug[d] = SQLITE_DEBUG.includes(d) ?
+    console.debug.bind(console) :
+    () => undefined;
 }

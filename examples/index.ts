@@ -7,7 +7,7 @@ import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
   });
   const promiser = await createSQLiteThread({ http: httpBackend });
 
-  console.log(promiser('config-get', {}));
+  console.log(await promiser('config-get', {}));
 
   console.log(await promiser('open', {
     filename: 'file:' + encodeURI('http://sokol.garga/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles'),

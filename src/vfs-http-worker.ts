@@ -4,6 +4,7 @@
 import LRUCache from 'lru-cache';
 import * as VFSHTTP from './vfs-http-types';
 import { ntoh16 } from './endianness';
+import { debug } from './vfs-http-types';
 
 if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
   throw new Error('This script must run in a WebWorker');
@@ -118,7 +119,7 @@ const backendAsyncMethods:
     let data = cache.get(entry.id + '|' + page);
 
     if (!data) {
-      console.log(`cache miss for ${msg.url}:${page}`);
+      debug['cache'](`cache miss for ${msg.url}:${page}`);
 
       let chunkSize = entry.pageSize;
       // If the previous page is in the cache, we double the page size
@@ -128,7 +129,7 @@ const backendAsyncMethods:
         if (typeof prev === 'number')
           prev = cache.get(entry.id + '|' + prev) as Uint8Array;
         chunkSize = prev.byteLength * 2;
-        console.log(`downloading super page of size ${chunkSize}`);
+        debug['cache'](`downloading super page of size ${chunkSize}`);
       }
 
       const resp = await fetch(msg.url, {
@@ -152,7 +153,7 @@ const backendAsyncMethods:
       pageStart = BigInt(data) * pageSize;
       data = cache.get(entry.id + '|' + data) as Uint8Array;
     } else {
-      console.log(`cache hit for ${msg.url}:${page}`);
+      debug['cache'](`cache hit for ${msg.url}:${page}`);
     }
 
     const pageOffset = Number(msg.offset - pageStart);
@@ -173,12 +174,12 @@ const backendAsyncMethods:
 };
 
 async function workMessage({ data }) {
-  console.log('Received new work message', this, data);
+  debug['threads']('Received new work message', this, data);
   let r;
   try {
     r = await backendAsyncMethods[data.msg](data, this);
 
-    console.log('operation successful', this, r);
+    debug['threads']('operation successful', this, r);
     Atomics.store(this.lock, 0, r);
   } catch (e) {
     console.error(e);
@@ -188,7 +189,7 @@ async function workMessage({ data }) {
 }
 
 onmessage = ({ data }) => {
-  console.log('Received new control message', data);
+  debug['threads']('Received new control message', data);
   switch (data.msg) {
     case 'handshake':
       const shm = new SharedArrayBuffer(options.maxPageSize + Int32Array.BYTES_PER_ELEMENT);

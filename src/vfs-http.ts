@@ -1,5 +1,6 @@
 import { SQLite } from "types/sqlite3";
 import * as VFSHTTP from './vfs-http-types';
+import { debug } from "./vfs-http-types";
 
 if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
   throw new Error('This script must run in a WebWorker');
@@ -49,7 +50,7 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
   httpVfs.$xDlOpen = httpVfs.$xDlError = httpVfs.$xDlSym = httpVfs.$xDlClose = null;
 
   backend.port.onmessage = function ({ data }) {
-    console.log('Received new work reply', data);
+    debug['threads']('Received new work reply', data);
   };
 
   const sendAndWait = (msg: VFSHTTP.Message) => {
@@ -65,23 +66,27 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
 
   const ioSyncWrappers = {
     xCheckReservedLock: function (fid: Internal.FH, out: Internal.CPointer): number {
-      console.log('xCheckReservedLock', fid, out);
+      debug['vfs']('xCheckReservedLock', fid, out);
       return 0;
     },
     xClose: function (fid: Internal.FH): number {
-      console.log('xClose', fid);
+      debug['vfs']('xClose', fid);
+      if (!openFiles[fid]) {
+        return capi.SQLITE_NOTFOUND;
+      }
+      delete openFiles[fid];
       return 0;
     },
     xDeviceCharacteristics: function (fid: Internal.FH): number {
-      console.log('xDeviceCharacteristics', fid);
+      debug['vfs']('xDeviceCharacteristics', fid);
       return capi.SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN;
     },
     xFileControl: function (fid: Internal.FH, op: number, arg: number): number {
-      console.log('xFileControl', fid, op, arg);
+      debug['vfs']('xFileControl', fid, op, arg);
       return 0;
     },
     xFileSize: function (fid: Internal.FH, size: Internal.CPointer) {
-      console.log('xFileSize', fid, size);
+      debug['vfs']('xFileSize', fid, size);
       if (!openFiles[fid]) {
         return capi.SQLITE_NOTFOUND;
       }
@@ -90,16 +95,16 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
         return capi.SQLITE_IOERR;
       }
       const sz = new BigUint64Array(backend.shm, 0, 1)[0];
-      console.log('file size is ', sz);
+      debug['vfs']('file size is ', sz);
       wasm.poke(size, sz, 'i64');
       return 0;
     },
     xLock: function (fid: Internal.FH, lock: number) {
-      console.log('xLock', fid, lock);
+      debug['vfs']('xLock', fid, lock);
       return 0;
     },
     xRead: function (fid: Internal.FH, dest: Uint8Array, n: number, offset: bigint) {
-      console.log('xRead', fid, dest, n, offset);
+      debug['vfs']('xRead', fid, dest, n, offset);
       if (Number(offset) > Number.MAX_SAFE_INTEGER) {
         return capi.SQLITE_TOOBIG;
       }
@@ -115,19 +120,19 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
       return capi.SQLITE_OK;
     },
     xSync: function (fid: Internal.FH, flags: number) {
-      console.log('xSync', fid, flags);
+      debug['vfs']('xSync', fid, flags);
       return 0;
     },
     xTruncate: function (fid: Internal.FH, size: number) {
-      console.log('xTruncate', fid, size);
+      debug['vfs']('xTruncate', fid, size);
       return 0;
     },
     xUnlock: function (fid: Internal.FH, lock: number) {
-      console.log('xUnlock', fid, lock);
+      debug['vfs']('xUnlock', fid, lock);
       return 0;
     },
     xWrite: function (fid: Internal.FH, src: Uint8Array, n: number, offset: bigint) {
-      console.log('xWrite', fid, src, n, offset);
+      debug['vfs']('xWrite', fid, src, n, offset);
       return 0;
     }
   };
@@ -137,7 +142,7 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
       name: Internal.CPointer,
       flags: number,
       out: Internal.CPointer) {
-      console.log('xAccess', vfs, name, flags, out);
+      debug['vfs']('xAccess', vfs, name, flags, out);
       const url = wasm.cstrToJs(name);
       const r = sendAndWait({ msg: 'xAccess', url });
       if (r !== 0) {
@@ -149,29 +154,29 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
       return capi.SQLITE_OK;
     },
     xCurrentTime: function (vfs: Internal.CPointer, out: Internal.CPointer) {
-      console.log('xCurrentTime', vfs, out);
+      debug['vfs']('xCurrentTime', vfs, out);
       return 0;
     },
     xCurrentTimeInt64: function (vfs: Internal.CPointer, out: Internal.CPointer) {
-      console.log('xCurrentTimeInt64', vfs, out);
+      debug['vfs']('xCurrentTimeInt64', vfs, out);
       return 0;
     },
     xDelete: function (vfs: Internal.CPointer, name: Internal.CPointer, doSyncDir) {
-      console.log('xDelete', vfs, name, doSyncDir);
+      debug['vfs']('xDelete', vfs, name, doSyncDir);
       return 0;
     },
     xFullPathname: function (vfs: Internal.CPointer,
       name: Internal.CPointer,
       nOut: number,
       pOut: Internal.CPointer) {
-      console.log('xFullPathname', vfs, name, nOut, pOut);
+      debug['vfs']('xFullPathname', vfs, name, nOut, pOut);
       const i = wasm.cstrncpy(pOut, name, nOut);
       return i < nOut ? 0 : capi.SQLITE_CANTOPEN;
     },
     xGetLastError: function (vfs: Internal.CPointer,
       nOut: number,
       pout: Internal.CPointer) {
-      console.log('xGetLastError', vfs, nOut, pout);
+      debug['vfs']('xGetLastError', vfs, nOut, pout);
       return 0;
     },
     xOpen: function (vfs: Internal.CPointer,
@@ -179,7 +184,7 @@ export function installHttpVfs(sqlite3: SQLite, backend: VFSHTTP.BackendChannel,
       fid: Internal.FH,
       flags: number,
       pOutFlags: number) {
-      console.log('xOpen', vfs, name, fid, flags, pOutFlags);
+      debug['vfs']('xOpen', vfs, name, fid, flags, pOutFlags);
       if (name === 0) {
         console.error('HTTP VFS does not support anonymous files');
         return capi.SQLITE_CANTOPEN;

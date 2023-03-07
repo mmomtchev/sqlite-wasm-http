@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -28,6 +29,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'examples/index.html'
+    }),
+    new webpack.DefinePlugin({
+      SQLITE_DEBUG: JSON.stringify(process.env.SQLITE_DEBUG?.split(',') ?? [])
     })
   ],
   devtool: 'inline-source-map',
