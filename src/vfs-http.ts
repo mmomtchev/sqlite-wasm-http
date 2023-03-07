@@ -1,4 +1,4 @@
-import { SQLite } from "types/sqlite3";
+import { SQLite } from 'types/sqlite3';
 import * as VFSHTTP from './vfs-http-types';
 import { debug } from "./vfs-http-types";
 

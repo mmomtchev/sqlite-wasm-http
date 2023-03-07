@@ -1,6 +1,6 @@
 // This is the user-facing API
-import '../deps/sqlite/ext/wasm/jswasm/sqlite3-bundler-friendly.mjs';
-import '../deps/sqlite/ext/wasm/jswasm/sqlite3-worker1-promiser-bundler-friendly.js'; 
+import '../deps/dist/sqlite3-bundler-friendly.mjs';
+import '../deps/dist/sqlite3-worker1-promiser-bundler-friendly.js'; 
 import { Promiser } from 'types/sqlite3-promiser';
 import * as VFSHTTP from './vfs-http-types';
 import { debug } from './vfs-http-types';
