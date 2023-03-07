@@ -45,10 +45,12 @@ export interface Message {
   [key: string]: string | number | BigInt;
 }
 
+declare const SQLITE_DEBUG: string[];
+
 export const debugSys = ['threads', 'vfs', 'cache'] as const;
 export const debug = {} as Record<typeof debugSys[number], (...args: any[]) => void>;
 for (const d of debugSys) {
-  debug[d] = SQLITE_DEBUG.includes(d) ?
+  debug[d] = typeof SQLITE_DEBUG !== 'undefined' && SQLITE_DEBUG.includes(d) ?
     console.debug.bind(console) :
     () => undefined;
 }
