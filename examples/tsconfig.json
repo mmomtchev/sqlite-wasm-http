@@ -8,11 +8,15 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "./dist",
-    "declaration": true
+    "paths": {
+      "sqlite-wasm-http": [
+        "./dist"
+      ],
+    },
+    "baseUrl": ".."
   },
   "include": [
-    "./src"
+    "."
   ],
   "exclude": [
     "node_modules"

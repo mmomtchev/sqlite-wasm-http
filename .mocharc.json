@@ -1,0 +1,10 @@
+{
+  "spec": "test/*.test.@(cjs|mjs|ts)",
+  "require": [
+    "ts-node/register",
+    "test/setup.ts"
+  ],
+  "reporter": "tap",
+  "timeout": 20000,
+  "loader": "ts-node/esm"
+}

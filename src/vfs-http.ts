@@ -1,8 +1,8 @@
-import * as VFSHTTP from './vfs-http-types';
-import { debug } from './vfs-http-types';
+import * as VFSHTTP from './vfs-http-types.js';
+import { debug } from './vfs-http-types.js';
 
-if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
-  throw new Error('This script must run in a WebWorker');
+/*if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
+  throw new Error('This script must run in a WebWorker');*/
 
 interface FileDescriptor {
   fid: SQLite.Internal.FH;
@@ -47,10 +47,6 @@ export function installHttpVfs(sqlite3: SQLite.SQLite, backend: VFSHTTP.BackendC
   httpVfs.$zName = wasm.allocCString('http');
 
   httpVfs.$xDlOpen = httpVfs.$xDlError = httpVfs.$xDlSym = httpVfs.$xDlClose = null;
-
-  backend.port.onmessage = function ({ data }) {
-    debug['threads']('Received new work reply', data);
-  };
 
   const sendAndWait = (msg: VFSHTTP.Message) => {
     Atomics.store(lock, 0, 0xffff);
@@ -106,6 +102,7 @@ export function installHttpVfs(sqlite3: SQLite.SQLite, backend: VFSHTTP.BackendC
     xRead: function (fid: SQLite.Internal.FH, dest: Uint8Array, n: number, offset: bigint) {
       debug['vfs']('xRead', fid, dest, n, offset);
       if (Number(offset) > Number.MAX_SAFE_INTEGER) {
+        // CampToCamp are not supported
         return capi.SQLITE_TOOBIG;
       }
       if (!openFiles[fid]) {

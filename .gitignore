@@ -1,3 +1,4 @@
 /node_modules
-/deps/*
+/deps/sqlite
 !/deps/dist
+/dist

@@ -1,13 +1,16 @@
 // This is the user-facing API
+/// <reference path='../deps/types/sqlite3.d.ts' />
+/// <reference path='../deps/types/sqlite3-promiser.d.ts' />
 import '../deps/dist/sqlite3-bundler-friendly.mjs';
 import '../deps/dist/sqlite3-worker1-promiser-bundler-friendly.js'; 
-import * as VFSHTTP from './vfs-http-types';
-import { debug } from './vfs-http-types';
+import * as VFSHTTP from './vfs-http-types.js';
+import { debug } from './vfs-http-types.js';
 
 export interface SQLiteOptions {
   http?: VFSHTTP.Backend;
 };
 export { Backend, BackendChannel, Options as HTTPOptions } from './vfs-http-types';
+
 declare global {
   export var sqlite3Worker1Promiser: (config: SQLite.PromiserConfig) => SQLite.Promiser;
 }
@@ -21,7 +24,7 @@ export function createSQLiteThread(options?: SQLiteOptions): Promise<SQLite.Prom
       },
       worker: () => {
         try {
-          const w = new Worker(new URL('./sqlite-worker.ts', import.meta.url));
+          const w = new Worker(new URL('./sqlite-worker.js', import.meta.url));
           w.onerror = (event) => console.error('Worker bootstrap failed', event);
           if (options?.http) {
             options.http.createNewChannel()
@@ -47,7 +50,7 @@ export function createSQLiteThread(options?: SQLiteOptions): Promise<SQLite.Prom
 export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
   debug['threads']('Creating new HTTP VFS backend thread');
   let nextId = 1;
-  const worker = new Worker(new URL('./vfs-http-worker.ts', import.meta.url));
+  const worker = new Worker(new URL('./vfs-http-worker.js', import.meta.url));
   options = VFSHTTP.defaultOptions(options);
   worker.postMessage({msg: 'init', options});
 
@@ -84,7 +87,7 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
         const timeout = setTimeout(() => {
           delete consumers[id];
           reject('Timeout while waiting on backend');
-        }, options.timeout);
+        }, options.timeout * 1e4);
         consumers[id] = { id, channel, resolve, timeout };
       });
     }

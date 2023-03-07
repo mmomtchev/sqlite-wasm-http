@@ -10,7 +10,7 @@ import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
   console.log(await db('config-get', {}));
 
   console.log(await db('open', {
-    filename: 'file:' + encodeURI('http://sokol.garga/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles'),
+    filename: 'file:' + encodeURI('https://velivole.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles'),
     vfs: 'http'
   }));
 

@@ -2,12 +2,12 @@
 // It can serve multiple SQLite worker threads
 
 import LRUCache from 'lru-cache';
-import * as VFSHTTP from './vfs-http-types';
-import { ntoh16 } from './endianness';
-import { debug } from './vfs-http-types';
+import * as VFSHTTP from './vfs-http-types.js';
+import { ntoh16 } from './endianness.js';
+import { debug } from './vfs-http-types.js';
 
-if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
-  throw new Error('This script must run in a WebWorker');
+/*if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
+  throw new Error('This script must run in a WebWorker');*/
 
 let options: VFSHTTP.Options;
 
@@ -188,7 +188,7 @@ async function workMessage({ data }) {
   Atomics.notify(this.lock, 0);
 }
 
-onmessage = ({ data }) => {
+globalThis.onmessage = ({ data }) => {
   debug['threads']('Received new control message', data);
   switch (data.msg) {
     case 'handshake':

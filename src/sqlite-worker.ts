@@ -1,11 +1,11 @@
 // This is the entry point for an SQLite worker thread
 import sqlite3q from '../deps/dist/sqlite3-bundler-friendly.mjs'; 
-import { installHttpVfs } from './vfs-http';
-import * as VFSHTTP from './vfs-http-types';
-import { debug } from './vfs-http-types';
+import { installHttpVfs } from './vfs-http.js';
+import * as VFSHTTP from './vfs-http-types.js';
+import { debug } from './vfs-http-types.js';
 
 debug['threads']('SQLite worker started');
-onmessage = ({ data }) => {
+globalThis.onmessage = ({ data }) => {
   debug['threads']('SQLite received green light', data);
   const msg = data as { httpChannel?: VFSHTTP.BackendChannel; };
   sqlite3q().then((sqlite3) => {
