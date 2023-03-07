@@ -61,14 +61,6 @@ Module['ready'] = new Promise(function(resolve, reject) {
   readyPromiseResolve = resolve;
   readyPromiseReject = reject;
 });
-["_malloc","_free","_realloc","_sqlite3_aggregate_context","_sqlite3_auto_extension","_sqlite3_bind_blob","_sqlite3_bind_double","_sqlite3_bind_int","_sqlite3_bind_int64","_sqlite3_bind_null","_sqlite3_bind_parameter_count","_sqlite3_bind_parameter_index","_sqlite3_bind_pointer","_sqlite3_bind_text","_sqlite3_busy_handler","_sqlite3_busy_timeout","_sqlite3_cancel_auto_extension","_sqlite3_changes","_sqlite3_changes64","_sqlite3_clear_bindings","_sqlite3_close_v2","_sqlite3_collation_needed","_sqlite3_column_blob","_sqlite3_column_bytes","_sqlite3_column_count","_sqlite3_column_double","_sqlite3_column_int","_sqlite3_column_int64","_sqlite3_column_name","_sqlite3_column_text","_sqlite3_column_type","_sqlite3_column_value","_sqlite3_commit_hook","_sqlite3_compileoption_get","_sqlite3_compileoption_used","_sqlite3_complete","_sqlite3_context_db_handle","_sqlite3_create_collation","_sqlite3_create_collation_v2","_sqlite3_create_function","_sqlite3_create_function_v2","_sqlite3_create_module","_sqlite3_create_module_v2","_sqlite3_create_window_function","_sqlite3_data_count","_sqlite3_db_filename","_sqlite3_db_handle","_sqlite3_db_name","_sqlite3_db_status","_sqlite3_declare_vtab","_sqlite3_deserialize","_sqlite3_drop_modules","_sqlite3_errcode","_sqlite3_errmsg","_sqlite3_error_offset","_sqlite3_errstr","_sqlite3_exec","_sqlite3_expanded_sql","_sqlite3_extended_errcode","_sqlite3_extended_result_codes","_sqlite3_file_control","_sqlite3_finalize","_sqlite3_free","_sqlite3_get_auxdata","_sqlite3_initialize","_sqlite3_keyword_count","_sqlite3_keyword_name","_sqlite3_keyword_check","_sqlite3_last_insert_rowid","_sqlite3_libversion","_sqlite3_libversion_number","_sqlite3_limit","_sqlite3_malloc","_sqlite3_malloc64","_sqlite3_msize","_sqlite3_open","_sqlite3_open_v2","_sqlite3_overload_function","_sqlite3_prepare_v2","_sqlite3_prepare_v3","_sqlite3_preupdate_blobwrite","_sqlite3_preupdate_count","_sqlite3_preupdate_depth","_sqlite3_preupdate_hook","_sqlite3_preupdate_new","_sqlite3_preupdate_old","_sqlite3_progress_handler","_sqlite3_randomness","_sqlite3_realloc","_sqlite3_realloc64","_sqlite3_reset","_sqlite3_reset_auto_extension","_sqlite3_result_blob","_sqlite3_result_double","_sqlite3_result_error","_sqlite3_result_error_code","_sqlite3_result_error_nomem","_sqlite3_result_error_toobig","_sqlite3_result_int","_sqlite3_result_int64","_sqlite3_result_null","_sqlite3_result_pointer","_sqlite3_result_subtype","_sqlite3_result_text","_sqlite3_result_zeroblob","_sqlite3_result_zeroblob64","_sqlite3_rollback_hook","_sqlite3_serialize","_sqlite3_set_authorizer","_sqlite3_set_auxdata","_sqlite3_set_last_insert_rowid","_sqlite3_shutdown","_sqlite3_sourceid","_sqlite3_sql","_sqlite3_status","_sqlite3_status64","_sqlite3_step","_sqlite3_stmt_isexplain","_sqlite3_stmt_readonly","_sqlite3_stmt_status","_sqlite3_strglob","_sqlite3_stricmp","_sqlite3_strlike","_sqlite3_strnicmp","_sqlite3_table_column_metadata","_sqlite3_total_changes","_sqlite3_total_changes64","_sqlite3_trace_v2","_sqlite3_txn_state","_sqlite3_update_hook","_sqlite3_uri_boolean","_sqlite3_uri_int64","_sqlite3_uri_key","_sqlite3_uri_parameter","_sqlite3_user_data","_sqlite3_value_blob","_sqlite3_value_bytes","_sqlite3_value_double","_sqlite3_value_dup","_sqlite3_value_free","_sqlite3_value_frombind","_sqlite3_value_int","_sqlite3_value_int64","_sqlite3_value_nochange","_sqlite3_value_numeric_type","_sqlite3_value_pointer","_sqlite3_value_subtype","_sqlite3_value_text","_sqlite3_value_type","_sqlite3_vfs_find","_sqlite3_vfs_register","_sqlite3_vfs_unregister","_sqlite3_vtab_collation","_sqlite3_vtab_distinct","_sqlite3_vtab_in","_sqlite3_vtab_in_first","_sqlite3_vtab_in_next","_sqlite3_vtab_nochange","_sqlite3_vtab_on_conflict","_sqlite3_vtab_rhs_value","_sqlite3changegroup_add","_sqlite3changegroup_add_strm","_sqlite3changegroup_delete","_sqlite3changegroup_new","_sqlite3changegroup_output","_sqlite3changegroup_output_strm","_sqlite3changeset_apply","_sqlite3changeset_apply_strm","_sqlite3changeset_apply_v2","_sqlite3changeset_apply_v2_strm","_sqlite3changeset_concat","_sqlite3changeset_concat_strm","_sqlite3changeset_conflict","_sqlite3changeset_finalize","_sqlite3changeset_fk_conflicts","_sqlite3changeset_invert","_sqlite3changeset_invert_strm","_sqlite3changeset_new","_sqlite3changeset_next","_sqlite3changeset_old","_sqlite3changeset_op","_sqlite3changeset_pk","_sqlite3changeset_start","_sqlite3changeset_start_strm","_sqlite3changeset_start_v2","_sqlite3changeset_start_v2_strm","_sqlite3session_attach","_sqlite3session_changeset","_sqlite3session_changeset_size","_sqlite3session_changeset_strm","_sqlite3session_config","_sqlite3session_create","_sqlite3session_delete","_sqlite3session_diff","_sqlite3session_enable","_sqlite3session_indirect","_sqlite3session_isempty","_sqlite3session_memory_used","_sqlite3session_object_config","_sqlite3session_patchset","_sqlite3session_patchset_strm","_sqlite3session_table_filter","_sqlite3_wasm_pstack_ptr","_sqlite3_wasm_pstack_restore","_sqlite3_wasm_pstack_alloc","_sqlite3_wasm_pstack_remaining","_sqlite3_wasm_pstack_quota","_sqlite3_wasm_db_error","_sqlite3_wasm_test_struct","_sqlite3_wasm_enum_json","_sqlite3_wasm_vfs_unlink","_sqlite3_wasm_db_vfs","_sqlite3_wasm_db_reset","_sqlite3_wasm_db_export_chunked","_sqlite3_wasm_db_serialize","_sqlite3_wasm_vfs_create_file","_sqlite3_wasm_kvvfsMakeKeyOnPstack","_sqlite3_wasm_kvvfs_methods","_sqlite3_wasm_vtab_config","_sqlite3_wasm_db_config_ip","_sqlite3_wasm_db_config_pii","_sqlite3_wasm_db_config_s","_sqlite3_wasm_config_i","_sqlite3_wasm_config_ii","_sqlite3_wasm_config_j","_sqlite3_wasm_init_wasmfs","_sqlite3_wasm_test_intptr","_sqlite3_wasm_test_voidptr","_sqlite3_wasm_test_int64_max","_sqlite3_wasm_test_int64_min","_sqlite3_wasm_test_int64_times2","_sqlite3_wasm_test_int64_minmax","_sqlite3_wasm_test_int64ptr","_sqlite3_wasm_test_stack_overflow","_sqlite3_wasm_test_str_hello","_fflush","onRuntimeInitialized"].forEach((prop) => {
-  if (!Object.getOwnPropertyDescriptor(Module['ready'], prop)) {
-    Object.defineProperty(Module['ready'], prop, {
-      get: () => abort('You are getting ' + prop + ' on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js'),
-      set: () => abort('You are setting ' + prop + ' on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js'),
-    });
-  }
-});
 
 // --pre-jses are emitted after the Module integration code, so that they can
 // refer to Module (if they choose; they can also define Module)
@@ -163,10 +155,6 @@ var ENVIRONMENT_IS_WORKER = typeof importScripts == 'function';
 var ENVIRONMENT_IS_NODE = typeof process == 'object' && typeof process.versions == 'object' && typeof process.versions.node == 'string';
 var ENVIRONMENT_IS_SHELL = !ENVIRONMENT_IS_WEB && !ENVIRONMENT_IS_NODE && !ENVIRONMENT_IS_WORKER;
 
-if (Module['ENVIRONMENT']) {
-  throw new Error('Module.ENVIRONMENT has been deprecated. To force the environment, use the ENVIRONMENT compile-time option (for example, -sENVIRONMENT=web or -sENVIRONMENT=node)');
-}
-
 // `/` should be present at the end if `scriptDirectory` is not empty
 var scriptDirectory = '';
 function locateFile(path) {
@@ -181,72 +169,6 @@ var read_,
     readAsync,
     readBinary,
     setWindowTitle;
-
-// Normally we don't log exceptions but instead let them bubble out the top
-// level where the embedding environment (e.g. the browser) can handle
-// them.
-// However under v8 and node we sometimes exit the process direcly in which case
-// its up to use us to log the exception before exiting.
-// If we fix https://github.com/emscripten-core/emscripten/issues/15080
-// this may no longer be needed under node.
-function logExceptionOnExit(e) {
-  if (e instanceof ExitStatus) return;
-  let toLog = e;
-  if (e && typeof e == 'object' && e.stack) {
-    toLog = [e, e.stack];
-  }
-  err('exiting due to exception: ' + toLog);
-}
-
-if (ENVIRONMENT_IS_SHELL) {
-
-  if ((typeof process == 'object' && typeof require === 'function') || typeof window == 'object' || typeof importScripts == 'function') throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
-
-  if (typeof read != 'undefined') {
-    read_ = function shell_read(f) {
-      return read(f);
-    };
-  }
-
-  readBinary = function readBinary(f) {
-    let data;
-    if (typeof readbuffer == 'function') {
-      return new Uint8Array(readbuffer(f));
-    }
-    data = read(f, 'binary');
-    assert(typeof data == 'object');
-    return data;
-  };
-
-  readAsync = function readAsync(f, onload, onerror) {
-    setTimeout(() => onload(readBinary(f)), 0);
-  };
-
-  if (typeof clearTimeout == 'undefined') {
-    globalThis.clearTimeout = (id) => {};
-  }
-
-  if (typeof scriptArgs != 'undefined') {
-    arguments_ = scriptArgs;
-  } else if (typeof arguments != 'undefined') {
-    arguments_ = arguments;
-  }
-
-  if (typeof quit == 'function') {
-    quit_ = (status, toThrow) => {
-      logExceptionOnExit(toThrow);
-      quit(status);
-    };
-  }
-
-  if (typeof print != 'undefined') {
-    // Prefer to use print/printErr where they exist, as they usually work better.
-    if (typeof console == 'undefined') console = /** @type{!Console} */({});
-    console.log = /** @type{!function(this:Console, ...*): undefined} */ (print);
-    console.warn = console.error = /** @type{!function(this:Console, ...*): undefined} */ (typeof printErr != 'undefined' ? printErr : print);
-  }
-
-} else
 
 // Note that this includes Node.js workers when relevant (pthreads is enabled).
 // Node.js workers are detected as a combination of ENVIRONMENT_IS_WORKER and
@@ -273,8 +195,6 @@ if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
   } else {
     scriptDirectory = '';
   }
-
-  if (!(typeof window == 'object' || typeof importScripts == 'function')) throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
 
   // Differentiate the Web Worker from the Node Worker case, as reading must
   // be done differently.
@@ -318,7 +238,6 @@ read_ = (url) => {
   setWindowTitle = (title) => document.title = title;
 } else
 {
-  throw new Error('environment detection error');
 }
 
 var out = Module['print'] || console.log.bind(console);
@@ -329,42 +248,19 @@ Object.assign(Module, moduleOverrides);
 // Free the object hierarchy contained in the overrides, this lets the GC
 // reclaim data used e.g. in memoryInitializerRequest, which is a large typed array.
 moduleOverrides = null;
-checkIncomingModuleAPI();
 
 // Emit code to handle expected values on the Module object. This applies Module.x
 // to the proper local x. This has two benefits: first, we only emit it if it is
 // expected to arrive, and second, by using a local everywhere else that can be
 // minified.
 
-if (Module['arguments']) arguments_ = Module['arguments'];legacyModuleProp('arguments', 'arguments_');
+if (Module['arguments']) arguments_ = Module['arguments'];
 
-if (Module['thisProgram']) thisProgram = Module['thisProgram'];legacyModuleProp('thisProgram', 'thisProgram');
+if (Module['thisProgram']) thisProgram = Module['thisProgram'];
 
-if (Module['quit']) quit_ = Module['quit'];legacyModuleProp('quit', 'quit_');
+if (Module['quit']) quit_ = Module['quit'];
 
 // perform assertions in shell.js after we set up out() and err(), as otherwise if an assertion fails it cannot print the message
-// Assertions on removed incoming Module JS APIs.
-assert(typeof Module['memoryInitializerPrefixURL'] == 'undefined', 'Module.memoryInitializerPrefixURL option was removed, use Module.locateFile instead');
-assert(typeof Module['pthreadMainPrefixURL'] == 'undefined', 'Module.pthreadMainPrefixURL option was removed, use Module.locateFile instead');
-assert(typeof Module['cdInitializerPrefixURL'] == 'undefined', 'Module.cdInitializerPrefixURL option was removed, use Module.locateFile instead');
-assert(typeof Module['filePackagePrefixURL'] == 'undefined', 'Module.filePackagePrefixURL option was removed, use Module.locateFile instead');
-assert(typeof Module['read'] == 'undefined', 'Module.read option was removed (modify read_ in JS)');
-assert(typeof Module['readAsync'] == 'undefined', 'Module.readAsync option was removed (modify readAsync in JS)');
-assert(typeof Module['readBinary'] == 'undefined', 'Module.readBinary option was removed (modify readBinary in JS)');
-assert(typeof Module['setWindowTitle'] == 'undefined', 'Module.setWindowTitle option was removed (modify setWindowTitle in JS)');
-assert(typeof Module['TOTAL_MEMORY'] == 'undefined', 'Module.TOTAL_MEMORY has been renamed Module.INITIAL_MEMORY');
-legacyModuleProp('read', 'read_');
-legacyModuleProp('readAsync', 'readAsync');
-legacyModuleProp('readBinary', 'readBinary');
-legacyModuleProp('setWindowTitle', 'setWindowTitle');
-var IDBFS = 'IDBFS is no longer included by default; build with -lidbfs.js';
-var PROXYFS = 'PROXYFS is no longer included by default; build with -lproxyfs.js';
-var WORKERFS = 'WORKERFS is no longer included by default; build with -lworkerfs.js';
-var NODEFS = 'NODEFS is no longer included by default; build with -lnodefs.js';
-
-assert(!ENVIRONMENT_IS_NODE, "node environment detected but not enabled at build time.  Add 'node' to `-sENVIRONMENT` to enable.");
-
-assert(!ENVIRONMENT_IS_SHELL, "shell environment detected but not enabled at build time.  Add 'shell' to `-sENVIRONMENT` to enable.");
 
 
 // end include: shell.js
@@ -380,8 +276,8 @@ assert(!ENVIRONMENT_IS_SHELL, "shell environment detected but not enabled at bui
 //    is up at http://kripken.github.io/emscripten-site/docs/api_reference/preamble.js.html
 
 var wasmBinary;
-if (Module['wasmBinary']) wasmBinary = Module['wasmBinary'];legacyModuleProp('wasmBinary', 'wasmBinary');
-var noExitRuntime = Module['noExitRuntime'] || true;legacyModuleProp('noExitRuntime', 'noExitRuntime');
+if (Module['wasmBinary']) wasmBinary = Module['wasmBinary'];
+var noExitRuntime = Module['noExitRuntime'] || true;
 
 if (typeof WebAssembly != 'object') {
   abort('no native wasm support detected');
@@ -407,12 +303,12 @@ var EXITSTATUS;
 /** @type {function(*, string=)} */
 function assert(condition, text) {
   if (!condition) {
-    abort('Assertion failed' + (text ? ': ' + text : ''));
+    // This build was created without ASSERTIONS defined.  `assert()` should not
+    // ever be called in this configuration but in case there are callers in
+    // the wild leave this simple abort() implemenation here for now.
+    abort(text);
   }
 }
-
-// We used to include malloc/free by default in the past. Show a helpful error in
-// builds with assertions.
 
 // include: runtime_strings.js
 // runtime_strings.js: String related runtime functions that are part of both
@@ -458,7 +354,6 @@ function UTF8ArrayToString(heapOrArray, idx, maxBytesToRead) {
     if ((u0 & 0xF0) == 0xE0) {
       u0 = ((u0 & 15) << 12) | (u1 << 6) | u2;
     } else {
-      if ((u0 & 0xF8) != 0xF0) warnOnce('Invalid UTF-8 leading byte ' + ptrToString(u0) + ' encountered when deserializing a UTF-8 string in wasm memory to a JS string!');
       u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (heapOrArray[idx++] & 63);
     }
 
@@ -488,7 +383,6 @@ function UTF8ArrayToString(heapOrArray, idx, maxBytesToRead) {
  * @return {string}
  */
 function UTF8ToString(ptr, maxBytesToRead) {
-  assert(typeof ptr == 'number');
   return ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead) : '';
 }
 
@@ -549,7 +443,6 @@ function stringToUTF8Array(str, heap, outIdx, maxBytesToWrite) {
       heap[outIdx++] = 0x80 | (u & 63);
     } else {
       if (outIdx + 3 >= endIdx) break;
-      if (u > 0x10FFFF) warnOnce('Invalid Unicode code point ' + ptrToString(u) + ' encountered when serializing a JS string to a UTF-8 string in wasm memory! (Valid unicode code points should be in range 0-0x10FFFF).');
       heap[outIdx++] = 0xF0 | (u >> 18);
       heap[outIdx++] = 0x80 | ((u >> 12) & 63);
       heap[outIdx++] = 0x80 | ((u >> 6) & 63);
@@ -571,7 +464,6 @@ function stringToUTF8Array(str, heap, outIdx, maxBytesToWrite) {
  * @return {number} The number of bytes written, EXCLUDING the null terminator.
  */
 function stringToUTF8(str, outPtr, maxBytesToWrite) {
-  assert(typeof maxBytesToWrite == 'number', 'stringToUTF8(str, outPtr, maxBytesToWrite) is missing the third parameter that specifies the length of the output buffer!');
   return stringToUTF8Array(str, HEAPU8,outPtr, maxBytesToWrite);
 }
 
@@ -644,16 +536,11 @@ function updateMemoryViews() {
   Module['HEAPU64'] = HEAPU64 = new BigUint64Array(b);
 }
 
-assert(!Module['STACK_SIZE'], 'STACK_SIZE can no longer be set at runtime.  Use -sSTACK_SIZE at link time')
-
-assert(typeof Int32Array != 'undefined' && typeof Float64Array !== 'undefined' && Int32Array.prototype.subarray != undefined && Int32Array.prototype.set != undefined,
-       'JS engine does not provide full typed array support');
-
 // In non-standalone/normal mode, we create the memory here.
 // include: runtime_init_memory.js
 // Create the wasm memory. (Note: this only applies if IMPORTED_MEMORY is defined)
 
-var INITIAL_MEMORY = Module['INITIAL_MEMORY'] || 16777216;legacyModuleProp('INITIAL_MEMORY', 'INITIAL_MEMORY');
+var INITIAL_MEMORY = Module['INITIAL_MEMORY'] || 16777216;
 
 assert(INITIAL_MEMORY >= 524288, 'INITIAL_MEMORY should be larger than STACK_SIZE, was ' + INITIAL_MEMORY + '! (STACK_SIZE=' + 524288 + ')');
 
@@ -679,7 +566,6 @@ updateMemoryViews();
 // If the user provides an incorrect length, just use that length instead rather than providing the user to
 // specifically provide the memory length with Module['INITIAL_MEMORY'].
 INITIAL_MEMORY = wasmMemory.buffer.byteLength;
-assert(INITIAL_MEMORY % 65536 === 0);
 
 // end include: runtime_init_memory.js
 
@@ -691,53 +577,8 @@ var wasmTable;
 
 // end include: runtime_init_table.js
 // include: runtime_stack_check.js
-// Initializes the stack cookie. Called at the startup of main and at the startup of each thread in pthreads mode.
-function writeStackCookie() {
-  var max = _emscripten_stack_get_end();
-  assert((max & 3) == 0);
-  // If the stack ends at address zero we write our cookies 4 bytes into the
-  // stack.  This prevents interference with the (separate) address-zero check
-  // below.
-  if (max == 0) {
-    max += 4;
-  }
-  // The stack grow downwards towards _emscripten_stack_get_end.
-  // We write cookies to the final two words in the stack and detect if they are
-  // ever overwritten.
-  HEAPU32[((max)>>2)] = 0x02135467;
-  HEAPU32[(((max)+(4))>>2)] = 0x89BACDFE;
-  // Also test the global address 0 for integrity.
-  HEAPU32[0] = 0x63736d65; /* 'emsc' */
-}
-
-function checkStackCookie() {
-  if (ABORT) return;
-  var max = _emscripten_stack_get_end();
-  // See writeStackCookie().
-  if (max == 0) {
-    max += 4;
-  }
-  var cookie1 = HEAPU32[((max)>>2)];
-  var cookie2 = HEAPU32[(((max)+(4))>>2)];
-  if (cookie1 != 0x02135467 || cookie2 != 0x89BACDFE) {
-    abort('Stack overflow! Stack cookie has been overwritten at ' + ptrToString(max) + ', expected hex dwords 0x89BACDFE and 0x2135467, but received ' + ptrToString(cookie2) + ' ' + ptrToString(cookie1));
-  }
-  // Also test the global address 0 for integrity.
-  if (HEAPU32[0] !== 0x63736d65 /* 'emsc' */) {
-    abort('Runtime error: The application has corrupted its heap memory area (address zero)!');
-  }
-}
-
 // end include: runtime_stack_check.js
 // include: runtime_assertions.js
-// Endianness check
-(function() {
-  var h16 = new Int16Array(1);
-  var h8 = new Int8Array(h16.buffer);
-  h16[0] = 0x6373;
-  if (h8[0] !== 0x73 || h8[1] !== 0x63) throw 'Runtime error: expected the system to be little-endian! (Run with -sSUPPORT_BIG_ENDIAN to bypass)';
-})();
-
 // end include: runtime_assertions.js
 var __ATPRERUN__  = []; // functions called before the runtime is initialized
 var __ATINIT__    = []; // functions called during startup
@@ -761,10 +602,7 @@ function preRun() {
 }
 
 function initRuntime() {
-  assert(!runtimeInitialized);
   runtimeInitialized = true;
-
-  checkStackCookie();
 
   
 if (!Module["noFSInit"] && !FS.init.initialized)
@@ -776,7 +614,6 @@ TTY.init();
 }
 
 function postRun() {
-  checkStackCookie();
 
   if (Module['postRun']) {
     if (typeof Module['postRun'] == 'function') Module['postRun'] = [Module['postRun']];
@@ -812,11 +649,6 @@ function addOnPostRun(cb) {
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc
 
-assert(Math.imul, 'This browser does not support Math.imul(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
-assert(Math.fround, 'This browser does not support Math.fround(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
-assert(Math.clz32, 'This browser does not support Math.clz32(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
-assert(Math.trunc, 'This browser does not support Math.trunc(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
-
 // end include: runtime_math.js
 // A counter of dependencies for calling run(). If we need to
 // do asynchronous work before running, increment this and
@@ -828,14 +660,9 @@ assert(Math.trunc, 'This browser does not support Math.trunc(), build with LEGAC
 var runDependencies = 0;
 var runDependencyWatcher = null;
 var dependenciesFulfilled = null; // overridden to take different actions when all run dependencies are fulfilled
-var runDependencyTracking = {};
 
 function getUniqueRunDependency(id) {
-  var orig = id;
-  while (1) {
-    if (!runDependencyTracking[id]) return id;
-    id = orig + Math.random();
-  }
+  return id;
 }
 
 function addRunDependency(id) {
@@ -845,33 +672,6 @@ function addRunDependency(id) {
     Module['monitorRunDependencies'](runDependencies);
   }
 
-  if (id) {
-    assert(!runDependencyTracking[id]);
-    runDependencyTracking[id] = 1;
-    if (runDependencyWatcher === null && typeof setInterval != 'undefined') {
-      // Check for missing dependencies every few seconds
-      runDependencyWatcher = setInterval(function() {
-        if (ABORT) {
-          clearInterval(runDependencyWatcher);
-          runDependencyWatcher = null;
-          return;
-        }
-        var shown = false;
-        for (var dep in runDependencyTracking) {
-          if (!shown) {
-            shown = true;
-            err('still waiting on run dependencies:');
-          }
-          err('dependency: ' + dep);
-        }
-        if (shown) {
-          err('(end of list)');
-        }
-      }, 10000);
-    }
-  } else {
-    err('warning: run dependency added without ID');
-  }
 }
 
 function removeRunDependency(id) {
@@ -881,12 +681,6 @@ function removeRunDependency(id) {
     Module['monitorRunDependencies'](runDependencies);
   }
 
-  if (id) {
-    assert(runDependencyTracking[id]);
-    delete runDependencyTracking[id];
-  } else {
-    err('warning: run dependency removed without ID');
-  }
   if (runDependencies == 0) {
     if (runDependencyWatcher !== null) {
       clearInterval(runDependencyWatcher);
@@ -913,6 +707,8 @@ function abort(what) {
 
   ABORT = true;
   EXITSTATUS = 1;
+
+  what += '. Build with -sASSERTIONS for more info.';
 
   // Use a wasm runtime error, because a JS error might be seen as a foreign
   // exception, which means we'd run destructors on it. We need the error to
@@ -955,22 +751,6 @@ function isFileURI(filename) {
 }
 
 // end include: URIUtils.js
-/** @param {boolean=} fixedasm */
-function createExportWrapper(name, fixedasm) {
-  return function() {
-    var displayName = name;
-    var asm = fixedasm;
-    if (!fixedasm) {
-      asm = Module['asm'];
-    }
-    assert(runtimeInitialized, 'native function `' + displayName + '` called before runtime initialization');
-    if (!asm[name]) {
-      assert(asm[name], 'exported native function `' + displayName + '` not found');
-    }
-    return asm[name].apply(null, arguments);
-  };
-}
-
 // include: runtime_exceptions.js
 // end include: runtime_exceptions.js
 var wasmBinaryFile;
@@ -1031,10 +811,6 @@ function instantiateArrayBuffer(binaryFile, imports, receiver) {
   }).then(receiver, function(reason) {
     err('failed to asynchronously prepare wasm: ' + reason);
 
-    // Warn on some common problems.
-    if (isFileURI(wasmBinaryFile)) {
-      err('warning: Loading from a file URI (' + wasmBinaryFile + ') is not supported in most browsers. See https://emscripten.org/docs/getting_started/FAQ.html#how-do-i-run-a-local-webserver-for-testing-why-does-my-program-stall-in-downloading-or-preparing');
-    }
     abort(reason);
   });
 }
@@ -1085,7 +861,6 @@ function createWasm() {
     Module['asm'] = exports;
 
     wasmTable = Module['asm']['__indirect_function_table'];
-    assert(wasmTable, "table not found in wasm exports");
 
     addOnInit(Module['asm']['__wasm_call_ctors']);
 
@@ -1097,15 +872,9 @@ function createWasm() {
   addRunDependency('wasm-instantiate');
 
   // Prefer streaming instantiation if available.
-  // Async compilation can be confusing when an error on the page overwrites Module
-  // (for example, if the order of elements is wrong, and the one defining Module is
-  // later), so we save Module and check it later.
-  var trueModule = Module;
   function receiveInstantiationResult(result) {
     // 'result' is a ResultObject object which has both the module and instance.
     // receiveInstance() will swap in the exports (to Module.asm) so they can be called
-    assert(Module === trueModule, 'the Module object should not be replaced during async compilation - perhaps the order of HTML elements is wrong?');
-    trueModule = null;
     // TODO: Due to Closure regression https://github.com/google/closure-compiler/issues/3193, the above line no longer optimizes out down to the following line.
     // When the regression is fixed, can restore the above USE_PTHREADS-enabled path.
     receiveInstance(result['instance']);
@@ -1135,101 +904,6 @@ var tempDouble;
 var tempI64;
 
 // include: runtime_debug.js
-function legacyModuleProp(prop, newName) {
-  if (!Object.getOwnPropertyDescriptor(Module, prop)) {
-    Object.defineProperty(Module, prop, {
-      configurable: true,
-      get: function() {
-        abort('Module.' + prop + ' has been replaced with plain ' + newName + ' (the initial value can be provided on Module, but after startup the value is only looked for on a local variable of that name)');
-      }
-    });
-  }
-}
-
-function ignoredModuleProp(prop) {
-  if (Object.getOwnPropertyDescriptor(Module, prop)) {
-    abort('`Module.' + prop + '` was supplied but `' + prop + '` not included in INCOMING_MODULE_JS_API');
-  }
-}
-
-// forcing the filesystem exports a few things by default
-function isExportedByForceFilesystem(name) {
-  return name === 'FS_createPath' ||
-         name === 'FS_createDataFile' ||
-         name === 'FS_createPreloadedFile' ||
-         name === 'FS_unlink' ||
-         name === 'addRunDependency' ||
-         // The old FS has some functionality that WasmFS lacks.
-         name === 'FS_createLazyFile' ||
-         name === 'FS_createDevice' ||
-         name === 'removeRunDependency';
-}
-
-function missingGlobal(sym, msg) {
-  if (typeof globalThis !== 'undefined') {
-    Object.defineProperty(globalThis, sym, {
-      configurable: true,
-      get: function() {
-        warnOnce('`' + sym + '` is not longer defined by emscripten. ' + msg);
-        return undefined;
-      }
-    });
-  }
-}
-
-missingGlobal('buffer', 'Please use HEAP8.buffer or wasmMemory.buffer');
-
-function missingLibrarySymbol(sym) {
-  if (typeof globalThis !== 'undefined' && !Object.getOwnPropertyDescriptor(globalThis, sym)) {
-    Object.defineProperty(globalThis, sym, {
-      configurable: true,
-      get: function() {
-        // Can't `abort()` here because it would break code that does runtime
-        // checks.  e.g. `if (typeof SDL === 'undefined')`.
-        var msg = '`' + sym + '` is a library symbol and not included by default; add it to your library.js __deps or to DEFAULT_LIBRARY_FUNCS_TO_INCLUDE on the command line';
-        // DEFAULT_LIBRARY_FUNCS_TO_INCLUDE requires the name as it appears in
-        // library.js, which means $name for a JS name with no prefix, or name
-        // for a JS name like _name.
-        var librarySymbol = sym;
-        if (!librarySymbol.startsWith('_')) {
-          librarySymbol = '$' + sym;
-        }
-        msg += " (e.g. -sDEFAULT_LIBRARY_FUNCS_TO_INCLUDE=" + librarySymbol + ")";
-        if (isExportedByForceFilesystem(sym)) {
-          msg += '. Alternatively, forcing filesystem support (-sFORCE_FILESYSTEM) can export this for you';
-        }
-        warnOnce(msg);
-        return undefined;
-      }
-    });
-  }
-  // Any symbol that is not included from the JS libary is also (by definition)
-  // not exported on the Module object.
-  unexportedRuntimeSymbol(sym);
-}
-
-function unexportedRuntimeSymbol(sym) {
-  if (!Object.getOwnPropertyDescriptor(Module, sym)) {
-    Object.defineProperty(Module, sym, {
-      configurable: true,
-      get: function() {
-        var msg = "'" + sym + "' was not exported. add it to EXPORTED_RUNTIME_METHODS (see the FAQ)";
-        if (isExportedByForceFilesystem(sym)) {
-          msg += '. Alternatively, forcing filesystem support (-sFORCE_FILESYSTEM) can export this for you';
-        }
-        abort(msg);
-      }
-    });
-  }
-}
-
-// Used by XXXXX_DEBUG settings to output debug messages.
-function dbg(text) {
-  // TODO(sbc): Make this configurable somehow.  Its not always convenient for
-  // logging to show up as errors.
-  console.error(text);
-}
-
 // end include: runtime_debug.js
 // === Body ===
 
@@ -1270,11 +944,6 @@ function dbg(text) {
     }
   }
 
-  function ptrToString(ptr) {
-      assert(typeof ptr === 'number');
-      return '0x' + ptr.toString(16).padStart(8, '0');
-    }
-
   
     /**
      * @param {number} ptr
@@ -1295,14 +964,6 @@ function dbg(text) {
       default: abort('invalid type for setValue: ' + type);
     }
   }
-
-  function warnOnce(text) {
-      if (!warnOnce.shown) warnOnce.shown = {};
-      if (!warnOnce.shown[text]) {
-        warnOnce.shown[text] = 1;
-        err(text);
-      }
-    }
 
   var PATH = {isAbs:(path) => path.charAt(0) === '/',splitPath:(filename) => {
         var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
@@ -1376,7 +1037,7 @@ function dbg(text) {
         return () => { crypto.getRandomValues(randomBuffer); return randomBuffer[0]; };
       } else
       // we couldn't find a proper implementation, as Math.random() is not suitable for /dev/random, see emscripten-core/emscripten/pull/7096
-      return () => abort("no cryptographic support found for randomDevice. consider polyfilling it if you want to use something insecure like Math.random(), e.g. put this in a --pre-js: var crypto = { getRandomValues: function(array) { for (var i = 0; i < array.length; i++) array[i] = (Math.random()*256)|0 } };");
+      return () => abort("randomDevice");
     }
   
   
@@ -1569,11 +1230,10 @@ function dbg(text) {
     }
   
   function alignMemory(size, alignment) {
-      assert(alignment, "alignment argument is required");
       return Math.ceil(size / alignment) * alignment;
     }
   function mmapAlloc(size) {
-      abort('internal error: mmapAlloc called but `emscripten_builtin_memalign` native symbol not exported');
+      abort();
     }
   var MEMFS = {ops_table:null,mount:function(mount) {
         return MEMFS.createNode(null, '/', 16384 | 511 /* 0777 */, 0);
@@ -1781,7 +1441,6 @@ function dbg(text) {
           var contents = stream.node.contents;
           if (position >= stream.node.usedBytes) return 0;
           var size = Math.min(stream.node.usedBytes - position, length);
-          assert(size >= 0);
           if (size > 8 && contents.subarray) { // non-trivial, and typed array
             buffer.set(contents.subarray(position, position + size), offset);
           } else {
@@ -1789,8 +1448,6 @@ function dbg(text) {
           }
           return size;
         },write:function(stream, buffer, offset, length, position, canOwn) {
-          // The data buffer should be a typed array view
-          assert(!(buffer instanceof ArrayBuffer));
           // If the buffer is located in main memory (HEAP), and if
           // memory can grow, we can't hold on to references of the
           // memory buffer, as they may get invalidated. That means we
@@ -1805,7 +1462,6 @@ function dbg(text) {
   
           if (buffer.subarray && (!node.contents || node.contents.subarray)) { // This write is from a typed array to a typed array?
             if (canOwn) {
-              assert(position === 0, 'canOwn must imply no weird position inside the file');
               node.contents = buffer.subarray(offset, offset + length);
               node.usedBytes = length;
               return length;
@@ -1900,24 +1556,6 @@ function dbg(text) {
       if (dep) addRunDependency(dep);
     }
   
-  
-  var ERRNO_MESSAGES = {0:"Success",1:"Arg list too long",2:"Permission denied",3:"Address already in use",4:"Address not available",5:"Address family not supported by protocol family",6:"No more processes",7:"Socket already connected",8:"Bad file number",9:"Trying to read unreadable message",10:"Mount device busy",11:"Operation canceled",12:"No children",13:"Connection aborted",14:"Connection refused",15:"Connection reset by peer",16:"File locking deadlock error",17:"Destination address required",18:"Math arg out of domain of func",19:"Quota exceeded",20:"File exists",21:"Bad address",22:"File too large",23:"Host is unreachable",24:"Identifier removed",25:"Illegal byte sequence",26:"Connection already in progress",27:"Interrupted system call",28:"Invalid argument",29:"I/O error",30:"Socket is already connected",31:"Is a directory",32:"Too many symbolic links",33:"Too many open files",34:"Too many links",35:"Message too long",36:"Multihop attempted",37:"File or path name too long",38:"Network interface is not configured",39:"Connection reset by network",40:"Network is unreachable",41:"Too many open files in system",42:"No buffer space available",43:"No such device",44:"No such file or directory",45:"Exec format error",46:"No record locks available",47:"The link has been severed",48:"Not enough core",49:"No message of desired type",50:"Protocol not available",51:"No space left on device",52:"Function not implemented",53:"Socket is not connected",54:"Not a directory",55:"Directory not empty",56:"State not recoverable",57:"Socket operation on non-socket",59:"Not a typewriter",60:"No such device or address",61:"Value too large for defined data type",62:"Previous owner died",63:"Not super-user",64:"Broken pipe",65:"Protocol error",66:"Unknown protocol",67:"Protocol wrong type for socket",68:"Math result not representable",69:"Read only file system",70:"Illegal seek",71:"No such process",72:"Stale file handle",73:"Connection timed out",74:"Text file busy",75:"Cross-device link",100:"Device not a stream",101:"Bad font file fmt",102:"Invalid slot",103:"Invalid request code",104:"No anode",105:"Block device required",106:"Channel number out of range",107:"Level 3 halted",108:"Level 3 reset",109:"Link number out of range",110:"Protocol driver not attached",111:"No CSI structure available",112:"Level 2 halted",113:"Invalid exchange",114:"Invalid request descriptor",115:"Exchange full",116:"No data (for no delay io)",117:"Timer expired",118:"Out of streams resources",119:"Machine is not on the network",120:"Package not installed",121:"The object is remote",122:"Advertise error",123:"Srmount error",124:"Communication error on send",125:"Cross mount point (not really error)",126:"Given log. name not unique",127:"f.d. invalid for this operation",128:"Remote address changed",129:"Can   access a needed shared lib",130:"Accessing a corrupted shared lib",131:".lib section in a.out corrupted",132:"Attempting to link in too many libs",133:"Attempting to exec a shared library",135:"Streams pipe error",136:"Too many users",137:"Socket type not supported",138:"Not supported",139:"Protocol family not supported",140:"Can't send after socket shutdown",141:"Too many references",142:"Host is down",148:"No medium (in tape drive)",156:"Level 2 not synchronized"};
-  
-  var ERRNO_CODES = {};
-  
-  function demangle(func) {
-      warnOnce('warning: build with -sDEMANGLE_SUPPORT to link in libcxxabi demangling');
-      return func;
-    }
-  function demangleAll(text) {
-      var regex =
-        /\b_Z[\w\d_]+/g;
-      return text.replace(regex,
-        function(x) {
-          var y = demangle(x);
-          return x === y ? x : (y + ' [' + x + ']');
-        });
-    }
   var FS = {root:null,mounts:[],devices:{},streams:[],nextInode:1,nameTable:null,currentPath:"/",initialized:false,ignorePermissions:true,ErrnoError:null,genericErrors:{},filesystems:null,syncFSRequests:0,lookupPath:(path, opts = {}) => {
         path = PATH_FS.resolve(path);
   
@@ -2027,7 +1665,6 @@ function dbg(text) {
         // if we failed to find it in the cache, call into the VFS
         return FS.lookup(parent, name);
       },createNode:(parent, name, mode, rdev) => {
-        assert(typeof parent == 'object')
         var node = new FS.FSNode(parent, name, mode, rdev);
   
         FS.hashAddNode(node);
@@ -2222,7 +1859,6 @@ function dbg(text) {
         var completed = 0;
   
         function doCallback(errCode) {
-          assert(FS.syncFSRequests > 0);
           FS.syncFSRequests--;
           return callback(errCode);
         }
@@ -2248,11 +1884,6 @@ function dbg(text) {
           mount.type.syncfs(mount, populate, done);
         });
       },mount:(type, opts, mountpoint) => {
-        if (typeof type == 'string') {
-          // The filesystem was not included, and instead we have an error
-          // message stored in the variable.
-          throw type;
-        }
         var root = mountpoint === '/';
         var pseudo = !mountpoint;
         var node;
@@ -2330,7 +1961,6 @@ function dbg(text) {
   
         // remove this mount from the child mounts
         var idx = node.mount.mounts.indexOf(mount);
-        assert(idx !== -1);
         node.mount.mounts.splice(idx, 1);
       },lookup:(parent, name) => {
         return parent.node_ops.lookup(parent, name);
@@ -2982,9 +2612,6 @@ function dbg(text) {
         var stdin = FS.open('/dev/stdin', 0);
         var stdout = FS.open('/dev/stdout', 1);
         var stderr = FS.open('/dev/stderr', 1);
-        assert(stdin.fd === 0, 'invalid handle for stdin (' + stdin.fd + ')');
-        assert(stdout.fd === 1, 'invalid handle for stdout (' + stdout.fd + ')');
-        assert(stderr.fd === 2, 'invalid handle for stderr (' + stderr.fd + ')');
       },ensureErrnoError:() => {
         if (FS.ErrnoError) return;
         FS.ErrnoError = /** @this{Object} */ function ErrnoError(errno, node) {
@@ -2998,23 +2625,10 @@ function dbg(text) {
           this.node = node;
           this.setErrno = /** @this{Object} */ function(errno) {
             this.errno = errno;
-            for (var key in ERRNO_CODES) {
-              if (ERRNO_CODES[key] === errno) {
-                this.code = key;
-                break;
-              }
-            }
           };
           this.setErrno(errno);
-          this.message = ERRNO_MESSAGES[errno];
+          this.message = 'FS error';
   
-          // Try to get a maximally helpful stack trace. On Node.js, getting Error.stack
-          // now ensures it shows what we want.
-          if (this.stack) {
-            // Define the stack property for Node.js 4, which otherwise errors on the next line.
-            Object.defineProperty(this, "stack", { value: (new Error).stack, writable: true });
-            this.stack = demangleAll(this.stack);
-          }
         };
         FS.ErrnoError.prototype = new Error();
         FS.ErrnoError.prototype.constructor = FS.ErrnoError;
@@ -3038,7 +2652,6 @@ function dbg(text) {
           'MEMFS': MEMFS,
         };
       },init:(input, output, error) => {
-        assert(!FS.init.initialized, 'FS.init was previously called. If you want to initialize later with custom parameters, remove any earlier calls (note that one is automatically added to the generated code)');
         FS.init.initialized = true;
   
         FS.ensureErrnoError();
@@ -3052,7 +2665,6 @@ function dbg(text) {
       },quit:() => {
         FS.init.initialized = false;
         // force-flush all streams, so we get musl std streams printed out
-        _fflush(0);
         // close all of our streams
         for (var i = 0; i < FS.streams.length; i++) {
           var stream = FS.streams[i];
@@ -3348,7 +2960,6 @@ function dbg(text) {
           if (position >= contents.length)
             return 0;
           var size = Math.min(contents.length - position, length);
-          assert(size >= 0);
           if (contents.slice) { // normal array
             for (var i = 0; i < size; i++) {
               buffer[offset + i] = contents[position + i];
@@ -3473,18 +3084,6 @@ function dbg(text) {
           transaction.onerror = onerror;
         };
         openRequest.onerror = onerror;
-      },absolutePath:() => {
-        abort('FS.absolutePath has been removed; use PATH_FS.resolve instead');
-      },createFolder:() => {
-        abort('FS.createFolder has been removed; use FS.mkdir instead');
-      },createLink:() => {
-        abort('FS.createLink has been removed; use FS.symlink instead');
-      },joinPath:() => {
-        abort('FS.joinPath has been removed; use PATH.join instead');
-      },mmapAlloc:() => {
-        abort('FS.mmapAlloc has been replaced by the top level function mmapAlloc');
-      },standardizePath:() => {
-        abort('FS.standardizePath has been removed; use PATH.normalize instead');
       }};
   var SYSCALLS = {DEFAULT_POLLMASK:5,calculateAt:function(dirfd, path, allowEmpty) {
         if (PATH.isAbs(path)) {
@@ -3547,7 +3146,6 @@ function dbg(text) {
         var buffer = HEAPU8.slice(addr, addr + len);
         FS.msync(stream, buffer, offset, len, flags);
       },varargs:undefined,get:function() {
-        assert(SYSCALLS.varargs != undefined);
         SYSCALLS.varargs += 4;
         var ret = HEAP32[(((SYSCALLS.varargs)-(4))>>2)];
         return ret;
@@ -3575,7 +3173,6 @@ function dbg(text) {
   try {
   
       path = SYSCALLS.getStr(path);
-      assert(flags === 0);
       path = SYSCALLS.calculateAt(dirfd, path);
       if (amode & ~7) {
         // need a valid mode
@@ -3823,7 +3420,6 @@ function dbg(text) {
       var nofollow = flags & 256;
       var allowEmpty = flags & 4096;
       flags = flags & (~6400);
-      assert(!flags, 'unknown flags in __syscall_newfstatat: ' + flags);
       path = SYSCALLS.calculateAt(dirfd, path, allowEmpty);
       return SYSCALLS.doStat(nofollow ? FS.lstat : FS.stat, path, buf);
     } catch (e) {
@@ -3917,7 +3513,6 @@ function dbg(text) {
   try {
   
       path = SYSCALLS.getStr(path);
-      assert(flags === 0);
       path = SYSCALLS.calculateAt(dirfd, path, true);
       if (!times) {
         var atime = Date.now();
@@ -4034,10 +3629,6 @@ function dbg(text) {
   var _emscripten_get_now;_emscripten_get_now = () => performance.now();
   ;
 
-  function _emscripten_memcpy_big(dest, src, num) {
-      HEAPU8.copyWithin(dest, src, src + num);
-    }
-
   function getHeapMax() {
       // Stay one Wasm page short of 4GB: while e.g. Chrome is able to allocate
       // full 4GB Wasm memories, the size will wrap back to 0 bytes in Wasm side
@@ -4054,7 +3645,6 @@ function dbg(text) {
         updateMemoryViews();
         return 1 /*success*/;
       } catch(e) {
-        err('emscripten_realloc_buffer: Attempted to grow heap from ' + b.byteLength  + ' bytes to ' + size + ' bytes, but got error: ' + e);
       }
       // implicit 0 return to save code size (caller will cast "undefined" into 0
       // anyhow)
@@ -4064,7 +3654,6 @@ function dbg(text) {
       requestedSize = requestedSize >>> 0;
       // With multithreaded builds, races can happen (another thread might increase the size
       // in between), so return a failure, and let the caller retry.
-      assert(requestedSize > oldSize);
   
       // Memory resize rules:
       // 1.  Always increase heap size to at least the requested size, rounded up
@@ -4087,7 +3676,6 @@ function dbg(text) {
       // (the wasm binary specifies it, so if we tried, we'd fail anyhow).
       var maxHeapSize = getHeapMax();
       if (requestedSize > maxHeapSize) {
-        err('Cannot enlarge memory, asked to go up to ' + requestedSize + ' bytes, but the limit is ' + maxHeapSize + ' bytes!');
         return false;
       }
   
@@ -4109,7 +3697,6 @@ function dbg(text) {
           return true;
         }
       }
-      err('Failed to grow the heap from ' + oldSize + ' bytes to ' + newSize + ' bytes, not enough memory!');
       return false;
     }
 
@@ -4152,7 +3739,6 @@ function dbg(text) {
   /** @param {boolean=} dontAddNull */
   function writeAsciiToMemory(str, buffer, dontAddNull) {
       for (var i = 0; i < str.length; ++i) {
-        assert(str.charCodeAt(i) === (str.charCodeAt(i) & 0xff));
         HEAP8[((buffer++)>>0)] = str.charCodeAt(i);
       }
       // Null-terminate the pointer to the HEAP.
@@ -4355,132 +3941,6 @@ function dbg(text) {
   });
   FS.FSNode = FSNode;
   FS.staticInit();;
-ERRNO_CODES = {
-      'EPERM': 63,
-      'ENOENT': 44,
-      'ESRCH': 71,
-      'EINTR': 27,
-      'EIO': 29,
-      'ENXIO': 60,
-      'E2BIG': 1,
-      'ENOEXEC': 45,
-      'EBADF': 8,
-      'ECHILD': 12,
-      'EAGAIN': 6,
-      'EWOULDBLOCK': 6,
-      'ENOMEM': 48,
-      'EACCES': 2,
-      'EFAULT': 21,
-      'ENOTBLK': 105,
-      'EBUSY': 10,
-      'EEXIST': 20,
-      'EXDEV': 75,
-      'ENODEV': 43,
-      'ENOTDIR': 54,
-      'EISDIR': 31,
-      'EINVAL': 28,
-      'ENFILE': 41,
-      'EMFILE': 33,
-      'ENOTTY': 59,
-      'ETXTBSY': 74,
-      'EFBIG': 22,
-      'ENOSPC': 51,
-      'ESPIPE': 70,
-      'EROFS': 69,
-      'EMLINK': 34,
-      'EPIPE': 64,
-      'EDOM': 18,
-      'ERANGE': 68,
-      'ENOMSG': 49,
-      'EIDRM': 24,
-      'ECHRNG': 106,
-      'EL2NSYNC': 156,
-      'EL3HLT': 107,
-      'EL3RST': 108,
-      'ELNRNG': 109,
-      'EUNATCH': 110,
-      'ENOCSI': 111,
-      'EL2HLT': 112,
-      'EDEADLK': 16,
-      'ENOLCK': 46,
-      'EBADE': 113,
-      'EBADR': 114,
-      'EXFULL': 115,
-      'ENOANO': 104,
-      'EBADRQC': 103,
-      'EBADSLT': 102,
-      'EDEADLOCK': 16,
-      'EBFONT': 101,
-      'ENOSTR': 100,
-      'ENODATA': 116,
-      'ETIME': 117,
-      'ENOSR': 118,
-      'ENONET': 119,
-      'ENOPKG': 120,
-      'EREMOTE': 121,
-      'ENOLINK': 47,
-      'EADV': 122,
-      'ESRMNT': 123,
-      'ECOMM': 124,
-      'EPROTO': 65,
-      'EMULTIHOP': 36,
-      'EDOTDOT': 125,
-      'EBADMSG': 9,
-      'ENOTUNIQ': 126,
-      'EBADFD': 127,
-      'EREMCHG': 128,
-      'ELIBACC': 129,
-      'ELIBBAD': 130,
-      'ELIBSCN': 131,
-      'ELIBMAX': 132,
-      'ELIBEXEC': 133,
-      'ENOSYS': 52,
-      'ENOTEMPTY': 55,
-      'ENAMETOOLONG': 37,
-      'ELOOP': 32,
-      'EOPNOTSUPP': 138,
-      'EPFNOSUPPORT': 139,
-      'ECONNRESET': 15,
-      'ENOBUFS': 42,
-      'EAFNOSUPPORT': 5,
-      'EPROTOTYPE': 67,
-      'ENOTSOCK': 57,
-      'ENOPROTOOPT': 50,
-      'ESHUTDOWN': 140,
-      'ECONNREFUSED': 14,
-      'EADDRINUSE': 3,
-      'ECONNABORTED': 13,
-      'ENETUNREACH': 40,
-      'ENETDOWN': 38,
-      'ETIMEDOUT': 73,
-      'EHOSTDOWN': 142,
-      'EHOSTUNREACH': 23,
-      'EINPROGRESS': 26,
-      'EALREADY': 7,
-      'EDESTADDRREQ': 17,
-      'EMSGSIZE': 35,
-      'EPROTONOSUPPORT': 66,
-      'ESOCKTNOSUPPORT': 137,
-      'EADDRNOTAVAIL': 4,
-      'ENETRESET': 39,
-      'EISCONN': 30,
-      'ENOTCONN': 53,
-      'ETOOMANYREFS': 141,
-      'EUSERS': 136,
-      'EDQUOT': 19,
-      'ESTALE': 72,
-      'ENOTSUP': 138,
-      'ENOMEDIUM': 148,
-      'EILSEQ': 25,
-      'EOVERFLOW': 61,
-      'ECANCELED': 11,
-      'ENOTRECOVERABLE': 56,
-      'EOWNERDEAD': 62,
-      'ESTRPIPE': 135,
-    };;
-function checkIncomingModuleAPI() {
-  ignoredModuleProp('fetchSettings');
-}
 var wasmImports = {
   "__syscall_chmod": ___syscall_chmod,
   "__syscall_faccessat": ___syscall_faccessat,
@@ -4505,7 +3965,6 @@ var wasmImports = {
   "_tzset_js": __tzset_js,
   "emscripten_date_now": _emscripten_date_now,
   "emscripten_get_now": _emscripten_get_now,
-  "emscripten_memcpy_big": _emscripten_memcpy_big,
   "emscripten_resize_heap": _emscripten_resize_heap,
   "environ_get": _environ_get,
   "environ_sizes_get": _environ_sizes_get,
@@ -4519,510 +3978,1203 @@ var wasmImports = {
 };
 var asm = createWasm();
 /** @type {function(...*):?} */
-var ___wasm_call_ctors = createExportWrapper("__wasm_call_ctors");
-/** @type {function(...*):?} */
-var _sqlite3_status64 = Module["_sqlite3_status64"] = createExportWrapper("sqlite3_status64");
-/** @type {function(...*):?} */
-var _sqlite3_status = Module["_sqlite3_status"] = createExportWrapper("sqlite3_status");
-/** @type {function(...*):?} */
-var _sqlite3_db_status = Module["_sqlite3_db_status"] = createExportWrapper("sqlite3_db_status");
-/** @type {function(...*):?} */
-var _sqlite3_msize = Module["_sqlite3_msize"] = createExportWrapper("sqlite3_msize");
-/** @type {function(...*):?} */
-var _sqlite3_vfs_find = Module["_sqlite3_vfs_find"] = createExportWrapper("sqlite3_vfs_find");
-/** @type {function(...*):?} */
-var _sqlite3_initialize = Module["_sqlite3_initialize"] = createExportWrapper("sqlite3_initialize");
-/** @type {function(...*):?} */
-var _sqlite3_vfs_register = Module["_sqlite3_vfs_register"] = createExportWrapper("sqlite3_vfs_register");
-/** @type {function(...*):?} */
-var _sqlite3_vfs_unregister = Module["_sqlite3_vfs_unregister"] = createExportWrapper("sqlite3_vfs_unregister");
-/** @type {function(...*):?} */
-var _sqlite3_malloc = Module["_sqlite3_malloc"] = createExportWrapper("sqlite3_malloc");
-/** @type {function(...*):?} */
-var _sqlite3_malloc64 = Module["_sqlite3_malloc64"] = createExportWrapper("sqlite3_malloc64");
-/** @type {function(...*):?} */
-var _sqlite3_free = Module["_sqlite3_free"] = createExportWrapper("sqlite3_free");
-/** @type {function(...*):?} */
-var _sqlite3_realloc = Module["_sqlite3_realloc"] = createExportWrapper("sqlite3_realloc");
-/** @type {function(...*):?} */
-var _sqlite3_realloc64 = Module["_sqlite3_realloc64"] = createExportWrapper("sqlite3_realloc64");
-/** @type {function(...*):?} */
-var _sqlite3_value_int64 = Module["_sqlite3_value_int64"] = createExportWrapper("sqlite3_value_int64");
-/** @type {function(...*):?} */
-var _sqlite3_value_double = Module["_sqlite3_value_double"] = createExportWrapper("sqlite3_value_double");
-/** @type {function(...*):?} */
-var _sqlite3_value_text = Module["_sqlite3_value_text"] = createExportWrapper("sqlite3_value_text");
-/** @type {function(...*):?} */
-var _sqlite3_randomness = Module["_sqlite3_randomness"] = createExportWrapper("sqlite3_randomness");
-/** @type {function(...*):?} */
-var _sqlite3_stricmp = Module["_sqlite3_stricmp"] = createExportWrapper("sqlite3_stricmp");
-/** @type {function(...*):?} */
-var _sqlite3_strnicmp = Module["_sqlite3_strnicmp"] = createExportWrapper("sqlite3_strnicmp");
-/** @type {function(...*):?} */
-var ___errno_location = createExportWrapper("__errno_location");
-/** @type {function(...*):?} */
-var _sqlite3_serialize = Module["_sqlite3_serialize"] = createExportWrapper("sqlite3_serialize");
-/** @type {function(...*):?} */
-var _sqlite3_prepare_v2 = Module["_sqlite3_prepare_v2"] = createExportWrapper("sqlite3_prepare_v2");
-/** @type {function(...*):?} */
-var _sqlite3_step = Module["_sqlite3_step"] = createExportWrapper("sqlite3_step");
-/** @type {function(...*):?} */
-var _sqlite3_column_int64 = Module["_sqlite3_column_int64"] = createExportWrapper("sqlite3_column_int64");
-/** @type {function(...*):?} */
-var _sqlite3_column_int = Module["_sqlite3_column_int"] = createExportWrapper("sqlite3_column_int");
-/** @type {function(...*):?} */
-var _sqlite3_finalize = Module["_sqlite3_finalize"] = createExportWrapper("sqlite3_finalize");
-/** @type {function(...*):?} */
-var _sqlite3_file_control = Module["_sqlite3_file_control"] = createExportWrapper("sqlite3_file_control");
-/** @type {function(...*):?} */
-var _sqlite3_reset = Module["_sqlite3_reset"] = createExportWrapper("sqlite3_reset");
-/** @type {function(...*):?} */
-var _sqlite3_value_int = Module["_sqlite3_value_int"] = createExportWrapper("sqlite3_value_int");
-/** @type {function(...*):?} */
-var _sqlite3_deserialize = Module["_sqlite3_deserialize"] = createExportWrapper("sqlite3_deserialize");
-/** @type {function(...*):?} */
-var _sqlite3_clear_bindings = Module["_sqlite3_clear_bindings"] = createExportWrapper("sqlite3_clear_bindings");
-/** @type {function(...*):?} */
-var _sqlite3_value_blob = Module["_sqlite3_value_blob"] = createExportWrapper("sqlite3_value_blob");
-/** @type {function(...*):?} */
-var _sqlite3_value_bytes = Module["_sqlite3_value_bytes"] = createExportWrapper("sqlite3_value_bytes");
-/** @type {function(...*):?} */
-var _sqlite3_value_subtype = Module["_sqlite3_value_subtype"] = createExportWrapper("sqlite3_value_subtype");
-/** @type {function(...*):?} */
-var _sqlite3_value_pointer = Module["_sqlite3_value_pointer"] = createExportWrapper("sqlite3_value_pointer");
-/** @type {function(...*):?} */
-var _sqlite3_value_type = Module["_sqlite3_value_type"] = createExportWrapper("sqlite3_value_type");
-/** @type {function(...*):?} */
-var _sqlite3_value_nochange = Module["_sqlite3_value_nochange"] = createExportWrapper("sqlite3_value_nochange");
-/** @type {function(...*):?} */
-var _sqlite3_value_frombind = Module["_sqlite3_value_frombind"] = createExportWrapper("sqlite3_value_frombind");
-/** @type {function(...*):?} */
-var _sqlite3_value_dup = Module["_sqlite3_value_dup"] = createExportWrapper("sqlite3_value_dup");
-/** @type {function(...*):?} */
-var _sqlite3_value_free = Module["_sqlite3_value_free"] = createExportWrapper("sqlite3_value_free");
-/** @type {function(...*):?} */
-var _sqlite3_result_blob = Module["_sqlite3_result_blob"] = createExportWrapper("sqlite3_result_blob");
-/** @type {function(...*):?} */
-var _sqlite3_result_error_toobig = Module["_sqlite3_result_error_toobig"] = createExportWrapper("sqlite3_result_error_toobig");
-/** @type {function(...*):?} */
-var _sqlite3_result_error_nomem = Module["_sqlite3_result_error_nomem"] = createExportWrapper("sqlite3_result_error_nomem");
-/** @type {function(...*):?} */
-var _sqlite3_result_double = Module["_sqlite3_result_double"] = createExportWrapper("sqlite3_result_double");
-/** @type {function(...*):?} */
-var _sqlite3_result_error = Module["_sqlite3_result_error"] = createExportWrapper("sqlite3_result_error");
-/** @type {function(...*):?} */
-var _sqlite3_result_int = Module["_sqlite3_result_int"] = createExportWrapper("sqlite3_result_int");
-/** @type {function(...*):?} */
-var _sqlite3_result_int64 = Module["_sqlite3_result_int64"] = createExportWrapper("sqlite3_result_int64");
-/** @type {function(...*):?} */
-var _sqlite3_result_null = Module["_sqlite3_result_null"] = createExportWrapper("sqlite3_result_null");
-/** @type {function(...*):?} */
-var _sqlite3_result_pointer = Module["_sqlite3_result_pointer"] = createExportWrapper("sqlite3_result_pointer");
-/** @type {function(...*):?} */
-var _sqlite3_result_subtype = Module["_sqlite3_result_subtype"] = createExportWrapper("sqlite3_result_subtype");
-/** @type {function(...*):?} */
-var _sqlite3_result_text = Module["_sqlite3_result_text"] = createExportWrapper("sqlite3_result_text");
-/** @type {function(...*):?} */
-var _sqlite3_result_zeroblob = Module["_sqlite3_result_zeroblob"] = createExportWrapper("sqlite3_result_zeroblob");
-/** @type {function(...*):?} */
-var _sqlite3_result_zeroblob64 = Module["_sqlite3_result_zeroblob64"] = createExportWrapper("sqlite3_result_zeroblob64");
-/** @type {function(...*):?} */
-var _sqlite3_result_error_code = Module["_sqlite3_result_error_code"] = createExportWrapper("sqlite3_result_error_code");
-/** @type {function(...*):?} */
-var _sqlite3_sql = Module["_sqlite3_sql"] = createExportWrapper("sqlite3_sql");
-/** @type {function(...*):?} */
-var _sqlite3_user_data = Module["_sqlite3_user_data"] = createExportWrapper("sqlite3_user_data");
-/** @type {function(...*):?} */
-var _sqlite3_context_db_handle = Module["_sqlite3_context_db_handle"] = createExportWrapper("sqlite3_context_db_handle");
-/** @type {function(...*):?} */
-var _sqlite3_vtab_nochange = Module["_sqlite3_vtab_nochange"] = createExportWrapper("sqlite3_vtab_nochange");
-/** @type {function(...*):?} */
-var _sqlite3_vtab_in_first = Module["_sqlite3_vtab_in_first"] = createExportWrapper("sqlite3_vtab_in_first");
-/** @type {function(...*):?} */
-var _sqlite3_vtab_in_next = Module["_sqlite3_vtab_in_next"] = createExportWrapper("sqlite3_vtab_in_next");
-/** @type {function(...*):?} */
-var _sqlite3_aggregate_context = Module["_sqlite3_aggregate_context"] = createExportWrapper("sqlite3_aggregate_context");
-/** @type {function(...*):?} */
-var _sqlite3_get_auxdata = Module["_sqlite3_get_auxdata"] = createExportWrapper("sqlite3_get_auxdata");
-/** @type {function(...*):?} */
-var _sqlite3_set_auxdata = Module["_sqlite3_set_auxdata"] = createExportWrapper("sqlite3_set_auxdata");
-/** @type {function(...*):?} */
-var _sqlite3_column_count = Module["_sqlite3_column_count"] = createExportWrapper("sqlite3_column_count");
-/** @type {function(...*):?} */
-var _sqlite3_data_count = Module["_sqlite3_data_count"] = createExportWrapper("sqlite3_data_count");
-/** @type {function(...*):?} */
-var _sqlite3_column_blob = Module["_sqlite3_column_blob"] = createExportWrapper("sqlite3_column_blob");
-/** @type {function(...*):?} */
-var _sqlite3_column_bytes = Module["_sqlite3_column_bytes"] = createExportWrapper("sqlite3_column_bytes");
-/** @type {function(...*):?} */
-var _sqlite3_column_double = Module["_sqlite3_column_double"] = createExportWrapper("sqlite3_column_double");
-/** @type {function(...*):?} */
-var _sqlite3_column_text = Module["_sqlite3_column_text"] = createExportWrapper("sqlite3_column_text");
-/** @type {function(...*):?} */
-var _sqlite3_column_value = Module["_sqlite3_column_value"] = createExportWrapper("sqlite3_column_value");
-/** @type {function(...*):?} */
-var _sqlite3_column_type = Module["_sqlite3_column_type"] = createExportWrapper("sqlite3_column_type");
-/** @type {function(...*):?} */
-var _sqlite3_column_name = Module["_sqlite3_column_name"] = createExportWrapper("sqlite3_column_name");
-/** @type {function(...*):?} */
-var _sqlite3_bind_blob = Module["_sqlite3_bind_blob"] = createExportWrapper("sqlite3_bind_blob");
-/** @type {function(...*):?} */
-var _sqlite3_bind_double = Module["_sqlite3_bind_double"] = createExportWrapper("sqlite3_bind_double");
-/** @type {function(...*):?} */
-var _sqlite3_bind_int = Module["_sqlite3_bind_int"] = createExportWrapper("sqlite3_bind_int");
-/** @type {function(...*):?} */
-var _sqlite3_bind_int64 = Module["_sqlite3_bind_int64"] = createExportWrapper("sqlite3_bind_int64");
-/** @type {function(...*):?} */
-var _sqlite3_bind_null = Module["_sqlite3_bind_null"] = createExportWrapper("sqlite3_bind_null");
-/** @type {function(...*):?} */
-var _sqlite3_bind_pointer = Module["_sqlite3_bind_pointer"] = createExportWrapper("sqlite3_bind_pointer");
-/** @type {function(...*):?} */
-var _sqlite3_bind_text = Module["_sqlite3_bind_text"] = createExportWrapper("sqlite3_bind_text");
-/** @type {function(...*):?} */
-var _sqlite3_bind_parameter_count = Module["_sqlite3_bind_parameter_count"] = createExportWrapper("sqlite3_bind_parameter_count");
-/** @type {function(...*):?} */
-var _sqlite3_bind_parameter_index = Module["_sqlite3_bind_parameter_index"] = createExportWrapper("sqlite3_bind_parameter_index");
-/** @type {function(...*):?} */
-var _sqlite3_db_handle = Module["_sqlite3_db_handle"] = createExportWrapper("sqlite3_db_handle");
-/** @type {function(...*):?} */
-var _sqlite3_stmt_readonly = Module["_sqlite3_stmt_readonly"] = createExportWrapper("sqlite3_stmt_readonly");
-/** @type {function(...*):?} */
-var _sqlite3_stmt_isexplain = Module["_sqlite3_stmt_isexplain"] = createExportWrapper("sqlite3_stmt_isexplain");
-/** @type {function(...*):?} */
-var _sqlite3_stmt_status = Module["_sqlite3_stmt_status"] = createExportWrapper("sqlite3_stmt_status");
-/** @type {function(...*):?} */
-var _sqlite3_expanded_sql = Module["_sqlite3_expanded_sql"] = createExportWrapper("sqlite3_expanded_sql");
-/** @type {function(...*):?} */
-var _sqlite3_preupdate_old = Module["_sqlite3_preupdate_old"] = createExportWrapper("sqlite3_preupdate_old");
-/** @type {function(...*):?} */
-var _sqlite3_preupdate_count = Module["_sqlite3_preupdate_count"] = createExportWrapper("sqlite3_preupdate_count");
-/** @type {function(...*):?} */
-var _sqlite3_preupdate_depth = Module["_sqlite3_preupdate_depth"] = createExportWrapper("sqlite3_preupdate_depth");
-/** @type {function(...*):?} */
-var _sqlite3_preupdate_blobwrite = Module["_sqlite3_preupdate_blobwrite"] = createExportWrapper("sqlite3_preupdate_blobwrite");
-/** @type {function(...*):?} */
-var _sqlite3_preupdate_new = Module["_sqlite3_preupdate_new"] = createExportWrapper("sqlite3_preupdate_new");
-/** @type {function(...*):?} */
-var _sqlite3_value_numeric_type = Module["_sqlite3_value_numeric_type"] = createExportWrapper("sqlite3_value_numeric_type");
-/** @type {function(...*):?} */
-var _sqlite3_errmsg = Module["_sqlite3_errmsg"] = createExportWrapper("sqlite3_errmsg");
-/** @type {function(...*):?} */
-var _sqlite3_set_authorizer = Module["_sqlite3_set_authorizer"] = createExportWrapper("sqlite3_set_authorizer");
-/** @type {function(...*):?} */
-var _sqlite3_strglob = Module["_sqlite3_strglob"] = createExportWrapper("sqlite3_strglob");
-/** @type {function(...*):?} */
-var _sqlite3_strlike = Module["_sqlite3_strlike"] = createExportWrapper("sqlite3_strlike");
-/** @type {function(...*):?} */
-var _sqlite3_exec = Module["_sqlite3_exec"] = createExportWrapper("sqlite3_exec");
-/** @type {function(...*):?} */
-var _sqlite3_auto_extension = Module["_sqlite3_auto_extension"] = createExportWrapper("sqlite3_auto_extension");
-/** @type {function(...*):?} */
-var _sqlite3_cancel_auto_extension = Module["_sqlite3_cancel_auto_extension"] = createExportWrapper("sqlite3_cancel_auto_extension");
-/** @type {function(...*):?} */
-var _sqlite3_reset_auto_extension = Module["_sqlite3_reset_auto_extension"] = createExportWrapper("sqlite3_reset_auto_extension");
-/** @type {function(...*):?} */
-var _sqlite3_prepare_v3 = Module["_sqlite3_prepare_v3"] = createExportWrapper("sqlite3_prepare_v3");
-/** @type {function(...*):?} */
-var _sqlite3_create_module = Module["_sqlite3_create_module"] = createExportWrapper("sqlite3_create_module");
-/** @type {function(...*):?} */
-var _sqlite3_create_module_v2 = Module["_sqlite3_create_module_v2"] = createExportWrapper("sqlite3_create_module_v2");
-/** @type {function(...*):?} */
-var _sqlite3_drop_modules = Module["_sqlite3_drop_modules"] = createExportWrapper("sqlite3_drop_modules");
-/** @type {function(...*):?} */
-var _sqlite3_declare_vtab = Module["_sqlite3_declare_vtab"] = createExportWrapper("sqlite3_declare_vtab");
-/** @type {function(...*):?} */
-var _sqlite3_vtab_on_conflict = Module["_sqlite3_vtab_on_conflict"] = createExportWrapper("sqlite3_vtab_on_conflict");
-/** @type {function(...*):?} */
-var _sqlite3_vtab_collation = Module["_sqlite3_vtab_collation"] = createExportWrapper("sqlite3_vtab_collation");
-/** @type {function(...*):?} */
-var _sqlite3_vtab_in = Module["_sqlite3_vtab_in"] = createExportWrapper("sqlite3_vtab_in");
-/** @type {function(...*):?} */
-var _sqlite3_vtab_rhs_value = Module["_sqlite3_vtab_rhs_value"] = createExportWrapper("sqlite3_vtab_rhs_value");
-/** @type {function(...*):?} */
-var _sqlite3_vtab_distinct = Module["_sqlite3_vtab_distinct"] = createExportWrapper("sqlite3_vtab_distinct");
-/** @type {function(...*):?} */
-var _sqlite3_keyword_name = Module["_sqlite3_keyword_name"] = createExportWrapper("sqlite3_keyword_name");
-/** @type {function(...*):?} */
-var _sqlite3_keyword_count = Module["_sqlite3_keyword_count"] = createExportWrapper("sqlite3_keyword_count");
-/** @type {function(...*):?} */
-var _sqlite3_keyword_check = Module["_sqlite3_keyword_check"] = createExportWrapper("sqlite3_keyword_check");
-/** @type {function(...*):?} */
-var _sqlite3_complete = Module["_sqlite3_complete"] = createExportWrapper("sqlite3_complete");
-/** @type {function(...*):?} */
-var _sqlite3_libversion = Module["_sqlite3_libversion"] = createExportWrapper("sqlite3_libversion");
-/** @type {function(...*):?} */
-var _sqlite3_libversion_number = Module["_sqlite3_libversion_number"] = createExportWrapper("sqlite3_libversion_number");
-/** @type {function(...*):?} */
-var _sqlite3_shutdown = Module["_sqlite3_shutdown"] = createExportWrapper("sqlite3_shutdown");
-/** @type {function(...*):?} */
-var _sqlite3_last_insert_rowid = Module["_sqlite3_last_insert_rowid"] = createExportWrapper("sqlite3_last_insert_rowid");
-/** @type {function(...*):?} */
-var _sqlite3_set_last_insert_rowid = Module["_sqlite3_set_last_insert_rowid"] = createExportWrapper("sqlite3_set_last_insert_rowid");
-/** @type {function(...*):?} */
-var _sqlite3_changes64 = Module["_sqlite3_changes64"] = createExportWrapper("sqlite3_changes64");
-/** @type {function(...*):?} */
-var _sqlite3_changes = Module["_sqlite3_changes"] = createExportWrapper("sqlite3_changes");
-/** @type {function(...*):?} */
-var _sqlite3_total_changes64 = Module["_sqlite3_total_changes64"] = createExportWrapper("sqlite3_total_changes64");
-/** @type {function(...*):?} */
-var _sqlite3_total_changes = Module["_sqlite3_total_changes"] = createExportWrapper("sqlite3_total_changes");
-/** @type {function(...*):?} */
-var _sqlite3_txn_state = Module["_sqlite3_txn_state"] = createExportWrapper("sqlite3_txn_state");
-/** @type {function(...*):?} */
-var _sqlite3_close_v2 = Module["_sqlite3_close_v2"] = createExportWrapper("sqlite3_close_v2");
-/** @type {function(...*):?} */
-var _sqlite3_busy_handler = Module["_sqlite3_busy_handler"] = createExportWrapper("sqlite3_busy_handler");
-/** @type {function(...*):?} */
-var _sqlite3_progress_handler = Module["_sqlite3_progress_handler"] = createExportWrapper("sqlite3_progress_handler");
-/** @type {function(...*):?} */
-var _sqlite3_busy_timeout = Module["_sqlite3_busy_timeout"] = createExportWrapper("sqlite3_busy_timeout");
-/** @type {function(...*):?} */
-var _sqlite3_create_function = Module["_sqlite3_create_function"] = createExportWrapper("sqlite3_create_function");
-/** @type {function(...*):?} */
-var _sqlite3_create_function_v2 = Module["_sqlite3_create_function_v2"] = createExportWrapper("sqlite3_create_function_v2");
-/** @type {function(...*):?} */
-var _sqlite3_create_window_function = Module["_sqlite3_create_window_function"] = createExportWrapper("sqlite3_create_window_function");
-/** @type {function(...*):?} */
-var _sqlite3_overload_function = Module["_sqlite3_overload_function"] = createExportWrapper("sqlite3_overload_function");
-/** @type {function(...*):?} */
-var _sqlite3_trace_v2 = Module["_sqlite3_trace_v2"] = createExportWrapper("sqlite3_trace_v2");
-/** @type {function(...*):?} */
-var _sqlite3_commit_hook = Module["_sqlite3_commit_hook"] = createExportWrapper("sqlite3_commit_hook");
-/** @type {function(...*):?} */
-var _sqlite3_update_hook = Module["_sqlite3_update_hook"] = createExportWrapper("sqlite3_update_hook");
-/** @type {function(...*):?} */
-var _sqlite3_rollback_hook = Module["_sqlite3_rollback_hook"] = createExportWrapper("sqlite3_rollback_hook");
-/** @type {function(...*):?} */
-var _sqlite3_preupdate_hook = Module["_sqlite3_preupdate_hook"] = createExportWrapper("sqlite3_preupdate_hook");
-/** @type {function(...*):?} */
-var _sqlite3_error_offset = Module["_sqlite3_error_offset"] = createExportWrapper("sqlite3_error_offset");
-/** @type {function(...*):?} */
-var _sqlite3_errcode = Module["_sqlite3_errcode"] = createExportWrapper("sqlite3_errcode");
-/** @type {function(...*):?} */
-var _sqlite3_extended_errcode = Module["_sqlite3_extended_errcode"] = createExportWrapper("sqlite3_extended_errcode");
-/** @type {function(...*):?} */
-var _sqlite3_errstr = Module["_sqlite3_errstr"] = createExportWrapper("sqlite3_errstr");
-/** @type {function(...*):?} */
-var _sqlite3_limit = Module["_sqlite3_limit"] = createExportWrapper("sqlite3_limit");
-/** @type {function(...*):?} */
-var _sqlite3_open = Module["_sqlite3_open"] = createExportWrapper("sqlite3_open");
-/** @type {function(...*):?} */
-var _sqlite3_open_v2 = Module["_sqlite3_open_v2"] = createExportWrapper("sqlite3_open_v2");
-/** @type {function(...*):?} */
-var _sqlite3_create_collation = Module["_sqlite3_create_collation"] = createExportWrapper("sqlite3_create_collation");
-/** @type {function(...*):?} */
-var _sqlite3_create_collation_v2 = Module["_sqlite3_create_collation_v2"] = createExportWrapper("sqlite3_create_collation_v2");
-/** @type {function(...*):?} */
-var _sqlite3_collation_needed = Module["_sqlite3_collation_needed"] = createExportWrapper("sqlite3_collation_needed");
-/** @type {function(...*):?} */
-var _sqlite3_table_column_metadata = Module["_sqlite3_table_column_metadata"] = createExportWrapper("sqlite3_table_column_metadata");
-/** @type {function(...*):?} */
-var _sqlite3_extended_result_codes = Module["_sqlite3_extended_result_codes"] = createExportWrapper("sqlite3_extended_result_codes");
-/** @type {function(...*):?} */
-var _sqlite3_uri_parameter = Module["_sqlite3_uri_parameter"] = createExportWrapper("sqlite3_uri_parameter");
-/** @type {function(...*):?} */
-var _sqlite3_uri_key = Module["_sqlite3_uri_key"] = createExportWrapper("sqlite3_uri_key");
-/** @type {function(...*):?} */
-var _sqlite3_uri_boolean = Module["_sqlite3_uri_boolean"] = createExportWrapper("sqlite3_uri_boolean");
-/** @type {function(...*):?} */
-var _sqlite3_uri_int64 = Module["_sqlite3_uri_int64"] = createExportWrapper("sqlite3_uri_int64");
-/** @type {function(...*):?} */
-var _sqlite3_db_name = Module["_sqlite3_db_name"] = createExportWrapper("sqlite3_db_name");
-/** @type {function(...*):?} */
-var _sqlite3_db_filename = Module["_sqlite3_db_filename"] = createExportWrapper("sqlite3_db_filename");
-/** @type {function(...*):?} */
-var _sqlite3_compileoption_used = Module["_sqlite3_compileoption_used"] = createExportWrapper("sqlite3_compileoption_used");
-/** @type {function(...*):?} */
-var _sqlite3_compileoption_get = Module["_sqlite3_compileoption_get"] = createExportWrapper("sqlite3_compileoption_get");
-/** @type {function(...*):?} */
-var _sqlite3session_diff = Module["_sqlite3session_diff"] = createExportWrapper("sqlite3session_diff");
-/** @type {function(...*):?} */
-var _sqlite3session_attach = Module["_sqlite3session_attach"] = createExportWrapper("sqlite3session_attach");
-/** @type {function(...*):?} */
-var _sqlite3session_create = Module["_sqlite3session_create"] = createExportWrapper("sqlite3session_create");
-/** @type {function(...*):?} */
-var _sqlite3session_delete = Module["_sqlite3session_delete"] = createExportWrapper("sqlite3session_delete");
-/** @type {function(...*):?} */
-var _sqlite3session_table_filter = Module["_sqlite3session_table_filter"] = createExportWrapper("sqlite3session_table_filter");
-/** @type {function(...*):?} */
-var _sqlite3session_changeset = Module["_sqlite3session_changeset"] = createExportWrapper("sqlite3session_changeset");
-/** @type {function(...*):?} */
-var _sqlite3session_changeset_strm = Module["_sqlite3session_changeset_strm"] = createExportWrapper("sqlite3session_changeset_strm");
-/** @type {function(...*):?} */
-var _sqlite3session_patchset_strm = Module["_sqlite3session_patchset_strm"] = createExportWrapper("sqlite3session_patchset_strm");
-/** @type {function(...*):?} */
-var _sqlite3session_patchset = Module["_sqlite3session_patchset"] = createExportWrapper("sqlite3session_patchset");
-/** @type {function(...*):?} */
-var _sqlite3session_enable = Module["_sqlite3session_enable"] = createExportWrapper("sqlite3session_enable");
-/** @type {function(...*):?} */
-var _sqlite3session_indirect = Module["_sqlite3session_indirect"] = createExportWrapper("sqlite3session_indirect");
-/** @type {function(...*):?} */
-var _sqlite3session_isempty = Module["_sqlite3session_isempty"] = createExportWrapper("sqlite3session_isempty");
-/** @type {function(...*):?} */
-var _sqlite3session_memory_used = Module["_sqlite3session_memory_used"] = createExportWrapper("sqlite3session_memory_used");
-/** @type {function(...*):?} */
-var _sqlite3session_object_config = Module["_sqlite3session_object_config"] = createExportWrapper("sqlite3session_object_config");
-/** @type {function(...*):?} */
-var _sqlite3session_changeset_size = Module["_sqlite3session_changeset_size"] = createExportWrapper("sqlite3session_changeset_size");
-/** @type {function(...*):?} */
-var _sqlite3changeset_start = Module["_sqlite3changeset_start"] = createExportWrapper("sqlite3changeset_start");
-/** @type {function(...*):?} */
-var _sqlite3changeset_start_v2 = Module["_sqlite3changeset_start_v2"] = createExportWrapper("sqlite3changeset_start_v2");
-/** @type {function(...*):?} */
-var _sqlite3changeset_start_strm = Module["_sqlite3changeset_start_strm"] = createExportWrapper("sqlite3changeset_start_strm");
-/** @type {function(...*):?} */
-var _sqlite3changeset_start_v2_strm = Module["_sqlite3changeset_start_v2_strm"] = createExportWrapper("sqlite3changeset_start_v2_strm");
-/** @type {function(...*):?} */
-var _sqlite3changeset_next = Module["_sqlite3changeset_next"] = createExportWrapper("sqlite3changeset_next");
-/** @type {function(...*):?} */
-var _sqlite3changeset_op = Module["_sqlite3changeset_op"] = createExportWrapper("sqlite3changeset_op");
-/** @type {function(...*):?} */
-var _sqlite3changeset_pk = Module["_sqlite3changeset_pk"] = createExportWrapper("sqlite3changeset_pk");
-/** @type {function(...*):?} */
-var _sqlite3changeset_old = Module["_sqlite3changeset_old"] = createExportWrapper("sqlite3changeset_old");
-/** @type {function(...*):?} */
-var _sqlite3changeset_new = Module["_sqlite3changeset_new"] = createExportWrapper("sqlite3changeset_new");
-/** @type {function(...*):?} */
-var _sqlite3changeset_conflict = Module["_sqlite3changeset_conflict"] = createExportWrapper("sqlite3changeset_conflict");
-/** @type {function(...*):?} */
-var _sqlite3changeset_fk_conflicts = Module["_sqlite3changeset_fk_conflicts"] = createExportWrapper("sqlite3changeset_fk_conflicts");
-/** @type {function(...*):?} */
-var _sqlite3changeset_finalize = Module["_sqlite3changeset_finalize"] = createExportWrapper("sqlite3changeset_finalize");
-/** @type {function(...*):?} */
-var _sqlite3changeset_invert = Module["_sqlite3changeset_invert"] = createExportWrapper("sqlite3changeset_invert");
-/** @type {function(...*):?} */
-var _sqlite3changeset_invert_strm = Module["_sqlite3changeset_invert_strm"] = createExportWrapper("sqlite3changeset_invert_strm");
-/** @type {function(...*):?} */
-var _sqlite3changeset_apply_v2 = Module["_sqlite3changeset_apply_v2"] = createExportWrapper("sqlite3changeset_apply_v2");
-/** @type {function(...*):?} */
-var _sqlite3changeset_apply = Module["_sqlite3changeset_apply"] = createExportWrapper("sqlite3changeset_apply");
-/** @type {function(...*):?} */
-var _sqlite3changeset_apply_v2_strm = Module["_sqlite3changeset_apply_v2_strm"] = createExportWrapper("sqlite3changeset_apply_v2_strm");
-/** @type {function(...*):?} */
-var _sqlite3changeset_apply_strm = Module["_sqlite3changeset_apply_strm"] = createExportWrapper("sqlite3changeset_apply_strm");
-/** @type {function(...*):?} */
-var _sqlite3changegroup_new = Module["_sqlite3changegroup_new"] = createExportWrapper("sqlite3changegroup_new");
-/** @type {function(...*):?} */
-var _sqlite3changegroup_add = Module["_sqlite3changegroup_add"] = createExportWrapper("sqlite3changegroup_add");
-/** @type {function(...*):?} */
-var _sqlite3changegroup_output = Module["_sqlite3changegroup_output"] = createExportWrapper("sqlite3changegroup_output");
-/** @type {function(...*):?} */
-var _sqlite3changegroup_add_strm = Module["_sqlite3changegroup_add_strm"] = createExportWrapper("sqlite3changegroup_add_strm");
-/** @type {function(...*):?} */
-var _sqlite3changegroup_output_strm = Module["_sqlite3changegroup_output_strm"] = createExportWrapper("sqlite3changegroup_output_strm");
-/** @type {function(...*):?} */
-var _sqlite3changegroup_delete = Module["_sqlite3changegroup_delete"] = createExportWrapper("sqlite3changegroup_delete");
-/** @type {function(...*):?} */
-var _sqlite3changeset_concat = Module["_sqlite3changeset_concat"] = createExportWrapper("sqlite3changeset_concat");
-/** @type {function(...*):?} */
-var _sqlite3changeset_concat_strm = Module["_sqlite3changeset_concat_strm"] = createExportWrapper("sqlite3changeset_concat_strm");
-/** @type {function(...*):?} */
-var _sqlite3session_config = Module["_sqlite3session_config"] = createExportWrapper("sqlite3session_config");
-/** @type {function(...*):?} */
-var _sqlite3_sourceid = Module["_sqlite3_sourceid"] = createExportWrapper("sqlite3_sourceid");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_pstack_ptr = Module["_sqlite3_wasm_pstack_ptr"] = createExportWrapper("sqlite3_wasm_pstack_ptr");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_pstack_restore = Module["_sqlite3_wasm_pstack_restore"] = createExportWrapper("sqlite3_wasm_pstack_restore");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_pstack_alloc = Module["_sqlite3_wasm_pstack_alloc"] = createExportWrapper("sqlite3_wasm_pstack_alloc");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_pstack_remaining = Module["_sqlite3_wasm_pstack_remaining"] = createExportWrapper("sqlite3_wasm_pstack_remaining");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_pstack_quota = Module["_sqlite3_wasm_pstack_quota"] = createExportWrapper("sqlite3_wasm_pstack_quota");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_error = Module["_sqlite3_wasm_db_error"] = createExportWrapper("sqlite3_wasm_db_error");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_struct = Module["_sqlite3_wasm_test_struct"] = createExportWrapper("sqlite3_wasm_test_struct");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_enum_json = Module["_sqlite3_wasm_enum_json"] = createExportWrapper("sqlite3_wasm_enum_json");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_vfs_unlink = Module["_sqlite3_wasm_vfs_unlink"] = createExportWrapper("sqlite3_wasm_vfs_unlink");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_vfs = Module["_sqlite3_wasm_db_vfs"] = createExportWrapper("sqlite3_wasm_db_vfs");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_reset = Module["_sqlite3_wasm_db_reset"] = createExportWrapper("sqlite3_wasm_db_reset");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_export_chunked = Module["_sqlite3_wasm_db_export_chunked"] = createExportWrapper("sqlite3_wasm_db_export_chunked");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_serialize = Module["_sqlite3_wasm_db_serialize"] = createExportWrapper("sqlite3_wasm_db_serialize");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_vfs_create_file = Module["_sqlite3_wasm_vfs_create_file"] = createExportWrapper("sqlite3_wasm_vfs_create_file");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_kvvfsMakeKeyOnPstack = Module["_sqlite3_wasm_kvvfsMakeKeyOnPstack"] = createExportWrapper("sqlite3_wasm_kvvfsMakeKeyOnPstack");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_kvvfs_methods = Module["_sqlite3_wasm_kvvfs_methods"] = createExportWrapper("sqlite3_wasm_kvvfs_methods");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_vtab_config = Module["_sqlite3_wasm_vtab_config"] = createExportWrapper("sqlite3_wasm_vtab_config");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_config_ip = Module["_sqlite3_wasm_db_config_ip"] = createExportWrapper("sqlite3_wasm_db_config_ip");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_config_pii = Module["_sqlite3_wasm_db_config_pii"] = createExportWrapper("sqlite3_wasm_db_config_pii");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_config_s = Module["_sqlite3_wasm_db_config_s"] = createExportWrapper("sqlite3_wasm_db_config_s");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_config_i = Module["_sqlite3_wasm_config_i"] = createExportWrapper("sqlite3_wasm_config_i");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_config_ii = Module["_sqlite3_wasm_config_ii"] = createExportWrapper("sqlite3_wasm_config_ii");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_config_j = Module["_sqlite3_wasm_config_j"] = createExportWrapper("sqlite3_wasm_config_j");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_init_wasmfs = Module["_sqlite3_wasm_init_wasmfs"] = createExportWrapper("sqlite3_wasm_init_wasmfs");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_intptr = Module["_sqlite3_wasm_test_intptr"] = createExportWrapper("sqlite3_wasm_test_intptr");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_voidptr = Module["_sqlite3_wasm_test_voidptr"] = createExportWrapper("sqlite3_wasm_test_voidptr");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_int64_max = Module["_sqlite3_wasm_test_int64_max"] = createExportWrapper("sqlite3_wasm_test_int64_max");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_int64_min = Module["_sqlite3_wasm_test_int64_min"] = createExportWrapper("sqlite3_wasm_test_int64_min");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_int64_times2 = Module["_sqlite3_wasm_test_int64_times2"] = createExportWrapper("sqlite3_wasm_test_int64_times2");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_int64_minmax = Module["_sqlite3_wasm_test_int64_minmax"] = createExportWrapper("sqlite3_wasm_test_int64_minmax");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_int64ptr = Module["_sqlite3_wasm_test_int64ptr"] = createExportWrapper("sqlite3_wasm_test_int64ptr");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_stack_overflow = Module["_sqlite3_wasm_test_stack_overflow"] = createExportWrapper("sqlite3_wasm_test_stack_overflow");
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_str_hello = Module["_sqlite3_wasm_test_str_hello"] = createExportWrapper("sqlite3_wasm_test_str_hello");
-/** @type {function(...*):?} */
-var _malloc = Module["_malloc"] = createExportWrapper("malloc");
-/** @type {function(...*):?} */
-var _free = Module["_free"] = createExportWrapper("free");
-/** @type {function(...*):?} */
-var _realloc = Module["_realloc"] = createExportWrapper("realloc");
-/** @type {function(...*):?} */
-var _fflush = Module["_fflush"] = createExportWrapper("fflush");
-/** @type {function(...*):?} */
-var _emscripten_stack_init = function() {
-  return (_emscripten_stack_init = Module["asm"]["emscripten_stack_init"]).apply(null, arguments);
+var ___wasm_call_ctors = function() {
+  return (___wasm_call_ctors = Module["asm"]["__wasm_call_ctors"]).apply(null, arguments);
 };
 
 /** @type {function(...*):?} */
-var _emscripten_stack_get_free = function() {
-  return (_emscripten_stack_get_free = Module["asm"]["emscripten_stack_get_free"]).apply(null, arguments);
+var _sqlite3_status64 = Module["_sqlite3_status64"] = function() {
+  return (_sqlite3_status64 = Module["_sqlite3_status64"] = Module["asm"]["sqlite3_status64"]).apply(null, arguments);
 };
 
 /** @type {function(...*):?} */
-var _emscripten_stack_get_base = function() {
-  return (_emscripten_stack_get_base = Module["asm"]["emscripten_stack_get_base"]).apply(null, arguments);
+var _sqlite3_status = Module["_sqlite3_status"] = function() {
+  return (_sqlite3_status = Module["_sqlite3_status"] = Module["asm"]["sqlite3_status"]).apply(null, arguments);
 };
 
 /** @type {function(...*):?} */
-var _emscripten_stack_get_end = function() {
-  return (_emscripten_stack_get_end = Module["asm"]["emscripten_stack_get_end"]).apply(null, arguments);
+var _sqlite3_db_status = Module["_sqlite3_db_status"] = function() {
+  return (_sqlite3_db_status = Module["_sqlite3_db_status"] = Module["asm"]["sqlite3_db_status"]).apply(null, arguments);
 };
 
 /** @type {function(...*):?} */
-var stackSave = createExportWrapper("stackSave");
+var _sqlite3_msize = Module["_sqlite3_msize"] = function() {
+  return (_sqlite3_msize = Module["_sqlite3_msize"] = Module["asm"]["sqlite3_msize"]).apply(null, arguments);
+};
+
 /** @type {function(...*):?} */
-var stackRestore = createExportWrapper("stackRestore");
+var _sqlite3_vfs_find = Module["_sqlite3_vfs_find"] = function() {
+  return (_sqlite3_vfs_find = Module["_sqlite3_vfs_find"] = Module["asm"]["sqlite3_vfs_find"]).apply(null, arguments);
+};
+
 /** @type {function(...*):?} */
-var stackAlloc = createExportWrapper("stackAlloc");
+var _sqlite3_initialize = Module["_sqlite3_initialize"] = function() {
+  return (_sqlite3_initialize = Module["_sqlite3_initialize"] = Module["asm"]["sqlite3_initialize"]).apply(null, arguments);
+};
+
 /** @type {function(...*):?} */
-var _emscripten_stack_get_current = function() {
-  return (_emscripten_stack_get_current = Module["asm"]["emscripten_stack_get_current"]).apply(null, arguments);
+var _sqlite3_malloc = Module["_sqlite3_malloc"] = function() {
+  return (_sqlite3_malloc = Module["_sqlite3_malloc"] = Module["asm"]["sqlite3_malloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_free = Module["_sqlite3_free"] = function() {
+  return (_sqlite3_free = Module["_sqlite3_free"] = Module["asm"]["sqlite3_free"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_vfs_register = Module["_sqlite3_vfs_register"] = function() {
+  return (_sqlite3_vfs_register = Module["_sqlite3_vfs_register"] = Module["asm"]["sqlite3_vfs_register"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_vfs_unregister = Module["_sqlite3_vfs_unregister"] = function() {
+  return (_sqlite3_vfs_unregister = Module["_sqlite3_vfs_unregister"] = Module["asm"]["sqlite3_vfs_unregister"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_malloc64 = Module["_sqlite3_malloc64"] = function() {
+  return (_sqlite3_malloc64 = Module["_sqlite3_malloc64"] = Module["asm"]["sqlite3_malloc64"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_realloc = Module["_sqlite3_realloc"] = function() {
+  return (_sqlite3_realloc = Module["_sqlite3_realloc"] = Module["asm"]["sqlite3_realloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_realloc64 = Module["_sqlite3_realloc64"] = function() {
+  return (_sqlite3_realloc64 = Module["_sqlite3_realloc64"] = Module["asm"]["sqlite3_realloc64"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_text = Module["_sqlite3_value_text"] = function() {
+  return (_sqlite3_value_text = Module["_sqlite3_value_text"] = Module["asm"]["sqlite3_value_text"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_randomness = Module["_sqlite3_randomness"] = function() {
+  return (_sqlite3_randomness = Module["_sqlite3_randomness"] = Module["asm"]["sqlite3_randomness"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_stricmp = Module["_sqlite3_stricmp"] = function() {
+  return (_sqlite3_stricmp = Module["_sqlite3_stricmp"] = Module["asm"]["sqlite3_stricmp"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_strnicmp = Module["_sqlite3_strnicmp"] = function() {
+  return (_sqlite3_strnicmp = Module["_sqlite3_strnicmp"] = Module["asm"]["sqlite3_strnicmp"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_uri_parameter = Module["_sqlite3_uri_parameter"] = function() {
+  return (_sqlite3_uri_parameter = Module["_sqlite3_uri_parameter"] = Module["asm"]["sqlite3_uri_parameter"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var ___errno_location = function() {
+  return (___errno_location = Module["asm"]["__errno_location"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_uri_boolean = Module["_sqlite3_uri_boolean"] = function() {
+  return (_sqlite3_uri_boolean = Module["_sqlite3_uri_boolean"] = Module["asm"]["sqlite3_uri_boolean"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_serialize = Module["_sqlite3_serialize"] = function() {
+  return (_sqlite3_serialize = Module["_sqlite3_serialize"] = Module["asm"]["sqlite3_serialize"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_prepare_v2 = Module["_sqlite3_prepare_v2"] = function() {
+  return (_sqlite3_prepare_v2 = Module["_sqlite3_prepare_v2"] = Module["asm"]["sqlite3_prepare_v2"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_step = Module["_sqlite3_step"] = function() {
+  return (_sqlite3_step = Module["_sqlite3_step"] = Module["asm"]["sqlite3_step"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_column_int64 = Module["_sqlite3_column_int64"] = function() {
+  return (_sqlite3_column_int64 = Module["_sqlite3_column_int64"] = Module["asm"]["sqlite3_column_int64"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_column_int = Module["_sqlite3_column_int"] = function() {
+  return (_sqlite3_column_int = Module["_sqlite3_column_int"] = Module["asm"]["sqlite3_column_int"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_finalize = Module["_sqlite3_finalize"] = function() {
+  return (_sqlite3_finalize = Module["_sqlite3_finalize"] = Module["asm"]["sqlite3_finalize"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_file_control = Module["_sqlite3_file_control"] = function() {
+  return (_sqlite3_file_control = Module["_sqlite3_file_control"] = Module["asm"]["sqlite3_file_control"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_reset = Module["_sqlite3_reset"] = function() {
+  return (_sqlite3_reset = Module["_sqlite3_reset"] = Module["asm"]["sqlite3_reset"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_deserialize = Module["_sqlite3_deserialize"] = function() {
+  return (_sqlite3_deserialize = Module["_sqlite3_deserialize"] = Module["asm"]["sqlite3_deserialize"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_clear_bindings = Module["_sqlite3_clear_bindings"] = function() {
+  return (_sqlite3_clear_bindings = Module["_sqlite3_clear_bindings"] = Module["asm"]["sqlite3_clear_bindings"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_blob = Module["_sqlite3_value_blob"] = function() {
+  return (_sqlite3_value_blob = Module["_sqlite3_value_blob"] = Module["asm"]["sqlite3_value_blob"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_bytes = Module["_sqlite3_value_bytes"] = function() {
+  return (_sqlite3_value_bytes = Module["_sqlite3_value_bytes"] = Module["asm"]["sqlite3_value_bytes"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_double = Module["_sqlite3_value_double"] = function() {
+  return (_sqlite3_value_double = Module["_sqlite3_value_double"] = Module["asm"]["sqlite3_value_double"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_int = Module["_sqlite3_value_int"] = function() {
+  return (_sqlite3_value_int = Module["_sqlite3_value_int"] = Module["asm"]["sqlite3_value_int"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_int64 = Module["_sqlite3_value_int64"] = function() {
+  return (_sqlite3_value_int64 = Module["_sqlite3_value_int64"] = Module["asm"]["sqlite3_value_int64"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_subtype = Module["_sqlite3_value_subtype"] = function() {
+  return (_sqlite3_value_subtype = Module["_sqlite3_value_subtype"] = Module["asm"]["sqlite3_value_subtype"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_pointer = Module["_sqlite3_value_pointer"] = function() {
+  return (_sqlite3_value_pointer = Module["_sqlite3_value_pointer"] = Module["asm"]["sqlite3_value_pointer"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_type = Module["_sqlite3_value_type"] = function() {
+  return (_sqlite3_value_type = Module["_sqlite3_value_type"] = Module["asm"]["sqlite3_value_type"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_nochange = Module["_sqlite3_value_nochange"] = function() {
+  return (_sqlite3_value_nochange = Module["_sqlite3_value_nochange"] = Module["asm"]["sqlite3_value_nochange"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_frombind = Module["_sqlite3_value_frombind"] = function() {
+  return (_sqlite3_value_frombind = Module["_sqlite3_value_frombind"] = Module["asm"]["sqlite3_value_frombind"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_dup = Module["_sqlite3_value_dup"] = function() {
+  return (_sqlite3_value_dup = Module["_sqlite3_value_dup"] = Module["asm"]["sqlite3_value_dup"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_free = Module["_sqlite3_value_free"] = function() {
+  return (_sqlite3_value_free = Module["_sqlite3_value_free"] = Module["asm"]["sqlite3_value_free"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_blob = Module["_sqlite3_result_blob"] = function() {
+  return (_sqlite3_result_blob = Module["_sqlite3_result_blob"] = Module["asm"]["sqlite3_result_blob"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_error_nomem = Module["_sqlite3_result_error_nomem"] = function() {
+  return (_sqlite3_result_error_nomem = Module["_sqlite3_result_error_nomem"] = Module["asm"]["sqlite3_result_error_nomem"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_error_toobig = Module["_sqlite3_result_error_toobig"] = function() {
+  return (_sqlite3_result_error_toobig = Module["_sqlite3_result_error_toobig"] = Module["asm"]["sqlite3_result_error_toobig"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_double = Module["_sqlite3_result_double"] = function() {
+  return (_sqlite3_result_double = Module["_sqlite3_result_double"] = Module["asm"]["sqlite3_result_double"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_error = Module["_sqlite3_result_error"] = function() {
+  return (_sqlite3_result_error = Module["_sqlite3_result_error"] = Module["asm"]["sqlite3_result_error"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_int = Module["_sqlite3_result_int"] = function() {
+  return (_sqlite3_result_int = Module["_sqlite3_result_int"] = Module["asm"]["sqlite3_result_int"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_int64 = Module["_sqlite3_result_int64"] = function() {
+  return (_sqlite3_result_int64 = Module["_sqlite3_result_int64"] = Module["asm"]["sqlite3_result_int64"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_null = Module["_sqlite3_result_null"] = function() {
+  return (_sqlite3_result_null = Module["_sqlite3_result_null"] = Module["asm"]["sqlite3_result_null"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_pointer = Module["_sqlite3_result_pointer"] = function() {
+  return (_sqlite3_result_pointer = Module["_sqlite3_result_pointer"] = Module["asm"]["sqlite3_result_pointer"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_subtype = Module["_sqlite3_result_subtype"] = function() {
+  return (_sqlite3_result_subtype = Module["_sqlite3_result_subtype"] = Module["asm"]["sqlite3_result_subtype"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_text = Module["_sqlite3_result_text"] = function() {
+  return (_sqlite3_result_text = Module["_sqlite3_result_text"] = Module["asm"]["sqlite3_result_text"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_zeroblob = Module["_sqlite3_result_zeroblob"] = function() {
+  return (_sqlite3_result_zeroblob = Module["_sqlite3_result_zeroblob"] = Module["asm"]["sqlite3_result_zeroblob"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_zeroblob64 = Module["_sqlite3_result_zeroblob64"] = function() {
+  return (_sqlite3_result_zeroblob64 = Module["_sqlite3_result_zeroblob64"] = Module["asm"]["sqlite3_result_zeroblob64"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_result_error_code = Module["_sqlite3_result_error_code"] = function() {
+  return (_sqlite3_result_error_code = Module["_sqlite3_result_error_code"] = Module["asm"]["sqlite3_result_error_code"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_user_data = Module["_sqlite3_user_data"] = function() {
+  return (_sqlite3_user_data = Module["_sqlite3_user_data"] = Module["asm"]["sqlite3_user_data"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_context_db_handle = Module["_sqlite3_context_db_handle"] = function() {
+  return (_sqlite3_context_db_handle = Module["_sqlite3_context_db_handle"] = Module["asm"]["sqlite3_context_db_handle"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_vtab_nochange = Module["_sqlite3_vtab_nochange"] = function() {
+  return (_sqlite3_vtab_nochange = Module["_sqlite3_vtab_nochange"] = Module["asm"]["sqlite3_vtab_nochange"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_vtab_in_first = Module["_sqlite3_vtab_in_first"] = function() {
+  return (_sqlite3_vtab_in_first = Module["_sqlite3_vtab_in_first"] = Module["asm"]["sqlite3_vtab_in_first"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_vtab_in_next = Module["_sqlite3_vtab_in_next"] = function() {
+  return (_sqlite3_vtab_in_next = Module["_sqlite3_vtab_in_next"] = Module["asm"]["sqlite3_vtab_in_next"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_aggregate_context = Module["_sqlite3_aggregate_context"] = function() {
+  return (_sqlite3_aggregate_context = Module["_sqlite3_aggregate_context"] = Module["asm"]["sqlite3_aggregate_context"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_get_auxdata = Module["_sqlite3_get_auxdata"] = function() {
+  return (_sqlite3_get_auxdata = Module["_sqlite3_get_auxdata"] = Module["asm"]["sqlite3_get_auxdata"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_set_auxdata = Module["_sqlite3_set_auxdata"] = function() {
+  return (_sqlite3_set_auxdata = Module["_sqlite3_set_auxdata"] = Module["asm"]["sqlite3_set_auxdata"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_column_count = Module["_sqlite3_column_count"] = function() {
+  return (_sqlite3_column_count = Module["_sqlite3_column_count"] = Module["asm"]["sqlite3_column_count"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_data_count = Module["_sqlite3_data_count"] = function() {
+  return (_sqlite3_data_count = Module["_sqlite3_data_count"] = Module["asm"]["sqlite3_data_count"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_column_blob = Module["_sqlite3_column_blob"] = function() {
+  return (_sqlite3_column_blob = Module["_sqlite3_column_blob"] = Module["asm"]["sqlite3_column_blob"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_column_bytes = Module["_sqlite3_column_bytes"] = function() {
+  return (_sqlite3_column_bytes = Module["_sqlite3_column_bytes"] = Module["asm"]["sqlite3_column_bytes"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_column_double = Module["_sqlite3_column_double"] = function() {
+  return (_sqlite3_column_double = Module["_sqlite3_column_double"] = Module["asm"]["sqlite3_column_double"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_column_text = Module["_sqlite3_column_text"] = function() {
+  return (_sqlite3_column_text = Module["_sqlite3_column_text"] = Module["asm"]["sqlite3_column_text"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_column_value = Module["_sqlite3_column_value"] = function() {
+  return (_sqlite3_column_value = Module["_sqlite3_column_value"] = Module["asm"]["sqlite3_column_value"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_column_type = Module["_sqlite3_column_type"] = function() {
+  return (_sqlite3_column_type = Module["_sqlite3_column_type"] = Module["asm"]["sqlite3_column_type"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_column_name = Module["_sqlite3_column_name"] = function() {
+  return (_sqlite3_column_name = Module["_sqlite3_column_name"] = Module["asm"]["sqlite3_column_name"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_bind_blob = Module["_sqlite3_bind_blob"] = function() {
+  return (_sqlite3_bind_blob = Module["_sqlite3_bind_blob"] = Module["asm"]["sqlite3_bind_blob"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_bind_double = Module["_sqlite3_bind_double"] = function() {
+  return (_sqlite3_bind_double = Module["_sqlite3_bind_double"] = Module["asm"]["sqlite3_bind_double"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_bind_int = Module["_sqlite3_bind_int"] = function() {
+  return (_sqlite3_bind_int = Module["_sqlite3_bind_int"] = Module["asm"]["sqlite3_bind_int"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_bind_int64 = Module["_sqlite3_bind_int64"] = function() {
+  return (_sqlite3_bind_int64 = Module["_sqlite3_bind_int64"] = Module["asm"]["sqlite3_bind_int64"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_bind_null = Module["_sqlite3_bind_null"] = function() {
+  return (_sqlite3_bind_null = Module["_sqlite3_bind_null"] = Module["asm"]["sqlite3_bind_null"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_bind_pointer = Module["_sqlite3_bind_pointer"] = function() {
+  return (_sqlite3_bind_pointer = Module["_sqlite3_bind_pointer"] = Module["asm"]["sqlite3_bind_pointer"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_bind_text = Module["_sqlite3_bind_text"] = function() {
+  return (_sqlite3_bind_text = Module["_sqlite3_bind_text"] = Module["asm"]["sqlite3_bind_text"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_bind_parameter_count = Module["_sqlite3_bind_parameter_count"] = function() {
+  return (_sqlite3_bind_parameter_count = Module["_sqlite3_bind_parameter_count"] = Module["asm"]["sqlite3_bind_parameter_count"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_bind_parameter_index = Module["_sqlite3_bind_parameter_index"] = function() {
+  return (_sqlite3_bind_parameter_index = Module["_sqlite3_bind_parameter_index"] = Module["asm"]["sqlite3_bind_parameter_index"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_db_handle = Module["_sqlite3_db_handle"] = function() {
+  return (_sqlite3_db_handle = Module["_sqlite3_db_handle"] = Module["asm"]["sqlite3_db_handle"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_stmt_readonly = Module["_sqlite3_stmt_readonly"] = function() {
+  return (_sqlite3_stmt_readonly = Module["_sqlite3_stmt_readonly"] = Module["asm"]["sqlite3_stmt_readonly"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_stmt_isexplain = Module["_sqlite3_stmt_isexplain"] = function() {
+  return (_sqlite3_stmt_isexplain = Module["_sqlite3_stmt_isexplain"] = Module["asm"]["sqlite3_stmt_isexplain"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_stmt_status = Module["_sqlite3_stmt_status"] = function() {
+  return (_sqlite3_stmt_status = Module["_sqlite3_stmt_status"] = Module["asm"]["sqlite3_stmt_status"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_sql = Module["_sqlite3_sql"] = function() {
+  return (_sqlite3_sql = Module["_sqlite3_sql"] = Module["asm"]["sqlite3_sql"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_expanded_sql = Module["_sqlite3_expanded_sql"] = function() {
+  return (_sqlite3_expanded_sql = Module["_sqlite3_expanded_sql"] = Module["asm"]["sqlite3_expanded_sql"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_preupdate_old = Module["_sqlite3_preupdate_old"] = function() {
+  return (_sqlite3_preupdate_old = Module["_sqlite3_preupdate_old"] = Module["asm"]["sqlite3_preupdate_old"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_preupdate_count = Module["_sqlite3_preupdate_count"] = function() {
+  return (_sqlite3_preupdate_count = Module["_sqlite3_preupdate_count"] = Module["asm"]["sqlite3_preupdate_count"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_preupdate_depth = Module["_sqlite3_preupdate_depth"] = function() {
+  return (_sqlite3_preupdate_depth = Module["_sqlite3_preupdate_depth"] = Module["asm"]["sqlite3_preupdate_depth"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_preupdate_blobwrite = Module["_sqlite3_preupdate_blobwrite"] = function() {
+  return (_sqlite3_preupdate_blobwrite = Module["_sqlite3_preupdate_blobwrite"] = Module["asm"]["sqlite3_preupdate_blobwrite"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_preupdate_new = Module["_sqlite3_preupdate_new"] = function() {
+  return (_sqlite3_preupdate_new = Module["_sqlite3_preupdate_new"] = Module["asm"]["sqlite3_preupdate_new"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_value_numeric_type = Module["_sqlite3_value_numeric_type"] = function() {
+  return (_sqlite3_value_numeric_type = Module["_sqlite3_value_numeric_type"] = Module["asm"]["sqlite3_value_numeric_type"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_errmsg = Module["_sqlite3_errmsg"] = function() {
+  return (_sqlite3_errmsg = Module["_sqlite3_errmsg"] = Module["asm"]["sqlite3_errmsg"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_set_authorizer = Module["_sqlite3_set_authorizer"] = function() {
+  return (_sqlite3_set_authorizer = Module["_sqlite3_set_authorizer"] = Module["asm"]["sqlite3_set_authorizer"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_strglob = Module["_sqlite3_strglob"] = function() {
+  return (_sqlite3_strglob = Module["_sqlite3_strglob"] = Module["asm"]["sqlite3_strglob"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_strlike = Module["_sqlite3_strlike"] = function() {
+  return (_sqlite3_strlike = Module["_sqlite3_strlike"] = Module["asm"]["sqlite3_strlike"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_exec = Module["_sqlite3_exec"] = function() {
+  return (_sqlite3_exec = Module["_sqlite3_exec"] = Module["asm"]["sqlite3_exec"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_auto_extension = Module["_sqlite3_auto_extension"] = function() {
+  return (_sqlite3_auto_extension = Module["_sqlite3_auto_extension"] = Module["asm"]["sqlite3_auto_extension"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_cancel_auto_extension = Module["_sqlite3_cancel_auto_extension"] = function() {
+  return (_sqlite3_cancel_auto_extension = Module["_sqlite3_cancel_auto_extension"] = Module["asm"]["sqlite3_cancel_auto_extension"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_reset_auto_extension = Module["_sqlite3_reset_auto_extension"] = function() {
+  return (_sqlite3_reset_auto_extension = Module["_sqlite3_reset_auto_extension"] = Module["asm"]["sqlite3_reset_auto_extension"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_prepare_v3 = Module["_sqlite3_prepare_v3"] = function() {
+  return (_sqlite3_prepare_v3 = Module["_sqlite3_prepare_v3"] = Module["asm"]["sqlite3_prepare_v3"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_create_module = Module["_sqlite3_create_module"] = function() {
+  return (_sqlite3_create_module = Module["_sqlite3_create_module"] = Module["asm"]["sqlite3_create_module"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_create_module_v2 = Module["_sqlite3_create_module_v2"] = function() {
+  return (_sqlite3_create_module_v2 = Module["_sqlite3_create_module_v2"] = Module["asm"]["sqlite3_create_module_v2"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_drop_modules = Module["_sqlite3_drop_modules"] = function() {
+  return (_sqlite3_drop_modules = Module["_sqlite3_drop_modules"] = Module["asm"]["sqlite3_drop_modules"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_declare_vtab = Module["_sqlite3_declare_vtab"] = function() {
+  return (_sqlite3_declare_vtab = Module["_sqlite3_declare_vtab"] = Module["asm"]["sqlite3_declare_vtab"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_vtab_on_conflict = Module["_sqlite3_vtab_on_conflict"] = function() {
+  return (_sqlite3_vtab_on_conflict = Module["_sqlite3_vtab_on_conflict"] = Module["asm"]["sqlite3_vtab_on_conflict"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_vtab_collation = Module["_sqlite3_vtab_collation"] = function() {
+  return (_sqlite3_vtab_collation = Module["_sqlite3_vtab_collation"] = Module["asm"]["sqlite3_vtab_collation"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_vtab_in = Module["_sqlite3_vtab_in"] = function() {
+  return (_sqlite3_vtab_in = Module["_sqlite3_vtab_in"] = Module["asm"]["sqlite3_vtab_in"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_vtab_rhs_value = Module["_sqlite3_vtab_rhs_value"] = function() {
+  return (_sqlite3_vtab_rhs_value = Module["_sqlite3_vtab_rhs_value"] = Module["asm"]["sqlite3_vtab_rhs_value"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_vtab_distinct = Module["_sqlite3_vtab_distinct"] = function() {
+  return (_sqlite3_vtab_distinct = Module["_sqlite3_vtab_distinct"] = Module["asm"]["sqlite3_vtab_distinct"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_keyword_name = Module["_sqlite3_keyword_name"] = function() {
+  return (_sqlite3_keyword_name = Module["_sqlite3_keyword_name"] = Module["asm"]["sqlite3_keyword_name"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_keyword_count = Module["_sqlite3_keyword_count"] = function() {
+  return (_sqlite3_keyword_count = Module["_sqlite3_keyword_count"] = Module["asm"]["sqlite3_keyword_count"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_keyword_check = Module["_sqlite3_keyword_check"] = function() {
+  return (_sqlite3_keyword_check = Module["_sqlite3_keyword_check"] = Module["asm"]["sqlite3_keyword_check"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_complete = Module["_sqlite3_complete"] = function() {
+  return (_sqlite3_complete = Module["_sqlite3_complete"] = Module["asm"]["sqlite3_complete"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_libversion = Module["_sqlite3_libversion"] = function() {
+  return (_sqlite3_libversion = Module["_sqlite3_libversion"] = Module["asm"]["sqlite3_libversion"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_libversion_number = Module["_sqlite3_libversion_number"] = function() {
+  return (_sqlite3_libversion_number = Module["_sqlite3_libversion_number"] = Module["asm"]["sqlite3_libversion_number"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_shutdown = Module["_sqlite3_shutdown"] = function() {
+  return (_sqlite3_shutdown = Module["_sqlite3_shutdown"] = Module["asm"]["sqlite3_shutdown"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_last_insert_rowid = Module["_sqlite3_last_insert_rowid"] = function() {
+  return (_sqlite3_last_insert_rowid = Module["_sqlite3_last_insert_rowid"] = Module["asm"]["sqlite3_last_insert_rowid"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_set_last_insert_rowid = Module["_sqlite3_set_last_insert_rowid"] = function() {
+  return (_sqlite3_set_last_insert_rowid = Module["_sqlite3_set_last_insert_rowid"] = Module["asm"]["sqlite3_set_last_insert_rowid"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_changes64 = Module["_sqlite3_changes64"] = function() {
+  return (_sqlite3_changes64 = Module["_sqlite3_changes64"] = Module["asm"]["sqlite3_changes64"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_changes = Module["_sqlite3_changes"] = function() {
+  return (_sqlite3_changes = Module["_sqlite3_changes"] = Module["asm"]["sqlite3_changes"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_total_changes64 = Module["_sqlite3_total_changes64"] = function() {
+  return (_sqlite3_total_changes64 = Module["_sqlite3_total_changes64"] = Module["asm"]["sqlite3_total_changes64"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_total_changes = Module["_sqlite3_total_changes"] = function() {
+  return (_sqlite3_total_changes = Module["_sqlite3_total_changes"] = Module["asm"]["sqlite3_total_changes"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_txn_state = Module["_sqlite3_txn_state"] = function() {
+  return (_sqlite3_txn_state = Module["_sqlite3_txn_state"] = Module["asm"]["sqlite3_txn_state"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_close_v2 = Module["_sqlite3_close_v2"] = function() {
+  return (_sqlite3_close_v2 = Module["_sqlite3_close_v2"] = Module["asm"]["sqlite3_close_v2"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_busy_handler = Module["_sqlite3_busy_handler"] = function() {
+  return (_sqlite3_busy_handler = Module["_sqlite3_busy_handler"] = Module["asm"]["sqlite3_busy_handler"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_progress_handler = Module["_sqlite3_progress_handler"] = function() {
+  return (_sqlite3_progress_handler = Module["_sqlite3_progress_handler"] = Module["asm"]["sqlite3_progress_handler"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_busy_timeout = Module["_sqlite3_busy_timeout"] = function() {
+  return (_sqlite3_busy_timeout = Module["_sqlite3_busy_timeout"] = Module["asm"]["sqlite3_busy_timeout"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_create_function = Module["_sqlite3_create_function"] = function() {
+  return (_sqlite3_create_function = Module["_sqlite3_create_function"] = Module["asm"]["sqlite3_create_function"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_create_function_v2 = Module["_sqlite3_create_function_v2"] = function() {
+  return (_sqlite3_create_function_v2 = Module["_sqlite3_create_function_v2"] = Module["asm"]["sqlite3_create_function_v2"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_create_window_function = Module["_sqlite3_create_window_function"] = function() {
+  return (_sqlite3_create_window_function = Module["_sqlite3_create_window_function"] = Module["asm"]["sqlite3_create_window_function"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_overload_function = Module["_sqlite3_overload_function"] = function() {
+  return (_sqlite3_overload_function = Module["_sqlite3_overload_function"] = Module["asm"]["sqlite3_overload_function"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_trace_v2 = Module["_sqlite3_trace_v2"] = function() {
+  return (_sqlite3_trace_v2 = Module["_sqlite3_trace_v2"] = Module["asm"]["sqlite3_trace_v2"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_commit_hook = Module["_sqlite3_commit_hook"] = function() {
+  return (_sqlite3_commit_hook = Module["_sqlite3_commit_hook"] = Module["asm"]["sqlite3_commit_hook"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_update_hook = Module["_sqlite3_update_hook"] = function() {
+  return (_sqlite3_update_hook = Module["_sqlite3_update_hook"] = Module["asm"]["sqlite3_update_hook"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_rollback_hook = Module["_sqlite3_rollback_hook"] = function() {
+  return (_sqlite3_rollback_hook = Module["_sqlite3_rollback_hook"] = Module["asm"]["sqlite3_rollback_hook"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_preupdate_hook = Module["_sqlite3_preupdate_hook"] = function() {
+  return (_sqlite3_preupdate_hook = Module["_sqlite3_preupdate_hook"] = Module["asm"]["sqlite3_preupdate_hook"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_error_offset = Module["_sqlite3_error_offset"] = function() {
+  return (_sqlite3_error_offset = Module["_sqlite3_error_offset"] = Module["asm"]["sqlite3_error_offset"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_errcode = Module["_sqlite3_errcode"] = function() {
+  return (_sqlite3_errcode = Module["_sqlite3_errcode"] = Module["asm"]["sqlite3_errcode"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_extended_errcode = Module["_sqlite3_extended_errcode"] = function() {
+  return (_sqlite3_extended_errcode = Module["_sqlite3_extended_errcode"] = Module["asm"]["sqlite3_extended_errcode"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_errstr = Module["_sqlite3_errstr"] = function() {
+  return (_sqlite3_errstr = Module["_sqlite3_errstr"] = Module["asm"]["sqlite3_errstr"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_limit = Module["_sqlite3_limit"] = function() {
+  return (_sqlite3_limit = Module["_sqlite3_limit"] = Module["asm"]["sqlite3_limit"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_open = Module["_sqlite3_open"] = function() {
+  return (_sqlite3_open = Module["_sqlite3_open"] = Module["asm"]["sqlite3_open"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_open_v2 = Module["_sqlite3_open_v2"] = function() {
+  return (_sqlite3_open_v2 = Module["_sqlite3_open_v2"] = Module["asm"]["sqlite3_open_v2"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_create_collation = Module["_sqlite3_create_collation"] = function() {
+  return (_sqlite3_create_collation = Module["_sqlite3_create_collation"] = Module["asm"]["sqlite3_create_collation"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_create_collation_v2 = Module["_sqlite3_create_collation_v2"] = function() {
+  return (_sqlite3_create_collation_v2 = Module["_sqlite3_create_collation_v2"] = Module["asm"]["sqlite3_create_collation_v2"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_collation_needed = Module["_sqlite3_collation_needed"] = function() {
+  return (_sqlite3_collation_needed = Module["_sqlite3_collation_needed"] = Module["asm"]["sqlite3_collation_needed"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_table_column_metadata = Module["_sqlite3_table_column_metadata"] = function() {
+  return (_sqlite3_table_column_metadata = Module["_sqlite3_table_column_metadata"] = Module["asm"]["sqlite3_table_column_metadata"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_extended_result_codes = Module["_sqlite3_extended_result_codes"] = function() {
+  return (_sqlite3_extended_result_codes = Module["_sqlite3_extended_result_codes"] = Module["asm"]["sqlite3_extended_result_codes"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_uri_key = Module["_sqlite3_uri_key"] = function() {
+  return (_sqlite3_uri_key = Module["_sqlite3_uri_key"] = Module["asm"]["sqlite3_uri_key"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_uri_int64 = Module["_sqlite3_uri_int64"] = function() {
+  return (_sqlite3_uri_int64 = Module["_sqlite3_uri_int64"] = Module["asm"]["sqlite3_uri_int64"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_db_name = Module["_sqlite3_db_name"] = function() {
+  return (_sqlite3_db_name = Module["_sqlite3_db_name"] = Module["asm"]["sqlite3_db_name"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_db_filename = Module["_sqlite3_db_filename"] = function() {
+  return (_sqlite3_db_filename = Module["_sqlite3_db_filename"] = Module["asm"]["sqlite3_db_filename"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_compileoption_used = Module["_sqlite3_compileoption_used"] = function() {
+  return (_sqlite3_compileoption_used = Module["_sqlite3_compileoption_used"] = Module["asm"]["sqlite3_compileoption_used"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_compileoption_get = Module["_sqlite3_compileoption_get"] = function() {
+  return (_sqlite3_compileoption_get = Module["_sqlite3_compileoption_get"] = Module["asm"]["sqlite3_compileoption_get"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_diff = Module["_sqlite3session_diff"] = function() {
+  return (_sqlite3session_diff = Module["_sqlite3session_diff"] = Module["asm"]["sqlite3session_diff"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_attach = Module["_sqlite3session_attach"] = function() {
+  return (_sqlite3session_attach = Module["_sqlite3session_attach"] = Module["asm"]["sqlite3session_attach"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_create = Module["_sqlite3session_create"] = function() {
+  return (_sqlite3session_create = Module["_sqlite3session_create"] = Module["asm"]["sqlite3session_create"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_delete = Module["_sqlite3session_delete"] = function() {
+  return (_sqlite3session_delete = Module["_sqlite3session_delete"] = Module["asm"]["sqlite3session_delete"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_table_filter = Module["_sqlite3session_table_filter"] = function() {
+  return (_sqlite3session_table_filter = Module["_sqlite3session_table_filter"] = Module["asm"]["sqlite3session_table_filter"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_changeset = Module["_sqlite3session_changeset"] = function() {
+  return (_sqlite3session_changeset = Module["_sqlite3session_changeset"] = Module["asm"]["sqlite3session_changeset"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_changeset_strm = Module["_sqlite3session_changeset_strm"] = function() {
+  return (_sqlite3session_changeset_strm = Module["_sqlite3session_changeset_strm"] = Module["asm"]["sqlite3session_changeset_strm"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_patchset_strm = Module["_sqlite3session_patchset_strm"] = function() {
+  return (_sqlite3session_patchset_strm = Module["_sqlite3session_patchset_strm"] = Module["asm"]["sqlite3session_patchset_strm"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_patchset = Module["_sqlite3session_patchset"] = function() {
+  return (_sqlite3session_patchset = Module["_sqlite3session_patchset"] = Module["asm"]["sqlite3session_patchset"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_enable = Module["_sqlite3session_enable"] = function() {
+  return (_sqlite3session_enable = Module["_sqlite3session_enable"] = Module["asm"]["sqlite3session_enable"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_indirect = Module["_sqlite3session_indirect"] = function() {
+  return (_sqlite3session_indirect = Module["_sqlite3session_indirect"] = Module["asm"]["sqlite3session_indirect"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_isempty = Module["_sqlite3session_isempty"] = function() {
+  return (_sqlite3session_isempty = Module["_sqlite3session_isempty"] = Module["asm"]["sqlite3session_isempty"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_memory_used = Module["_sqlite3session_memory_used"] = function() {
+  return (_sqlite3session_memory_used = Module["_sqlite3session_memory_used"] = Module["asm"]["sqlite3session_memory_used"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_object_config = Module["_sqlite3session_object_config"] = function() {
+  return (_sqlite3session_object_config = Module["_sqlite3session_object_config"] = Module["asm"]["sqlite3session_object_config"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_changeset_size = Module["_sqlite3session_changeset_size"] = function() {
+  return (_sqlite3session_changeset_size = Module["_sqlite3session_changeset_size"] = Module["asm"]["sqlite3session_changeset_size"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_start = Module["_sqlite3changeset_start"] = function() {
+  return (_sqlite3changeset_start = Module["_sqlite3changeset_start"] = Module["asm"]["sqlite3changeset_start"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_start_v2 = Module["_sqlite3changeset_start_v2"] = function() {
+  return (_sqlite3changeset_start_v2 = Module["_sqlite3changeset_start_v2"] = Module["asm"]["sqlite3changeset_start_v2"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_start_strm = Module["_sqlite3changeset_start_strm"] = function() {
+  return (_sqlite3changeset_start_strm = Module["_sqlite3changeset_start_strm"] = Module["asm"]["sqlite3changeset_start_strm"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_start_v2_strm = Module["_sqlite3changeset_start_v2_strm"] = function() {
+  return (_sqlite3changeset_start_v2_strm = Module["_sqlite3changeset_start_v2_strm"] = Module["asm"]["sqlite3changeset_start_v2_strm"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_next = Module["_sqlite3changeset_next"] = function() {
+  return (_sqlite3changeset_next = Module["_sqlite3changeset_next"] = Module["asm"]["sqlite3changeset_next"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_op = Module["_sqlite3changeset_op"] = function() {
+  return (_sqlite3changeset_op = Module["_sqlite3changeset_op"] = Module["asm"]["sqlite3changeset_op"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_pk = Module["_sqlite3changeset_pk"] = function() {
+  return (_sqlite3changeset_pk = Module["_sqlite3changeset_pk"] = Module["asm"]["sqlite3changeset_pk"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_old = Module["_sqlite3changeset_old"] = function() {
+  return (_sqlite3changeset_old = Module["_sqlite3changeset_old"] = Module["asm"]["sqlite3changeset_old"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_new = Module["_sqlite3changeset_new"] = function() {
+  return (_sqlite3changeset_new = Module["_sqlite3changeset_new"] = Module["asm"]["sqlite3changeset_new"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_conflict = Module["_sqlite3changeset_conflict"] = function() {
+  return (_sqlite3changeset_conflict = Module["_sqlite3changeset_conflict"] = Module["asm"]["sqlite3changeset_conflict"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_fk_conflicts = Module["_sqlite3changeset_fk_conflicts"] = function() {
+  return (_sqlite3changeset_fk_conflicts = Module["_sqlite3changeset_fk_conflicts"] = Module["asm"]["sqlite3changeset_fk_conflicts"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_finalize = Module["_sqlite3changeset_finalize"] = function() {
+  return (_sqlite3changeset_finalize = Module["_sqlite3changeset_finalize"] = Module["asm"]["sqlite3changeset_finalize"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_invert = Module["_sqlite3changeset_invert"] = function() {
+  return (_sqlite3changeset_invert = Module["_sqlite3changeset_invert"] = Module["asm"]["sqlite3changeset_invert"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_invert_strm = Module["_sqlite3changeset_invert_strm"] = function() {
+  return (_sqlite3changeset_invert_strm = Module["_sqlite3changeset_invert_strm"] = Module["asm"]["sqlite3changeset_invert_strm"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_apply_v2 = Module["_sqlite3changeset_apply_v2"] = function() {
+  return (_sqlite3changeset_apply_v2 = Module["_sqlite3changeset_apply_v2"] = Module["asm"]["sqlite3changeset_apply_v2"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_apply = Module["_sqlite3changeset_apply"] = function() {
+  return (_sqlite3changeset_apply = Module["_sqlite3changeset_apply"] = Module["asm"]["sqlite3changeset_apply"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_apply_v2_strm = Module["_sqlite3changeset_apply_v2_strm"] = function() {
+  return (_sqlite3changeset_apply_v2_strm = Module["_sqlite3changeset_apply_v2_strm"] = Module["asm"]["sqlite3changeset_apply_v2_strm"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_apply_strm = Module["_sqlite3changeset_apply_strm"] = function() {
+  return (_sqlite3changeset_apply_strm = Module["_sqlite3changeset_apply_strm"] = Module["asm"]["sqlite3changeset_apply_strm"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changegroup_new = Module["_sqlite3changegroup_new"] = function() {
+  return (_sqlite3changegroup_new = Module["_sqlite3changegroup_new"] = Module["asm"]["sqlite3changegroup_new"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changegroup_add = Module["_sqlite3changegroup_add"] = function() {
+  return (_sqlite3changegroup_add = Module["_sqlite3changegroup_add"] = Module["asm"]["sqlite3changegroup_add"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changegroup_output = Module["_sqlite3changegroup_output"] = function() {
+  return (_sqlite3changegroup_output = Module["_sqlite3changegroup_output"] = Module["asm"]["sqlite3changegroup_output"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changegroup_add_strm = Module["_sqlite3changegroup_add_strm"] = function() {
+  return (_sqlite3changegroup_add_strm = Module["_sqlite3changegroup_add_strm"] = Module["asm"]["sqlite3changegroup_add_strm"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changegroup_output_strm = Module["_sqlite3changegroup_output_strm"] = function() {
+  return (_sqlite3changegroup_output_strm = Module["_sqlite3changegroup_output_strm"] = Module["asm"]["sqlite3changegroup_output_strm"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changegroup_delete = Module["_sqlite3changegroup_delete"] = function() {
+  return (_sqlite3changegroup_delete = Module["_sqlite3changegroup_delete"] = Module["asm"]["sqlite3changegroup_delete"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_concat = Module["_sqlite3changeset_concat"] = function() {
+  return (_sqlite3changeset_concat = Module["_sqlite3changeset_concat"] = Module["asm"]["sqlite3changeset_concat"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3changeset_concat_strm = Module["_sqlite3changeset_concat_strm"] = function() {
+  return (_sqlite3changeset_concat_strm = Module["_sqlite3changeset_concat_strm"] = Module["asm"]["sqlite3changeset_concat_strm"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3session_config = Module["_sqlite3session_config"] = function() {
+  return (_sqlite3session_config = Module["_sqlite3session_config"] = Module["asm"]["sqlite3session_config"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_sourceid = Module["_sqlite3_sourceid"] = function() {
+  return (_sqlite3_sourceid = Module["_sqlite3_sourceid"] = Module["asm"]["sqlite3_sourceid"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_pstack_ptr = Module["_sqlite3_wasm_pstack_ptr"] = function() {
+  return (_sqlite3_wasm_pstack_ptr = Module["_sqlite3_wasm_pstack_ptr"] = Module["asm"]["sqlite3_wasm_pstack_ptr"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_pstack_restore = Module["_sqlite3_wasm_pstack_restore"] = function() {
+  return (_sqlite3_wasm_pstack_restore = Module["_sqlite3_wasm_pstack_restore"] = Module["asm"]["sqlite3_wasm_pstack_restore"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_pstack_alloc = Module["_sqlite3_wasm_pstack_alloc"] = function() {
+  return (_sqlite3_wasm_pstack_alloc = Module["_sqlite3_wasm_pstack_alloc"] = Module["asm"]["sqlite3_wasm_pstack_alloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_pstack_remaining = Module["_sqlite3_wasm_pstack_remaining"] = function() {
+  return (_sqlite3_wasm_pstack_remaining = Module["_sqlite3_wasm_pstack_remaining"] = Module["asm"]["sqlite3_wasm_pstack_remaining"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_pstack_quota = Module["_sqlite3_wasm_pstack_quota"] = function() {
+  return (_sqlite3_wasm_pstack_quota = Module["_sqlite3_wasm_pstack_quota"] = Module["asm"]["sqlite3_wasm_pstack_quota"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_db_error = Module["_sqlite3_wasm_db_error"] = function() {
+  return (_sqlite3_wasm_db_error = Module["_sqlite3_wasm_db_error"] = Module["asm"]["sqlite3_wasm_db_error"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_test_struct = Module["_sqlite3_wasm_test_struct"] = function() {
+  return (_sqlite3_wasm_test_struct = Module["_sqlite3_wasm_test_struct"] = Module["asm"]["sqlite3_wasm_test_struct"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_enum_json = Module["_sqlite3_wasm_enum_json"] = function() {
+  return (_sqlite3_wasm_enum_json = Module["_sqlite3_wasm_enum_json"] = Module["asm"]["sqlite3_wasm_enum_json"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_vfs_unlink = Module["_sqlite3_wasm_vfs_unlink"] = function() {
+  return (_sqlite3_wasm_vfs_unlink = Module["_sqlite3_wasm_vfs_unlink"] = Module["asm"]["sqlite3_wasm_vfs_unlink"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_db_vfs = Module["_sqlite3_wasm_db_vfs"] = function() {
+  return (_sqlite3_wasm_db_vfs = Module["_sqlite3_wasm_db_vfs"] = Module["asm"]["sqlite3_wasm_db_vfs"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_db_reset = Module["_sqlite3_wasm_db_reset"] = function() {
+  return (_sqlite3_wasm_db_reset = Module["_sqlite3_wasm_db_reset"] = Module["asm"]["sqlite3_wasm_db_reset"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_db_export_chunked = Module["_sqlite3_wasm_db_export_chunked"] = function() {
+  return (_sqlite3_wasm_db_export_chunked = Module["_sqlite3_wasm_db_export_chunked"] = Module["asm"]["sqlite3_wasm_db_export_chunked"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_db_serialize = Module["_sqlite3_wasm_db_serialize"] = function() {
+  return (_sqlite3_wasm_db_serialize = Module["_sqlite3_wasm_db_serialize"] = Module["asm"]["sqlite3_wasm_db_serialize"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_vfs_create_file = Module["_sqlite3_wasm_vfs_create_file"] = function() {
+  return (_sqlite3_wasm_vfs_create_file = Module["_sqlite3_wasm_vfs_create_file"] = Module["asm"]["sqlite3_wasm_vfs_create_file"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_kvvfsMakeKeyOnPstack = Module["_sqlite3_wasm_kvvfsMakeKeyOnPstack"] = function() {
+  return (_sqlite3_wasm_kvvfsMakeKeyOnPstack = Module["_sqlite3_wasm_kvvfsMakeKeyOnPstack"] = Module["asm"]["sqlite3_wasm_kvvfsMakeKeyOnPstack"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_kvvfs_methods = Module["_sqlite3_wasm_kvvfs_methods"] = function() {
+  return (_sqlite3_wasm_kvvfs_methods = Module["_sqlite3_wasm_kvvfs_methods"] = Module["asm"]["sqlite3_wasm_kvvfs_methods"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_vtab_config = Module["_sqlite3_wasm_vtab_config"] = function() {
+  return (_sqlite3_wasm_vtab_config = Module["_sqlite3_wasm_vtab_config"] = Module["asm"]["sqlite3_wasm_vtab_config"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_db_config_ip = Module["_sqlite3_wasm_db_config_ip"] = function() {
+  return (_sqlite3_wasm_db_config_ip = Module["_sqlite3_wasm_db_config_ip"] = Module["asm"]["sqlite3_wasm_db_config_ip"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_db_config_pii = Module["_sqlite3_wasm_db_config_pii"] = function() {
+  return (_sqlite3_wasm_db_config_pii = Module["_sqlite3_wasm_db_config_pii"] = Module["asm"]["sqlite3_wasm_db_config_pii"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_db_config_s = Module["_sqlite3_wasm_db_config_s"] = function() {
+  return (_sqlite3_wasm_db_config_s = Module["_sqlite3_wasm_db_config_s"] = Module["asm"]["sqlite3_wasm_db_config_s"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_config_i = Module["_sqlite3_wasm_config_i"] = function() {
+  return (_sqlite3_wasm_config_i = Module["_sqlite3_wasm_config_i"] = Module["asm"]["sqlite3_wasm_config_i"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_config_ii = Module["_sqlite3_wasm_config_ii"] = function() {
+  return (_sqlite3_wasm_config_ii = Module["_sqlite3_wasm_config_ii"] = Module["asm"]["sqlite3_wasm_config_ii"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_config_j = Module["_sqlite3_wasm_config_j"] = function() {
+  return (_sqlite3_wasm_config_j = Module["_sqlite3_wasm_config_j"] = Module["asm"]["sqlite3_wasm_config_j"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_init_wasmfs = Module["_sqlite3_wasm_init_wasmfs"] = function() {
+  return (_sqlite3_wasm_init_wasmfs = Module["_sqlite3_wasm_init_wasmfs"] = Module["asm"]["sqlite3_wasm_init_wasmfs"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_test_intptr = Module["_sqlite3_wasm_test_intptr"] = function() {
+  return (_sqlite3_wasm_test_intptr = Module["_sqlite3_wasm_test_intptr"] = Module["asm"]["sqlite3_wasm_test_intptr"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_test_voidptr = Module["_sqlite3_wasm_test_voidptr"] = function() {
+  return (_sqlite3_wasm_test_voidptr = Module["_sqlite3_wasm_test_voidptr"] = Module["asm"]["sqlite3_wasm_test_voidptr"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_test_int64_max = Module["_sqlite3_wasm_test_int64_max"] = function() {
+  return (_sqlite3_wasm_test_int64_max = Module["_sqlite3_wasm_test_int64_max"] = Module["asm"]["sqlite3_wasm_test_int64_max"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_test_int64_min = Module["_sqlite3_wasm_test_int64_min"] = function() {
+  return (_sqlite3_wasm_test_int64_min = Module["_sqlite3_wasm_test_int64_min"] = Module["asm"]["sqlite3_wasm_test_int64_min"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_test_int64_times2 = Module["_sqlite3_wasm_test_int64_times2"] = function() {
+  return (_sqlite3_wasm_test_int64_times2 = Module["_sqlite3_wasm_test_int64_times2"] = Module["asm"]["sqlite3_wasm_test_int64_times2"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_test_int64_minmax = Module["_sqlite3_wasm_test_int64_minmax"] = function() {
+  return (_sqlite3_wasm_test_int64_minmax = Module["_sqlite3_wasm_test_int64_minmax"] = Module["asm"]["sqlite3_wasm_test_int64_minmax"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_test_int64ptr = Module["_sqlite3_wasm_test_int64ptr"] = function() {
+  return (_sqlite3_wasm_test_int64ptr = Module["_sqlite3_wasm_test_int64ptr"] = Module["asm"]["sqlite3_wasm_test_int64ptr"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_test_stack_overflow = Module["_sqlite3_wasm_test_stack_overflow"] = function() {
+  return (_sqlite3_wasm_test_stack_overflow = Module["_sqlite3_wasm_test_stack_overflow"] = Module["asm"]["sqlite3_wasm_test_stack_overflow"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _sqlite3_wasm_test_str_hello = Module["_sqlite3_wasm_test_str_hello"] = function() {
+  return (_sqlite3_wasm_test_str_hello = Module["_sqlite3_wasm_test_str_hello"] = Module["asm"]["sqlite3_wasm_test_str_hello"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _malloc = Module["_malloc"] = function() {
+  return (_malloc = Module["_malloc"] = Module["asm"]["malloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _free = Module["_free"] = function() {
+  return (_free = Module["_free"] = Module["asm"]["free"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _realloc = Module["_realloc"] = function() {
+  return (_realloc = Module["_realloc"] = Module["asm"]["realloc"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var stackSave = function() {
+  return (stackSave = Module["asm"]["stackSave"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var stackRestore = function() {
+  return (stackRestore = Module["asm"]["stackRestore"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var stackAlloc = function() {
+  return (stackAlloc = Module["asm"]["stackAlloc"]).apply(null, arguments);
 };
 
 
@@ -5031,262 +5183,6 @@ var _emscripten_stack_get_current = function() {
 // === Auto-generated postamble setup entry stuff ===
 
 Module["wasmMemory"] = wasmMemory;
-var missingLibrarySymbols = [
-  'stringToNewUTF8',
-  'exitJS',
-  'inetPton4',
-  'inetNtop4',
-  'inetPton6',
-  'inetNtop6',
-  'readSockaddr',
-  'writeSockaddr',
-  'getHostByName',
-  'traverseStack',
-  'convertPCtoSourceLocation',
-  'readEmAsmArgs',
-  'jstoi_q',
-  'jstoi_s',
-  'listenOnce',
-  'autoResumeAudioContext',
-  'getDynCaller',
-  'dynCall',
-  'handleException',
-  'runtimeKeepalivePush',
-  'runtimeKeepalivePop',
-  'callUserCallback',
-  'maybeExit',
-  'safeSetTimeout',
-  'asmjsMangle',
-  'HandleAllocator',
-  'getNativeTypeSize',
-  'STACK_SIZE',
-  'STACK_ALIGN',
-  'POINTER_SIZE',
-  'ASSERTIONS',
-  'writeI53ToI64',
-  'writeI53ToI64Clamped',
-  'writeI53ToI64Signaling',
-  'writeI53ToU64Clamped',
-  'writeI53ToU64Signaling',
-  'readI53FromU64',
-  'convertI32PairToI53',
-  'convertI32PairToI53Checked',
-  'convertU32PairToI53',
-  'getCFunc',
-  'ccall',
-  'cwrap',
-  'uleb128Encode',
-  'sigToWasmTypes',
-  'generateFuncType',
-  'convertJsFunctionToWasm',
-  'getEmptyTableSlot',
-  'updateTableMap',
-  'getFunctionAddress',
-  'addFunction',
-  'removeFunction',
-  'reallyNegative',
-  'unSign',
-  'strLen',
-  'reSign',
-  'formatString',
-  'intArrayToString',
-  'AsciiToString',
-  'stringToAscii',
-  'UTF16ToString',
-  'stringToUTF16',
-  'lengthBytesUTF16',
-  'UTF32ToString',
-  'stringToUTF32',
-  'lengthBytesUTF32',
-  'allocateUTF8OnStack',
-  'writeStringToMemory',
-  'writeArrayToMemory',
-  'getSocketFromFD',
-  'getSocketAddress',
-  'registerKeyEventCallback',
-  'maybeCStringToJsString',
-  'findEventTarget',
-  'findCanvasEventTarget',
-  'getBoundingClientRect',
-  'fillMouseEventData',
-  'registerMouseEventCallback',
-  'registerWheelEventCallback',
-  'registerUiEventCallback',
-  'registerFocusEventCallback',
-  'fillDeviceOrientationEventData',
-  'registerDeviceOrientationEventCallback',
-  'fillDeviceMotionEventData',
-  'registerDeviceMotionEventCallback',
-  'screenOrientation',
-  'fillOrientationChangeEventData',
-  'registerOrientationChangeEventCallback',
-  'fillFullscreenChangeEventData',
-  'registerFullscreenChangeEventCallback',
-  'JSEvents_requestFullscreen',
-  'JSEvents_resizeCanvasForFullscreen',
-  'registerRestoreOldStyle',
-  'hideEverythingExceptGivenElement',
-  'restoreHiddenElements',
-  'setLetterbox',
-  'softFullscreenResizeWebGLRenderTarget',
-  'doRequestFullscreen',
-  'fillPointerlockChangeEventData',
-  'registerPointerlockChangeEventCallback',
-  'registerPointerlockErrorEventCallback',
-  'requestPointerLock',
-  'fillVisibilityChangeEventData',
-  'registerVisibilityChangeEventCallback',
-  'registerTouchEventCallback',
-  'fillGamepadEventData',
-  'registerGamepadEventCallback',
-  'registerBeforeUnloadEventCallback',
-  'fillBatteryEventData',
-  'battery',
-  'registerBatteryEventCallback',
-  'setCanvasElementSize',
-  'getCanvasElementSize',
-  'jsStackTrace',
-  'stackTrace',
-  'checkWasiClock',
-  'createDyncallWrapper',
-  'setImmediateWrapped',
-  'clearImmediateWrapped',
-  'polyfillSetImmediate',
-  'getPromise',
-  'makePromise',
-  'makePromiseCallback',
-  'ExceptionInfo',
-  'exception_addRef',
-  'exception_decRef',
-  'setMainLoop',
-  '_setNetworkCallback',
-  'heapObjectForWebGLType',
-  'heapAccessShiftForWebGLHeap',
-  'emscriptenWebGLGet',
-  'computeUnpackAlignedImageSize',
-  'emscriptenWebGLGetTexPixelData',
-  'emscriptenWebGLGetUniform',
-  'webglGetUniformLocation',
-  'webglPrepareUniformLocationsBeforeFirstUse',
-  'webglGetLeftBracePos',
-  'emscriptenWebGLGetVertexAttrib',
-  'writeGLArray',
-  'SDL_unicode',
-  'SDL_ttfContext',
-  'SDL_audio',
-  'GLFW_Window',
-  'runAndAbortIfError',
-  'ALLOC_NORMAL',
-  'ALLOC_STACK',
-  'allocate',
-];
-missingLibrarySymbols.forEach(missingLibrarySymbol)
-
-var unexportedSymbols = [
-  'run',
-  'UTF8ArrayToString',
-  'UTF8ToString',
-  'stringToUTF8Array',
-  'stringToUTF8',
-  'lengthBytesUTF8',
-  'addOnPreRun',
-  'addOnInit',
-  'addOnPreMain',
-  'addOnExit',
-  'addOnPostRun',
-  'addRunDependency',
-  'removeRunDependency',
-  'FS_createFolder',
-  'FS_createPath',
-  'FS_createDataFile',
-  'FS_createPreloadedFile',
-  'FS_createLazyFile',
-  'FS_createLink',
-  'FS_createDevice',
-  'FS_unlink',
-  'out',
-  'err',
-  'callMain',
-  'abort',
-  'keepRuntimeAlive',
-  'stackAlloc',
-  'stackSave',
-  'stackRestore',
-  'getTempRet0',
-  'setTempRet0',
-  'writeStackCookie',
-  'checkStackCookie',
-  'ptrToString',
-  'zeroMemory',
-  'getHeapMax',
-  'emscripten_realloc_buffer',
-  'ENV',
-  'ERRNO_CODES',
-  'ERRNO_MESSAGES',
-  'setErrNo',
-  'DNS',
-  'Protocols',
-  'Sockets',
-  'getRandomDevice',
-  'timers',
-  'warnOnce',
-  'UNWIND_CACHE',
-  'readEmAsmArgsArray',
-  'getExecutableName',
-  'asyncLoad',
-  'alignMemory',
-  'mmapAlloc',
-  'readI53FromI64',
-  'MAX_INT53',
-  'MIN_INT53',
-  'bigintToI53Checked',
-  'freeTableIndexes',
-  'functionsInTableMap',
-  'setValue',
-  'getValue',
-  'PATH',
-  'PATH_FS',
-  'intArrayFromString',
-  'UTF16Decoder',
-  'allocateUTF8',
-  'writeAsciiToMemory',
-  'SYSCALLS',
-  'JSEvents',
-  'specialHTMLTargets',
-  'currentFullscreenStrategy',
-  'restoreOldWindowedStyle',
-  'demangle',
-  'demangleAll',
-  'ExitStatus',
-  'getEnvStrings',
-  'doReadv',
-  'doWritev',
-  'dlopenMissingError',
-  'promiseMap',
-  'uncaughtExceptionCount',
-  'exceptionLast',
-  'exceptionCaught',
-  'Browser',
-  'wget',
-  'FS',
-  'MEMFS',
-  'TTY',
-  'PIPEFS',
-  'SOCKFS',
-  'tempFixedLengthArray',
-  'miniTempWebGLFloatBuffers',
-  'GL',
-  'AL',
-  'SDL',
-  'SDL_gfx',
-  'GLUT',
-  'EGL',
-  'GLFW',
-  'GLEW',
-  'IDBStore',
-];
-unexportedSymbols.forEach(unexportedRuntimeSymbol);
-
 
 
 var calledRun;
@@ -5297,22 +5193,11 @@ dependenciesFulfilled = function runCaller() {
   if (!calledRun) dependenciesFulfilled = runCaller; // try this again later, after new deps are fulfilled
 };
 
-function stackCheckInit() {
-  // This is normally called automatically during __wasm_call_ctors but need to
-  // get these values before even running any of the ctors so we call it redundantly
-  // here.
-  _emscripten_stack_init();
-  // TODO(sbc): Move writeStackCookie to native to to avoid this.
-  writeStackCookie();
-}
-
 function run() {
 
   if (runDependencies > 0) {
     return;
   }
-
-    stackCheckInit();
 
   preRun();
 
@@ -5335,8 +5220,6 @@ function run() {
     readyPromiseResolve(Module);
     if (Module['onRuntimeInitialized']) Module['onRuntimeInitialized']();
 
-    assert(!Module['_main'], 'compiled without a main, but one is present. if you added it from JS, use Module["onRuntimeInitialized"]');
-
     postRun();
   }
 
@@ -5351,46 +5234,6 @@ function run() {
   } else
   {
     doRun();
-  }
-  checkStackCookie();
-}
-
-function checkUnflushedContent() {
-  // Compiler settings do not allow exiting the runtime, so flushing
-  // the streams is not possible. but in ASSERTIONS mode we check
-  // if there was something to flush, and if so tell the user they
-  // should request that the runtime be exitable.
-  // Normally we would not even include flush() at all, but in ASSERTIONS
-  // builds we do so just for this check, and here we see if there is any
-  // content to flush, that is, we check if there would have been
-  // something a non-ASSERTIONS build would have not seen.
-  // How we flush the streams depends on whether we are in SYSCALLS_REQUIRE_FILESYSTEM=0
-  // mode (which has its own special function for this; otherwise, all
-  // the code is inside libc)
-  var oldOut = out;
-  var oldErr = err;
-  var has = false;
-  out = err = (x) => {
-    has = true;
-  }
-  try { // it doesn't matter if it fails
-    _fflush(0);
-    // also flush in the JS FS layer
-    ['stdout', 'stderr'].forEach(function(name) {
-      var info = FS.analyzePath('/dev/' + name);
-      if (!info) return;
-      var stream = info.object;
-      var rdev = stream.rdev;
-      var tty = TTY.ttys[rdev];
-      if (tty && tty.output && tty.output.length) {
-        has = true;
-      }
-    });
-  } catch(e) {}
-  out = oldOut;
-  err = oldErr;
-  if (has) {
-    warnOnce('stdio streams had content in them that was not flushed. you should set EXIT_RUNTIME to 1 (see the FAQ), or make sure to emit a newline when you printf etc.');
   }
 }
 
