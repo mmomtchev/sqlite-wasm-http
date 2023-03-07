@@ -14,7 +14,7 @@
     "baseUrl": "."
   },
   "include": [
-    "./src", "./examples", "./types"
+    "./src", "./examples", "./deps/types"
   ],
   "exclude": [
     "node_modules"

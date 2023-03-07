@@ -5,23 +5,23 @@ import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
     maxPageSize: 1024,
     timeout: 10000
   });
-  const promiser = await createSQLiteThread({ http: httpBackend });
+  const db = await createSQLiteThread({ http: httpBackend });
 
-  console.log(await promiser('config-get', {}));
+  console.log(await db('config-get'));
 
-  console.log(await promiser('open', {
+  console.log(await db('open', {
     filename: 'file:' + encodeURI('http://sokol.garga/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles'),
     vfs: 'http'
   }));
 
-  console.log(await promiser('exec', {
+  console.log(await db('exec', {
     sql: 'SELECT * FROM tiles WHERE zoom_level = 1',
     callback: function (row) {
       console.log('got row', row);
     }
   }));
 
-  console.log(await promiser('exec', {
+  console.log(await db('exec', {
     sql: 'SELECT * FROM tiles WHERE zoom_level = 0',
     callback: function (row) {
       console.log('got row', row);

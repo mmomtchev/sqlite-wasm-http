@@ -1,17 +1,20 @@
 // This is the user-facing API
 import '../deps/dist/sqlite3-bundler-friendly.mjs';
 import '../deps/dist/sqlite3-worker1-promiser-bundler-friendly.js'; 
-import { Promiser } from 'types/sqlite3-promiser';
 import * as VFSHTTP from './vfs-http-types';
 import { debug } from './vfs-http-types';
 
 export interface SQLiteOptions {
   http?: VFSHTTP.Backend;
 };
+export { Backend, BackendChannel, Options as HTTPOptions } from './vfs-http-types';
+declare global {
+  export var sqlite3Worker1Promiser: (config: SQLite.PromiserConfig) => SQLite.Promiser;
+}
 
-export function createSQLiteThread(options?: SQLiteOptions): Promise<Promiser.Promiser> {
+export function createSQLiteThread(options?: SQLiteOptions): Promise<SQLite.Promiser> {
   debug['threads']('Creating new SQLite thread', options);
-  const r = new Promise<Promiser.Promiser>((resolve, reject) => {
+  const r = new Promise<SQLite.Promiser>((resolve, reject) => {
     const promiser = sqlite3Worker1Promiser({
       onready: () => {
         resolve(promiser);
