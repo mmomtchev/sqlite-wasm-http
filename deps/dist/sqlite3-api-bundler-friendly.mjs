@@ -29,7 +29,7 @@
 **
 ** SQLITE_VERSION "3.42.0"
 ** SQLITE_VERSION_NUMBER 3042000
-** SQLITE_SOURCE_ID "2023-03-02 13:49:50 8fe13f7a5e5eb798189acb25a608df7a94c2f5cc83463331a048b779c7890c82"
+** SQLITE_SOURCE_ID "2023-03-08 10:05:42 dd8612c8adbaf9d06bf0d7319b9afc9bd8ca3d0fcfa1cb591a7a2fcb86480048"
 **
 ** Using the Emscripten SDK version 3.1.32.
 */
@@ -66,7 +66,7 @@
    exposed by this API. It is intended to be called one time at the
    end of the API amalgamation process, passed configuration details
    for the current environment, and then optionally be removed from
-   the global object using `delete self.sqlite3ApiBootstrap`.
+   the global object using `delete globalThis.sqlite3ApiBootstrap`.
 
    This function is not intended for client-level use. It is intended
    for use in creating bundles configured for specific WASM
@@ -95,7 +95,7 @@
      WASM-exported memory.
 
    - `bigIntEnabled`: true if BigInt support is enabled. Defaults to
-     true if `self.BigInt64Array` is available, else false. Some APIs
+     true if `globalThis.BigInt64Array` is available, else false. Some APIs
      will throw exceptions if called without BigInt support, as BigInt
      is required for marshalling C-side int64 into and out of JS.
      (Sidebar: it is technically possible to add int64 support via
@@ -137,8 +137,8 @@
 
 */
 'use strict';
-self.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
-  apiConfig = (self.sqlite3ApiConfig || sqlite3ApiBootstrap.defaultConfig)
+globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
+  apiConfig = (globalThis.sqlite3ApiConfig || sqlite3ApiBootstrap.defaultConfig)
 ){
   if(sqlite3ApiBootstrap.sqlite3){ /* already initalized */
     console.warn("sqlite3ApiBootstrap() called multiple times.",
@@ -154,7 +154,7 @@ self.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
            -sWASM_BIGINT=1, else it will not. */
         return !!Module.HEAPU64;
       }
-      return !!self.BigInt64Array;
+      return !!globalThis.BigInt64Array;
     })(),
     debug: console.debug.bind(console),
     warn: console.warn.bind(console),
@@ -809,7 +809,7 @@ self.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
     isBindableTypedArray,
     isInt32, isSQLableTypedArray, isTypedArray,
     typedArrayToString,
-    isUIThread: ()=>(self.window===self && !!self.document),
+    isUIThread: ()=>(globalThis.window===globalThis && !!globalThis.document),
     // is this true for ESM?: 'undefined'===typeof WorkerGlobalScope
     isSharedTypedArray,
     toss: function(...args){throw new Error(args.join(' '))},
@@ -1240,9 +1240,9 @@ self.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
     console.error("sqlite3_wasmfs_opfs_dir() can no longer work due "+
                   "to incompatible WASMFS changes. It will be removed.");
     if(!pdir
-       || !self.FileSystemHandle
-       || !self.FileSystemDirectoryHandle
-       || !self.FileSystemFileHandle){
+       || !globalThis.FileSystemHandle
+       || !globalThis.FileSystemDirectoryHandle
+       || !globalThis.FileSystemFileHandle){
       return __wasmfsOpfsDir = "";
     }
     try{
@@ -1498,8 +1498,8 @@ self.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
       const rc = Object.create(null);
       rc.prefix = 'kvvfs-'+which;
       rc.stores = [];
-      if('session'===which || ""===which) rc.stores.push(self.sessionStorage);
-      if('local'===which || ""===which) rc.stores.push(self.localStorage);
+      if('session'===which || ""===which) rc.stores.push(globalThis.sessionStorage);
+      if('local'===which || ""===which) rc.stores.push(globalThis.localStorage);
       return rc;
     };
 
@@ -1953,7 +1953,7 @@ self.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
              StructBinder to client-side code, but it's only useful if
              clients build their own sqlite3.wasm which contains their
              one C struct types. */
-          //delete sqlite3.StructBinder;
+          delete sqlite3.StructBinder;
         }
         return sqlite3;
       };
@@ -1999,7 +1999,7 @@ self.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
   return sqlite3;
 }/*sqlite3ApiBootstrap()*/;
 /**
-  self.sqlite3ApiBootstrap.initializers is an internal detail used by
+  globalThis.sqlite3ApiBootstrap.initializers is an internal detail used by
   the various pieces of the sqlite3 API's amalgamation process. It
   must not be modified by client code except when plugging such code
   into the amalgamation process.
@@ -2017,14 +2017,14 @@ self.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
   utilized until the whwasmutil.js part is plugged in via
   sqlite3-api-glue.js.
 */
-self.sqlite3ApiBootstrap.initializers = [];
+globalThis.sqlite3ApiBootstrap.initializers = [];
 /**
-  self.sqlite3ApiBootstrap.initializersAsync is an internal detail
+  globalThis.sqlite3ApiBootstrap.initializersAsync is an internal detail
   used by the sqlite3 API's amalgamation process. It must not be
   modified by client code except when plugging such code into the
   amalgamation process.
 
-  The counterpart of self.sqlite3ApiBootstrap.initializers,
+  The counterpart of globalThis.sqlite3ApiBootstrap.initializers,
   specifically for initializers which are asynchronous. All entries in
   this list must be either async functions, non-async functions which
   return a Promise, or a Promise. Each function in the list is called
@@ -2036,10 +2036,10 @@ self.sqlite3ApiBootstrap.initializers = [];
 
   This list is not processed until the client calls
   sqlite3.asyncPostInit(). This means, for example, that intializers
-  added to self.sqlite3ApiBootstrap.initializers may push entries to
+  added to globalThis.sqlite3ApiBootstrap.initializers may push entries to
   this list.
 */
-self.sqlite3ApiBootstrap.initializersAsync = [];
+globalThis.sqlite3ApiBootstrap.initializersAsync = [];
 /**
    Client code may assign sqlite3ApiBootstrap.defaultConfig an
    object-type value before calling sqlite3ApiBootstrap() (without
@@ -2049,16 +2049,15 @@ self.sqlite3ApiBootstrap.initializersAsync = [];
    an environment-suitable configuration without having to define a new
    global-scope symbol.
 */
-self.sqlite3ApiBootstrap.defaultConfig = Object.create(null);
+globalThis.sqlite3ApiBootstrap.defaultConfig = Object.create(null);
 /**
    Placeholder: gets installed by the first call to
-   self.sqlite3ApiBootstrap(). However, it is recommended that the
+   globalThis.sqlite3ApiBootstrap(). However, it is recommended that the
    caller of sqlite3ApiBootstrap() capture its return value and delete
-   self.sqlite3ApiBootstrap after calling it. It returns the same
+   globalThis.sqlite3ApiBootstrap after calling it. It returns the same
    value which will be stored here.
 */
-self.sqlite3ApiBootstrap.sqlite3 = undefined;
-
+globalThis.sqlite3ApiBootstrap.sqlite3 = undefined;
 /* END FILE: api/sqlite3-api-prologue.js */
 /* BEGIN FILE: common/whwasmutil.js */
 /**
@@ -2108,8 +2107,8 @@ self.sqlite3ApiBootstrap.sqlite3 = undefined;
    Intended usage:
 
    ```
-   self.WhWasmUtilInstaller(appObject);
-   delete self.WhWasmUtilInstaller;
+   globalThis.WhWasmUtilInstaller(appObject);
+   delete globalThis.WhWasmUtilInstaller;
    ```
 
    Its global-scope symbol is intended only to provide an easy way to
@@ -2234,7 +2233,7 @@ self.sqlite3ApiBootstrap.sqlite3 = undefined;
 
    https://fossil.wanderinghorse.net/r/jaccwabbyt/file/common/whwasmutil.js
 */
-self.WhWasmUtilInstaller = function(target){
+globalThis.WhWasmUtilInstaller = function(target){
   'use strict';
   if(undefined===target.bigIntEnabled){
     target.bigIntEnabled = !!self['BigInt64Array'];
@@ -4257,7 +4256,7 @@ self.WhWasmUtilInstaller = function(target){
    Error handling is up to the caller, who may attach a `catch()` call
    to the promise.
 */
-self.WhWasmUtilInstaller.yawl = function(config){
+globalThis.WhWasmUtilInstaller.yawl = function(config){
   const wfetch = ()=>fetch(config.uri, {credentials: 'same-origin'});
   const wui = this;
   const finalThen = function(arg){
@@ -4303,7 +4302,7 @@ self.WhWasmUtilInstaller.yawl = function(config){
             .then(finalThen);
         };
   return loadWasm;
-}.bind(self.WhWasmUtilInstaller)/*yawl()*/;
+}.bind(globalThis.WhWasmUtilInstaller)/*yawl()*/;
 /* END FILE: common/whwasmutil.js */
 /* BEGIN FILE: jaccwabyt/jaccwabyt.js */
 /**
@@ -4327,7 +4326,7 @@ self.WhWasmUtilInstaller.yawl = function(config){
 
 */
 'use strict';
-self.Jaccwabyt = function StructBinderFactory(config){
+globalThis.Jaccwabyt = function StructBinderFactory(config){
 /* ^^^^ it is recommended that clients move that object into wherever
    they'd like to have it and delete the self-held copy ("self" being
    the global window or worker object).  This API does not require the
@@ -5022,13 +5021,13 @@ self.Jaccwabyt = function StructBinderFactory(config){
   initializes the main API pieces so that the downstream components
   (e.g. sqlite3-api-oo1.js) have all that they need.
 */
-self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
+globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
   'use strict';
   const toss = (...args)=>{throw new Error(args.join(' '))};
   const toss3 = sqlite3.SQLite3Error.toss;
   const capi = sqlite3.capi, wasm = sqlite3.wasm, util = sqlite3.util;
-  self.WhWasmUtilInstaller(wasm);
-  delete self.WhWasmUtilInstaller;
+  globalThis.WhWasmUtilInstaller(wasm);
+  delete globalThis.WhWasmUtilInstaller;
 
   if(0){
     /**
@@ -5333,6 +5332,15 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
     wasm.bindingSignatures.push(["sqlite3_normalized_sql", "string", "sqlite3_stmt*"]);
   }
 
+  if(wasm.exports.sqlite3_activate_see instanceof Function){
+    wasm.bindingSignatures.push(
+      ["sqlite3_key", "int", "sqlite3*", "string", "int"],
+      ["sqlite3_key_v2","int","sqlite3*","string","*","int"],
+      ["sqlite3_rekey", "int", "sqlite3*", "string", "int"],
+      ["sqlite3_rekey_v2", "int", "sqlite3*", "string", "*", "int"],
+      ["sqlite3_activate_see", undefined, "string"]
+    );
+  }
   /**
      Functions which require BigInt (int64) support are separated from
      the others because we need to conditionally bind them or apply
@@ -5611,7 +5619,7 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
   /**
      Install JS<->C struct bindings for the non-opaque struct types we
      need... */
-  sqlite3.StructBinder = self.Jaccwabyt({
+  sqlite3.StructBinder = globalThis.Jaccwabyt({
     heap: 0 ? wasm.memory : wasm.heap8u,
     alloc: wasm.alloc,
     dealloc: wasm.dealloc,
@@ -5619,7 +5627,7 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
     memberPrefix: /* Never change this: this prefix is baked into any
                      amount of code and client-facing docs. */ '$'
   });
-  delete self.Jaccwabyt;
+  delete globalThis.Jaccwabyt;
 
   {// wasm.xWrap() bindings...
 
@@ -6657,8 +6665,8 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 });
 /* END FILE: api/sqlite3-api-glue.js */
 /* BEGIN FILE: ./bld/sqlite3-api-build-version.js */
-self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
-  sqlite3.version = {"libVersion": "3.42.0", "libVersionNumber": 3042000, "sourceId": "2023-03-02 13:49:50 8fe13f7a5e5eb798189acb25a608df7a94c2f5cc83463331a048b779c7890c82","downloadVersion": 3420000};
+globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
+  sqlite3.version = {"libVersion": "3.42.0", "libVersionNumber": 3042000, "sourceId": "2023-03-08 10:05:42 dd8612c8adbaf9d06bf0d7319b9afc9bd8ca3d0fcfa1cb591a7a2fcb86480048","downloadVersion": 3420000};
 });
 /* END FILE: ./bld/sqlite3-api-build-version.js */
 /* BEGIN FILE: api/sqlite3-api-oo1.js */
@@ -6676,9 +6684,9 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 
   This file contains the so-called OO #1 API wrapper for the sqlite3
   WASM build. It requires that sqlite3-api-glue.js has already run
-  and it installs its deliverable as self.sqlite3.oo1.
+  and it installs its deliverable as globalThis.sqlite3.oo1.
 */
-self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
+globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
   const toss = (...args)=>{throw new Error(args.join(' '))};
   const toss3 = (...args)=>{throw new sqlite3.SQLite3Error(...args)};
 
@@ -8855,13 +8863,13 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
   options.columnNames may be populated by the call to db.exec().
 
 */
-self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
+globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 sqlite3.initWorker1API = function(){
   'use strict';
   const toss = (...args)=>{throw new Error(args.join(' '))};
-  //if('function' !== typeof importScripts){
-  //  toss("initWorker1API() must be run from a Worker thread.");
-  //}
+  if(!(globalThis.WorkerGlobalScope instanceof Function)){
+    toss("initWorker1API() must be run from a Worker thread.");
+  }
   const self = this.self;
   const sqlite3 = this.sqlite3 || toss("Missing this.sqlite3 object.");
   const DB = sqlite3.oo1.DB;
@@ -8924,10 +8932,10 @@ sqlite3.initWorker1API = function(){
     */
     post: function(msg,xferList){
       if(xferList && xferList.length){
-        self.postMessage( msg, Array.from(xferList) );
+        globalThis.postMessage( msg, Array.from(xferList) );
         xferList.length = 0;
       }else{
-        self.postMessage(msg);
+        globalThis.postMessage(msg);
       }
     },
     /** Map of DB IDs to DBs. */
@@ -9131,7 +9139,7 @@ sqlite3.initWorker1API = function(){
     }
   }/*wMsgHandler*/;
 
-  self.onmessage = async function(ev){
+  globalThis.onmessage = async function(ev){
     ev = ev.data;
     let result, dbId = ev.dbId, evType = ev.type;
     const arrivalTime = performance.now();
@@ -9179,7 +9187,7 @@ sqlite3.initWorker1API = function(){
       result: result
     }, wState.xfer);
   };
-  self.postMessage({type:'sqlite3-api',result:'worker1-ready'});
+  globalThis.postMessage({type:'sqlite3-api',result:'worker1-ready'});
 }.bind({self, sqlite3});
 });
 /* END FILE: api/sqlite3-api-worker1.js */
@@ -9201,10 +9209,13 @@ sqlite3.initWorker1API = function(){
    with its virtual table counterpart, sqlite3.vtab.
 */
 'use strict';
-self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
+globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
   const wasm = sqlite3.wasm, capi = sqlite3.capi, toss = sqlite3.util.toss3;
   const vfs = Object.create(null), vtab = Object.create(null);
 
+  const StructBinder = sqlite3.StructBinder
+  /* we require a local alias b/c StructBinder is removed from the sqlite3
+     object during the final steps of the API cleanup. */;
   sqlite3.vfs = vfs;
   sqlite3.vtab = vtab;
 
@@ -9298,7 +9309,7 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
   const installMethod = function callee(
     tgt, name, func, applyArgcCheck = callee.installMethodArgcCheck
   ){
-    if(!(tgt instanceof sqlite3.StructBinder.StructType)){
+    if(!(tgt instanceof StructBinder.StructType)){
       toss("Usage error: target object is-not-a StructType.");
     }else if(!(func instanceof Function) && !wasm.isPtr(func)){
       toss("Usage errror: expecting a Function or WASM pointer to one.");
@@ -9318,7 +9329,7 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
         }
       };
       /* An ondispose() callback for use with
-         sqlite3.StructBinder-created types. */
+         StructBinder-created types. */
       callee.removeFuncList = function(){
         if(this.ondispose.__removeFuncList){
           this.ondispose.__removeFuncList.forEach(
@@ -9407,7 +9418,7 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
      and the first is an object, it's instead equivalent to calling
      installMethods(this,...arguments).
   */
-  sqlite3.StructBinder.StructType.prototype.installMethod = function callee(
+  StructBinder.StructType.prototype.installMethod = function callee(
     name, func, applyArgcCheck = installMethod.installMethodArgcCheck
   ){
     return (arguments.length < 3 && name && 'object'===typeof name)
@@ -9419,7 +9430,7 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
      Equivalent to calling installMethods() with a first argument
      of this object.
   */
-  sqlite3.StructBinder.StructType.prototype.installMethods = function(
+  StructBinder.StructType.prototype.installMethods = function(
     methods, applyArgcCheck = installMethod.installMethodArgcCheck
   ){
     return installMethods(this, methods, applyArgcCheck);
@@ -9920,7 +9931,7 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
   after sqlite3-api-oo1.js and before sqlite3-api-cleanup.js.
 */
 'use strict';
-self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
+globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 /**
    installOpfsVfs() returns a Promise which, on success, installs an
    sqlite3_vfs named "opfs", suitable for use with all sqlite3 APIs
@@ -9978,23 +9989,23 @@ self.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
   `opfs` property, containing several OPFS-specific utilities.
 */
 const installOpfsVfs = function callee(options){
-  if(!self.SharedArrayBuffer
-    || !self.Atomics){
+  if(!globalThis.SharedArrayBuffer
+    || !globalThis.Atomics){
     return Promise.reject(
       new Error("Cannot install OPFS: Missing SharedArrayBuffer and/or Atomics. "+
                 "The server must emit the COOP/COEP response headers to enable those. "+
                 "See https://sqlite.org/wasm/doc/trunk/persistence.md#coop-coep")
     );
-  }else if(self.window===self && self.document){
+  }else if('undefined'===typeof WorkerGlobalScope){
     return Promise.reject(
       new Error("The OPFS sqlite3_vfs cannot run in the main thread "+
                 "because it requires Atomics.wait().")
     );
-  }else if(!self.FileSystemHandle ||
-           !self.FileSystemDirectoryHandle ||
-           !self.FileSystemFileHandle ||
-           !self.FileSystemFileHandle.prototype.createSyncAccessHandle ||
-           !navigator.storage.getDirectory){
+  }else if(!globalThis.FileSystemHandle ||
+           !globalThis.FileSystemDirectoryHandle ||
+           !globalThis.FileSystemFileHandle ||
+           !globalThis.FileSystemFileHandle.prototype.createSyncAccessHandle ||
+           !navigator?.storage?.getDirectory){
     return Promise.reject(
       new Error("Missing required OPFS APIs.")
     );
@@ -10002,7 +10013,7 @@ const installOpfsVfs = function callee(options){
   if(!options || 'object'!==typeof options){
     options = Object.create(null);
   }
-  const urlParams = self.location?.href ? new URL(self.location.href).searchParams : new URLSearchParams()
+  const urlParams = new URL(globalThis.location.href).searchParams;
   if(undefined===options.verbose){
     options.verbose = urlParams.has('opfs-verbose')
       ? (+urlParams.get('opfs-verbose') || 2) : 1;
@@ -10014,7 +10025,7 @@ const installOpfsVfs = function callee(options){
     options.proxyUri = callee.defaultProxyUri;
   }
 
-  //sqlite3.config.warn("OPFS options =",options,self.location);
+  //sqlite3.config.warn("OPFS options =",options,globalThis.location);
 
   if('function' === typeof options.proxyUri){
     options.proxyUri = options.proxyUri();
@@ -10051,11 +10062,11 @@ const installOpfsVfs = function callee(options){
        Returns true if _this_ thread has access to the OPFS APIs.
     */
     const thisThreadHasOPFS = ()=>{
-      return self.FileSystemHandle &&
-        self.FileSystemDirectoryHandle &&
-        self.FileSystemFileHandle &&
-        self.FileSystemFileHandle.prototype.createSyncAccessHandle &&
-        navigator.storage.getDirectory;
+      return globalThis.FileSystemHandle &&
+        globalThis.FileSystemDirectoryHandle &&
+        globalThis.FileSystemFileHandle &&
+        globalThis.FileSystemFileHandle.prototype.createSyncAccessHandle &&
+        navigator?.storage?.getDirectory;
     };
 
     /**
@@ -10073,8 +10084,8 @@ const installOpfsVfs = function callee(options){
           m.avgTime = (m.count && m.time) ? (m.time / m.count) : 0;
           m.avgWait = (m.count && m.wait) ? (m.wait / m.count) : 0;
         }
-        sqlite3.config.log(self.location.href,
-                    "metrics for",self.location.href,":",metrics,
+        sqlite3.config.log(globalThis.location.href,
+                    "metrics for",globalThis.location.href,":",metrics,
                     "\nTotal of",n,"op(s) for",t,
                     "ms (incl. "+w+" ms of waiting on the async side)");
         sqlite3.config.log("Serialization metrics:",metrics.s11n);
@@ -11207,7 +11218,7 @@ const installOpfsVfs = function callee(options){
 }/*installOpfsVfs()*/;
 installOpfsVfs.defaultProxyUri =
   "sqlite3-opfs-async-proxy.js";
-self.sqlite3ApiBootstrap.initializersAsync.push(async (sqlite3)=>{
+globalThis.sqlite3ApiBootstrap.initializersAsync.push(async (sqlite3)=>{
   try{
     let proxyJs = installOpfsVfs.defaultProxyUri;
     if(sqlite3.scriptInfo.sqlite3Dir){
@@ -11253,7 +11264,7 @@ if('undefined' !== typeof Module){ // presumably an Emscripten build
       exports: Module['asm'],
       memory: Module.wasmMemory /* gets set if built with -sIMPORT_MEMORY */
     },
-    self.sqlite3ApiConfig || {}
+    globalThis.sqlite3ApiConfig || {}
   );
 
   /**
@@ -11261,29 +11272,29 @@ if('undefined' !== typeof Module){ // presumably an Emscripten build
      sqlite3ApiBootstrap().  That decision will be revisited at some
      point, as we really want client code to be able to call this to
      configure certain parts. Clients may modify
-     self.sqlite3ApiBootstrap.defaultConfig to tweak the default
+     globalThis.sqlite3ApiBootstrap.defaultConfig to tweak the default
      configuration used by a no-args call to sqlite3ApiBootstrap(),
      but must have first loaded their WASM module in order to be
      able to provide the necessary configuration state.
   */
-  //console.warn("self.sqlite3ApiConfig = ",self.sqlite3ApiConfig);
-  self.sqlite3ApiConfig = SABC;
+  //console.warn("globalThis.sqlite3ApiConfig = ",globalThis.sqlite3ApiConfig);
+  globalThis.sqlite3ApiConfig = SABC;
   let sqlite3;
   try{
-    sqlite3 = self.sqlite3ApiBootstrap();
+    sqlite3 = globalThis.sqlite3ApiBootstrap();
   }catch(e){
     console.error("sqlite3ApiBootstrap() error:",e);
     throw e;
   }finally{
-    delete self.sqlite3ApiBootstrap;
-    delete self.sqlite3ApiConfig;
+    delete globalThis.sqlite3ApiBootstrap;
+    delete globalThis.sqlite3ApiConfig;
   }
 
   Module.sqlite3 = sqlite3 /* Needed for customized sqlite3InitModule() to be able to
                               pass the sqlite3 object off to the client. */;
 }else{
   console.warn("This is not running in an Emscripten module context, so",
-               "self.sqlite3ApiBootstrap() is _not_ being called due to lack",
+               "globalThis.sqlite3ApiBootstrap() is _not_ being called due to lack",
                "of config info for the WASM environment.",
                "It must be called manually.");
 }
