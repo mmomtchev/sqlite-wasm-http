@@ -1,5 +1,5 @@
 // This is the entry point for an SQLite worker thread
-import sqlite3q from '../deps/dist/sqlite3-bundler-friendly.mjs'; 
+import sqlite3q from '#sqlite3.js'; 
 import { installHttpVfs } from './vfs-http.js';
 import * as VFSHTTP from './vfs-http-types.js';
 import { debug } from './vfs-http-types.js';

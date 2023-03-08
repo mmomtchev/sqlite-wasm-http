@@ -6,10 +6,11 @@
       "webWorker"
     ],
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "sourceMap": true,
     "outDir": "./dist",
-    "declaration": true
+    "declaration": true,
+    "rootDir": "./src"
   },
   "include": [
     "./src"

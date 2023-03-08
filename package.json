@@ -9,6 +9,38 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./sqlite3.js": {
+      "types": {
+        "types": "./deps/types/sqlite3.d.ts"
+      },
+      "default": {
+        "import": "./deps/dist/sqlite3-bundler-friendly.mjs"
+      },
+      "node": {
+        "import": "./deps/dist/sqlite3-node.mjs"
+      }
+    },
+    "./sqlite3-worker1-promiser.js": {
+      "types": {
+        "types": "./deps/types/sqlite3-promiser.d.ts"
+      },
+      "default": {
+        "import": "./deps/dist/sqlite3-worker1-promiser-bundler-friendly.js"
+      },
+      "node": {
+        "import": "./deps/dist/sqlite3-worker1-promiser-node.js"
+      }
+    }
+  },
+  "imports": {
+    "#sqlite3.js": {
+      "node": "./deps/dist/sqlite3-node.mjs",
+      "default": "./deps/dist/sqlite3-bundler-friendly.mjs"
+    },
+    "#sqlite3-worker1-promiser.js": {
+      "node": "./deps/dist/sqlite3-worker1-promiser-node.js",
+      "default": "./deps/dist/sqlite3-worker1-promiser-bundler-friendly.js"
     }
   },
   "scripts": {
@@ -47,5 +79,8 @@
   },
   "dependencies": {
     "lru-cache": "^7.18.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }

@@ -1,15 +1,15 @@
 // This is the user-facing API
 /// <reference path='../deps/types/sqlite3.d.ts' />
 /// <reference path='../deps/types/sqlite3-promiser.d.ts' />
-import '../deps/dist/sqlite3-bundler-friendly.mjs';
-import '../deps/dist/sqlite3-worker1-promiser-bundler-friendly.js'; 
+import '#sqlite3.js';
+import '#sqlite3-worker1-promiser.js'; 
 import * as VFSHTTP from './vfs-http-types.js';
 import { debug } from './vfs-http-types.js';
 
 export interface SQLiteOptions {
   http?: VFSHTTP.Backend;
 };
-export { Backend, BackendChannel, Options as HTTPOptions } from './vfs-http-types';
+//export type { Backend, BackendChannel, Options as HTTPOptions } from './vfs-http-types.js';
 
 declare global {
   export var sqlite3Worker1Promiser: (config: SQLite.PromiserConfig) => SQLite.Promiser;

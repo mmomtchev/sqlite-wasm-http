@@ -46,11 +46,14 @@ export interface Message {
 }
 
 declare const SQLITE_DEBUG: string[];
+const debugOptions = (typeof SQLITE_DEBUG !== 'undefined' && SQLITE_DEBUG) ||
+  (typeof process?.env?.SQLITE_DEBUG !== 'undefined' && process.env.SQLITE_DEBUG) ||
+  '';
 
 export const debugSys = ['threads', 'vfs', 'cache'] as const;
 export const debug = {} as Record<typeof debugSys[number], (...args: any[]) => void>;
 for (const d of debugSys) {
-  debug[d] = typeof SQLITE_DEBUG !== 'undefined' && SQLITE_DEBUG.includes(d) ?
+  debug[d] = debugOptions.includes(d) ?
     console.debug.bind(console) :
     () => undefined;
 }
