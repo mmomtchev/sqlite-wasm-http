@@ -44,7 +44,8 @@
     }
   },
   "scripts": {
-    "start": "webpack serve --mode=development",
+    "start": "tsc && webpack serve --mode=development",
+    "build": "tsc && webpack --mode=production",
     "test": "mocha"
   },
   "repository": {
