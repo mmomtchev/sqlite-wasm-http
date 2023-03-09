@@ -25,6 +25,7 @@ declare namespace SQLite {
   export type MessageId = string;
   export type MessageExec = {
     sql: string;
+    bind?: Record<string, unknown>;
     callback: (row: Result) => void;
   };
   export type MessageOpen = {
@@ -32,7 +33,7 @@ declare namespace SQLite {
     vfs?: string;
   };
 
-  export type MessageClose = {};
+  export type MessageClose = { unlink?: boolean; };
   export type MessageConfigGet = {};
   export type Message = MessageExec | MessageOpen | MessageClose | MessageConfigGet;
 
@@ -86,6 +87,8 @@ declare namespace SQLite {
       filename?: string;
     };
   };
+
+  export type Response = ResponseConfigGet | ResponseOpen | ResponseClose | ResponseExec;
 
   export type Promiser1Exec = (msgType: 'exec', args: MessageExec) => Promise<ResponseExec>;
   export type Promiser2Exec = (msg: { type: 'exec'; } & MessageExec) => Promise<ResponseExec>;
