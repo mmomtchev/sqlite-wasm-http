@@ -154,7 +154,7 @@ const backendAsyncMethods:
       cache.set(cacheId, resp);
       // These point to the parent super-page and resolve at the same time as resp
       for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
-        cache.set(entry.id + '|' + i, resp.then((p) => Number(p)));
+        cache.set(entry.id + '|' + i, resp.then(() => Number(page)));
       }
 
       data = await resp;
