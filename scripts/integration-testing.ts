@@ -20,6 +20,7 @@ const testDir = path.resolve(dirname, '..', '..', 'test', 'integration');
       await exec('npm test');
     } catch (e) {
       console.error(e.stdout);
+      console.error(e.stderr);
       throw new Error('Test failed');
     }
   }
