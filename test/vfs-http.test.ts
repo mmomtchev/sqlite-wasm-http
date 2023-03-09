@@ -97,9 +97,9 @@ describe('HTTP VFS', () => {
     for (let i = 0; i < concurrentDb.length; i++) {
       q.push(concurrentDb[i]
         .then((db) => db('open', {
-            filename: 'file:' + encodeURI(remoteURL),
-            vfs: 'http'
-          }).then(() => db))
+          filename: 'file:' + encodeURI(remoteURL),
+          vfs: 'http'
+        }).then(() => db))
         .then((db) => db('exec', {
           sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
             'WHERE zoom_level = 10 AND tile_column = $col AND tile_row = $row',
@@ -120,11 +120,11 @@ describe('HTTP VFS', () => {
     Promise.all(q)
       .then(() => {
         assert.strictEqual(tiles, concurrentDb.length);
-        done();
       })
-      .catch(done)
       .finally(() => {
         Promise.all(concurrentDb.map((dbq) => dbq.then((db) => db.close())));
-      });
+        done();
+      })
+      .catch(done);
   });
 });
