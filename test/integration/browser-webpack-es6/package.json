@@ -1,0 +1,8 @@
+{
+  "name": "browser-webpack-es6",
+  "version": "1.0.0",
+  "description": "browser/webpack/es6 integration test",
+  "scripts": {
+    "test": "webpack --mode=production"
+  }
+}

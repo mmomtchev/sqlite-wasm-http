@@ -25,6 +25,8 @@ Its main drawback at the moment is that it depends on a number of very recent JS
 
 * Ony ES6 module mode is supported at the moment, CommonJS is not supported and this includes TypeScript transpiled to CommonJS - you have to transpile to ES6 in order to use this module
 
+You can check [test/integration](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/test/integration) for examples for the various environments that are currently tested and supported.
+
 # Node.js compatibility
 
 Node.js is fully supported but requires `web-worker` and `fetch` available in Node.js 18.x+.

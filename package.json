@@ -48,7 +48,8 @@
     "build": "tsc && webpack --mode=production",
     "c8": "node_modules/.bin/c8 mocha",
     "lcov": "node_modules/.bin/c8 report --reporter=text-lcov > coverage/tests.lcov",
-    "test": "mocha"
+    "test": "mocha",
+    "test:integration:link": "sudo npm link && ts-node-esm scripts/integration-testing.ts npm link sqlite-wasm-http"
   },
   "repository": {
     "type": "git",

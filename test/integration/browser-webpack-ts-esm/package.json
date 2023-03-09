@@ -1,0 +1,9 @@
+{
+  "name": "browser-webpack-ts-esm",
+  "version": "1.0.0",
+  "description": "browser/webpack/ts-esm integration test",
+  "type": "module",
+  "scripts": {
+    "test": "webpack --mode=production"
+  }
+}

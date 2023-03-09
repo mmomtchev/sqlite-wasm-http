@@ -1,6 +1,7 @@
-/node_modules
+node_modules
 /deps/sqlite
 !/deps/dist
 /dist
 /docs/examples
 /coverage
+temp
