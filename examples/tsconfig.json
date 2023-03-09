@@ -3,7 +3,7 @@
     "module": "es2020",
     "target": "es6",
     "lib": [
-      "webWorker"
+      "webWorker", "dom"
     ],
     "esModuleInterop": true,
     "moduleResolution": "node",
