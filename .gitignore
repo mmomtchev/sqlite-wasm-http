@@ -2,3 +2,4 @@
 /deps/sqlite
 !/deps/dist
 /dist
+/docs/examples
