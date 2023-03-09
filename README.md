@@ -17,4 +17,4 @@ Even if the option to include an alternative backend without concurrent connecti
 
 # Status
 
-Early stage development
+Experimental
