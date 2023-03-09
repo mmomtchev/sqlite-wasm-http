@@ -102,17 +102,18 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
     },
     close: function () {
       debug['threads']('Closing the HTTP VFS channel');
-      const channel = new MessageChannel();
       worker.postMessage({ msg: 'close' });
       return new Promise<void>((resolve, reject) => {
-        worker.onmessage = ({ data }) => {
-          debug['threads']('Received close response', data);
-          if (data.msg === 'ack' && data.id === undefined)
-          resolve();
-        };
         const timeout = setTimeout(() => {
           reject('Timeout while waiting on backend');
         }, options.timeout);
+        worker.onmessage = ({ data }) => {
+          debug['threads']('Received close response', data);
+          if (data.msg === 'ack' && data.id === undefined) {
+            resolve();
+            clearTimeout(timeout);
+          }
+        };
       });
     },
   };
