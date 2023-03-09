@@ -9,6 +9,7 @@ const httpBackend = createHttpBackend({
   timeout: 10000,       // 10s
   cacheSize: 4096       // 4 MB
 });
+// Multiple DB workers can be created, all sharing the same backend cache
 const db = await createSQLiteThread({ http: httpBackend });
 await db('open', { filename: 'file:' + encodeURI(remoteURL), vfs: 'http' });
 await db('exec', {
