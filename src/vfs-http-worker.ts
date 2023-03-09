@@ -35,7 +35,7 @@ const files = new LRUCache<string, FileEntry>({
 
 // The entry for a given page can be either the page itself
 // or the number of the page that has the parent super-page
-let cache: LRUCache<string, Uint8Array | number>;
+let cache: LRUCache<string, Uint8Array | number | Promise<Uint8Array | number>>;
 
 let nextId = 1;
 
@@ -116,7 +116,12 @@ const backendAsyncMethods:
     let pageStart = page * pageSize;
     if (pageStart + pageSize < msg.offset + len)
       throw new Error(`Read chunk ${msg.offset}:${msg.n} spans across a page-boundary`);
-    let data = cache.get(entry.id + '|' + page);
+
+    const cacheId = entry.id + '|' + page;
+    let data = cache.get(cacheId);
+    if (data instanceof Promise)
+      // This means that another thread has requested this segment
+      data = await data;
 
     if (!data) {
       debug['cache'](`cache miss for ${msg.url}:${page}`);
@@ -126,32 +131,42 @@ const backendAsyncMethods:
       // This was the original page merging algorithm implemented by @phiresky
       let prev = page > 0 && cache.get(entry.id + '|' + (Number(page) - 1));
       if (prev) {
+        if (prev instanceof Promise)
+          prev = await prev;
         if (typeof prev === 'number')
           prev = cache.get(entry.id + '|' + prev) as Uint8Array;
         chunkSize = prev.byteLength * 2;
         debug['cache'](`downloading super page of size ${chunkSize}`);
       }
 
-      const resp = await fetch(msg.url, {
+      // Downloading a new segment
+      const resp = fetch(msg.url, {
         method: 'GET',
         headers: {
           'Range': `bytes=${pageStart}-${pageStart + BigInt(chunkSize - 1)}`
         }
-      });
-      data = new Uint8Array(await resp.arrayBuffer());
+      })
+        .then((r) => r.arrayBuffer())
+        .then((r) => new Uint8Array(r));
+      // We synchronously set a Promise in the cache in case another thread
+      // tries to read the same segment
+      cache.set(cacheId, resp);
+      data = await resp;
 
-      // This is the parent super-page
-      cache.set(entry.id + '|' + page, data);
+      // In case of a multiple-page segment, this is the parent super-page
+      cache.set(cacheId, data);
 
       // These point to the parent super-page
       const pages = chunkSize / entry.pageSize;
       for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
         cache.set(entry.id + '|' + i, Number(page));
       }
+
     } else if (typeof data === 'number') {
       // This page is present as a segment of a super-page
       pageStart = BigInt(data) * pageSize;
       data = cache.get(entry.id + '|' + data) as Uint8Array;
+
     } else {
       debug['cache'](`cache hit for ${msg.url}:${page}`);
     }
@@ -208,7 +223,7 @@ globalThis.onmessage = ({ data }) => {
       });
       break;
     case 'close':
-      postMessage({msg: 'ack'});
+      postMessage({ msg: 'ack' });
       close();
       break;
     default:
