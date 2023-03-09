@@ -40,7 +40,6 @@ describe('HTTP VFS', () => {
         return httpBackend.close();
       })
       .then(() => {
-        console.log('close finished');
         done();
       })
       .catch(done);
@@ -84,5 +83,48 @@ describe('HTTP VFS', () => {
         done();
       })
       .catch(done);
+  });
+
+  it('should support multiple parallel connections', (done) => {
+    let concurrentDb: Promise<SQLite.Promiser>[] = [];
+    let tiles = 0;
+
+    for (let i = 0; i < 8; i++) {
+      concurrentDb.push(createSQLiteThread({ http: httpBackend }));
+    }
+
+    const q: Promise<SQLite.Response>[] = [];
+    for (let i = 0; i < concurrentDb.length; i++) {
+      q.push(concurrentDb[i]
+        .then((db) => db('open', {
+            filename: 'file:' + encodeURI(remoteURL),
+            vfs: 'http'
+          }).then(() => db))
+        .then((db) => db('exec', {
+          sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
+            'WHERE zoom_level = 6 AND tile_column = $col AND tile_row = $row',
+          bind: { $col: i, $row: i },
+          callback: (msg) => {
+            if (msg.row) {
+              tiles++;
+              assert.sameMembers(msg.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
+              assert.strictEqual(msg.row[0], 6);
+              assert.strictEqual(msg.row[1], i);
+              assert.strictEqual(msg.row[2], i);
+              assert.instanceOf(msg.row[3], Uint8Array);
+            }
+          }
+        })));
+    }
+
+    Promise.all(q)
+      .then(() => {
+        assert.strictEqual(tiles, 10);
+        done();
+      })
+      .catch(done)
+      .finally(() => {
+        Promise.all(concurrentDb.map((dbq) => dbq.then((db) => db.close())));
+      });
   });
 });
