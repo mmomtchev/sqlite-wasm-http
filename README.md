@@ -23,6 +23,8 @@ Its main drawback at the moment is that it depends on a number of very recent JS
 
 * *Import maps* which require Webpack 5 or the latest rollup
 
+* Ony ES6 module mode is supported at the moment, CommonJS is not supported and this includes TypeScript transpiled to CommonJS - you have to transpile to ES6 in order to use this module
+
 # Node.js compatibility
 
 Node.js is fully supported but requires `web-worker` and `fetch` available in Node.js 18.x+.
