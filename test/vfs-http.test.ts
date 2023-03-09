@@ -102,15 +102,15 @@ describe('HTTP VFS', () => {
           }).then(() => db))
         .then((db) => db('exec', {
           sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
-            'WHERE zoom_level = 6 AND tile_column = $col AND tile_row = $row',
-          bind: { $col: i, $row: i },
+            'WHERE zoom_level = 10 AND tile_column = $col AND tile_row = $row',
+          bind: { $col: 600 + i, $row: 600 + i },
           callback: (msg) => {
             if (msg.row) {
               tiles++;
               assert.sameMembers(msg.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
-              assert.strictEqual(msg.row[0], 6);
-              assert.strictEqual(msg.row[1], i);
-              assert.strictEqual(msg.row[2], i);
+              assert.strictEqual(msg.row[0], 10);
+              assert.strictEqual(msg.row[1], 600 + i);
+              assert.strictEqual(msg.row[2], 600 + i);
               assert.instanceOf(msg.row[3], Uint8Array);
             }
           }
@@ -119,7 +119,7 @@ describe('HTTP VFS', () => {
 
     Promise.all(q)
       .then(() => {
-        assert.strictEqual(tiles, 10);
+        assert.strictEqual(tiles, concurrentDb.length);
         done();
       })
       .catch(done)

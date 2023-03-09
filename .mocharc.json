@@ -6,5 +6,9 @@
   ],
   "reporter": "tap",
   "timeout": 20000,
-  "loader": "ts-node/esm"
+  "loader": "ts-node/esm",
+  "node-option": [
+    "no-warnings",
+    "loader=ts-node/esm"
+  ]
 }
