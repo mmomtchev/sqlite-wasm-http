@@ -73,3 +73,9 @@ await db('close', {});
 db.close();
 await httpBackend.close();
 ```
+
+# Will write-access ever be possible?
+
+Short answer: Maybe, in some cases.
+
+Long answer: It won't have the same universal support as read-only access though. There is a `Content-Range` header for HTTP bodies - that is used in the response of an HTTP `GET` request that carries a `Range` header. The RFC does not say anything about this header being used for `PUT` requests. Most web server do not support it. Apache does support it if the WebDAV extensions are enabled. Maybe other servers support in specific configurations too. Support on public infrastructure servers, especially the low-cost ones, will likely be very rare.
