@@ -5,5 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "node index.js"
+  },
+  "devDependencies": {
+    "web-worker": "github:mmomtchev/web-worker#workerglobalscope"
   }
 }

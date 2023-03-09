@@ -4,5 +4,9 @@
   "description": "browser/webpack/es6 integration test",
   "scripts": {
     "test": "webpack --mode=production"
+  },
+  "devDependencies": {
+    "webpack": "^5.76.0",
+    "webpack-cli": "^5.0.1"
   }
 }
