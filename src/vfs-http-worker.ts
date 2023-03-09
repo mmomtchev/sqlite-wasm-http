@@ -138,6 +138,7 @@ const backendAsyncMethods:
         chunkSize = prev.byteLength * 2;
         debug['cache'](`downloading super page of size ${chunkSize}`);
       }
+      const pages = chunkSize / entry.pageSize;
 
       // Downloading a new segment
       const resp = fetch(msg.url, {
@@ -151,17 +152,20 @@ const backendAsyncMethods:
       // We synchronously set a Promise in the cache in case another thread
       // tries to read the same segment
       cache.set(cacheId, resp);
+      // These point to the parent super-page and resolve at the same time as resp
+      for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
+        cache.set(entry.id + '|' + i, resp.then((p) => Number(p)));
+      }
+
       data = await resp;
 
       // In case of a multiple-page segment, this is the parent super-page
       cache.set(cacheId, data);
 
       // These point to the parent super-page
-      const pages = chunkSize / entry.pageSize;
       for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
         cache.set(entry.id + '|' + i, Number(page));
       }
-
     } else if (typeof data === 'number') {
       // This page is present as a segment of a super-page
       pageStart = BigInt(data) * pageSize;
