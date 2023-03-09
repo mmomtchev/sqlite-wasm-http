@@ -123,7 +123,12 @@ const backendAsyncMethods:
       // This means that another thread has requested this segment
       data = await data;
 
-    if (!data) {
+    if (typeof data === 'number') {
+      // This page is present as a segment of a super-page
+      pageStart = BigInt(data) * pageSize;
+      data = cache.get(entry.id + '|' + data) as Uint8Array;
+
+    } else if (typeof data === 'undefined') {
       debug['cache'](`cache miss for ${msg.url}:${page}`);
 
       let chunkSize = entry.pageSize;
@@ -166,11 +171,6 @@ const backendAsyncMethods:
       for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
         cache.set(entry.id + '|' + i, Number(page));
       }
-    } else if (typeof data === 'number') {
-      // This page is present as a segment of a super-page
-      pageStart = BigInt(data) * pageSize;
-      data = cache.get(entry.id + '|' + data) as Uint8Array;
-
     } else {
       debug['cache'](`cache hit for ${msg.url}:${page}`);
     }
