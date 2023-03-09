@@ -1,0 +1,13 @@
+{
+  "name": "node-es6",
+  "version": "1.0.0",
+  "description": "node/es6 integration test",
+  "type": "module",
+  "scripts": {
+    "test": "ts-node-esm index.ts"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "web-worker": "github:mmomtchev/web-worker#workerglobalscope"
+  }
+}
