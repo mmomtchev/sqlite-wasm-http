@@ -47,7 +47,10 @@ const backendAsyncMethods:
     if (files.has(msg.url))
       return 0;
 
-    const head = await fetch(msg.url, { method: 'HEAD' });
+    const fetchOptions = { ...options.fetchOptions };
+    if (!fetchOptions.method) fetchOptions.method = 'HEAD';
+    if (!fetchOptions.headers) fetchOptions.headers = {};
+    const head = await fetch(msg.url, fetchOptions);
     if (head.headers.get('Accept-Ranges') !== 'bytes') {
       console.warn(`Server for ${msg.url} does not advertise 'Accept-Ranges'. ` +
         'If the server supports it, in order to remove this message, add "Accept-Ranges: bytes". ' +
@@ -146,12 +149,11 @@ const backendAsyncMethods:
       const pages = chunkSize / entry.pageSize;
 
       // Downloading a new segment
-      const resp = fetch(msg.url, {
-        method: 'GET',
-        headers: {
-          'Range': `bytes=${pageStart}-${pageStart + BigInt(chunkSize - 1)}`
-        }
-      })
+      const fetchOptions = {...options.fetchOptions};
+      if (!fetchOptions.method) fetchOptions.method = 'GET';
+      if (!fetchOptions.headers) fetchOptions.headers = {};
+      fetchOptions.headers['Range'] = `bytes=${pageStart}-${pageStart + BigInt(chunkSize - 1)}`;
+      const resp = fetch(msg.url, fetchOptions)
         .then((r) => r.arrayBuffer())
         .then((r) => new Uint8Array(r));
       // We synchronously set a Promise in the cache in case another thread
@@ -163,6 +165,8 @@ const backendAsyncMethods:
       }
 
       data = await resp;
+      if (!(data instanceof Uint8Array) || data.length === 0)
+        throw new Error(`Invalid HTTP response received: ${JSON.stringify(resp)}`);
 
       // In case of a multiple-page segment, this is the parent super-page
       cache.set(cacheId, data);

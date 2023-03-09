@@ -85,6 +85,57 @@ describe('HTTP VFS', () => {
       .catch(done);
   });
 
+  it('should support custom HTTP headers', (done) => {
+    const secretURL = 'https://sqlite-secret-zone.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles';
+    const authorization = 'Basic: OpenSesame';
+
+    const backend = createHttpBackend({
+      fetchOptions: {
+        headers: {
+          'Authorization': authorization
+        }
+      }
+    });
+    const dbAuthq = createSQLiteThread({ http: backend });
+    const rows: SQLite.Result[] = [];
+    dbAuthq
+      .then((dbAuth) => dbAuth('open', {
+        filename: 'file:' + encodeURI(secretURL),
+        vfs: 'http'
+      })
+        .then(() => dbAuth))
+      .then((dbAuth) => dbAuth('exec', {
+        sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = 1',
+        callback: (msg) => {
+          rows.push(msg);
+        }
+      }))
+      .then((msg) => {
+        assert.strictEqual(msg.type, 'exec');
+        assert.sameMembers(msg.result.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
+        assert.lengthOf(rows, 5);
+        rows.forEach((row, idx) => {
+          assert.sameMembers(row.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
+          if (row.row) {
+            assert.isAtMost(idx, 3);
+            assert.isNumber(row.rowNumber);
+            assert.strictEqual(row.row[0], 1);
+            assert.isNumber(row.row[1]);
+            assert.isNumber(row.row[2]);
+            assert.instanceOf(row.row[3], Uint8Array);
+          } else {
+            assert.isNull(row.rowNumber);
+            assert.strictEqual(idx, 4);
+          }
+        });
+        done();
+      })
+      .catch(done)
+      .finally(() => {
+        dbAuthq.then((dbAuth) => dbAuth.close()).then(() => backend.close());
+      });
+  });
+
   it('should support multiple parallel connections', (done) => {
     let concurrentDb: Promise<SQLite.Promiser>[] = [];
     let tiles = 0;

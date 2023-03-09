@@ -36,15 +36,18 @@ export interface Options {
    * @default 1024
    */
   cacheSize?: number;
-  debug?: string[];
-}
+  /**
+   * Optional fetch options to be used when requesting data
+   */
+  fetchOptions?: RequestInit
+};
 
 export function defaultOptions(options?: Options): Options {
   return {
     timeout: options?.timeout ?? 20000,
     maxPageSize: options?.maxPageSize ?? 4096,
     cacheSize: options.cacheSize ?? 1024,
-    debug: []
+    fetchOptions: options.fetchOptions ?? {}
   };
 }
 
