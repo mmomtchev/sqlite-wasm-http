@@ -16674,7 +16674,7 @@ else if (typeof exports === 'object')
      is called.
   */
   const initModuleState = globalThis.sqlite3InitModuleState = Object.assign(Object.create(null),{
-    moduleScript: self?.document?.currentScript,
+    moduleScript: globalThis?.document?.currentScript,
     isWorker: ('undefined' !== typeof WorkerGlobalScope),
     location: globalThis.location,
     urlParams:  globalThis?.location?.href
