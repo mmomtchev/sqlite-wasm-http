@@ -49,7 +49,7 @@ const backendAsyncMethods:
 
     const fetchOptions = { ...options.fetchOptions };
     if (!fetchOptions.method) fetchOptions.method = 'HEAD';
-    if (!fetchOptions.headers) fetchOptions.headers = {};
+    fetchOptions.headers = { ...(fetchOptions.headers ?? {}) };
     const head = await fetch(msg.url, fetchOptions);
     if (head.headers.get('Accept-Ranges') !== 'bytes') {
       console.warn(`Server for ${msg.url} does not advertise 'Accept-Ranges'. ` +
@@ -149,9 +149,9 @@ const backendAsyncMethods:
       const pages = chunkSize / entry.pageSize;
 
       // Downloading a new segment
-      const fetchOptions = {...options.fetchOptions};
+      const fetchOptions = { ...options.fetchOptions };
       if (!fetchOptions.method) fetchOptions.method = 'GET';
-      if (!fetchOptions.headers) fetchOptions.headers = {};
+      fetchOptions.headers = { ...(fetchOptions.headers ?? {}) };
       fetchOptions.headers['Range'] = `bytes=${pageStart}-${pageStart + BigInt(chunkSize - 1)}`;
       const resp = fetch(msg.url, fetchOptions)
         .then((r) => r.arrayBuffer())
