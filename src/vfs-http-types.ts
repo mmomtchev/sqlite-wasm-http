@@ -5,7 +5,19 @@ export interface BackendChannel {
 
 export interface Backend {
   worker: Worker;
+  /**
+   * Create a new channel to be used with a new SQLite worker
+   * @returns {Promise<BackendChannel>}
+   */
   createNewChannel: () => Promise<BackendChannel>;
+  /**
+   * Close the HTTP backend waiting for clean shutdown
+   */
+  close: () => Promise<void>;
+  /**
+   * Synchronously kill the HTTP backend
+   */
+  terminate: () => void;
 }
 
 export interface Options {

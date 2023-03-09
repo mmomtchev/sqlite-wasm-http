@@ -14,8 +14,10 @@ declare namespace SQLite {
     columnNames: string[];
   }
   export interface RowEOT {
-    row: null;
+    type: string;
+    row: undefined;
     rowNumber: null;
+    columnNames: string[];
   }
   export type Result = Row | RowEOT;
 
@@ -37,7 +39,7 @@ declare namespace SQLite {
   export type ResponseError = {
     type: 'error';
     messageId: MessageId;
-    dbId: MessageExec;
+    dbId: MessageId;
     result: {
       operation: MessageType;
       message: string;
@@ -50,7 +52,7 @@ declare namespace SQLite {
   export type ResponseConfigGet = {
     type: 'config-get';
     messageId: MessageId;
-    dbId: MessageExec;
+    dbId: string;
     result: {
       version: string;
       bigIntEnable: boolean;
@@ -61,14 +63,14 @@ declare namespace SQLite {
   export type ResponseExec = {
     type: 'exec';
     messageId: MessageId;
-    dbId: MessageExec;
+    dbId: string;
     result: Record<string, any>;
   };
 
   export type ResponseOpen = {
     type: 'open';
     messageId: MessageId;
-    dbId: MessageExec;
+    dbId: string;
     result: {
       filename: string;
       persistent: boolean;
@@ -79,7 +81,7 @@ declare namespace SQLite {
   export type ResponseClose = {
     type: 'close';
     messageId: MessageId;
-    dbId: MessageExec;
+    dbId: string;
     result: {
       filename?: string;
     };
@@ -96,5 +98,6 @@ declare namespace SQLite {
   export type Promiser = Promiser1Exec & Promiser2Exec &
     Promiser1Open & Promiser2Open &
     Promiser1Close & Promiser2Close &
-    Promiser1ConfigGet & Promiser2ConfigGet;
+    Promiser1ConfigGet & Promiser2ConfigGet &
+  { close: () => void; };
 }

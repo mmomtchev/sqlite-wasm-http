@@ -2,14 +2,14 @@
 /// <reference path='../deps/types/sqlite3.d.ts' />
 /// <reference path='../deps/types/sqlite3-promiser.d.ts' />
 import '#sqlite3.js';
-import '#sqlite3-worker1-promiser.js'; 
-import * as VFSHTTP from './vfs-http-types.js';
+import '#sqlite3-worker1-promiser.js';
 import { debug } from './vfs-http-types.js';
+import * as VFSHTTP from './vfs-http-types.js';
+export * as VFSHTTP from './vfs-http-types.js';
 
 export interface SQLiteOptions {
   http?: VFSHTTP.Backend;
 };
-//export type { Backend, BackendChannel, Options as HTTPOptions } from './vfs-http-types.js';
 
 declare global {
   export var sqlite3Worker1Promiser: (config: SQLite.PromiserConfig) => SQLite.Promiser;
@@ -17,6 +17,7 @@ declare global {
 
 export function createSQLiteThread(options?: SQLiteOptions): Promise<SQLite.Promiser> {
   debug['threads']('Creating new SQLite thread', options);
+  let worker: Worker;
   const r = new Promise<SQLite.Promiser>((resolve, reject) => {
     const promiser = sqlite3Worker1Promiser({
       onready: () => {
@@ -24,23 +25,28 @@ export function createSQLiteThread(options?: SQLiteOptions): Promise<SQLite.Prom
       },
       worker: () => {
         try {
-          const w = new Worker(new URL('./sqlite-worker.js', import.meta.url));
-          w.onerror = (event) => console.error('Worker bootstrap failed', event);
+          worker = new Worker(new URL('./sqlite-worker.js', import.meta.url));
+          worker.onerror = (event) => console.error('Worker bootstrap failed', event);
           if (options?.http) {
             options.http.createNewChannel()
               .then((channel) => {
-                w.postMessage({ httpChannel: channel }, [channel.port]);
+                worker.postMessage({ httpChannel: channel }, [channel.port]);
               });
           } else {
-            w.postMessage({});
+            worker.postMessage({});
           }
-          return w;
+          return worker;
         } catch (e) {
           console.error('Failed to create SQLite worker', e);
           reject(e);
         }
       }
     });
+  }).then((p) => {
+    p.close = () => {
+      worker.terminate();
+    };
+    return p;
   });
 
   return r;
@@ -52,7 +58,7 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
   let nextId = 1;
   const worker = new Worker(new URL('./vfs-http-worker.js', import.meta.url));
   options = VFSHTTP.defaultOptions(options);
-  worker.postMessage({msg: 'init', options});
+  worker.postMessage({ msg: 'init', options });
 
   const consumers = {};
 
@@ -78,18 +84,36 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
 
   return {
     worker,
-    createNewChannel: (): Promise<VFSHTTP.BackendChannel> => {
-      debug['threads']('Creating new HTTP VFS channel');
+    createNewChannel: function () {
+      debug['threads']('Creating a new HTTP VFS channel');
       const channel = new MessageChannel();
       const id = nextId++;
       worker.postMessage({ msg: 'handshake', port: channel.port1, id }, [channel.port1]);
-      return new Promise((resolve, reject) => {
+      return new Promise<VFSHTTP.BackendChannel>((resolve, reject) => {
         const timeout = setTimeout(() => {
           delete consumers[id];
           reject('Timeout while waiting on backend');
-        }, options.timeout * 1e4);
+        }, options.timeout);
         consumers[id] = { id, channel, resolve, timeout };
       });
-    }
+    },
+    terminate: function () {
+      worker.terminate();
+    },
+    close: function () {
+      debug['threads']('Closing the HTTP VFS channel');
+      const channel = new MessageChannel();
+      worker.postMessage({ msg: 'close' });
+      return new Promise<void>((resolve, reject) => {
+        worker.onmessage = ({ data }) => {
+          debug['threads']('Received close response', data);
+          if (data.msg === 'ack' && data.id === undefined)
+          resolve();
+        };
+        const timeout = setTimeout(() => {
+          reject('Timeout while waiting on backend');
+        }, options.timeout);
+      });
+    },
   };
 }

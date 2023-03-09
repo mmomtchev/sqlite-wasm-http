@@ -207,5 +207,11 @@ globalThis.onmessage = ({ data }) => {
         sizeCalculation: (value) => value.byteLength ?? 4
       });
       break;
+    case 'close':
+      postMessage({msg: 'ack'});
+      close();
+      break;
+    default:
+      throw new Error(`Invalid message received by backend: ${data}`);
   }
 };
