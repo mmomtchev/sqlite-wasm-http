@@ -15,8 +15,11 @@ const testDir = path.resolve(dirname, '..', '..', 'test', 'integration');
     console.log('Running', test);
     process.chdir(path.resolve(testDir, test));
     try {
+      console.log('npm install');
       await exec('npm install');
+      console.log(process.argv.slice(2).join(' '));
       await exec(process.argv.slice(2).join(' '));
+      console.log('npm test');
       await exec('npm test');
     } catch (e) {
       console.error(e.stdout);
