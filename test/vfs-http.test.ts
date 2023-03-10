@@ -85,6 +85,34 @@ describe('HTTP VFS', () => {
       .catch(done);
   });
 
+  it('should support aggregation (VFS stress test)', (done) => {
+    const rows: SQLite.Result[] = [];
+    db('exec', {
+      sql: 'SELECT COUNT(*) AS total FROM tiles WHERE zoom_level < 11',
+      callback: (msg) => {
+        rows.push(msg);
+      }
+    })
+      .then((msg) => {
+        assert.strictEqual(msg.type, 'exec');
+        assert.sameMembers(msg.result.columnNames, ['total']);
+        assert.lengthOf(rows, 2);
+        rows.forEach((row, idx) => {
+          assert.sameMembers(row.columnNames, ['total']);
+          if (row.row) {
+            assert.isAtMost(idx, 0);
+            assert.isNumber(row.rowNumber);
+            assert.strictEqual(row.row[0], 72841);
+          } else {
+            assert.isNull(row.rowNumber);
+            assert.strictEqual(idx, 1);
+          }
+        });
+        done();
+      })
+      .catch(done);
+  });
+
   it('should support custom HTTP headers', (done) => {
     const secretURL = 'https://sqlite-secret-zone.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles';
     const authorization = 'Basic: OpenSesame';

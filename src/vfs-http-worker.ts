@@ -127,11 +127,25 @@ const backendAsyncMethods:
       data = await data;
 
     if (typeof data === 'number') {
-      // This page is present as a segment of a super-page
-      pageStart = BigInt(data) * pageSize;
-      data = cache.get(entry.id + '|' + data) as Uint8Array;
+      debug['cache'](`cache hit (multi-page segment) for ${msg.url}:${page}`);
 
-    } else if (typeof data === 'undefined') {
+      // This page is present as a segment of a super-page
+      const newPageStart = BigInt(data) * pageSize;
+      data = cache.get(entry.id + '|' + data);
+      if (data instanceof Promise)
+        data = await data;
+      if (data instanceof Uint8Array) {
+        // Not all subpages are valid, there are two possible cases
+        // where a non-valid superpage can be referenced:
+        // * the superpage was too big to fit in the cache
+        // * the superpage was evicted before the subsegments
+        pageStart = newPageStart;
+      } else {
+        data = undefined as Uint8Array;
+      }
+    }
+    
+    if (typeof data === 'undefined') {
       debug['cache'](`cache miss for ${msg.url}:${page}`);
 
       let chunkSize = entry.pageSize;
@@ -143,8 +157,13 @@ const backendAsyncMethods:
           prev = await prev;
         if (typeof prev === 'number')
           prev = cache.get(entry.id + '|' + prev) as Uint8Array;
-        chunkSize = prev.byteLength * 2;
-        debug['cache'](`downloading super page of size ${chunkSize}`);
+        if (prev instanceof Promise)
+          prev = await prev;
+        if (prev instanceof Uint8Array) {
+          // Valid superpage
+          chunkSize = prev.byteLength * 2;
+          debug['cache'](`downloading super page of size ${chunkSize}`);
+        }
       }
       const pages = chunkSize / entry.pageSize;
 
