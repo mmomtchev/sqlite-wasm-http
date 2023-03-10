@@ -1,5 +1,7 @@
 import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
 
+const pacman = new URL('./pacman.svg', import.meta.url);
+
 (async function main() {
   const httpBackend = createHttpBackend({
     maxPageSize: 1024,
@@ -19,6 +21,7 @@ import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
   elSql.value = 'SELECT zoom_level, tile_row, tile_column FROM tiles WHERE zoom_level = 1';
 
   btnConf.addEventListener('click', async () => {
+    divMsg.innerHTML = `<img src="${pacman}">`;
     const msg = await db('config-get', {});
     divMsg.innerHTML = JSON.stringify(msg, null, 4);
     divResults.innerHTML = '';
@@ -30,8 +33,8 @@ import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
   });
 
   btnGo.addEventListener('click', async () => {
-    divMsg.innerHTML = '';
-    divResults.innerHTML = '';
+    divMsg.innerHTML = `<img src="${pacman}">`;
+    divResults.innerHTML = `<img id="spinner-results" src="${pacman}">`;
     try {
       const msgOpen = await db('open', {
         filename: 'file:' + encodeURI(elUrl.value),
@@ -45,7 +48,7 @@ import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
           if (row.row)
             divResults.innerHTML += `<div>row: ${JSON.stringify(row, null, 4)}</div>`;
           else
-            console.log('done');
+            document.getElementById('spinner-results').hidden = true;
         }
       });
       divMsg.innerHTML += JSON.stringify(msgExec, null, 4);
