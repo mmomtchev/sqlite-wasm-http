@@ -1,5 +1,5 @@
 import { createSQLiteThread, createHttpBackend } from '../dist/index.js';
-import '../test/setup.js'
+import '../test/setup.js';
 
 (async () => {
 // MBTiles is a common format for storing both vector and raster maps in an SQLite database

@@ -9,7 +9,7 @@ interface FileDescriptor {
   url: string;
   sq3File: SQLite.Internal.CStruct;
   lockType: number;
-};
+}
 const openFiles: Record<SQLite.Internal.FH, FileDescriptor> = {};
 
 export function installHttpVfs(sqlite3: SQLite.SQLite, backend: VFSHTTP.BackendChannel, options: VFSHTTP.Options) {
@@ -34,12 +34,6 @@ export function installHttpVfs(sqlite3: SQLite.SQLite, backend: VFSHTTP.BackendC
 
   const httpVfs = new sqlite3_vfs();
   const httpIoMethods = new sqlite3_io_methods();
-
-  // Init copied from sqlite3-vfs-opfs.c-pp.js
-  const pDVfs = capi.sqlite3_vfs_find(null);
-  const dVfs = pDVfs
-    ? new sqlite3_vfs(pDVfs)
-    : null;
 
   httpVfs.$iVersion = 1;
   httpVfs.$szOsFile = capi.sqlite3_file.structInfo.sizeof;
@@ -218,4 +212,4 @@ export function installHttpVfs(sqlite3: SQLite.SQLite, backend: VFSHTTP.BackendC
     io: { struct: httpIoMethods, methods: ioSyncWrappers },
     vfs: { struct: httpVfs, methods: vfsSyncWrappers }
   });
-};
+}

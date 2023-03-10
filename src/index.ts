@@ -9,9 +9,10 @@ export * as VFSHTTP from './vfs-http-types.js';
 
 export interface SQLiteOptions {
   http?: VFSHTTP.Backend;
-};
+}
 
 declare global {
+  // eslint-disable-next-line no-var
   export var sqlite3Worker1Promiser: (config: SQLite.PromiserConfig) => SQLite.Promiser;
 }
 

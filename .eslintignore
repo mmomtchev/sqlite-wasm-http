@@ -1,0 +1,5 @@
+/deps/**
+/docs/**
+/test/integration/**
+*.json
+*.html

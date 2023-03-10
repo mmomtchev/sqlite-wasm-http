@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Some quick hacks to make SQLite WASM work in Node.js
 import WebWorker from 'web-worker';
 import { MessageChannel, MessagePort as MessagePort } from 'worker_threads';

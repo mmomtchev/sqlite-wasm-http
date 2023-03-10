@@ -40,7 +40,7 @@ export interface Options {
    * Optional fetch options to be used when requesting data
    */
   fetchOptions?: RequestInit
-};
+}
 
 export function defaultOptions(options?: Options): Options {
   return {
@@ -57,7 +57,7 @@ export interface Message {
   url: string;
   offset?: bigint;
   n?: number;
-  [key: string]: string | number | BigInt;
+  [key: string]: string | number | bigint;
 }
 
 declare const SQLITE_DEBUG: string[];
@@ -66,7 +66,7 @@ const debugOptions = (typeof SQLITE_DEBUG !== 'undefined' && SQLITE_DEBUG) ||
   '';
 
 export const debugSys = ['threads', 'vfs', 'cache'] as const;
-export const debug = {} as Record<typeof debugSys[number], (...args: any[]) => void>;
+export const debug = {} as Record<typeof debugSys[number], (...args: unknown[]) => void>;
 for (const d of debugSys) {
   debug[d] = debugOptions.includes(d) ?
     console.debug.bind(console) :

@@ -18,7 +18,7 @@ interface Consumer {
   shm: SharedArrayBuffer;
   lock: Int32Array;
   buffer: Uint8Array;
-};
+}
 // The set of sqlite Workers that use this backend
 const consumers: Record<string, Consumer> = {};
 
@@ -28,7 +28,7 @@ interface FileEntry {
   url: string;
   size: bigint;
   pageSize: number | null;
-};
+}
 const files = new LRUCache<string, FileEntry>({
   max: 32
 });
@@ -144,7 +144,7 @@ const backendAsyncMethods:
         data = undefined as Uint8Array;
       }
     }
-    
+
     if (typeof data === 'undefined') {
       debug['cache'](`cache miss for ${msg.url}:${page}`);
 
@@ -234,13 +234,15 @@ globalThis.onmessage = ({ data }) => {
   debug['threads']('Received new control message', data);
   switch (data.msg) {
     case 'handshake':
-      const shm = new SharedArrayBuffer(options.maxPageSize + Int32Array.BYTES_PER_ELEMENT);
-      const lock = new Int32Array(shm, options.maxPageSize);
-      const buffer = new Uint8Array(shm, 0, options.maxPageSize);
-      lock[0] = 0xffff;
-      consumers[data.id] = { id: data.id, port: data.port, shm, lock, buffer };
-      postMessage({ msg: 'ack', id: data.id, shm, lock });
-      data.port.onmessage = workMessage.bind(consumers[data.id]);
+      {
+        const shm = new SharedArrayBuffer(options.maxPageSize + Int32Array.BYTES_PER_ELEMENT);
+        const lock = new Int32Array(shm, options.maxPageSize);
+        const buffer = new Uint8Array(shm, 0, options.maxPageSize);
+        lock[0] = 0xffff;
+        consumers[data.id] = { id: data.id, port: data.port, shm, lock, buffer };
+        postMessage({ msg: 'ack', id: data.id, shm, lock });
+        data.port.onmessage = workMessage.bind(consumers[data.id]);
+      }
       break;
     case 'init':
       options = data.options;

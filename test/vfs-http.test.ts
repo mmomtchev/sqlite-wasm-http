@@ -165,7 +165,7 @@ describe('HTTP VFS', () => {
   });
 
   it('should support multiple parallel connections', (done) => {
-    let concurrentDb: Promise<SQLite.Promiser>[] = [];
+    const concurrentDb: Promise<SQLite.Promiser>[] = [];
     let tiles = 0;
 
     for (let i = 0; i < 8; i++) {
