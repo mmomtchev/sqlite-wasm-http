@@ -7,7 +7,7 @@ const pacman = new URL('./pacman.svg', import.meta.url);
     maxPageSize: 1024,
     timeout: 10000
   });
-  const db = await createSQLiteThread({ http: httpBackend });
+  const db = await createSQLiteThread({ http: true });
   const remoteDB = 'https://velivole.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles';
 
   const elUrl = document.getElementById('input-url') as HTMLInputElement;

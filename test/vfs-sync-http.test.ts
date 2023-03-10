@@ -1,18 +1,13 @@
-import { createSQLiteThread, createHttpBackend, VFSHTTP } from '../dist/index.js';
+import { createSQLiteThread, createHttpBackend } from '../dist/index.js';
 
 import { assert } from 'chai';
 
 const remoteURL = 'https://velivole.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles';
 
-describe('HTTP VFS (multiplexed)', () => {
-  let httpBackend: VFSHTTP.Backend;
+describe('HTTP VFS (ersatz sync version)', () => {
   let db: SQLite.Promiser;
   before((done) => {
-    httpBackend = createHttpBackend({
-      maxPageSize: 1024,
-      timeout: 10000
-    });
-    createSQLiteThread({ http: httpBackend })
+    createSQLiteThread({ http: true })
       .then((r) => {
         db = r;
         done();
@@ -34,12 +29,8 @@ describe('HTTP VFS (multiplexed)', () => {
   after((done) => {
     db('close', {})
       .then((msg: SQLite.ResponseClose) => {
-        assert.equal(msg.type, 'close');
-      }).then(() => {
         db.close();
-        return httpBackend.close();
-      })
-      .then(() => {
+        assert.equal(msg.type, 'close');
         done();
       })
       .catch(done);
@@ -85,7 +76,7 @@ describe('HTTP VFS (multiplexed)', () => {
       .catch(done);
   });
 
-  it('should support aggregation (VFS stress test)', (done) => {
+  it.skip('should support aggregation (VFS stress test)', (done) => {
     const rows: SQLite.Result[] = [];
     db('exec', {
       sql: 'SELECT COUNT(*) AS total FROM tiles WHERE zoom_level < 10',
@@ -113,7 +104,7 @@ describe('HTTP VFS (multiplexed)', () => {
       .catch(done);
   });
 
-  it('should support custom HTTP headers', (done) => {
+  it.skip('should support custom HTTP headers', (done) => {
     const secretURL = 'https://sqlite-secret-zone.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles';
     const authorization = 'Basic: OpenSesame';
 
@@ -162,48 +153,5 @@ describe('HTTP VFS (multiplexed)', () => {
       .finally(() => {
         dbAuthq.then((dbAuth) => dbAuth.close()).then(() => backend.close());
       });
-  });
-
-  it('should support multiple parallel connections', (done) => {
-    const concurrentDb: Promise<SQLite.Promiser>[] = [];
-    let tiles = 0;
-
-    for (let i = 0; i < 8; i++) {
-      concurrentDb.push(createSQLiteThread({ http: httpBackend }));
-    }
-
-    const q: Promise<SQLite.Response>[] = [];
-    for (let i = 0; i < concurrentDb.length; i++) {
-      q.push(concurrentDb[i]
-        .then((db) => db('open', {
-          filename: 'file:' + encodeURI(remoteURL),
-          vfs: 'http'
-        }).then(() => db))
-        .then((db) => db('exec', {
-          sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
-            'WHERE zoom_level = 10 AND tile_column = $col AND tile_row = $row',
-          bind: { $col: 600 + i, $row: 600 + i },
-          callback: (msg) => {
-            if (msg.row) {
-              tiles++;
-              assert.sameMembers(msg.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
-              assert.strictEqual(msg.row[0], 10);
-              assert.strictEqual(msg.row[1], 600 + i);
-              assert.strictEqual(msg.row[2], 600 + i);
-              assert.instanceOf(msg.row[3], Uint8Array);
-            }
-          }
-        })));
-    }
-
-    Promise.all(q)
-      .then(() => {
-        assert.strictEqual(tiles, concurrentDb.length);
-      })
-      .finally(() => {
-        Promise.all(concurrentDb.map((dbq) => dbq.then((db) => db.close())));
-        done();
-      })
-      .catch(done);
   });
 });

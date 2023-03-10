@@ -8,7 +8,7 @@ import * as VFSHTTP from './vfs-http-types.js';
 export * as VFSHTTP from './vfs-http-types.js';
 
 export interface SQLiteOptions {
-  http?: VFSHTTP.Backend;
+  http?: VFSHTTP.Backend | true;
 }
 
 declare global {
@@ -28,13 +28,13 @@ export function createSQLiteThread(options?: SQLiteOptions): Promise<SQLite.Prom
         try {
           worker = new Worker(new URL('./sqlite-worker.js', import.meta.url));
           worker.onerror = (event) => console.error('Worker bootstrap failed', event);
-          if (options?.http) {
+          if (options?.http && typeof options.http === 'object') {
             options.http.createNewChannel()
               .then((channel) => {
                 worker.postMessage({ httpChannel: channel }, [channel.port]);
               });
           } else {
-            worker.postMessage({});
+            worker.postMessage({ httpChannel: options?.http });
           }
           return worker;
         } catch (e) {

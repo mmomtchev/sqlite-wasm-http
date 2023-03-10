@@ -41,6 +41,10 @@
     "#sqlite3-worker1-promiser.js": {
       "node": "./deps/dist/sqlite3-worker1-promiser-node.js",
       "default": "./deps/dist/sqlite3-worker1-promiser-bundler-friendly.js"
+    },
+    "#XMLHttpRequest.cjs": {
+      "node": "./deps/XMLHttpRequest.cjs",
+      "default": "./deps/XMLHttpRequest-stub.js"
     }
   },
   "scripts": {
