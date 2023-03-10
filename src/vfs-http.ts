@@ -8,7 +8,6 @@ interface FileDescriptor {
   fid: SQLite.Internal.FH;
   url: string;
   sq3File: SQLite.Internal.CStruct;
-  lockType: number;
 }
 const openFiles: Record<SQLite.Internal.FH, FileDescriptor> = {};
 
@@ -16,7 +15,7 @@ export function installHttpVfs(sqlite3: SQLite.SQLite, backend: VFSHTTP.BackendC
   if (typeof SharedArrayBuffer === 'undefined') {
     throw new Error('SharedArrayBuffer is not available. ' +
       'If your browser supports it, the webserver must send ' +
-      '"Cross-Origin-Opener-Policy: same-origin"' +
+      '"Cross-Origin-Opener-Policy: same-origin "' +
       'and "Cross-Origin-Embedder-Policy: require-corp" headers.');
   }
   if (!backend ||
@@ -192,7 +191,6 @@ export function installHttpVfs(sqlite3: SQLite.SQLite, backend: VFSHTTP.BackendC
       fh.url = url;
       fh.sq3File = new sqlite3_file(fid);
       fh.sq3File.$pMethods = httpIoMethods.pointer;
-      fh.lockType = capi.SQLITE_LOCK_NONE;
       openFiles[fid] = fh;
 
       const r = sendAndWait({ msg: 'xOpen', url });

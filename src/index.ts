@@ -66,7 +66,7 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
   if (typeof SharedArrayBuffer === 'undefined') {
     throw new Error('SharedArrayBuffer is not available. ' +
       'If your browser supports it, the webserver must send ' +
-      '"Cross-Origin-Opener-Policy: same-origin"' +
+      '"Cross-Origin-Opener-Policy: same-origin "' +
       'and "Cross-Origin-Embedder-Policy: require-corp" headers.');
   }
 

@@ -38,7 +38,7 @@ declare namespace SQLite {
   }
 
   export interface WASM {
-    poke: ((ptr: Internal.CPointer, val: BigInt, size: 'i64') => void) &
+    poke: ((ptr: Internal.CPointer, val: bigint, size: 'i64') => void) &
     ((ptr: Internal.CPointer, val: number, size: 'i32') => void) &
     ((ptr: Internal.CPointer, val: number, size: 'double') => void);
     cstrToJs: (ptr: Internal.CPointer) => string;
