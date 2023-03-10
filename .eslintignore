@@ -3,3 +3,5 @@
 /test/integration/**
 *.json
 *.html
+*.cjs
+*.js

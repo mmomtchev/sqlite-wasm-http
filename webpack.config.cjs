@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const EnhancedResolvePlugin = require('enhanced-resolve');
 
 module.exports = {
   entry: './examples/index.ts',
@@ -20,7 +21,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
-    plugins: [new TsconfigPathsPlugin({ configFile: './examples/tsconfig.json' })],
+    plugins: [
+      new TsconfigPathsPlugin({ configFile: './examples/tsconfig.json' }),
+    ],
   },
   output: {
     filename: 'bundle.js',

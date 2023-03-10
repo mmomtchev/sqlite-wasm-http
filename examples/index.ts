@@ -59,30 +59,4 @@ import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
         divMsg.innerHTML = e.toString();
     }
   });
-
-
-  /*
-    resultsDiv.innerHTML += '<div>SELECT * FROM tiles WHERE zoom_level = 0</div>';
-    msg = await db('exec', {
-      sql: 'SELECT * FROM tiles WHERE zoom_level = 0',
-      callback: function (row) {
-        if (row.row)
-          resultsDiv.innerHTML += `<div>row: ${JSON.stringify(row)}</div>`;
-        else
-          resultsDiv.innerHTML += `<div>end of rows</div>`;
-      }
-    });
-    resultsDiv.innerHTML += `<div>${JSON.stringify(msg)}</div>`;
-  
-    resultsDiv.innerHTML += '<div>SELECT * FROM tiles WHERE zoom_level = 1</div>';
-    msg = await db('exec', {
-      sql: 'SELECT * FROM tiles WHERE zoom_level = 1',
-      callback: function (row) {
-        if (row.row)
-          resultsDiv.innerHTML += `<div>row: ${JSON.stringify(row)}</div>`;
-        else
-          resultsDiv.innerHTML += `<div>end of rows</div>`;
-      }
-    });
-    resultsDiv.innerHTML += `<div>${JSON.stringify(msg)}</div>`;*/
 })();
