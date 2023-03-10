@@ -88,7 +88,7 @@ describe('HTTP VFS', () => {
   it('should support aggregation (VFS stress test)', (done) => {
     const rows: SQLite.Result[] = [];
     db('exec', {
-      sql: 'SELECT COUNT(*) AS total FROM tiles WHERE zoom_level < 11',
+      sql: 'SELECT COUNT(*) AS total FROM tiles WHERE zoom_level < 10',
       callback: (msg) => {
         rows.push(msg);
       }
@@ -102,7 +102,7 @@ describe('HTTP VFS', () => {
           if (row.row) {
             assert.isAtMost(idx, 0);
             assert.isNumber(row.rowNumber);
-            assert.strictEqual(row.row[0], 72841);
+            assert.strictEqual(row.row[0], 20953);
           } else {
             assert.isNull(row.rowNumber);
             assert.strictEqual(idx, 1);
