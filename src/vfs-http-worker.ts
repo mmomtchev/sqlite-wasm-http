@@ -259,3 +259,10 @@ globalThis.onmessage = ({ data }) => {
       throw new Error(`Invalid message received by backend: ${data}`);
   }
 };
+
+if (typeof SharedArrayBuffer === 'undefined') {
+  throw new Error('SharedArrayBuffer is not available. ' +
+    'If your browser supports it, the webserver must send ' +
+    '"Cross-Origin-Opener-Policy: same-origin"' +
+    'and "Cross-Origin-Embedder-Policy: require-corp" headers.');
+}

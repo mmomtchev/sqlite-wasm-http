@@ -63,6 +63,13 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
 
   const consumers = {};
 
+  if (typeof SharedArrayBuffer === 'undefined') {
+    throw new Error('SharedArrayBuffer is not available. ' +
+      'If your browser supports it, the webserver must send ' +
+      '"Cross-Origin-Opener-Policy: same-origin"' +
+      'and "Cross-Origin-Embedder-Policy: require-corp" headers.');
+  }
+
   worker.onmessage = ({ data }) => {
     debug['threads']('Received control message reply', data);
     switch (data.msg) {
