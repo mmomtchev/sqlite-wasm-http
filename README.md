@@ -15,7 +15,7 @@ The new features planned for 1.0 compared to the original project are:
 * Aims to support all bundlers out-of-the-box without special configuration
 
 Its main drawback at the moment is that it depends on a number of very recent JS features:
-* `SharedArrayBuffer` which requires that the server hosting the JS code sends [`Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: require-corp` headers](https://web.dev/coop-coep/).
+* `SharedArrayBuffer` which requires that the server hosting the JS code sends [`Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: require-corp` headers](https://web.dev/coop-coep/) (aka CORS 2).
 
   According to [caniuse.com](https://caniuse.com/sharedarraybuffer), as of March 2023, this is supported by 92.51% of the currently used browsers.
 
@@ -26,6 +26,8 @@ Its main drawback at the moment is that it depends on a number of very recent JS
 * Ony ES6 module mode is supported at the moment, CommonJS is not supported and this includes TypeScript transpiled to CommonJS - you have to transpile to ES6 in order to use this module
 
 You can check [test/integration](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/test/integration) for examples for the various environments that are currently tested and supported.
+
+Also you can check [this](http://stefnotch.github.io/web/COOP%20and%20COEP%20Service%20Worker/) for a hack-ish *Baron Munchausen-style* method to enable COOP/COEP via JS if you don't have access to the server.
 
 # Node.js compatibility
 
