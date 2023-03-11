@@ -10,12 +10,16 @@ const swapNeeded = (function() {
   u8[1] = 0x0D;
   // Big
   if (u16[0] == 0xF00D) {
-    console.debug('System is Big-Endian');
+    if (typeof globalThis.WorkerGlobalScope === 'undefined') {
+      console.debug('System is Big-Endian');
+    }
     return false;
   } 
   // Little
   if (u16[0] == 0x0DF0) {
-    console.debug('System is Little-Endian');
+    if (typeof globalThis.WorkerGlobalScope === 'undefined') {
+      console.debug('System is Little-Endian');
+    }
     return true;
   }
   throw new Error(`Failed determining endianness: ${u16}`);
