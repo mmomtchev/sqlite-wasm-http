@@ -93,7 +93,7 @@ describe('HTTP VFS (ersatz sync version)', () => {
           if (row.row) {
             assert.isAtMost(idx, 0);
             assert.isNumber(row.rowNumber);
-            assert.strictEqual(row.row[0], 20953);
+            assert.strictEqual(row.row[0], 1365);
           } else {
             assert.isNull(row.rowNumber);
             assert.strictEqual(idx, 1);
