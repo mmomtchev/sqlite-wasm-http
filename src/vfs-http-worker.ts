@@ -6,9 +6,6 @@ import * as VFSHTTP from './vfs-http-types.js';
 import { ntoh16 } from './endianness.js';
 import { debug } from './vfs-http-types.js';
 
-/*if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
-  throw new Error('This script must run in a WebWorker');*/
-
 let options: VFSHTTP.Options;
 
 // This identifies an SQLite worker thread
@@ -35,6 +32,13 @@ const files = new LRUCache<string, FileEntry>({
 
 // The entry for a given page can be either the page itself
 // or the number of the page that has the parent super-page
+// Here is an example of a cache structure (indexed by the URL + page number)
+// URL|0 -> Uint8Array(page)                     # This page is in cache
+// URL|1 -> undefined                            # These two
+// URL|2 -> undefined                            # are not
+// URL|3 -> Promise<Uint8Array(page * 2)>        # This is a currently downloading 2-page segment
+// URL|4 -> Promise<3>                           # This references the previous one
+// URL|5 -> 2                                    # An invalid stale entry that will be overwritten
 let cache: LRUCache<string, Uint8Array | number | Promise<Uint8Array | number>>;
 
 let nextId = 1;

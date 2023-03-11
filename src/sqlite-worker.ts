@@ -11,12 +11,15 @@ import { XMLHttpRequest as _XMLHttpRequest } from '#XMLHttpRequest.cjs';
 debug['threads']('SQLite worker started');
 globalThis.onmessage = ({ data }) => {
   debug['threads']('SQLite received green light', data);
-  const msg = data as { httpChannel?: VFSHTTP.BackendChannel | boolean | undefined; };
+  const msg = data as {
+    httpChannel?: VFSHTTP.BackendChannel | boolean | undefined;
+    httpOptions?: VFSHTTP.Options;
+  };
   sqlite3q().then((sqlite3) => {
     debug['threads']('SQLite init');
     sqlite3.initWorker1API();
     if (typeof msg.httpChannel === 'object') {
-      installHttpVfs(sqlite3, msg.httpChannel, {});
+      installHttpVfs(sqlite3, msg.httpChannel);
     } else if (msg.httpChannel === true) {
       if (typeof globalThis.XMLHttpRequest === 'undefined') {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,7 +32,7 @@ globalThis.onmessage = ({ data }) => {
         };
       }
 
-      installSyncHttpVfs(sqlite3, {});
+      installSyncHttpVfs(sqlite3, VFSHTTP.defaultOptions(msg.httpOptions));
     }
   });
 };

@@ -4,7 +4,7 @@ const pacman = new URL('./pacman.svg', import.meta.url);
 
 (async function main() {
   const httpBackend = createHttpBackend({
-    maxPageSize: 1024,
+    maxPageSize: 4096,
     timeout: 10000
   });
   const db = await createSQLiteThread({ http: true });

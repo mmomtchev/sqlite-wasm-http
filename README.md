@@ -30,6 +30,20 @@ Node.js is fully supported but requires `web-worker` and `fetch` available in No
 
 Check [`test/setup.ts`](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/test/setup.ts) which is used to setup the `mocha` environment for everything that is required.
 
+# Page size
+
+It is highly recommended to decrease your SQLite page size to 1024 bytes for maximum performance:
+```
+PRAGMA JOURNAL_MODE = DELETE;
+PRAGMA page_size = 1024;
+-- Do it for every FTS table you have
+-- (geospatial datasets do not use full text search)
+INSERT INTO ftstable(ftstable) VALUES ('optimize');
+-- Reorganize database and apply changed page size
+-- Sometimes you will be surprised by the new size of your DB
+VACUUM;
+```
+
 # Status
 
 Experimental
@@ -76,3 +90,15 @@ await httpBackend.close();
 Short answer: Maybe, in some cases.
 
 Long answer: It won't have the same universal support as read-only access though. There is a `Content-Range` header for HTTP bodies - that is used in the response of an HTTP `GET` request that carries a `Range` header. The RFC does not say anything about this header being used for `PUT` requests. Most web server do not support it. Apache does support it if the WebDAV extensions are enabled. Maybe other servers support in specific configurations too. Support on public infrastructure servers, especially the low-cost ones, will likely be very rare.
+
+# Debug output
+
+Browser mode:
+```
+SQLITE_DEBUG=vfs,threads,cache npm run start
+```
+
+Node.js
+```
+SQLITE_DEBUG=vfs,threads,cache mocha
+```

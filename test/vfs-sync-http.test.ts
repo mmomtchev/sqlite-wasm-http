@@ -76,7 +76,7 @@ describe('HTTP VFS (ersatz sync version)', () => {
       .catch(done);
   });
 
-  it.skip('should support aggregation (VFS stress test)', (done) => {
+  it('should support aggregation (VFS stress test)', (done) => {
     const rows: SQLite.Result[] = [];
     db('exec', {
       sql: 'SELECT COUNT(*) AS total FROM tiles WHERE zoom_level < 10',

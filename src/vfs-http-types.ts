@@ -46,8 +46,8 @@ export function defaultOptions(options?: Options): Options {
   return {
     timeout: options?.timeout ?? 20000,
     maxPageSize: options?.maxPageSize ?? 4096,
-    cacheSize: options.cacheSize ?? 1024,
-    fetchOptions: options.fetchOptions ?? {}
+    cacheSize: options?.cacheSize ?? 1024,
+    fetchOptions: options?.fetchOptions ?? {}
   };
 }
 

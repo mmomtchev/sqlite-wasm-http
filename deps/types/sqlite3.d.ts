@@ -44,7 +44,7 @@ declare namespace SQLite {
     cstrToJs: (ptr: Internal.CPointer) => string;
     cstrncpy: (dst: Internal.CPointer, src: Internal.CPointer, len: number) => number;
     heap8u: () => {
-      set: (src: Uint8Array, dest: Uint8Array) => void;
+      set: (src: Uint8Array, dest: Internal.CPointer) => void;
     };
 
     [fn: string]: Function;

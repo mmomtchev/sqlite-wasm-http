@@ -3,6 +3,7 @@
 // It runs in the SQLite worker thread
 
 import LRUCache from 'lru-cache';
+import { ntoh16 } from './endianness.js';
 import * as VFSHTTP from './vfs-http-types.js';
 import { debug } from './vfs-http-types.js';
 
@@ -12,12 +13,11 @@ interface FileDescriptor {
   sq3File: SQLite.Internal.CStruct;
   size: bigint;
   pageSize: number;
-  pageCache: LRUCache<number, Uint8Array>;
+  pageCache: LRUCache<number, Uint8Array | number>;
 }
 
 const openFiles: Record<SQLite.Internal.FH, FileDescriptor> = {};
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function installSyncHttpVfs(sqlite3: SQLite.SQLite, options: VFSHTTP.Options) {
   const capi = sqlite3.capi;
   const wasm = sqlite3.wasm;
@@ -70,8 +70,8 @@ export function installSyncHttpVfs(sqlite3: SQLite.SQLite, options: VFSHTTP.Opti
       debug['vfs']('xLock', fid, lock);
       return 0;
     },
-    xRead: function (fid: SQLite.Internal.FH, dest: Uint8Array, n: number, offset: bigint) {
-      debug['vfs']('xRead', fid, dest, n, offset);
+    xRead: function (fid: SQLite.Internal.FH, dest: SQLite.Internal.CPointer | Uint8Array, n: number, offset: bigint) {
+      debug['vfs']('xRead (sync)', fid, dest, n, offset);
       if (Number(offset) > Number.MAX_SAFE_INTEGER) {
         // CampToCamp are not supported
         return capi.SQLITE_TOOBIG;
@@ -81,22 +81,107 @@ export function installSyncHttpVfs(sqlite3: SQLite.SQLite, options: VFSHTTP.Opti
       }
       const entry = openFiles[fid];
 
-      try {
-        let data: Uint8Array;
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', entry.url, false);
-        xhr.setRequestHeader('Range', `bytes=${Number(offset)}-${Number(offset) + n - 1}`);
-        xhr.responseType = 'arraybuffer';
-        xhr.onload = () => {
-          if (xhr.response instanceof ArrayBuffer)
-            data = new Uint8Array(xhr.response);
-        };
-        xhr.send();
-        if (!data) {
+      if (!entry.pageSize) {
+        // Determine the page size if we don't know it
+        // It is in two big-endian bytes at offset 16 in what is always the first page
+        entry.pageSize = 1024;
+        const pageDataBuffer = new Uint8Array(2);
+        const r = ioSyncWrappers.xRead(fid, pageDataBuffer, 2, BigInt(16));
+        const pageData = new Uint16Array(pageDataBuffer.buffer);
+        if (r !== 0)
           return capi.SQLITE_IOERR;
+        ntoh16(pageData);
+        entry.pageSize = pageData[0];
+        if (entry.pageSize != 1024) {
+          // If the page size is not 1024 we can't keep this "page" in the cache
+          console.warn(`Page size for ${entry.url} is ${entry.pageSize}, recommended size is 1024`);
+          entry.pageCache.delete(0);
+        }
+        if (entry.pageSize > options.maxPageSize)
+          throw new Error(`${entry.pageSize} is over the maximum configured ${options.maxPageSize}`);
+      }
+
+      try {
+        const pageSize = BigInt(entry.pageSize);
+        const len = BigInt(n);
+        const page = offset / pageSize;
+        if (page * pageSize !== offset)
+          console.warn(`Read chunk ${offset} is not page-aligned`);
+        let pageStart = page * pageSize;
+        if (pageStart + pageSize < offset + len)
+          throw new Error(`Read chunk ${offset}:${n} spans across a page-boundary`);
+        let data = entry.pageCache.get(Number(page));
+
+        if (typeof data === 'number') {
+          debug['cache'](`[sync] cache hit (multi-page segment) for ${entry.url}:${page}`);
+
+          // This page is present as a segment of a super-page
+          const newPageStart = BigInt(data) * pageSize;
+          data = entry.pageCache.get(data);
+          if (data instanceof Uint8Array) {
+            // Not all subpages are valid, there are two possible cases
+            // where a non-valid superpage can be referenced:
+            // * the superpage was too big to fit in the cache
+            // * the superpage was evicted before the subsegments
+            pageStart = newPageStart;
+          } else {
+            data = undefined as Uint8Array;
+          }
         }
 
-        wasm.heap8u().set(data.subarray(0, n), dest);
+        if (typeof data === 'undefined') {
+          debug['cache'](`[sync] cache miss for ${entry.url}:${page}`);
+
+          let chunkSize = entry.pageSize;
+          // If the previous page is in the cache, we double the page size
+          // This was the original page merging algorithm implemented by @phiresky
+          let prev = page > 0 && entry.pageCache.get((Number(page) - 1));
+          if (prev) {
+            if (typeof prev === 'number')
+              prev = entry.pageCache.get(prev) as Uint8Array;
+            if (prev instanceof Uint8Array) {
+              // Valid superpage
+              chunkSize = prev.byteLength * 2;
+              debug['cache'](`[sync] downloading super page of size ${chunkSize}`);
+            }
+          }
+          const pages = chunkSize / entry.pageSize;
+
+          // Downloading a new segment
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', entry.url, false);
+          xhr.setRequestHeader('Range', `bytes=${pageStart}-${pageStart + BigInt(chunkSize - 1)}`);
+          xhr.responseType = 'arraybuffer';
+          xhr.onload = () => {
+            if (xhr.response instanceof ArrayBuffer)
+              data = new Uint8Array(xhr.response);
+          };
+          xhr.send();
+          if (!data) {
+            return capi.SQLITE_IOERR;
+          }
+          // TypeScript does not recognize the sync XMLHttpRequest
+          data = data as Uint8Array;
+
+          if (!(data instanceof Uint8Array) || data.length === 0)
+            throw new Error(`Invalid HTTP response received: ${JSON.stringify(xhr.response)}`);
+
+          // In case of a multiple-page segment, this is the parent super-page
+          entry.pageCache.set(Number(page), data);
+
+          // These point to the parent super-page
+          for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
+            entry.pageCache.set(i, Number(page));
+          }
+        } else {
+          debug['cache'](`[sync] cache hit for ${entry.url}:${page}`);
+        }
+
+        const pageOffset = Number(offset - pageStart);
+        if (dest instanceof Uint8Array)
+          dest.set(data.subarray(pageOffset, pageOffset + n));
+        else
+          wasm.heap8u().set(data.subarray(pageOffset, pageOffset + n), dest);
         return capi.SQLITE_OK;
       } catch (e) {
         console.error(e);
@@ -171,7 +256,7 @@ export function installSyncHttpVfs(sqlite3: SQLite.SQLite, options: VFSHTTP.Opti
       fid: SQLite.Internal.FH,
       flags: number,
       pOutFlags: number) {
-      debug['vfs']('xOpen', vfs, name, fid, flags, pOutFlags);
+      debug['vfs']('xOpen (sync)', vfs, name, fid, flags, pOutFlags);
       if (name === 0) {
         console.error('HTTP VFS does not support anonymous files');
         return capi.SQLITE_CANTOPEN;
@@ -192,6 +277,10 @@ export function installSyncHttpVfs(sqlite3: SQLite.SQLite, options: VFSHTTP.Opti
           fh.sq3File = new sqlite3_file(fid);
           fh.sq3File.$pMethods = httpIoMethods.pointer;
           fh.size = BigInt(xhr.getResponseHeader('Content-Length'));
+          fh.pageCache = new LRUCache<number, Uint8Array>({
+            maxSize: options.cacheSize * 1024,
+            sizeCalculation: (value) => value.byteLength ?? 4
+          });
           openFiles[fid] = fh;
           valid = true;
         };
