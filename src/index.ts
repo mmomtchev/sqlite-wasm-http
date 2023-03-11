@@ -20,8 +20,10 @@ declare global {
 }
 
 /**
- * Creates a new SQLite worker thread, can accept an optional
- * HTTP backend for HTTP support.
+ * Creates a new SQLite worker thread, can accept an optional HTTP backend for HTTP support.
+ * 
+ * The sync backend is particularly inefficient in Node.js and should never be used except for unit-testing browser
+ * code.
  * 
  * @param {SQLiteOptions} [options] Options object
  * @param {VFSHTTP.Backend | true} [options.http] Optional HTTP backend, either a shared one or a dedicated sync one
