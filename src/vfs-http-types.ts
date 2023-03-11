@@ -33,7 +33,7 @@ export interface Options {
   maxPageSize?: number;
   /**
    * Cache size in Kb
-   * @default 1024
+   * @default 4096
    */
   cacheSize?: number;
   /**
