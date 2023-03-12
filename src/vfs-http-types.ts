@@ -37,9 +37,9 @@ export interface Options {
    */
   cacheSize?: number;
   /**
-   * Optional fetch options to be used when requesting data
+   * Optional custom headers to be used when requesting data
    */
-  fetchOptions?: RequestInit
+  headers?: Record<string, string>;
 }
 
 export function defaultOptions(options?: Options): Options {
@@ -47,7 +47,7 @@ export function defaultOptions(options?: Options): Options {
     timeout: options?.timeout ?? 20000,
     maxPageSize: options?.maxPageSize ?? 4096,
     cacheSize: options?.cacheSize ?? 1024,
-    fetchOptions: options?.fetchOptions ?? {}
+    headers: options?.headers ?? {}
   };
 }
 

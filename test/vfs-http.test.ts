@@ -118,10 +118,8 @@ describe('HTTP VFS (multiplexed)', () => {
     const authorization = 'Basic: OpenSesame';
 
     const backend = createHttpBackend({
-      fetchOptions: {
-        headers: {
-          'Authorization': authorization
-        }
+      headers: {
+        'Authorization': authorization
       }
     });
     const dbAuthq = createSQLiteThread({ http: backend });

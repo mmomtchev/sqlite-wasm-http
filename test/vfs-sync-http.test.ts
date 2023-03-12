@@ -1,4 +1,4 @@
-import { createSQLiteThread, createHttpBackend } from '../dist/index.js';
+import { createSQLiteThread } from '../dist/index.js';
 
 import { assert } from 'chai';
 
@@ -104,18 +104,17 @@ describe('HTTP VFS (ersatz sync version)', () => {
       .catch(done);
   });
 
-  it.skip('should support custom HTTP headers', (done) => {
+  it('should support custom HTTP headers', (done) => {
     const secretURL = 'https://sqlite-secret-zone.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles';
     const authorization = 'Basic: OpenSesame';
 
-    const backend = createHttpBackend({
-      fetchOptions: {
+    const dbAuthq = createSQLiteThread({
+      http: true, httpOptions: {
         headers: {
           'Authorization': authorization
         }
       }
     });
-    const dbAuthq = createSQLiteThread({ http: backend });
     const rows: SQLite.Result[] = [];
     dbAuthq
       .then((dbAuth) => dbAuth('open', {
@@ -124,7 +123,7 @@ describe('HTTP VFS (ersatz sync version)', () => {
       })
         .then(() => dbAuth))
       .then((dbAuth) => dbAuth('exec', {
-        sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = 1',
+        sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = 0',
         callback: (msg) => {
           rows.push(msg);
         }
@@ -132,26 +131,26 @@ describe('HTTP VFS (ersatz sync version)', () => {
       .then((msg) => {
         assert.strictEqual(msg.type, 'exec');
         assert.sameMembers(msg.result.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
-        assert.lengthOf(rows, 5);
+        assert.lengthOf(rows, 2);
         rows.forEach((row, idx) => {
           assert.sameMembers(row.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
           if (row.row) {
-            assert.isAtMost(idx, 3);
+            assert.strictEqual(idx, 0);
             assert.isNumber(row.rowNumber);
-            assert.strictEqual(row.row[0], 1);
-            assert.isNumber(row.row[1]);
-            assert.isNumber(row.row[2]);
+            assert.strictEqual(row.row[0], 0);
+            assert.strictEqual(row.row[1], 0);
+            assert.strictEqual(row.row[2], 0);
             assert.instanceOf(row.row[3], Uint8Array);
           } else {
             assert.isNull(row.rowNumber);
-            assert.strictEqual(idx, 4);
+            assert.strictEqual(idx, 1);
           }
         });
         done();
       })
-      .catch(done)
       .finally(() => {
-        dbAuthq.then((dbAuth) => dbAuth.close()).then(() => backend.close());
-      });
+        dbAuthq.then((db) => db('close', {}).then(() => db.close()));
+      })
+      .catch(done);
   });
 });

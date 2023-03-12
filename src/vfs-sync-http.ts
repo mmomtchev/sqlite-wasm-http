@@ -150,6 +150,8 @@ export function installSyncHttpVfs(sqlite3: SQLite.SQLite, options: VFSHTTP.Opti
           // Downloading a new segment
           const xhr = new XMLHttpRequest();
           xhr.open('GET', entry.url, false);
+          for (const h of Object.keys(options.headers))
+            xhr.setRequestHeader(h, options.headers[h]);
           xhr.setRequestHeader('Range', `bytes=${pageStart}-${pageStart + BigInt(chunkSize - 1)}`);
           xhr.responseType = 'arraybuffer';
           xhr.onload = () => {
@@ -270,6 +272,8 @@ export function installSyncHttpVfs(sqlite3: SQLite.SQLite, options: VFSHTTP.Opti
       try {
         const xhr = new XMLHttpRequest();
         xhr.open('HEAD', url, false);
+        for (const h of Object.keys(options.headers))
+          xhr.setRequestHeader(h, options.headers[h]);
         xhr.onload = () => {
           const fh = Object.create(null) as FileDescriptor;
           fh.fid = fid;
