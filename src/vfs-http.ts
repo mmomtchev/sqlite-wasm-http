@@ -1,8 +1,8 @@
+// This is the VFS layer for the shared backend
+// It run in each SQLite worker thread that uses it
+
 import * as VFSHTTP from './vfs-http-types.js';
 import { debug } from './vfs-http-types.js';
-
-/*if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
-  throw new Error('This script must run in a WebWorker');*/
 
 interface FileDescriptor {
   fid: SQLite.Internal.FH;

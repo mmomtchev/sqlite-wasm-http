@@ -6,9 +6,6 @@ import * as VFSHTTP from './vfs-http-types.js';
 import { ntoh16 } from './endianness.js';
 import { debug } from './vfs-http-types.js';
 
-/*if (typeof WorkerGlobalScope === 'undefined' || !(self instanceof WorkerGlobalScope))
-  throw new Error('This script must run in a WebWorker');*/
-
 let options: VFSHTTP.Options;
 
 // This identifies an SQLite worker thread
@@ -35,6 +32,13 @@ const files = new LRUCache<string, FileEntry>({
 
 // The entry for a given page can be either the page itself
 // or the number of the page that has the parent super-page
+// Here is an example of a cache structure (indexed by the URL + page number)
+// URL|0 -> Uint8Array(page)                     # This page is in cache
+// URL|1 -> undefined                            # These two
+// URL|2 -> undefined                            # are not
+// URL|3 -> Promise<Uint8Array(page * 2)>        # This is a currently downloading 2-page segment
+// URL|4 -> Promise<3>                           # This references the previous one
+// URL|5 -> 2                                    # An invalid stale entry that will be overwritten
 let cache: LRUCache<string, Uint8Array | number | Promise<Uint8Array | number>>;
 
 let nextId = 1;
@@ -47,10 +51,7 @@ const backendAsyncMethods:
     if (files.has(msg.url))
       return 0;
 
-    const fetchOptions = { ...options.fetchOptions };
-    if (!fetchOptions.method) fetchOptions.method = 'HEAD';
-    fetchOptions.headers = { ...(fetchOptions.headers ?? {}) };
-    const head = await fetch(msg.url, fetchOptions);
+    const head = await fetch(msg.url, { method: 'HEAD', headers: {...options?.headers}});
     if (head.headers.get('Accept-Ranges') !== 'bytes') {
       console.warn(`Server for ${msg.url} does not advertise 'Accept-Ranges'. ` +
         'If the server supports it, in order to remove this message, add "Accept-Ranges: bytes". ' +
@@ -102,6 +103,7 @@ const backendAsyncMethods:
         return r;
       ntoh16(pageData);
       entry.pageSize = pageData[0];
+      debug['vfs'](`page size is ${entry.pageSize}`);
       if (entry.pageSize != 1024) {
         // If the page size is not 1024 we can't keep this "page" in the cache
         console.warn(`Page size for ${msg.url} is ${entry.pageSize}, recommended size is 1024`);
@@ -115,12 +117,12 @@ const backendAsyncMethods:
     const len = BigInt(msg.n);
     const page = msg.offset / pageSize;
     if (page * pageSize !== msg.offset)
-      console.warn(`Read chunk ${msg.offset} is not page-aligned`);
+      debug['vfs'](`Read chunk ${msg.offset}:${msg.n} is not page-aligned`);
     let pageStart = page * pageSize;
     if (pageStart + pageSize < msg.offset + len)
       throw new Error(`Read chunk ${msg.offset}:${msg.n} spans across a page-boundary`);
 
-    const cacheId = entry.id + '|' + page;
+    const cacheId = entry.url + '|' + page;
     let data = cache.get(cacheId);
     if (data instanceof Promise)
       // This means that another thread has requested this segment
@@ -131,7 +133,7 @@ const backendAsyncMethods:
 
       // This page is present as a segment of a super-page
       const newPageStart = BigInt(data) * pageSize;
-      data = cache.get(entry.id + '|' + data);
+      data = cache.get(entry.url + '|' + data);
       if (data instanceof Promise)
         data = await data;
       if (data instanceof Uint8Array) {
@@ -151,12 +153,12 @@ const backendAsyncMethods:
       let chunkSize = entry.pageSize;
       // If the previous page is in the cache, we double the page size
       // This was the original page merging algorithm implemented by @phiresky
-      let prev = page > 0 && cache.get(entry.id + '|' + (Number(page) - 1));
+      let prev = page > 0 && cache.get(entry.url + '|' + (Number(page) - 1));
       if (prev) {
         if (prev instanceof Promise)
           prev = await prev;
         if (typeof prev === 'number')
-          prev = cache.get(entry.id + '|' + prev) as Uint8Array;
+          prev = cache.get(entry.url + '|' + prev) as Uint8Array;
         if (prev instanceof Promise)
           prev = await prev;
         if (prev instanceof Uint8Array) {
@@ -167,12 +169,15 @@ const backendAsyncMethods:
       }
       const pages = chunkSize / entry.pageSize;
 
-      // Downloading a new segment
-      const fetchOptions = { ...options.fetchOptions };
-      if (!fetchOptions.method) fetchOptions.method = 'GET';
-      fetchOptions.headers = { ...(fetchOptions.headers ?? {}) };
-      fetchOptions.headers['Range'] = `bytes=${pageStart}-${pageStart + BigInt(chunkSize - 1)}`;
-      const resp = fetch(msg.url, fetchOptions)
+      // Download a new segment
+      debug['http'](`downloading page ${page} of size ${chunkSize} starting at ${pageStart}`);
+      const resp = fetch(msg.url, {
+        method: 'GET',
+        headers: {
+          ...options.headers,
+          'Range': `bytes=${pageStart}-${pageStart + BigInt(chunkSize - 1)}`
+        }
+      })
         .then((r) => r.arrayBuffer())
         .then((r) => new Uint8Array(r));
       // We synchronously set a Promise in the cache in case another thread
@@ -180,7 +185,7 @@ const backendAsyncMethods:
       cache.set(cacheId, resp);
       // These point to the parent super-page and resolve at the same time as resp
       for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
-        cache.set(entry.id + '|' + i, resp.then(() => Number(page)));
+        cache.set(entry.url + '|' + i, resp.then(() => Number(page)));
       }
 
       data = await resp;
@@ -192,7 +197,7 @@ const backendAsyncMethods:
 
       // These point to the parent super-page
       for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
-        cache.set(entry.id + '|' + i, Number(page));
+        cache.set(entry.url + '|' + i, Number(page));
       }
     } else {
       debug['cache'](`cache hit for ${msg.url}:${page}`);

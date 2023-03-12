@@ -1,25 +1,3 @@
-export interface BackendChannel {
-  port: MessagePort;
-  shm: SharedArrayBuffer;
-}
-
-export interface Backend {
-  worker: Worker;
-  /**
-   * Create a new channel to be used with a new SQLite worker
-   * @returns {Promise<BackendChannel>}
-   */
-  createNewChannel: () => Promise<BackendChannel>;
-  /**
-   * Close the HTTP backend waiting for clean shutdown
-   */
-  close: () => Promise<void>;
-  /**
-   * Synchronously kill the HTTP backend
-   */
-  terminate: () => void;
-}
-
 export interface Options {
   /**
    * Timeout for SQL operations (must take HTTP transfers into account)
@@ -33,21 +11,57 @@ export interface Options {
   maxPageSize?: number;
   /**
    * Cache size in Kb
-   * @default 1024
+   * @default 4096
    */
   cacheSize?: number;
   /**
-   * Optional fetch options to be used when requesting data
+   * Optional custom headers to be used when requesting data
    */
-  fetchOptions?: RequestInit
+  headers?: Record<string, string>;
+  /**
+   * Force the type of backend
+   */
+  backendType?: 'sync' | 'shared';
+}
+
+export interface BackendChannel {
+  port: MessagePort;
+  shm: SharedArrayBuffer;
+}
+
+export interface Backend {
+  /**
+   * The backend type
+   */
+  type: 'shared' | 'sync',
+  /**
+   * @private
+   */
+  worker: Worker | null;
+  /**
+   * @private
+   */
+  createNewChannel: () => Promise<BackendChannel>;
+  /**
+   * Close the HTTP backend waiting for clean shutdown
+   */
+  close: () => Promise<void>;
+  /**
+   * Synchronously kill the HTTP backend
+   */
+  terminate: () => void;
+  /**
+   * The options object
+   */
+  options: Options;
 }
 
 export function defaultOptions(options?: Options): Options {
   return {
     timeout: options?.timeout ?? 20000,
     maxPageSize: options?.maxPageSize ?? 4096,
-    cacheSize: options.cacheSize ?? 1024,
-    fetchOptions: options.fetchOptions ?? {}
+    cacheSize: options?.cacheSize ?? 1024,
+    headers: options?.headers ?? {}
   };
 }
 
@@ -65,10 +79,11 @@ const debugOptions = (typeof SQLITE_DEBUG !== 'undefined' && SQLITE_DEBUG) ||
   (typeof process?.env?.SQLITE_DEBUG !== 'undefined' && process.env.SQLITE_DEBUG) ||
   '';
 
-export const debugSys = ['threads', 'vfs', 'cache'] as const;
+export const debugSys = ['threads', 'vfs', 'cache', 'http'] as const;
 export const debug = {} as Record<typeof debugSys[number], (...args: unknown[]) => void>;
 for (const d of debugSys) {
   debug[d] = debugOptions.includes(d) ?
     console.debug.bind(console) :
     () => undefined;
 }
+
