@@ -107,7 +107,7 @@ export function installSyncHttpVfs(sqlite3: SQLite.SQLite, options: VFSHTTP.Opti
         const len = BigInt(n);
         const page = offset / pageSize;
         if (page * pageSize !== offset)
-          console.warn(`Read chunk ${offset} is not page-aligned`);
+          debug['vfs'](`Read chunk ${offset} is not page-aligned`);
         let pageStart = page * pageSize;
         if (pageStart + pageSize < offset + len)
           throw new Error(`Read chunk ${offset}:${n} spans across a page-boundary`);

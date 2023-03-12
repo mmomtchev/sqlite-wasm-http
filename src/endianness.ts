@@ -1,8 +1,9 @@
 // Procedures for changing the byte sex
-
 // SQLite is always Big-Endian, JS follows the platform, which is Little-Endian on x86
 
-const swapNeeded = (function() {
+import { debug } from './vfs-http-types.js';
+
+const swapNeeded = (function () {
   const ab = new ArrayBuffer(2);
   const u8 = new Uint8Array(ab);
   const u16 = new Uint16Array(ab);
@@ -10,16 +11,12 @@ const swapNeeded = (function() {
   u8[1] = 0x0D;
   // Big
   if (u16[0] == 0xF00D) {
-    if (typeof globalThis.WorkerGlobalScope === 'undefined') {
-      console.debug('System is Big-Endian');
-    }
+    debug['threads']('System is Big-Endian');
     return false;
-  } 
+  }
   // Little
   if (u16[0] == 0x0DF0) {
-    if (typeof globalThis.WorkerGlobalScope === 'undefined') {
-      console.debug('System is Little-Endian');
-    }
+    debug['threads']('System is Little-Endian');
     return true;
   }
   throw new Error(`Failed determining endianness: ${u16}`);
