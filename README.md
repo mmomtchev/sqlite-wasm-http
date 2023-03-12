@@ -13,11 +13,13 @@ The new features planned for 1.0 compared to the original project are:
 * Based upon what will probably be the industry reference (backed by SQLite and Google)
 * Supports multiple concurrent connections to the same database with shared cache
 
-  The async version requires `SharedArrayBuffer` which requires that the server hosting the JS code sends [`Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: require-corp` headers](https://web.dev/coop-coep/) (aka CORS 2).
-* Simplified sync version without support for concurrent connections that does not require `SharedArrayBuffer` (*still not ready*)
+  The shared cache version uses `SharedArrayBuffer` which requires that the server hosting the JS code sends [`Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: require-corp` headers](https://web.dev/coop-coep/) (aka CORS 2).
+* Simplified sync version without support for concurrent connections that does not require `SharedArrayBuffer`
 * Aims to support all bundlers out-of-the-box without special configuration
 
-You can see a [live demo of the async version here](https://sqlite-wasm-http.momtchev.com/).
+You can see a [live demo of the shared cache version here](https://sqlite-wasm-http.momtchev.com/).
+
+The [Github Pages live demo](https://mmomtchev.github.io/sqlite-wasm-http/) uses the sync backend since as of March 2023 Github Pages does not support cross-origin isolation.
 
 Ony ES6 module mode is supported at the moment, CommonJS is not supported and this includes TypeScript transpiled to CommonJS - you have to transpile to ES6 in order to use this module
 
