@@ -7,12 +7,18 @@ import { debug } from './vfs-http-types.js';
 import * as VFSHTTP from './vfs-http-types.js';
 export * as VFSHTTP from './vfs-http-types.js';
 
-export type SQLiteOptions = {
+export interface SQLiteOptions {
   http?: VFSHTTP.Backend;
-} | {
-  http: true;
-  httpOptions?: VFSHTTP.Options;
-};
+}
+
+const kPool = Symbol('pool');
+export interface SQLitePool {
+  [kPool]: {
+    worker: SQLite.Promiser;
+    busy: boolean;
+  }[];
+  exec: SQLite.Promiser;
+}
 
 declare global {
   // eslint-disable-next-line no-var
@@ -41,13 +47,14 @@ export function createSQLiteThread(options?: SQLiteOptions): Promise<SQLite.Prom
         try {
           worker = new Worker(new URL('./sqlite-worker.js', import.meta.url));
           worker.onerror = (event) => console.error('Worker bootstrap failed', event);
-          if (options?.http && typeof options.http === 'object') {
-            options.http.createNewChannel()
+          const backend = options?.http;
+          if (backend?.type === 'shared') {
+            backend.createNewChannel()
               .then((channel) => {
-                worker.postMessage({ httpChannel: channel }, [channel.port]);
+                worker.postMessage({ httpChannel: channel, httpOptions: backend.options }, [channel.port]);
               });
-          } else if (options?.http === true) {
-            worker.postMessage({ httpChannel: options?.http, httpOptions: options.httpOptions });
+          } else if (backend?.type === 'sync') {
+            worker.postMessage({ httpChannel: true, httpOptions: backend.options });
           } else {
             worker.postMessage({});
           }
@@ -68,29 +75,43 @@ export function createSQLiteThread(options?: SQLiteOptions): Promise<SQLite.Prom
   return r;
 }
 
+const noSharedBufferMsg = 'SharedArrayBuffer is not available. ' +
+  'If your browser supports it, the webserver must send ' +
+  '"Cross-Origin-Opener-Policy: same-origin "' +
+  'and "Cross-Origin-Embedder-Policy: require-corp" headers.';
 /**
- * Creates a new shared backend worker that can support multiple SQLite threads
- * with shared cache. Requires SharedArrayBuffer and an isolated browsing context.
- * Always works in Node.js.
+ * Creates a new HTTP backend worker that can support multiple SQLite threads.
+ * The cache is shared only if the environment supports SharedArrayBuffer.
+ * 
+ * This is always the case in Node.js, but it requires a cross-origin isolated
+ * environment in the browser.
  * 
  * @param {VFSHTTP.Options} [options] Options object
  * @returns {VFSHTTP.Backend}
  */
 export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
   debug['threads']('Creating new HTTP VFS backend thread');
+
+  if (typeof SharedArrayBuffer === 'undefined' || options.backendType === 'sync') {
+    if (options.backendType === 'shared') throw new Error(noSharedBufferMsg);
+    if (options.backendType !== 'sync')
+      console.warn(noSharedBufferMsg + ' Falling back to the legacy HTTP backend.');
+    return {
+      type: 'sync',
+      worker: null,
+      options,
+      createNewChannel: () => undefined,
+      close: () => Promise.resolve(),
+      terminate: () => undefined
+    };
+  }
+
   let nextId = 1;
   const worker = new Worker(new URL('./vfs-http-worker.js', import.meta.url));
   options = VFSHTTP.defaultOptions(options);
   worker.postMessage({ msg: 'init', options });
 
   const consumers = {};
-
-  if (typeof SharedArrayBuffer === 'undefined') {
-    throw new Error('SharedArrayBuffer is not available. ' +
-      'If your browser supports it, the webserver must send ' +
-      '"Cross-Origin-Opener-Policy: same-origin "' +
-      'and "Cross-Origin-Embedder-Policy: require-corp" headers.');
-  }
 
   worker.onmessage = ({ data }) => {
     debug['threads']('Received control message reply', data);
@@ -113,7 +134,9 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
   };
 
   return {
+    type: 'shared',
     worker,
+    options,
     createNewChannel: function () {
       debug['threads']('Creating a new HTTP VFS channel');
       const channel = new MessageChannel();
@@ -150,19 +173,26 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
 }
 
 /**
-export async function createSQLitePool(opts: {workers?: number, httpOptions: VFSHTTP.Options}) {
+ * Higher-level API which allows to work with a pool
+ * 
+ */
+/*
+export async function createSQLitePool(opts: {
+  workers?: number,
+  httpOptions: VFSHTTP.Options;
+}
+) {
   if (typeof SharedArrayBuffer === 'function') {
     console.debug(
       'Cross-origin isolated environment, enabling high-performance shared concurrent SQLite HTTP backend');
+
+    const httpBackend = createHttpBackend(opts.httpOptions);
+    const db = await createSQLiteThread({ http: httpBackend });
   } else {
     console.debug(
       'Legacy environment, enabling compatibility synchronous SQLite HTTP backend (aka the ersatz backend)');
 
-    const httpBackend = createHttpBackend({
-      maxPageSize: 4096,
-      timeout: 10000
-    });
-    const db = await createSQLiteThread({ http: true });
+    const db = await createSQLiteThread({ http: true, httpOptions: opts.httpOptions });
 
   }
 }

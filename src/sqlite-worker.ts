@@ -19,7 +19,7 @@ globalThis.onmessage = ({ data }) => {
     debug['threads']('SQLite init');
     sqlite3.initWorker1API();
     if (typeof msg.httpChannel === 'object') {
-      installHttpVfs(sqlite3, msg.httpChannel);
+      installHttpVfs(sqlite3, msg.httpChannel, msg.httpOptions);
     } else if (msg.httpChannel === true) {
       if (typeof globalThis.XMLHttpRequest === 'undefined') {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

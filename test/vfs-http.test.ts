@@ -9,24 +9,24 @@ describe('HTTP VFS (multiplexed)', () => {
   let db: SQLite.Promiser;
   before((done) => {
     httpBackend = createHttpBackend({
-      maxPageSize: 1024,
-      timeout: 10000
+      maxPageSize: 1024
     });
     createSQLiteThread({ http: httpBackend })
       .then((r) => {
         db = r;
-        done();
+        return db('open', {
+          filename: 'file:' + encodeURI(remoteURL),
+          vfs: 'http'
+        });
       })
-      .then(() => db('open', {
-        filename: 'file:' + encodeURI(remoteURL),
-        vfs: 'http'
-      }))
       .then((msg) => {
+        assert.strictEqual(httpBackend.type, 'shared');
         assert.equal(msg.type, 'open');
         assert.isString(msg.messageId);
         assert.isString(msg.dbId);
         assert.strictEqual(msg.result.filename, 'file:' + remoteURL);
         assert.strictEqual(msg.result.vfs, 'http');
+        done();
       })
       .catch(done);
   });

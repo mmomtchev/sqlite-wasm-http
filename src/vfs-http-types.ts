@@ -1,25 +1,3 @@
-export interface BackendChannel {
-  port: MessagePort;
-  shm: SharedArrayBuffer;
-}
-
-export interface Backend {
-  worker: Worker;
-  /**
-   * Create a new channel to be used with a new SQLite worker
-   * @returns {Promise<BackendChannel>}
-   */
-  createNewChannel: () => Promise<BackendChannel>;
-  /**
-   * Close the HTTP backend waiting for clean shutdown
-   */
-  close: () => Promise<void>;
-  /**
-   * Synchronously kill the HTTP backend
-   */
-  terminate: () => void;
-}
-
 export interface Options {
   /**
    * Timeout for SQL operations (must take HTTP transfers into account)
@@ -40,6 +18,42 @@ export interface Options {
    * Optional custom headers to be used when requesting data
    */
   headers?: Record<string, string>;
+  /**
+   * Force the type of backend
+   */
+  backendType?: 'sync' | 'shared';
+}
+
+export interface BackendChannel {
+  port: MessagePort;
+  shm: SharedArrayBuffer;
+}
+
+export interface Backend {
+  /**
+   * The backend type
+   */
+  type: 'shared' | 'sync',
+  /**
+   * @private
+   */
+  worker: Worker | null;
+  /**
+   * @private
+   */
+  createNewChannel: () => Promise<BackendChannel>;
+  /**
+   * Close the HTTP backend waiting for clean shutdown
+   */
+  close: () => Promise<void>;
+  /**
+   * Synchronously kill the HTTP backend
+   */
+  terminate: () => void;
+  /**
+   * The options object
+   */
+  options: Options;
 }
 
 export function defaultOptions(options?: Options): Options {
@@ -72,3 +86,4 @@ for (const d of debugSys) {
     console.debug.bind(console) :
     () => undefined;
 }
+

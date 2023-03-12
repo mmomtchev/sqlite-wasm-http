@@ -11,7 +11,7 @@ interface FileDescriptor {
 }
 const openFiles: Record<SQLite.Internal.FH, FileDescriptor> = {};
 
-export function installHttpVfs(sqlite3: SQLite.SQLite, backend: VFSHTTP.BackendChannel) {
+export function installHttpVfs(sqlite3: SQLite.SQLite, backend: VFSHTTP.BackendChannel, options: VFSHTTP.Options) {
   if (typeof SharedArrayBuffer === 'undefined') {
     throw new Error('SharedArrayBuffer is not available. ' +
       'If your browser supports it, the webserver must send ' +
@@ -41,9 +41,6 @@ export function installHttpVfs(sqlite3: SQLite.SQLite, backend: VFSHTTP.BackendC
 
   httpVfs.$xDlOpen = httpVfs.$xDlError = httpVfs.$xDlSym = httpVfs.$xDlClose = null;
 
-  // This is the timeout between the SQLite worker and the VFS backend
-  // TODO: it is not configurable at the moment
-  const options = { timeout: 2000 };
   const sendAndWait = (msg: VFSHTTP.Message) => {
     Atomics.store(lock, 0, 0xffff);
     backend.port.postMessage(msg);

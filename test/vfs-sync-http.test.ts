@@ -1,4 +1,4 @@
-import { createSQLiteThread } from '../dist/index.js';
+import { createHttpBackend, createSQLiteThread } from '../dist/index.js';
 
 import { assert } from 'chai';
 
@@ -7,7 +7,11 @@ const remoteURL = 'https://velivole.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-eur
 describe('HTTP VFS (ersatz sync version)', () => {
   let db: SQLite.Promiser;
   before((done) => {
-    createSQLiteThread({ http: true })
+    createSQLiteThread({
+      http: createHttpBackend({
+        backendType: 'sync'
+      })
+    })
       .then((r) => {
         db = r;
         done();
@@ -109,11 +113,12 @@ describe('HTTP VFS (ersatz sync version)', () => {
     const authorization = 'Basic: OpenSesame';
 
     const dbAuthq = createSQLiteThread({
-      http: true, httpOptions: {
+      http: createHttpBackend({
+        backendType: 'sync',
         headers: {
           'Authorization': authorization
         }
-      }
+      })
     });
     const rows: SQLite.Result[] = [];
     dbAuthq
