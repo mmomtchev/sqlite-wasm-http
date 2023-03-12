@@ -1,4 +1,5 @@
 // This is the user-facing API
+// It runs in the user-thread (which is probably the main UI thread)
 /// <reference path='../deps/types/sqlite3.d.ts' />
 /// <reference path='../deps/types/sqlite3-promiser.d.ts' />
 import '#sqlite3.js';
@@ -9,15 +10,6 @@ export * as VFSHTTP from './vfs-http-types.js';
 
 export interface SQLiteOptions {
   http?: VFSHTTP.Backend;
-}
-
-const kPool = Symbol('pool');
-export interface SQLitePool {
-  [kPool]: {
-    worker: SQLite.Promiser;
-    busy: boolean;
-  }[];
-  exec: SQLite.Promiser;
 }
 
 declare global {
@@ -48,6 +40,7 @@ export function createSQLiteThread(options?: SQLiteOptions): Promise<SQLite.Prom
           worker = new Worker(new URL('./sqlite-worker.js', import.meta.url));
           worker.onerror = (event) => console.error('Worker bootstrap failed', event);
           const backend = options?.http;
+          // This is the SQLite worker green light
           if (backend?.type === 'shared') {
             backend.createNewChannel()
               .then((channel) => {
@@ -92,9 +85,9 @@ const noSharedBufferMsg = 'SharedArrayBuffer is not available. ' +
 export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
   debug['threads']('Creating new HTTP VFS backend thread');
 
-  if (typeof SharedArrayBuffer === 'undefined' || options.backendType === 'sync') {
-    if (options.backendType === 'shared') throw new Error(noSharedBufferMsg);
-    if (options.backendType !== 'sync')
+  if (typeof SharedArrayBuffer === 'undefined' || options?.backendType === 'sync') {
+    if (options?.backendType === 'shared') throw new Error(noSharedBufferMsg);
+    if (options?.backendType !== 'sync')
       console.warn(noSharedBufferMsg + ' Falling back to the legacy HTTP backend.');
     return {
       type: 'sync',
@@ -172,28 +165,92 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
   };
 }
 
+export interface SQLiteHTTPPool {
+  /**
+   * Open a new remote database
+   * @param {string} url Remote database
+   * @returns {Promise<void>}
+   */
+  open: (url: string) => Promise<void>;
+
+  /**
+   * Dispose of the pool (stops the background workers)
+   * @returns {Promise<void>}
+   */
+  close: () => Promise<void>;
+
+  /**
+   * Run an SQL statement
+   * @param {string} sql SQL statement
+   * @param {Record<string, unknown>} [bind] Optional map of values to be binded
+   * @returns {Promise<void>}
+   */
+  exec: (sql: string, bind?: Record<string, unknown>) => Promise<SQLite.Row[]>;
+}
+
+type PoolThread = {
+  worker: SQLite.Promiser;
+  busy: null | Promise<void>;
+};
+
 /**
- * Higher-level API which allows to work with a pool
- * 
+ * Higher-level API for working with a pool
+ * @param {number} [opts.workers] Number of concurrent workers to spawn, @default 1
+ * @param {VFSHTTP.Options} [opts.httpOptions] Options to pass to the HTTP backend
  */
-/*
-export async function createSQLitePool(opts: {
+export async function createSQLiteHTTPPool(opts: {
   workers?: number,
-  httpOptions: VFSHTTP.Options;
-}
-) {
-  if (typeof SharedArrayBuffer === 'function') {
-    console.debug(
-      'Cross-origin isolated environment, enabling high-performance shared concurrent SQLite HTTP backend');
+  httpOptions?: VFSHTTP.Options;
+}): Promise<SQLiteHTTPPool> {
+  const backend = createHttpBackend(opts?.httpOptions);
 
-    const httpBackend = createHttpBackend(opts.httpOptions);
-    const db = await createSQLiteThread({ http: httpBackend });
-  } else {
-    console.debug(
-      'Legacy environment, enabling compatibility synchronous SQLite HTTP backend (aka the ersatz backend)');
-
-    const db = await createSQLiteThread({ http: true, httpOptions: opts.httpOptions });
-
+  const workers: PoolThread[] = [];
+  const startq: Promise<void>[] = [];
+  for (let i = 0; i < (opts.workers ?? 1); i++) {
+    startq.push(createSQLiteThread({ http: backend })
+      .then((worker) =>
+        workers.push({
+          worker,
+          busy: null
+        }))
+      .then(() => undefined));
   }
+  await Promise.all(startq);
+
+  return {
+    open: (url: string) =>
+      Promise.all(workers.map((w) => w.worker('open', {
+        filename: 'file:' + encodeURI(url),
+        vfs: 'http'
+      })))
+        .then(() => undefined),
+
+    close: () =>
+      Promise.all(workers.map((w) => w.worker.close()))
+        .then(() => backend.close()),
+
+    exec: async function (sql: string, bind?: Record<string, unknown>) {
+      let w: PoolThread | undefined;
+      do {
+        w = workers.find((w) => !w.busy);
+        if (!w)
+          await Promise.race(workers.map((w) => w.busy)).catch(() => undefined);
+      } while (!w);
+
+      const results: SQLite.Row[] = [];
+      w.busy = w.worker('exec', {
+        sql,
+        bind,
+        callback: (row) => {
+          if (row.row)
+            results.push(row);
+        }
+      })
+        .then(() => undefined);
+      await w.busy;
+
+      w.busy = null;
+      return results;
+    }
+  };
 }
-*/

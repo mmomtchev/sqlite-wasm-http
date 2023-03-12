@@ -52,6 +52,10 @@ Experimental
 
 # Usage
 
+## Using the SQLite API
+
+This method allows using the raw SQLite interface with the added support of an HTTP VFS.
+
 ```typescript
 import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
 
@@ -59,13 +63,17 @@ import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
 // raster maps in an SQLite database
 const remoteURL = 
   'https://velivole.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles';
+// createHttpBackend will autodetect if you can use SharedArrayBuffer or not
 const httpBackend = createHttpBackend({
   maxPageSize: 4096,    // this is the current default SQLite page size
   timeout: 10000,       // 10s
   cacheSize: 4096       // 4 MB
 });
 // Multiple DB workers can be created, all sharing the same backend cache
+// db is a raw SQLite Promiser object as described here:
+// https://sqlite.org/wasm/doc/trunk/api-worker1.md
 const db = await createSQLiteThread({ http: httpBackend });
+// This API is compatible with all SQLite VFS
 await db('open', { filename: 'file:' + encodeURI(remoteURL), vfs: 'http' });
 await db('exec', {
   sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
@@ -85,6 +93,27 @@ await db('close', {});
 // This terminates the SQLite worker
 db.close();
 await httpBackend.close();
+```
+
+## Using the automated pool
+
+A higher-level API allows to automatically use concurrent HTTP connections to the same SQLite database.
+
+Unlike the previous API which is compatible with all SQLite VFS, this one works only for HTTP remote access.
+
+```typescript
+const remoteURL = 
+  'https://velivole.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles';
+const pool = await createSQLiteHTTPPool({ workers: 8 });
+await pool.open(remoteURL);
+// This will automatically use a free thread from the pool
+const tile = await pool.exec('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
+    'WHERE zoom_level = 10 AND tile_column = $col AND tile_row = $row',
+    { $col: 600, $row: 600 });
+console.log(tile[0].columnNames);
+console.log(tile[0].row);
+// This shutdowns the pool
+await pool.close();
 ```
 
 # Will write-access ever be possible?

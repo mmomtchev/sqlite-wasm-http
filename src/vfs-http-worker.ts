@@ -103,6 +103,7 @@ const backendAsyncMethods:
         return r;
       ntoh16(pageData);
       entry.pageSize = pageData[0];
+      debug['vfs'](`page size is ${entry.pageSize}`);
       if (entry.pageSize != 1024) {
         // If the page size is not 1024 we can't keep this "page" in the cache
         console.warn(`Page size for ${msg.url} is ${entry.pageSize}, recommended size is 1024`);
@@ -116,12 +117,12 @@ const backendAsyncMethods:
     const len = BigInt(msg.n);
     const page = msg.offset / pageSize;
     if (page * pageSize !== msg.offset)
-      console.warn(`Read chunk ${msg.offset} is not page-aligned`);
+      debug['vfs'](`Read chunk ${msg.offset}:${msg.n} is not page-aligned`);
     let pageStart = page * pageSize;
     if (pageStart + pageSize < msg.offset + len)
       throw new Error(`Read chunk ${msg.offset}:${msg.n} spans across a page-boundary`);
 
-    const cacheId = entry.id + '|' + page;
+    const cacheId = entry.url + '|' + page;
     let data = cache.get(cacheId);
     if (data instanceof Promise)
       // This means that another thread has requested this segment
@@ -132,7 +133,7 @@ const backendAsyncMethods:
 
       // This page is present as a segment of a super-page
       const newPageStart = BigInt(data) * pageSize;
-      data = cache.get(entry.id + '|' + data);
+      data = cache.get(entry.url + '|' + data);
       if (data instanceof Promise)
         data = await data;
       if (data instanceof Uint8Array) {
@@ -152,12 +153,12 @@ const backendAsyncMethods:
       let chunkSize = entry.pageSize;
       // If the previous page is in the cache, we double the page size
       // This was the original page merging algorithm implemented by @phiresky
-      let prev = page > 0 && cache.get(entry.id + '|' + (Number(page) - 1));
+      let prev = page > 0 && cache.get(entry.url + '|' + (Number(page) - 1));
       if (prev) {
         if (prev instanceof Promise)
           prev = await prev;
         if (typeof prev === 'number')
-          prev = cache.get(entry.id + '|' + prev) as Uint8Array;
+          prev = cache.get(entry.url + '|' + prev) as Uint8Array;
         if (prev instanceof Promise)
           prev = await prev;
         if (prev instanceof Uint8Array) {
@@ -169,6 +170,7 @@ const backendAsyncMethods:
       const pages = chunkSize / entry.pageSize;
 
       // Download a new segment
+      debug['http'](`downloading page ${page} of size ${chunkSize} starting at ${pageStart}`);
       const resp = fetch(msg.url, {
         method: 'GET',
         headers: {
@@ -183,7 +185,7 @@ const backendAsyncMethods:
       cache.set(cacheId, resp);
       // These point to the parent super-page and resolve at the same time as resp
       for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
-        cache.set(entry.id + '|' + i, resp.then(() => Number(page)));
+        cache.set(entry.url + '|' + i, resp.then(() => Number(page)));
       }
 
       data = await resp;
@@ -195,7 +197,7 @@ const backendAsyncMethods:
 
       // These point to the parent super-page
       for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
-        cache.set(entry.id + '|' + i, Number(page));
+        cache.set(entry.url + '|' + i, Number(page));
       }
     } else {
       debug['cache'](`cache hit for ${msg.url}:${page}`);

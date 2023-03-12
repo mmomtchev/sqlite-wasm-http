@@ -92,6 +92,7 @@ export function installSyncHttpVfs(sqlite3: SQLite.SQLite, options: VFSHTTP.Opti
           return capi.SQLITE_IOERR;
         ntoh16(pageData);
         entry.pageSize = pageData[0];
+        debug['vfs'](`page size is ${entry.pageSize}`);
         if (entry.pageSize != 1024) {
           // If the page size is not 1024 we can't keep this "page" in the cache
           console.warn(`Page size for ${entry.url} is ${entry.pageSize}, recommended size is 1024`);
@@ -148,6 +149,7 @@ export function installSyncHttpVfs(sqlite3: SQLite.SQLite, options: VFSHTTP.Opti
           const pages = chunkSize / entry.pageSize;
 
           // Downloading a new segment
+          debug['http'](`downloading page ${page} of size ${chunkSize} starting at ${pageStart}`);
           const xhr = new XMLHttpRequest();
           xhr.open('GET', entry.url, false);
           for (const h of Object.keys(options.headers))
@@ -285,6 +287,11 @@ export function installSyncHttpVfs(sqlite3: SQLite.SQLite, options: VFSHTTP.Opti
             maxSize: options.cacheSize * 1024,
             sizeCalculation: (value) => value.byteLength ?? 4
           });
+          if (xhr.getResponseHeader('Accept-Ranges') !== 'bytes') {
+            console.warn(`Server for ${url} does not advertise 'Accept-Ranges'. ` +
+              'If the server supports it, in order to remove this message, add "Accept-Ranges: bytes". ' +
+              'Additionally, if using CORS, add "Access-Control-Expose-Headers: *".');
+          }
           openFiles[fid] = fh;
           valid = true;
         };
