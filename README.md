@@ -9,30 +9,36 @@ SQLite WASM with HTTP VFS
 
 This project is inspired from [@phiresky](https://github.com/phiresky/)/[sql.js-httpvfs](https://github.com/phiresky/sql.js-httpvfs) but uses the new official SQLite WASM distribution.
 
-The new features planned for 1.0 compared to the original project are:
+It includes a number of improvements over the first version:
 * Based upon what will probably be the industry reference (backed by SQLite and Google)
 * Supports multiple concurrent connections to the same database with shared cache
 
   The shared cache version uses `SharedArrayBuffer` which requires that the server hosting the JS code sends [`Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: require-corp` headers](https://web.dev/coop-coep/) (aka CORS 2).
-* Simplified sync version without support for concurrent connections that does not require `SharedArrayBuffer`
+
+* Simplified fall-back version without support for sharing cache between worker threads that does not require `SharedArrayBuffer`
 * Aims to support all bundlers out-of-the-box without special configuration
 
 You can see a [live demo of the shared cache version here](https://sqlite-wasm-http.momtchev.com/).
 
-The [Github Pages live demo](https://mmomtchev.github.io/sqlite-wasm-http/) uses the sync backend since as of March 2023 Github Pages does not support cross-origin isolation.
+The [Github Pages live demo](https://mmomtchev.github.io/sqlite-wasm-http/) uses the sync backend since as of March 2023 Github Pages still does not support cross-origin isolation.
 
 Ony ES6 module mode is supported at the moment, CommonJS is not supported and this includes TypeScript transpiled to CommonJS - you have to transpile to ES6 in order to use this module
 
 You can check [test/integration](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/test/integration) for examples for the various environments that are currently tested and supported.
 
-
-# Node.js compatibility
-
 Node.js is fully supported but requires `web-worker` and `fetch` available in Node.js 18.x+.
 
-Check [`test/setup.ts`](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/test/setup.ts) which is used to setup the `mocha` environment for everything that is required.
+If you intend to use Node.js only for bundling without using SQLite in a standalone application, then the minimum required version is Node.js 16.x.
 
-# Page size
+# Status
+
+Experimental
+
+# Usage
+
+If you are not already familiair with [@phiresky](https://github.com/phiresky/)/[sql.js-httpvfs](https://github.com/phiresky/sql.js-httpvfs), there is a brief presentation in the [Overview](#Overview) section.
+
+## Page size
 
 It is highly recommended to decrease your SQLite page size to 1024 bytes for maximum performance:
 ```
@@ -45,12 +51,6 @@ INSERT INTO ftstable(ftstable) VALUES ('optimize');
 -- Sometimes you will be surprised by the new size of your DB
 VACUUM;
 ```
-
-# Status
-
-Experimental
-
-# Usage
 
 ## Using the SQLite API
 
@@ -115,6 +115,22 @@ console.log(tile[0].row);
 // This shutdowns the pool
 await pool.close();
 ```
+
+# Overview
+
+This package includes a browser-compatible version of SQLite3 compiled to WASM. SQLite3 already supports user-defined VFS - both in its original C API and in its very recent new JS API. The JS API includes an OPFS VFS driver which is the reason this project is being pushed by Google and has very good chances of becoming an industry reference. This package adds an additional HTTP VFS driver that uses HTTP `Range` requests - the same that are used by clients supporting resuming of failed downloads - to implement a filesystem-like random access for SQLite3.
+
+The main drawback of SQLite3 - as it is the case of almost all C/C++ software built to WASM for the web - is that it is fully synchronous. Accordingly, the SQLite3 WASM comes with two APIs - one, fully synchronous, which works a lot like the C/C++ version, and another one - which runs SQLite3 in a Web Worker and communicates with it by message passing implemented in a `Promise`-based wrapper.
+
+Currently, the builtin multithreading of the C/C++ version of SQLite3 is not enabled in the WASM version. This means that the only way to have multiple concurrent connections to one (or more) databases is to run several independent SQLite3 workers.
+
+OPFS and HTTP further complicate that situation - as both are intrinsically asynchronous APIs. This is why the HTTP driver comes in two flavors:
+  * a more modern one, that uses a dedicated HTTP worker thread to run asynchronously all HTTP operations for all SQLite3 workers and implements sharing of the cache between those
+  * and a more compatible one, that runs synchronously all HTTP operations in the SQLite3 thread that invoked them and does not support cache sharing between workers
+
+If you do not intend to run concurrent queries using multiple workers, both backends will be equivalent to you.
+
+The driver is smart enough to select the appropriate backend according to whether `SharedArrayBuffer` is available or not.
 
 # Will write-access ever be possible?
 
