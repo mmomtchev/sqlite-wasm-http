@@ -1,11 +1,11 @@
 // This is the user-facing API
 // It runs in the user-thread (which is probably the main UI thread)
-/// <reference path='../deps/types/sqlite3.d.ts' />
-/// <reference path='../deps/types/sqlite3-promiser.d.ts' />
 import '#sqlite3.js';
 import '#sqlite3-worker1-promiser.js';
 import { debug } from './vfs-http-types.js';
 import * as VFSHTTP from './vfs-http-types.js';
+import * as SQLite from '../deps/types/sqlite3.js';
+
 export * as VFSHTTP from './vfs-http-types.js';
 
 export interface SQLiteOptions {

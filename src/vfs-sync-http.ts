@@ -6,19 +6,20 @@ import LRUCache from 'lru-cache';
 import { ntoh16 } from './endianness.js';
 import * as VFSHTTP from './vfs-http-types.js';
 import { debug } from './vfs-http-types.js';
+import { SQLite3, Internal } from '../deps/types/sqlite3.js';
 
 interface FileDescriptor {
-  fid: SQLite.Internal.FH;
+  fid: Internal.FH;
   url: string;
-  sq3File: SQLite.Internal.CStruct;
+  sq3File: Internal.CStruct;
   size: bigint;
   pageSize: number;
   pageCache: LRUCache<number, Uint8Array | number>;
 }
 
-const openFiles: Record<SQLite.Internal.FH, FileDescriptor> = {};
+const openFiles: Record<Internal.FH, FileDescriptor> = {};
 
-export function installSyncHttpVfs(sqlite3: typeof SQLite.sqlite3, options: VFSHTTP.Options) {
+export function installSyncHttpVfs(sqlite3: SQLite3, options: VFSHTTP.Options) {
   const capi = sqlite3.capi;
   const wasm = sqlite3.wasm;
   const sqlite3_vfs = capi.sqlite3_vfs;
@@ -36,12 +37,12 @@ export function installSyncHttpVfs(sqlite3: typeof SQLite.sqlite3, options: VFSH
   httpVfs.$xDlOpen = httpVfs.$xDlError = httpVfs.$xDlSym = httpVfs.$xDlClose = null;
 
   const ioSyncWrappers = {
-    xCheckReservedLock: function (fid: SQLite.Internal.FH, out: SQLite.Internal.CPointer): number {
+    xCheckReservedLock: function (fid: Internal.FH, out: Internal.CPointer): number {
       debug['vfs']('xCheckReservedLock', fid, out);
       wasm.poke(out, 0, 'i32');
       return 0;
     },
-    xClose: function (fid: SQLite.Internal.FH): number {
+    xClose: function (fid: Internal.FH): number {
       debug['vfs']('xClose', fid);
       if (!openFiles[fid]) {
         return capi.SQLITE_NOTFOUND;
@@ -49,15 +50,15 @@ export function installSyncHttpVfs(sqlite3: typeof SQLite.sqlite3, options: VFSH
       delete openFiles[fid];
       return 0;
     },
-    xDeviceCharacteristics: function (fid: SQLite.Internal.FH): number {
+    xDeviceCharacteristics: function (fid: Internal.FH): number {
       debug['vfs']('xDeviceCharacteristics', fid);
       return capi.SQLITE_IOCAP_IMMUTABLE;
     },
-    xFileControl: function (fid: SQLite.Internal.FH, op: number, arg: number): number {
+    xFileControl: function (fid: Internal.FH, op: number, arg: number): number {
       debug['vfs']('xFileControl', fid, op, arg);
       return 0;
     },
-    xFileSize: function (fid: SQLite.Internal.FH, size: SQLite.Internal.CPointer) {
+    xFileSize: function (fid: Internal.FH, size: Internal.CPointer) {
       debug['vfs']('xFileSize', fid, size);
       if (!openFiles[fid]) {
         return capi.SQLITE_NOTFOUND;
@@ -66,11 +67,11 @@ export function installSyncHttpVfs(sqlite3: typeof SQLite.sqlite3, options: VFSH
       wasm.poke(size, openFiles[fid].size, 'i64');
       return 0;
     },
-    xLock: function (fid: SQLite.Internal.FH, lock: number) {
+    xLock: function (fid: Internal.FH, lock: number) {
       debug['vfs']('xLock', fid, lock);
       return 0;
     },
-    xRead: function (fid: SQLite.Internal.FH, dest: SQLite.Internal.CPointer | Uint8Array, n: number, offset: bigint) {
+    xRead: function (fid: Internal.FH, dest: Internal.CPointer | Uint8Array, n: number, offset: bigint) {
       debug['vfs']('xRead (sync)', fid, dest, n, offset);
       if (Number(offset) > Number.MAX_SAFE_INTEGER) {
         // CampToCamp are not supported
@@ -192,29 +193,29 @@ export function installSyncHttpVfs(sqlite3: typeof SQLite.sqlite3, options: VFSH
         return capi.SQLITE_ERROR;
       }
     },
-    xSync: function (fid: SQLite.Internal.FH, flags: number) {
+    xSync: function (fid: Internal.FH, flags: number) {
       debug['vfs']('xSync', fid, flags);
       return 0;
     },
-    xTruncate: function (fid: SQLite.Internal.FH, size: number) {
+    xTruncate: function (fid: Internal.FH, size: number) {
       debug['vfs']('xTruncate', fid, size);
       return 0;
     },
-    xUnlock: function (fid: SQLite.Internal.FH, lock: number) {
+    xUnlock: function (fid: Internal.FH, lock: number) {
       debug['vfs']('xUnlock', fid, lock);
       return 0;
     },
-    xWrite: function (fid: SQLite.Internal.FH, src: Uint8Array, n: number, offset: bigint) {
+    xWrite: function (fid: Internal.FH, src: Uint8Array, n: number, offset: bigint) {
       debug['vfs']('xWrite', fid, src, n, offset);
       return capi.SQLITE_READONLY;
     }
   };
 
   const vfsSyncWrappers = {
-    xAccess: function (vfs: SQLite.Internal.CPointer,
-      name: SQLite.Internal.CPointer,
+    xAccess: function (vfs: Internal.CPointer,
+      name: Internal.CPointer,
       flags: number,
-      out: SQLite.Internal.CPointer) {
+      out: Internal.CPointer) {
       debug['vfs']('xAccess', vfs, name, flags, out);
       if ((flags & capi.SQLITE_OPEN_READONLY) === 0) {
         wasm.poke(out, 0, 'i32');
@@ -231,39 +232,39 @@ export function installSyncHttpVfs(sqlite3: typeof SQLite.sqlite3, options: VFSH
       }      
       return capi.SQLITE_OK;
     },
-    xCurrentTime: function (vfs: SQLite.Internal.CPointer, out: SQLite.Internal.CPointer) {
+    xCurrentTime: function (vfs: Internal.CPointer, out: Internal.CPointer) {
       debug['vfs']('xCurrentTime', vfs, out);
       wasm.poke(out, 2440587.5 + (new Date().getTime() / 86400000), 'double');
       return 0;
     },
-    xCurrentTimeInt64: function (vfs: SQLite.Internal.CPointer, out: SQLite.Internal.CPointer) {
+    xCurrentTimeInt64: function (vfs: Internal.CPointer, out: Internal.CPointer) {
       debug['vfs']('xCurrentTimeInt64', vfs, out);
       wasm.poke(out, (BigInt(2440587.5) * BigInt(86400000)) + BigInt(new Date().getTime()), 'i64');
       return 0;
     },
-    xDelete: function (vfs: SQLite.Internal.CPointer, name: SQLite.Internal.CPointer, doSyncDir) {
+    xDelete: function (vfs: Internal.CPointer, name: Internal.CPointer, doSyncDir) {
       debug['vfs']('xDelete', vfs, name, doSyncDir);
       return capi.SQLITE_READONLY;
     },
-    xFullPathname: function (vfs: SQLite.Internal.CPointer,
-      name: SQLite.Internal.CPointer,
+    xFullPathname: function (vfs: Internal.CPointer,
+      name: Internal.CPointer,
       nOut: number,
-      pOut: SQLite.Internal.CPointer) {
+      pOut: Internal.CPointer) {
       debug['vfs']('xFullPathname', vfs, name, nOut, pOut);
       const i = wasm.cstrncpy(pOut, name, nOut);
       return i < nOut ? 0 : capi.SQLITE_CANTOPEN;
     },
-    xGetLastError: function (vfs: SQLite.Internal.CPointer,
+    xGetLastError: function (vfs: Internal.CPointer,
       nOut: number,
-      pout: SQLite.Internal.CPointer) {
+      pout: Internal.CPointer) {
       debug['vfs']('xGetLastError', vfs, nOut, pout);
       return 0;
     },
-    xOpen: function (vfs: SQLite.Internal.CPointer,
-      name: SQLite.Internal.CPointer,
-      fid: SQLite.Internal.FH,
+    xOpen: function (vfs: Internal.CPointer,
+      name: Internal.CPointer,
+      fid: Internal.FH,
       flags: number,
-      pOutFlags: SQLite.Internal.CPointer) {
+      pOutFlags: Internal.CPointer) {
       debug['vfs']('xOpen (sync)', vfs, name, fid, flags, pOutFlags);
       if (name === 0) {
         console.error('HTTP VFS does not support anonymous files');

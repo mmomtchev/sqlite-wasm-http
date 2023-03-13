@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "es2020",
+    "target": "es6",
+    "lib": [
+      "webWorker", "dom"
+    ],
+    "esModuleInterop": true,
+    "moduleResolution": "node16",
+    "sourceMap": true,
+  },
+  "include": [
+    "."
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

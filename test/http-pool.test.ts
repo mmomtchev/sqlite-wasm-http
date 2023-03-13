@@ -1,3 +1,4 @@
+import * as SQLite from '#sqlite3.js';
 import { createSQLiteHTTPPool } from '../dist/index.js';
 
 import { assert } from 'chai';
