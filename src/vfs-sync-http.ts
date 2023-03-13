@@ -216,15 +216,19 @@ export function installSyncHttpVfs(sqlite3: typeof SQLite.sqlite3, options: VFSH
       flags: number,
       out: SQLite.Internal.CPointer) {
       debug['vfs']('xAccess', vfs, name, flags, out);
-      /*
-      const url = wasm.cstrToJs(name);
-      const r = sendAndWait({ msg: 'xAccess', url });
-      if (r !== 0) {
-        console.error('xAccess', r);
-        return capi.SQLITE_IOERR;
+      if ((flags & capi.SQLITE_OPEN_READONLY) === 0) {
+        wasm.poke(out, 0, 'i32');
+        return capi.SQLITE_OK;
       }
-      const result = new Uint32Array(backend.shm, 0, 1)[0];
-      wasm.poke(out, result, 'i32');*/
+
+      const fid = Symbol();
+      const r = vfsSyncWrappers.xOpen(vfs, name, fid, flags, out);
+      if (r === capi.SQLITE_OK) {
+        ioSyncWrappers.xClose(fid);
+        wasm.poke(out, 1, 'i32');
+      } else {
+        wasm.poke(out, 0, 'i32');
+      }      
       return capi.SQLITE_OK;
     },
     xCurrentTime: function (vfs: SQLite.Internal.CPointer, out: SQLite.Internal.CPointer) {
@@ -259,7 +263,7 @@ export function installSyncHttpVfs(sqlite3: typeof SQLite.sqlite3, options: VFSH
       name: SQLite.Internal.CPointer,
       fid: SQLite.Internal.FH,
       flags: number,
-      pOutFlags: number) {
+      pOutFlags: SQLite.Internal.CPointer) {
       debug['vfs']('xOpen (sync)', vfs, name, fid, flags, pOutFlags);
       if (name === 0) {
         console.error('HTTP VFS does not support anonymous files');

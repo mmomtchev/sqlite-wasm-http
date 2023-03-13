@@ -136,6 +136,10 @@ export function installHttpVfs(
       flags: number,
       out: SQLite.Internal.CPointer) {
       debug['vfs']('xAccess', vfs, name, flags, out);
+      if ((flags & capi.SQLITE_OPEN_READONLY) === 0) {
+        wasm.poke(out, 0, 'i32');
+        return capi.SQLITE_OK;
+      }
       const url = wasm.cstrToJs(name);
       const r = sendAndWait({ msg: 'xAccess', url });
       if (r !== 0) {
