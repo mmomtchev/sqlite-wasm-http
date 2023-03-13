@@ -213,4 +213,15 @@ export function installHttpVfs(
     io: { struct: httpIoMethods, methods: ioSyncWrappers },
     vfs: { struct: httpVfs, methods: vfsSyncWrappers }
   });
+
+  sqlite3.oo1.DB.dbCtorHelper.setVfsPostOpenSql(
+    httpVfs.pointer,
+    function (oo1Db, sqlite3) {
+      sqlite3.capi.sqlite3_busy_timeout(oo1Db, options.timeout);
+      sqlite3.capi.sqlite3_exec(oo1Db, [
+        'PRAGMA journal_mode=DELETE;',
+        'PRAGMA cache_size=0;'
+      ], 0, 0, 0);
+    }
+  );
 }

@@ -16,12 +16,21 @@ declare namespace SQLite {
     }
   }
 
+  export type SQLite3 = typeof sqlite3;
+
   export namespace sqlite3 {
     export namespace capi {
       export const sqlite3_vfs: typeof Internal.CStruct;
       export const sqlite3_file: typeof Internal.CStruct;
       export const sqlite3_io_methods: typeof Internal.CStruct;
-      export const sqlite3_vfs_find: (vfs: unknown) => unknown;
+
+      export function sqlite3_exec(
+        db: oo1.DB, sql: string | string[],
+        cb: Internal.CPointer,
+        arg: Internal.CPointer,
+        err: Internal.CPointer);
+      export function sqlite3_vfs_find(vfs: unknown): unknown;
+      export function sqlite3_busy_timeout(db: oo1.DB, timeout: number): void;
 
       export const OK = 0;
       export const SQLITE_ERROR: number;
@@ -50,8 +59,14 @@ declare namespace SQLite {
       export function allocCString(s: string): Internal.CPointer;
     }
 
+    interface DbCtorHelper {
+      setVfsPostOpenSql(vfs: Internal.CPointer, cb: (db: oo1.DB, sqlite3: SQLite3) => void): void;
+    }
+
     export namespace oo1 {
-      export class DB {}
+      export class DB {
+        static dbCtorHelper: DbCtorHelper;
+      }
     }
     export namespace vfs {
       export function installVfs(...args: unknown[]): void;
