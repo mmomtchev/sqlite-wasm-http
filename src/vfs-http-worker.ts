@@ -26,7 +26,7 @@ interface FileEntry {
   size: bigint;
   pageSize: number | null;
 }
-const files = new LRUCache<string, FileEntry>({
+const files = new LRUCache<string, FileEntry | Promise<FileEntry>>({
   max: 32
 });
 
@@ -48,22 +48,31 @@ const backendAsyncMethods:
     (msg: VFSHTTP.Message, consumer: Consumer) => Promise<number>> = {
   // HTTP is a stateless protocol, so xOpen means verify if the URL is valid
   xOpen: async function (msg) {
-    if (files.has(msg.url))
+    let entry = files.get(msg.url);
+    if (entry instanceof Promise)
+      entry = await entry;
+    if (entry !== undefined)
       return 0;
 
-    const head = await fetch(msg.url, { method: 'HEAD', headers: {...options?.headers}});
-    if (head.headers.get('Accept-Ranges') !== 'bytes') {
-      console.warn(`Server for ${msg.url} does not advertise 'Accept-Ranges'. ` +
-        'If the server supports it, in order to remove this message, add "Accept-Ranges: bytes". ' +
-        'Additionally, if using CORS, add "Access-Control-Expose-Headers: *".');
-    }
-    files.set(msg.url, {
-      url: msg.url,
-      id: nextId++,
-      size: BigInt(head.headers.get('Content-Length')),
-      // This will be determined on the first read
-      pageSize: null
-    });
+    // Set a promise for the next opener of the same file to await upon
+    entry = fetch(msg.url, { method: 'HEAD', headers: { ...options?.headers } })
+      .then((head) => {
+        if (head.headers.get('Accept-Ranges') !== 'bytes') {
+          console.warn(`Server for ${msg.url} does not advertise 'Accept-Ranges'. ` +
+            'If the server supports it, in order to remove this message, add "Accept-Ranges: bytes". ' +
+            'Additionally, if using CORS, add "Access-Control-Expose-Headers: *".');
+        }
+        return {
+          url: msg.url,
+          id: nextId++,
+          size: BigInt(head.headers.get('Content-Length')),
+          // This will be determined on the first read
+          pageSize: null
+        };
+      });
+    files.set(msg.url, entry);
+    // Replace it with the actual entry once resolved
+    files.set(msg.url, await entry);
 
     return 0;
   },
@@ -86,10 +95,12 @@ const backendAsyncMethods:
   },
 
   xRead: async function (msg, consumer) {
-    const entry = files.get(msg.url);
+    let entry = files.get(msg.url);
 
     if (!entry)
       throw new Error(`File ${msg.url} not open`);
+    if (entry instanceof Promise)
+      entry = await entry;
 
     if (!entry.pageSize) {
       // Determine the page size if we don't know it
@@ -122,7 +133,7 @@ const backendAsyncMethods:
     if (pageStart + pageSize < msg.offset + len)
       throw new Error(`Read chunk ${msg.offset}:${msg.n} spans across a page-boundary`);
 
-    const cacheId = entry.url + '|' + page;
+    const cacheId = entry.id + '|' + page;
     let data = cache.get(cacheId);
     if (data instanceof Promise)
       // This means that another thread has requested this segment
@@ -133,7 +144,7 @@ const backendAsyncMethods:
 
       // This page is present as a segment of a super-page
       const newPageStart = BigInt(data) * pageSize;
-      data = cache.get(entry.url + '|' + data);
+      data = cache.get(entry.id + '|' + data);
       if (data instanceof Promise)
         data = await data;
       if (data instanceof Uint8Array) {
@@ -153,12 +164,12 @@ const backendAsyncMethods:
       let chunkSize = entry.pageSize;
       // If the previous page is in the cache, we double the page size
       // This was the original page merging algorithm implemented by @phiresky
-      let prev = page > 0 && cache.get(entry.url + '|' + (Number(page) - 1));
+      let prev = page > 0 && cache.get(entry.id + '|' + (Number(page) - 1));
       if (prev) {
         if (prev instanceof Promise)
           prev = await prev;
         if (typeof prev === 'number')
-          prev = cache.get(entry.url + '|' + prev) as Uint8Array;
+          prev = cache.get(entry.id + '|' + prev) as Uint8Array;
         if (prev instanceof Promise)
           prev = await prev;
         if (prev instanceof Uint8Array) {
@@ -185,7 +196,7 @@ const backendAsyncMethods:
       cache.set(cacheId, resp);
       // These point to the parent super-page and resolve at the same time as resp
       for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
-        cache.set(entry.url + '|' + i, resp.then(() => Number(page)));
+        cache.set(entry.id + '|' + i, resp.then(() => Number(page)));
       }
 
       data = await resp;
@@ -197,7 +208,7 @@ const backendAsyncMethods:
 
       // These point to the parent super-page
       for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
-        cache.set(entry.url + '|' + i, Number(page));
+        cache.set(entry.id + '|' + i, Number(page));
       }
     } else {
       debug['cache'](`cache hit for ${msg.url}:${page}`);
@@ -210,9 +221,11 @@ const backendAsyncMethods:
 
   // This is cached
   xFilesize: async function (msg, consumer) {
-    const entry = files.get(msg.url);
+    let entry = files.get(msg.url);
     if (!entry)
       throw new Error(`File ${msg.fid} not open`);
+    if (entry instanceof Promise)
+      entry = await entry;
 
     const out = new BigInt64Array(consumer.shm, 0, 1);
     out[0] = entry.size;
