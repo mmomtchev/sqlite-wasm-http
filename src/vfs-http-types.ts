@@ -76,7 +76,7 @@ export interface Message {
 
 declare const SQLITE_DEBUG: string[];
 const debugOptions = (typeof SQLITE_DEBUG !== 'undefined' && SQLITE_DEBUG) ||
-  (typeof process?.env?.SQLITE_DEBUG !== 'undefined' && process.env.SQLITE_DEBUG) ||
+  (typeof process !== 'undefined' && typeof process?.env?.SQLITE_DEBUG !== 'undefined' && process.env.SQLITE_DEBUG) ||
   '';
 
 export const debugSys = ['threads', 'vfs', 'cache', 'http'] as const;

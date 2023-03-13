@@ -1,0 +1,14 @@
+{
+  "name": "browser-rollup-js",
+  "version": "1.0.0",
+  "description": "browser/rollup/es6 integration test",
+  "scripts": {
+    "test": "rollup --mode=production"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@surma/rollup-plugin-off-main-thread": "^2.2.3",
+    "@web/rollup-plugin-import-meta-assets": "^1.0.7",
+    "rollup": "^3.19.1"
+  }
+}
