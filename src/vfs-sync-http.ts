@@ -18,7 +18,7 @@ interface FileDescriptor {
 
 const openFiles: Record<SQLite.Internal.FH, FileDescriptor> = {};
 
-export function installSyncHttpVfs(sqlite3: SQLite.SQLite, options: VFSHTTP.Options) {
+export function installSyncHttpVfs(sqlite3: typeof SQLite.sqlite3, options: VFSHTTP.Options) {
   const capi = sqlite3.capi;
   const wasm = sqlite3.wasm;
   const sqlite3_vfs = capi.sqlite3_vfs;

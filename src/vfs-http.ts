@@ -11,7 +11,10 @@ interface FileDescriptor {
 }
 const openFiles: Record<SQLite.Internal.FH, FileDescriptor> = {};
 
-export function installHttpVfs(sqlite3: SQLite.SQLite, backend: VFSHTTP.BackendChannel, options: VFSHTTP.Options) {
+export function installHttpVfs(
+  sqlite3: typeof SQLite.sqlite3,
+  backend: VFSHTTP.BackendChannel,
+  options: VFSHTTP.Options) {
   if (typeof SharedArrayBuffer === 'undefined') {
     throw new Error('SharedArrayBuffer is not available. ' +
       'If your browser supports it, the webserver must send ' +
