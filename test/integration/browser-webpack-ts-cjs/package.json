@@ -1,11 +1,12 @@
 {
-  "name": "browser-webpack-es6",
+  "name": "browser-webpack-ts-cjs",
   "version": "1.0.0",
-  "description": "browser/webpack/es6 integration test",
+  "description": "browser/webpack/ts-esm integration test",
   "scripts": {
     "test": "webpack --mode=production"
   },
   "devDependencies": {
+    "ts-loader": "^9.4.2",
     "webpack": "^5.76.0",
     "webpack-cli": "^5.0.1"
   }
