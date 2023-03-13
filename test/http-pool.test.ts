@@ -12,7 +12,6 @@ describe('SQLite HTTP pool', () => {
     const poolq = createSQLiteHTTPPool({ workers });
 
     poolq.then((pool) => pool.open(remoteURL).then(() => {
-      console.log('opened', remoteURL);
       const r: Promise<SQLite.Row>[] = [];
       for (let i = 0; i < requests; i++)
         r.push(pool.exec('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
@@ -35,7 +34,6 @@ describe('SQLite HTTP pool', () => {
       });
     }))
       .finally(() => {
-        console.log('finally');
         poolq.then((pool) => pool.close());
       })
       .catch(done);
