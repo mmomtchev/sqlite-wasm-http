@@ -3,7 +3,6 @@ import * as fs from 'fs';
 import * as process from 'process';
 import { execSync } from 'child_process';
 
-
 describe('integration tests', () => {
   const dirname = new URL(import.meta.url).pathname;
   const testDir = path.resolve(dirname, '..', 'integration');
