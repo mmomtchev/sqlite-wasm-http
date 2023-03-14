@@ -12,6 +12,9 @@ const testDir = path.resolve(dirname, '..', '..', 'test', 'integration');
   const list = await fs.readdir(testDir);
 
   for (const test of list) {
+    if (!(await fs.stat(path.resolve(testDir, test))).isDirectory())
+      continue;
+
     console.log('Running', test);
     process.chdir(path.resolve(testDir, test));
     try {
