@@ -1,0 +1,28 @@
+name: Test npm package
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version to test'
+        required: true
+
+jobs:
+  integration:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+    - run: npm ci
+    - run: npm run build
+    - name: Run headless test
+      uses: GabrielBB/xvfb-action@v1
+      env:
+        SQLITE_INSTALL_CMD: npm install sqlite-wasm-http@${{ github.event.inputs.version }}
+      with:
+        run: npm test
