@@ -1,30 +1,32 @@
 import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
 
-(async function main() {
+(async function test() {
+  console.log('start test');
   const httpBackend = createHttpBackend({
     maxPageSize: 1024,
     timeout: 10000
   });
   const db = await createSQLiteThread({ http: httpBackend });
 
-  console.log(await db('config-get', {}));
+  await db('config-get', {});
 
-  console.log(await db('open', {
+  await db('open', {
     filename: 'file:' + encodeURI('https://velivole.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles'),
     vfs: 'http'
-  }));
+  });
 
-  console.log(await db('exec', {
+  let rows = 0;
+  await db('exec', {
     sql: 'SELECT * FROM tiles WHERE zoom_level = 1',
     callback: function (row) {
-      console.log('got row', row);
+      rows++;
     }
-  }));
+  });
 
-  console.log(await db('exec', {
-    sql: 'SELECT * FROM tiles WHERE zoom_level = 0',
-    callback: function (row) {
-      console.log('got row', row);
-    }
-  }));
-})();
+  if (rows != 5)
+    throw new Error('test failed');
+
+  window.rollupDone();
+
+})().catch(window.rollupDone);
+

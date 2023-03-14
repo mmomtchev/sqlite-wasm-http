@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "browser/webpack/es6 integration test",
   "scripts": {
-    "test": "webpack --mode=production"
+    "build": "webpack --mode=production"
   },
   "devDependencies": {
     "webpack": "^5.76.0",
