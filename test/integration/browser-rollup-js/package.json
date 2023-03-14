@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "browser/rollup/es6 integration test",
   "scripts": {
-    "test": "rollup -c rollup.config.mjs"
+    "build": "rollup -c rollup.config.mjs"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.1",

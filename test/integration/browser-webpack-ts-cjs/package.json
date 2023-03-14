@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "browser/webpack/ts-esm integration test",
   "scripts": {
-    "test": "webpack --mode=production"
+    "build": "webpack --mode=production"
   },
   "devDependencies": {
     "ts-loader": "^9.4.2",

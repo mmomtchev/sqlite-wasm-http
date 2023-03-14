@@ -7,7 +7,7 @@ on:
     branches: [ '*' ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -23,10 +23,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run build
-    - run: npm test
+    - name: Run headless test
+      uses: GabrielBB/xvfb-action@v1
+      with:
+        run: npm test
 
-
-  integration:
+  codecov:
 
     runs-on: ubuntu-latest
 
@@ -36,21 +38,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18.x
-    - run: npm ci
-    - run: npm run build
-    - run: npm run test:integration:link
-
-
-  codecov:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js 19.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: 19.x
     - run: npm ci
     - run: npm run build
     - run: npm run c8
