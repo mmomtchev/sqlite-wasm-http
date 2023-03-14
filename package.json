@@ -50,6 +50,7 @@
   "scripts": {
     "start": "tsc && webpack serve --mode=development",
     "build": "tsc && webpack --mode=production",
+    "doc": "documentation build src/*.ts --shallow -f md -o docs/API.md",
     "c8": "node_modules/.bin/c8 mocha -i -g integration",
     "lcov": "node_modules/.bin/c8 report --reporter=text-lcov > coverage/tests.lcov",
     "test": "npm run lint && npm link && mocha",
@@ -81,6 +82,7 @@
     "@typescript-eslint/parser": "^5.54.1",
     "c8": "^7.13.0",
     "chai": "^4.3.7",
+    "documentation": "^14.0.1",
     "eslint": "^8.35.0",
     "eslint-plugin-mocha": "^10.1.0",
     "gh-pages": "^5.0.0",
