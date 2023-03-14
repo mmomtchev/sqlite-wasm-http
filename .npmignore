@@ -1,0 +1,8 @@
+.vscode
+.github
+.git
+node_modules
+/deps/sqlite
+!/deps/dist
+/coverage
+temp
