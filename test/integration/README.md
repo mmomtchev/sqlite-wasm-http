@@ -2,6 +2,8 @@
 
 This directory contains the integration tests which can also be used as example configurations for setting up an environment with `sqlite-wasm-http`.
 
+**Ignore the `.karma.cjs` files which contain the configuration needed to run the resulting bundles in [Karma](https://karma-runner.github.io/latest/index.html).**
+
 If you want to setup an environment that is not included you should be aware of the following specific requirements of this package:
 
 * It contains a number of workers that are imported using the new *standard* method that all bundlers have agreed upon: `new Worker(new URL('./script.js', import.meta.url))` - you bundler should support this syntax
