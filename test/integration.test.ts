@@ -35,8 +35,8 @@ describe('integration tests', () => {
           execSync('npm test');
         }
       } catch (e) {
-        console.error(e.stdout);
-        console.error(e.stderr);
+        console.error(e.stdout.toString());
+        console.error(e.stderr.toString());
         throw new Error('Test failed');
       }
     });
