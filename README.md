@@ -36,7 +36,7 @@ Experimental
 
 # Usage
 
-If you are not already familiair with [@phiresky](https://github.com/phiresky/)/[sql.js-httpvfs](https://github.com/phiresky/sql.js-httpvfs), there is a brief presentation in the [Overview](#Overview) section.
+If you are not already familiar with [@phiresky](https://github.com/phiresky/)/[sql.js-httpvfs](https://github.com/phiresky/sql.js-httpvfs), there is a brief presentation in the [Overview](#Overview) section.
 
 ## Page size
 
@@ -115,6 +115,11 @@ console.log(tile[0].row);
 // This shutdowns the pool
 await pool.close();
 ```
+
+## Further information
+
+* [The full `sqlite-wasm-http` API](https://github.com/mmomtchev/sqlite-wasm-http/blob/integration-tests/docs/API.md)
+* [The SQLite WASM main documentation](https://sqlite.org/wasm/doc/trunk/index.md)
 
 # Overview
 
