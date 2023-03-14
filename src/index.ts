@@ -246,10 +246,12 @@ export async function createSQLiteHTTPPool(opts: {
             results.push(row);
         }
       })
-        .then(() => undefined);
+        .then(() => undefined)
+        .finally(() => {
+          w.busy = null;
+        });
       await w.busy;
 
-      w.busy = null;
       return results;
     }
   };

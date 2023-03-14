@@ -39,4 +39,30 @@ describe('SQLite HTTP pool', () => {
       })
       .catch(done);
   });
+
+  it('should handle errors gracefully', (done) => {
+    const poolq = createSQLiteHTTPPool({ workers });
+
+    poolq.then((pool) => pool.open(remoteURL).then(() => {
+      const r: Promise<SQLite.Row>[] = [];
+      for (let i = 0; i < requests; i++)
+        r.push(pool.exec('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
+          'WHERE zoom_level = -1 AND tile_column = $col AND tile_row = $row',
+          { $col: 600 + i, $row: 600 + i })
+          .then((results) => {
+            assert.lengthOf(results, 0);
+            return [];
+          }));
+
+      return Promise.all(r).then((resp) => {
+        const tiles = resp.flat();
+        assert.lengthOf(tiles, 0);
+        done();
+      });
+    }))
+      .finally(() => {
+        poolq.then((pool) => pool.close());
+      })
+      .catch(done);
+  });
 });
