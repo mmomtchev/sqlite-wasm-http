@@ -65,7 +65,7 @@ const backendAsyncMethods:
         return {
           url: msg.url,
           id: nextId++,
-          size: BigInt(head.headers.get('Content-Length')),
+          size: BigInt(head.headers.get('Content-Length') ?? 0),
           // This will be determined on the first read
           pageSize: null
         };
