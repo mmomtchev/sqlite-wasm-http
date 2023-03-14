@@ -13,7 +13,7 @@ module.exports = function (config) {
     },
     files: [
       { pattern: 'browser-rollup-js/temp/index.js', included: true },
-      { pattern: '../../scripts/rollup-test.js', included: true },
+      { pattern: '../../scripts/wait-test.js', included: true },
       { pattern: 'browser-rollup-js/temp/*', served: true, included: false },
       { pattern: 'browser-rollup-js/temp/assets/*', served: true, included: false }
     ],

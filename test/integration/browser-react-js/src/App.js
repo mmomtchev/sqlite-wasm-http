@@ -1,6 +1,6 @@
 import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
 
-(async function test() {
+async function test() {
   const httpBackend = createHttpBackend({
     maxPageSize: 1024,
     timeout: 10000
@@ -21,14 +21,28 @@ import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
       rows++;
     }
   });
-  console.log('got', rows, 'rows');
 
-  if (rows != 5)
+  if (rows !== 5)
     throw new Error('test failed');
+}
 
-  if (typeof window.testDone === 'function')
-    window.testDone();
-  else
-    console.error('Not running in a test');
-})().catch(window.testDone);
+function App() {
+  test()
+  .then(() => {
+    if (typeof window.testDone === 'function')
+      window.testDone()
+    else
+      console.error('Not running in the test environment');
+  })
+  .catch(window.testDone);
 
+  return (
+    <div className="App">
+      <header className="App-header">
+        React Integration
+      </header>
+    </div>
+  );
+}
+
+export default App;
