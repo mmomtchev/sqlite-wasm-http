@@ -50,7 +50,7 @@
   "scripts": {
     "start": "tsc && webpack serve --mode=development",
     "build": "tsc && webpack --mode=production",
-    "c8": "node_modules/.bin/c8 mocha",
+    "c8": "node_modules/.bin/c8 mocha -i -g integration",
     "lcov": "node_modules/.bin/c8 report --reporter=text-lcov > coverage/tests.lcov",
     "test": "npm run lint && npm link && mocha",
     "lint": "eslint src test examples scripts",
