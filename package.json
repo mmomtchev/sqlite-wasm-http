@@ -57,7 +57,11 @@
     "lint": "eslint src test examples scripts",
     "lint:fix": "eslint --fix src test examples scripts",
     "publish:shared": "tar -C docs/examples -zcf - `ls docs/examples` | mbuffer | ssh sqlite-wasm-http@pelikan.garga.net 'cat - | mbuffer | tar -C www -zxvf -'",
-    "publish:gh": "ts-node-esm scripts/publish-ghpages.ts"
+    "publish:gh": "ts-node-esm scripts/publish-ghpages.ts",
+    "publish": "npm run publish:shared && npm run publish:gh",
+    "preversion": "npm test",
+    "version": "npm run build && npm run doc && git add package.json docs",
+    "postversion": "git push && git push --tags && npm run publish"
   },
   "repository": {
     "type": "git",
