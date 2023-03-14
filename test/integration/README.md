@@ -2,7 +2,7 @@
 
 This directory contains the integration tests which can also be used as example configurations for setting up an environment with `sqlite-wasm-http`.
 
-If you want to setup an environment that is not included you show be aware of the following specific requirements of this package:
+If you want to setup an environment that is not included you should be aware of the following specific requirements of this package:
 
 * It contains a number of workers that are imported using the new *standard* method that all bundlers have agreed upon: `new Worker(new URL('./script.js', import.meta.url))` - you bundler should support this syntax
 * It contains a WASM blob that is also imported using this same syntax: `new URL('./sqlite3.wasm', import.meta.url)` - your bundler should be able to handle this
