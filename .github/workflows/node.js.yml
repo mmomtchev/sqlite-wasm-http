@@ -41,6 +41,8 @@ jobs:
     - run: npm ci
     - run: npm run build
     - run: npm run c8
+      env:
+        NODE_DEBUG: c8
     - run: npm run lcov
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
