@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="overview.svg"
+   inkscape:export-filename="overview.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title2913">SQLite WASM HTTP Overview</title>
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="2.587745"
+     inkscape:cx="340.06442"
+     inkscape:cy="210.41486"
+     inkscape:window-width="2560"
+     inkscape:window-height="1351"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient11237">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop11233" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop11235" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient11160">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop11156" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop11158" />
+    </linearGradient>
+    <marker
+       style="overflow:visible"
+       id="Arrow5"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow5"
+       markerWidth="5.8874259"
+       markerHeight="6.6094756"
+       viewBox="0 0 5.8874262 6.6094758"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m 6,0 c -3,1 -7,3 -9,5 0,0 0,-4 2,-5 -2,-1 -2,-5 -2,-5 2,2 6,4 9,5 z"
+         id="path8893" />
+    </marker>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient11160"
+       id="radialGradient11162"
+       cx="52.911659"
+       cy="13.598552"
+       fx="52.911659"
+       fy="13.598552"
+       r="46.571838"
+       gradientTransform="matrix(1,0,0,0.2217237,0,10.583431)"
+       gradientUnits="userSpaceOnUse" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient11160"
+       id="radialGradient11191"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,0.2217237,103.88066,10.787921)"
+       cx="52.911659"
+       cy="13.598552"
+       fx="52.911659"
+       fy="13.598552"
+       r="46.571838" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient11237"
+       id="radialGradient11239"
+       cx="95.189857"
+       cy="72.08255"
+       fx="95.189857"
+       fy="72.08255"
+       r="10.633453"
+       gradientTransform="matrix(1.2355769,0,0,0.92788462,-22.475657,5.5561163)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <ellipse
+       style="opacity:1;fill:url(#radialGradient11239);fill-opacity:1;stroke:none;stroke-width:0.029964;stroke-dasharray:none"
+       id="path11231"
+       cx="95.138741"
+       cy="72.440414"
+       rx="13.13845"
+       ry="9.8666182" />
+    <g
+       id="g2876">
+      <g
+         id="g1306"
+         transform="translate(29.208373,-17.640701)">
+        <rect
+           style="fill:#aaccff;stroke:#000000;stroke-width:0.217719"
+           id="rect1103"
+           width="43.124672"
+           height="26.652512"
+           x="18.484844"
+           y="40.752613" />
+        <text
+           xml:space="preserve"
+           style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           x="23.605549"
+           y="54.957111"
+           id="text1267"><tspan
+             sodipodi:role="line"
+             id="tspan1265"
+             style="stroke-width:0.264583"
+             x="23.605549"
+             y="54.957111">User (calling) thread</tspan></text>
+      </g>
+      <g
+         id="g1281"
+         transform="translate(15.037974,-18.508276)">
+        <rect
+           style="fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           id="rect1269"
+           width="18.797468"
+           height="30.414944"
+           x="45.113922"
+           y="75.045273" />
+        <text
+           xml:space="preserve"
+           style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           x="48.754868"
+           y="89.422562"
+           id="text1273"><tspan
+             sodipodi:role="line"
+             id="tspan1271"
+             style="stroke-width:0.264583"
+             x="48.754868"
+             y="89.422562">SQLite</tspan><tspan
+             sodipodi:role="line"
+             style="stroke-width:0.264583"
+             x="48.754868"
+             y="93.391312"
+             id="tspan1275">Worker</tspan></text>
+      </g>
+      <g
+         id="g1291"
+         transform="translate(-7.8081796,-18.508276)">
+        <rect
+           style="fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           id="rect1283"
+           width="18.797468"
+           height="30.414944"
+           x="45.113922"
+           y="75.045273" />
+        <text
+           xml:space="preserve"
+           style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           x="48.754868"
+           y="89.422562"
+           id="text1289"><tspan
+             sodipodi:role="line"
+             id="tspan1285"
+             style="stroke-width:0.264583"
+             x="48.754868"
+             y="89.422562">SQLite</tspan><tspan
+             sodipodi:role="line"
+             style="stroke-width:0.264583"
+             x="48.754868"
+             y="93.391312"
+             id="tspan1287">Worker</tspan></text>
+      </g>
+      <g
+         id="g1301"
+         transform="translate(-30.654333,-18.508276)">
+        <rect
+           style="fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           id="rect1293"
+           width="18.797468"
+           height="30.414944"
+           x="45.113922"
+           y="75.045273" />
+        <text
+           xml:space="preserve"
+           style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           x="48.754868"
+           y="89.422562"
+           id="text1299"><tspan
+             sodipodi:role="line"
+             id="tspan1295"
+             style="stroke-width:0.264583"
+             x="48.754868"
+             y="89.422562">SQLite</tspan><tspan
+             sodipodi:role="line"
+             style="stroke-width:0.264583"
+             x="48.754868"
+             y="93.391312"
+             id="tspan1297">Worker</tspan></text>
+      </g>
+      <g
+         id="g1372"
+         transform="translate(4.1932814,19.665044)">
+        <rect
+           style="fill:#aaccff;stroke:#000000;stroke-width:0.217719"
+           id="rect1308"
+           width="43.124672"
+           height="26.652512"
+           x="43.499935"
+           y="78.492149" />
+        <text
+           xml:space="preserve"
+           style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           x="50.067062"
+           y="93.000504"
+           id="text1312"><tspan
+             sodipodi:role="line"
+             id="tspan1310"
+             style="stroke-width:0.264583"
+             x="50.067062"
+             y="93.000504">HTTP VFS Backend</tspan></text>
+      </g>
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264786px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow5)"
+         d="M 86.704605,49.91067 86.600649,97.346818"
+         id="path1905"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+         x="87.263634"
+         y="69.47834"
+         id="text2346"><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.264583"
+           x="87.263634"
+           y="69.47834"
+           id="tspan2356">Control &amp;</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.264583"
+           x="87.263634"
+           y="73.44709"
+           id="tspan2362">new thread</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.264583"
+           x="87.263634"
+           y="77.41584"
+           id="tspan2366">creation</tspan></text>
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.249281px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow5)"
+         d="m 69.839824,49.813291 v 5.904318"
+         id="path2368"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.25477px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow5)"
+         d="M 69.812496,49.669787 46.748173,56.133279"
+         id="path2392"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.261293px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow5)"
+         d="M 69.732504,49.6316 23.66542,56.33054"
+         id="path2432"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.253138px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow5)"
+         d="M 69.406037,86.97444 V 97.165946"
+         id="path2454"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.255424px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow5)"
+         d="M 46.621168,86.888236 68.638301,97.596005"
+         id="path2480"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 23.619783,86.890967 69.323185,98.086765"
+         id="path2502"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       id="g2909">
+      <g
+         id="g2557"
+         transform="translate(118.51913,-10.979014)">
+        <rect
+           style="fill:#aaccff;stroke:#000000;stroke-width:0.217719"
+           id="rect2551"
+           width="43.124672"
+           height="26.652512"
+           x="18.484844"
+           y="40.752613" />
+        <text
+           xml:space="preserve"
+           style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           x="23.605549"
+           y="54.957111"
+           id="text2555"><tspan
+             sodipodi:role="line"
+             id="tspan2553"
+             style="stroke-width:0.264583"
+             x="23.605549"
+             y="54.957111">User (calling) thread</tspan></text>
+      </g>
+      <g
+         id="g2646"
+         transform="translate(-5.7838364,21.400195)">
+        <rect
+           style="fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           id="rect2559"
+           width="18.797468"
+           height="30.414944"
+           x="129.57483"
+           y="43.94239" />
+        <text
+           xml:space="preserve"
+           style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           x="133.21577"
+           y="51.131218"
+           id="text2565"><tspan
+             sodipodi:role="line"
+             id="tspan2561"
+             style="stroke-width:0.264583"
+             x="133.21577"
+             y="51.131218">SQLite</tspan><tspan
+             sodipodi:role="line"
+             style="stroke-width:0.264583"
+             x="133.21577"
+             y="55.099968"
+             id="tspan2563">Worker</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           x="131.21667"
+           y="65.501945"
+           id="text2635"><tspan
+             sodipodi:role="line"
+             id="tspan2633"
+             style="stroke-width:0.264583"
+             x="131.21667"
+             y="65.501945">HTTP VFS</tspan><tspan
+             sodipodi:role="line"
+             style="stroke-width:0.264583"
+             x="131.21667"
+             y="69.470695"
+             id="tspan2637">Backend</tspan></text>
+      </g>
+      <g
+         id="g2662"
+         transform="translate(19.592746,21.400195)">
+        <rect
+           style="fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           id="rect2648"
+           width="18.797468"
+           height="30.414944"
+           x="129.57483"
+           y="43.94239" />
+        <text
+           xml:space="preserve"
+           style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           x="133.21577"
+           y="51.131218"
+           id="text2654"><tspan
+             sodipodi:role="line"
+             id="tspan2650"
+             style="stroke-width:0.264583"
+             x="133.21577"
+             y="51.131218">SQLite</tspan><tspan
+             sodipodi:role="line"
+             style="stroke-width:0.264583"
+             x="133.21577"
+             y="55.099968"
+             id="tspan2652">Worker</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           x="131.21667"
+           y="65.501945"
+           id="text2660"><tspan
+             sodipodi:role="line"
+             id="tspan2656"
+             style="stroke-width:0.264583"
+             x="131.21667"
+             y="65.501945">HTTP VFS</tspan><tspan
+             sodipodi:role="line"
+             style="stroke-width:0.264583"
+             x="131.21667"
+             y="69.470695"
+             id="tspan2658">Backend</tspan></text>
+      </g>
+      <g
+         id="g2678"
+         transform="translate(44.969329,21.400195)">
+        <rect
+           style="fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           id="rect2664"
+           width="18.797468"
+           height="30.414944"
+           x="129.57483"
+           y="43.94239" />
+        <text
+           xml:space="preserve"
+           style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           x="133.21577"
+           y="51.131218"
+           id="text2670"><tspan
+             sodipodi:role="line"
+             id="tspan2666"
+             style="stroke-width:0.264583"
+             x="133.21577"
+             y="51.131218">SQLite</tspan><tspan
+             sodipodi:role="line"
+             style="stroke-width:0.264583"
+             x="133.21577"
+             y="55.099968"
+             id="tspan2668">Worker</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+           x="131.21667"
+           y="65.501945"
+           id="text2676"><tspan
+             sodipodi:role="line"
+             id="tspan2672"
+             style="stroke-width:0.264583"
+             x="131.21667"
+             y="65.501945">HTTP VFS</tspan><tspan
+             sodipodi:role="line"
+             style="stroke-width:0.264583"
+             x="131.21667"
+             y="69.470695"
+             id="tspan2674">Backend</tspan></text>
+      </g>
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.348128px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow5)"
+         d="m 149.77062,56.629028 -15.28473,8.068994"
+         id="path2736"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.259651px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow5)"
+         d="m 158.56631,56.480244 v 8.045419"
+         id="path2738"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.357186px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow5)"
+         d="m 167.35356,56.633264 15.84013,8.19651"
+         id="path2740"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       id="g11223"
+       transform="translate(0,0.20448971)">
+      <ellipse
+         style="opacity:1;fill:url(#radialGradient11162);fill-opacity:1;stroke:none;stroke-width:0.0288586;stroke-dasharray:none"
+         id="path10740"
+         cx="52.911659"
+         cy="13.598552"
+         rx="46.571838"
+         ry="10.32608" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+         x="15.166677"
+         y="10.516569"
+         id="text2820"><tspan
+           sodipodi:role="line"
+           id="tspan2818"
+           style="stroke-width:0.264583"
+           x="15.166677"
+           y="10.516569">With Cross-Origin Isolation:</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.264583"
+           x="15.166677"
+           y="14.485319"
+           id="tspan2826">Shared cache and asynchronous HTTP handling</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.264583"
+           x="15.166677"
+           y="18.454069"
+           id="tspan2832">multiple connections in the same backend</tspan></text>
+    </g>
+    <g
+       id="g11210">
+      <ellipse
+         style="opacity:1;fill:url(#radialGradient11191);fill-opacity:1;stroke:none;stroke-width:0.0288586;stroke-dasharray:none"
+         id="ellipse11189"
+         cx="156.79231"
+         cy="13.803041"
+         rx="46.571838"
+         ry="10.32608" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.175px;fill:#aaccff;stroke:#000000;stroke-width:0.264583"
+         x="126.4337"
+         y="11.01639"
+         id="text2836"><tspan
+           sodipodi:role="line"
+           id="tspan2834"
+           style="stroke-width:0.264583"
+           x="126.4337"
+           y="11.01639">Without Cross-Origin Isolation:</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.264583"
+           x="126.4337"
+           y="14.98514"
+           id="tspan2838">Each worker thread uses synchronous</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.264583"
+           x="126.4337"
+           y="18.95389"
+           id="tspan2840">HTTP with its own cache</tspan></text>
+    </g>
+  </g>
+  <metadata
+     id="metadata2911">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>SQLite WASM HTTP Overview</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

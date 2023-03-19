@@ -177,6 +177,10 @@ These are all the options required for maximum performance:
 
 They must be set on the origin - the main entry point as it is displayed in the user's URL bar. When using an `iframe`, the `iframe` must have them **as well as all of its parents up to the origin**, as well as the special `iframe` attribute: `<iframe allow="cross-origin-isolated">`.
 
+# Overview
+
+[![Overview](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/docs/overview.png)](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/docs/overview.png)
+
 # Copyright
 
 ISC License
