@@ -1,5 +1,5 @@
 // Some quick hacks to make SQLite WASM work in Node.js
-import WebWorker from 'web-worker';
+import WebWorker from '@mmomtchev/web-worker';
 import { MessageChannel, MessagePort as MessagePort } from 'worker_threads';
 import { performance } from 'perf_hooks';
 
