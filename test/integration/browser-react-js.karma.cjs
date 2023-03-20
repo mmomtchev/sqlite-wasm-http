@@ -1,4 +1,5 @@
 const path = require('path');
+const url = require('url');
 const fs = require('fs');
 
 const dir = path.resolve(__dirname, 'browser-react-js', 'build', 'static', 'js');
@@ -17,19 +18,18 @@ module.exports = function (config) {
       }
     },
     files: [
-      { pattern: path.join('browser-react-js', 'build', 'static', 'js', js), included: true },
-      { pattern: '../../scripts/wait-test.js', included: true },
-      { pattern: 'browser-react-js/build/*', served: true, included: false },
-      { pattern: 'browser-react-js/build/static/js/*', served: true, included: false },
-      { pattern: 'browser-react-js/build/static/media/*', served: true, included: false }
+      { pattern: path.join(__dirname, 'browser-react-js', 'build', 'static', 'js', js), included: true },
+      { pattern: path.resolve(__dirname, '..', '..', 'scripts', 'wait-test.js'), included: true },
+      { pattern: path.join(__dirname, 'browser-react-js', 'build', '*'), served: true, included: false },
+      { pattern: path.join(__dirname, 'browser-react-js', 'build', 'static', 'js', '*'), served: true, included: false },
+      { pattern: path.join(__dirname, 'browser-react-js', 'build', 'static', 'media', '*'), served: true, included: false }
     ],
     exclude: [
     ],
     preprocessors: {
     },
     proxies: {
-      '/static/js/': path.join(__dirname, 'browser-react-js', 'build', 'static', 'js'),
-      '/static/media/': path.join(__dirname, 'browser-react-js', 'build', 'static', 'media')
+      '/static/': '/base/browser-react-js/build/static/',
     },
     reporters: ['progress'],
     port: 9876,
