@@ -7,6 +7,6 @@
     "test": "node index.js"
   },
   "devDependencies": {
-    "web-worker": "github:mmomtchev/web-worker#workerglobalscope"
+    "web-worker": "github:mmomtchev/web-worker#mmomtchev"
   }
 }
