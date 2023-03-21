@@ -49,7 +49,7 @@
   },
   "scripts": {
     "start": "tsc && webpack serve --mode=development",
-    "build": "tsc && webpack --mode=production",
+    "prepare": "tsc && webpack --mode=production",
     "doc": "documentation build src/*.ts --shallow -f md -o docs/API.md",
     "c8": "node_modules/.bin/c8 mocha -i -g integration",
     "lcov": "node_modules/.bin/c8 report --reporter=text-lcov > coverage/tests.lcov",
@@ -59,8 +59,8 @@
     "publish:shared": "tar -C docs/examples -zcf - `ls docs/examples` | mbuffer | ssh sqlite-wasm-http@pelikan.garga.net 'cat - | mbuffer | tar -C www -zxvf -'",
     "publish:gh": "ts-node-esm scripts/publish-ghpages.ts",
     "publish": "npm run publish:shared && npm run publish:gh",
-    "preversion": "npm test",
-    "version": "npm run build && npm run doc && git add package.json docs",
+    "preversion": "npm run prepare && npm test",
+    "version": "npm run doc && git add package.json docs",
     "postversion": "git push && git push --tags && npm run publish",
     "postpublish": "gh workflow run npm.yml -F version=$npm_package_version"
   },
