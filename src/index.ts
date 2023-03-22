@@ -182,7 +182,9 @@ export interface SQLiteHTTPPool {
   /**
    * Run an SQL statement
    * @param {string} sql SQL statement
-   * @param {Record<string, unknown>} [bind] Optional map of values to be binded
+   * @param {Record<string, unknown>} [bind] Optional map of values to be bound
+   * @param {Record<string, any>} [options] Options
+   * @param {'array' | 'object'} [options.rowMode] SQLite row format, @default array
    * @returns {Promise<SQLite.Row[]>}
    */
   exec(sql: string, bind?: Record<string, unknown>, opts?: {
