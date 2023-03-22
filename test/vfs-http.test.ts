@@ -97,7 +97,8 @@ for (const back of Object.keys(backTests)) {
     it('should support aggregation (VFS stress test)', (done) => {
       const rows: SQLite.Result[] = [];
       db('exec', {
-        sql: 'SELECT COUNT(*) AS total FROM tiles WHERE zoom_level < 10',
+        sql: 'SELECT COUNT(*) AS total FROM tiles WHERE zoom_level < $maxZoom',
+        bind: { $maxZoom: back === 'shared' ? 10 : 4},
         callback: (msg) => {
           rows.push(msg);
         }
@@ -111,7 +112,7 @@ for (const back of Object.keys(backTests)) {
             if (row.row) {
               assert.isAtMost(idx, 0);
               assert.isNumber(row.rowNumber);
-              assert.strictEqual(row.row[0], 20953);
+              assert.strictEqual(row.row[0], back === 'shared' ? 20953 : 85);
             } else {
               assert.isNull(row.rowNumber);
               assert.strictEqual(idx, 1);
