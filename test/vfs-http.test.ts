@@ -15,83 +15,44 @@ for (const back of Object.keys(backTests)) {
     let httpBackend: VFSHTTP.Backend;
     let db: SQLite.Promiser;
 
-    switch (back) {
-      case 'shared':
-        before((done) => {
-          httpBackend = createHttpBackend({
-            maxPageSize: 1024
+    before((done) => {
+      httpBackend = createHttpBackend({
+        maxPageSize: 1024,
+        backendType: back === 'sync' ? 'sync' : undefined
+      });
+      createSQLiteThread({ http: httpBackend })
+        .then((r) => {
+          db = r;
+          return db('open', {
+            filename: 'file:' + encodeURI(remoteURL),
+            vfs: 'http'
           });
-          createSQLiteThread({ http: httpBackend })
-            .then((r) => {
-              db = r;
-              return db('open', {
-                filename: 'file:' + encodeURI(remoteURL),
-                vfs: 'http'
-              });
-            })
-            .then((msg) => {
-              assert.strictEqual(httpBackend.type, 'shared');
-              assert.equal(msg.type, 'open');
-              assert.isString(msg.messageId);
-              assert.isString(msg.dbId);
-              assert.strictEqual(msg.result.filename, 'file:' + remoteURL);
-              assert.strictEqual(msg.result.vfs, 'http');
-              done();
-            })
-            .catch(done);
-        });
+        })
+        .then((msg) => {
+          assert.strictEqual(httpBackend.type, back);
+          assert.equal(msg.type, 'open');
+          assert.isString(msg.messageId);
+          assert.isString(msg.dbId);
+          assert.strictEqual(msg.result.filename, 'file:' + remoteURL);
+          assert.strictEqual(msg.result.vfs, 'http');
+          done();
+        })
+        .catch(done);
+    });
 
-        after((done) => {
-          db('close', {})
-            .then((msg: SQLite.ResponseClose) => {
-              assert.equal(msg.type, 'close');
-            }).then(() => {
-              db.close();
-              return httpBackend.close();
-            })
-            .then(() => {
-              done();
-            })
-            .catch(done);
-        });
-        break;
-
-      case 'sync':
-        before((done) => {
-          createSQLiteThread({
-            http: createHttpBackend({
-              backendType: 'sync'
-            })
-          })
-            .then((r) => {
-              db = r;
-              done();
-            })
-            .then(() => db('open', {
-              filename: 'file:' + encodeURI(remoteURL),
-              vfs: 'http'
-            }))
-            .then((msg) => {
-              assert.equal(msg.type, 'open');
-              assert.isString(msg.messageId);
-              assert.isString(msg.dbId);
-              assert.strictEqual(msg.result.filename, 'file:' + remoteURL);
-              assert.strictEqual(msg.result.vfs, 'http');
-            })
-            .catch(done);
-        });
-
-        after((done) => {
-          db('close', {})
-            .then((msg: SQLite.ResponseClose) => {
-              db.close();
-              assert.equal(msg.type, 'close');
-              done();
-            })
-            .catch(done);
-        });
-        break;
-    }
+    after((done) => {
+      db('close', {})
+        .then((msg: SQLite.ResponseClose) => {
+          assert.equal(msg.type, 'close');
+        }).then(() => {
+          db.close();
+          return httpBackend.close();
+        })
+        .then(() => {
+          done();
+        })
+        .catch(done);
+    });
 
     it('should register the HTTP VFS', (done) => {
       db('config-get', {})
@@ -210,37 +171,37 @@ for (const back of Object.keys(backTests)) {
         });
     });
 
-  it('should support object row mode', (done) => {
-    const rows: SQLite.Result[] = [];
-    db('exec', {
-      sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = 1',
-      rowMode: 'object',
-      callback: (msg) => {
-        rows.push(msg);
-      }
-    })
-      .then((msg) => {
-        assert.strictEqual(msg.type, 'exec');
-        assert.sameMembers(msg.result.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
-        assert.lengthOf(rows, 5);
-        rows.forEach((row, idx) => {
-          assert.sameMembers(row.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
-          if (row.row) {
-            assert.isAtMost(idx, 3);
-            assert.isNumber(row.rowNumber);
-            assert.strictEqual(row.row.zoom_level, 1);
-            assert.isNumber(row.row.tile_column);
-            assert.isNumber(row.row.tile_row);
-            assert.instanceOf(row.row.tile_data, Uint8Array);
-          } else {
-            assert.isNull(row.rowNumber);
-            assert.strictEqual(idx, 4);
-          }
-        });
-        done();
+    it('should support object row mode', (done) => {
+      const rows: SQLite.Result[] = [];
+      db('exec', {
+        sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = 1',
+        rowMode: 'object',
+        callback: (msg) => {
+          rows.push(msg);
+        }
       })
-      .catch(done);
-  });
+        .then((msg) => {
+          assert.strictEqual(msg.type, 'exec');
+          assert.sameMembers(msg.result.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
+          assert.lengthOf(rows, 5);
+          rows.forEach((row, idx) => {
+            assert.sameMembers(row.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
+            if (row.row) {
+              assert.isAtMost(idx, 3);
+              assert.isNumber(row.rowNumber);
+              assert.strictEqual(row.row.zoom_level, 1);
+              assert.isNumber(row.row.tile_column);
+              assert.isNumber(row.row.tile_row);
+              assert.instanceOf(row.row.tile_data, Uint8Array);
+            } else {
+              assert.isNull(row.rowNumber);
+              assert.strictEqual(idx, 4);
+            }
+          });
+          done();
+        })
+        .catch(done);
+    });
 
     if (back === 'shared') {
       it('should support multiple parallel connections', (done) => {
