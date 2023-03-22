@@ -8,6 +8,8 @@
     "esModuleInterop": true,
     "moduleResolution": "node16",
     "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": true
   },
   "include": [
     "."

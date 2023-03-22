@@ -36,6 +36,7 @@
   "imports": {
     "#sqlite3.js": {
       "node": "./deps/dist/sqlite3-node.mjs",
+      "types": "./deps/types/sqlite3.d.ts",
       "default": "./deps/dist/sqlite3-bundler-friendly.mjs"
     },
     "#sqlite3-worker1-promiser.js": {

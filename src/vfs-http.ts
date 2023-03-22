@@ -15,7 +15,7 @@ const openFiles: Record<Internal.FH, FileDescriptor> = {};
 export function installHttpVfs(
   sqlite3: SQLite3,
   backend: VFSHTTP.BackendChannel,
-  options: VFSHTTP.Options) {
+  options?: VFSHTTP.Options) {
   if (typeof SharedArrayBuffer === 'undefined') {
     throw new Error('SharedArrayBuffer is not available. ' +
       'If your browser supports it, the webserver must send ' +
@@ -48,7 +48,7 @@ export function installHttpVfs(
   const sendAndWait = (msg: VFSHTTP.Message) => {
     Atomics.store(lock, 0, 0xffff);
     backend.port.postMessage(msg);
-    const r = Atomics.wait(lock, 0, 0xffff, options.timeout);
+    const r = Atomics.wait(lock, 0, 0xffff, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
     if (r === 'timed-out') {
       console.error('Backend timeout', r, lock, msg);
       return -1;
@@ -161,7 +161,7 @@ export function installHttpVfs(
       wasm.poke(out, (BigInt(2440587.5) * BigInt(86400000)) + BigInt(new Date().getTime()), 'i64');
       return 0;
     },
-    xDelete: function (vfs: Internal.CPointer, name: Internal.CPointer, doSyncDir) {
+    xDelete: function (vfs: Internal.CPointer, name: Internal.CPointer, doSyncDir: boolean) {
       debug['vfs']('xDelete', vfs, name, doSyncDir);
       return capi.SQLITE_READONLY;
     },
@@ -222,7 +222,7 @@ export function installHttpVfs(
   sqlite3.oo1.DB.dbCtorHelper.setVfsPostOpenSql(
     httpVfs.pointer,
     function (oo1Db, sqlite3) {
-      sqlite3.capi.sqlite3_busy_timeout(oo1Db, options.timeout);
+      sqlite3.capi.sqlite3_busy_timeout(oo1Db, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
       sqlite3.capi.sqlite3_exec(oo1Db, [
         'PRAGMA journal_mode=DELETE;',
         'PRAGMA cache_size=0;'

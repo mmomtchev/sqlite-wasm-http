@@ -102,6 +102,9 @@ const backendAsyncMethods:
     if (entry instanceof Promise)
       entry = await entry;
 
+    if (msg.n === undefined || msg.offset === undefined)
+      throw new Error('Mandatory arguments missing');
+
     if (!entry.pageSize) {
       // Determine the page size if we don't know it
       // It is in two big-endian bytes at offset 16 in what is always the first page
@@ -120,7 +123,7 @@ const backendAsyncMethods:
         console.warn(`Page size for ${msg.url} is ${entry.pageSize}, recommended size is 1024`);
         cache.delete(entry.id + '|0');
       }
-      if (entry.pageSize > options.maxPageSize)
+      if (entry.pageSize > (options?.maxPageSize ?? VFSHTTP.defaultOptions.maxPageSize))
         throw new Error(`${entry.pageSize} is over the maximum configured ${options.maxPageSize}`);
     }
 
@@ -154,7 +157,7 @@ const backendAsyncMethods:
         // * the superpage was evicted before the subsegments
         pageStart = newPageStart;
       } else {
-        data = undefined as Uint8Array;
+        data = undefined as unknown as Uint8Array;
       }
     }
 
@@ -233,7 +236,7 @@ const backendAsyncMethods:
   }
 };
 
-async function workMessage({ data }) {
+async function workMessage(this: Consumer, { data }: { data: VFSHTTP.Message }) {
   debug['threads']('Received new work message', this, data);
   let r;
   try {
@@ -253,9 +256,10 @@ globalThis.onmessage = ({ data }) => {
   switch (data.msg) {
     case 'handshake':
       {
-        const shm = new SharedArrayBuffer(options.maxPageSize + Int32Array.BYTES_PER_ELEMENT);
-        const lock = new Int32Array(shm, options.maxPageSize);
-        const buffer = new Uint8Array(shm, 0, options.maxPageSize);
+        const shm = new SharedArrayBuffer((options?.maxPageSize ?? VFSHTTP.defaultOptions.maxPageSize)
+          + Int32Array.BYTES_PER_ELEMENT);
+        const lock = new Int32Array(shm, (options?.maxPageSize ?? VFSHTTP.defaultOptions.maxPageSize));
+        const buffer = new Uint8Array(shm, 0, (options?.maxPageSize ?? VFSHTTP.defaultOptions.maxPageSize));
         lock[0] = 0xffff;
         consumers[data.id] = { id: data.id, port: data.port, shm, lock, buffer };
         postMessage({ msg: 'ack', id: data.id, shm, lock });
@@ -264,9 +268,9 @@ globalThis.onmessage = ({ data }) => {
       break;
     case 'init':
       options = data.options;
-      cache = new LRUCache<string, Uint8Array>({
-        maxSize: options.cacheSize * 1024,
-        sizeCalculation: (value) => value.byteLength ?? 4
+      cache = new LRUCache({
+        maxSize: (options?.cacheSize ?? VFSHTTP.defaultOptions.cacheSize) * 1024,
+        sizeCalculation: (value) => (value as Uint8Array).byteLength ?? 4
       });
       break;
     case 'close':

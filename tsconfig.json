@@ -10,7 +10,9 @@
     "sourceMap": true,
     "outDir": "./dist",
     "declaration": true,
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "strict": true,
+    "strictNullChecks": true
   },
   "include": [
     "./src"

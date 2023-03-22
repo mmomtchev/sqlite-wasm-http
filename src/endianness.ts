@@ -22,7 +22,7 @@ const swapNeeded = (function () {
   throw new Error(`Failed determining endianness: ${u16}`);
 })();
 
-export function ntoh16(data) {
+export function ntoh16(data: Uint16Array) {
   if (swapNeeded) {
     for (let i = 0; i < data.length; i++) {
       data[i] = ((data[i] & 0xFF00) >> 8) | ((data[i] & 0x00FF) << 8);

@@ -1,4 +1,4 @@
-import * as SQLite from '#sqlite3.js';
+import * as SQLite from '../deps/types/sqlite3.js';
 import { createSQLiteHTTPPool } from '../dist/index.js';
 
 import { assert } from 'chai';
@@ -13,7 +13,7 @@ describe('SQLite HTTP pool', () => {
     const poolq = createSQLiteHTTPPool({ workers });
 
     poolq.then((pool) => pool.open(remoteURL).then(() => {
-      const r: Promise<SQLite.Row>[] = [];
+      const r: Promise<SQLite.RowArray>[] = [];
       for (let i = 0; i < requests; i++)
         r.push(pool.exec('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
           'WHERE zoom_level = 10 AND tile_column = $col AND tile_row = $row',
@@ -44,14 +44,14 @@ describe('SQLite HTTP pool', () => {
     const poolq = createSQLiteHTTPPool({ workers });
 
     poolq.then((pool) => pool.open(remoteURL).then(() => {
-      const r: Promise<SQLite.Row>[] = [];
+      const r: Promise<SQLite.RowArray[]>[] = [];
       for (let i = 0; i < requests; i++)
         r.push(pool.exec('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
           'WHERE zoom_level = -1 AND tile_column = $col AND tile_row = $row',
           { $col: 600 + i, $row: 600 + i })
           .then((results) => {
             assert.lengthOf(results, 0);
-            return [];
+            return results;
           }));
 
       return Promise.all(r).then((resp) => {

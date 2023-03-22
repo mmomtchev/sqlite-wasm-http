@@ -23,8 +23,6 @@ export type ResultArray = RowArray | RowEOT;
 
 export type ResultObject = RowObject | RowEOT;
 
-export type Result = ResultArray | ResultObject;
-
 export namespace Internal {
   // Opaque C pointer type
   export type CPointer = unknown;
@@ -44,7 +42,10 @@ export namespace Internal {
 
 export type SQLite3 = typeof sqlite3;
 
+export default function (): Promise<SQLite3>;
+
 export namespace sqlite3 {
+  export function initWorker1API(): void;
   export namespace capi {
     export const sqlite3_vfs: typeof Internal.CStruct;
     export const sqlite3_file: typeof Internal.CStruct;
@@ -54,7 +55,7 @@ export namespace sqlite3 {
       db: oo1.DB, sql: string | string[],
       cb: Internal.CPointer,
       arg: Internal.CPointer,
-      err: Internal.CPointer);
+      err: Internal.CPointer): number;
     export function sqlite3_vfs_find(vfs: unknown): unknown;
     export function sqlite3_busy_timeout(db: oo1.DB, timeout: number): void;
 
@@ -188,18 +189,15 @@ export type ResponseClose = {
 
 export type Response = ResponseConfigGet | ResponseOpen | ResponseClose | ResponseExec;
 
-export type Promiser1Exec = (msgType: 'exec', args: MessageExecArray) => Promise<ResponseExec>;
-export type Promiser2Exec = (msg: { type: 'exec'; } & MessageExecArray) => Promise<ResponseExec>;
-export type Promiser3Exec = (msgType: 'exec', args: MessageExecObject) => Promise<ResponseExec>;
-export type Promiser4Exec = (msg: { type: 'exec'; } & MessageExecObject) => Promise<ResponseExec>;
-export type Promiser1Open = (msgType: 'open', args: MessageOpen) => Promise<ResponseOpen>;
-export type Promiser2Open = (msg: { type: 'open'; } & MessageOpen) => Promise<ResponseOpen>;
-export type Promiser1Close = (msgType: 'close', args: MessageClose) => Promise<ResponseClose>;
-export type Promiser2Close = (msg: { type: 'close'; } & MessageClose) => Promise<ResponseClose>;
-export type Promiser1ConfigGet = (msgType: 'config-get', args: MessageConfigGet) => Promise<ResponseConfigGet>;
-export type Promiser2ConfigGet = (msg: { type: 'config-get'; } & MessageConfigGet) => Promise<ResponseConfigGet>;
-export type Promiser = Promiser1Exec & Promiser2Exec &
-  Promiser1Open & Promiser2Open &
-  Promiser1Close & Promiser2Close &
-  Promiser1ConfigGet & Promiser2ConfigGet &
-{ close: () => void; };
+export type Promiser = {
+  (msgType: 'exec', args: MessageExecArray): Promise<ResponseExec>;
+  (msg: { type: 'exec'; } & MessageExecArray): Promise<ResponseExec>;
+  (msgType: 'exec', args: MessageExecObject): Promise<ResponseExec>;
+  (msg: { type: 'exec'; } & MessageExecObject): Promise<ResponseExec>;
+  (msgType: 'open', args: MessageOpen): Promise<ResponseOpen>;
+  (msg: { type: 'open'; } & MessageOpen): Promise<ResponseOpen>;
+  (msgType: 'close', args: MessageClose): Promise<ResponseClose>;
+  (msg: { type: 'close'; } & MessageClose): Promise<ResponseClose>;
+  (msgType: 'config-get', args: MessageConfigGet): Promise<ResponseConfigGet>;
+  (msg: { type: 'config-get'; } & MessageConfigGet): Promise<ResponseConfigGet>;
+} & { close: () => void; };
