@@ -19,7 +19,7 @@ interface FileDescriptor {
 
 const openFiles: Record<Internal.FH, FileDescriptor> = {};
 
-export function installSyncHttpVfs(sqlite3: SQLite3, options: VFSHTTP.Options) {
+export function installSyncHttpVfs(sqlite3: SQLite3, options?: VFSHTTP.Options) {
   const capi = sqlite3.capi;
   const wasm = sqlite3.wasm;
   const sqlite3_vfs = capi.sqlite3_vfs;
@@ -99,8 +99,9 @@ export function installSyncHttpVfs(sqlite3: SQLite3, options: VFSHTTP.Options) {
           console.warn(`Page size for ${entry.url} is ${entry.pageSize}, recommended size is 1024`);
           entry.pageCache.delete(0);
         }
-        if (entry.pageSize > options.maxPageSize)
-          throw new Error(`${entry.pageSize} is over the maximum configured ${options.maxPageSize}`);
+        if (entry.pageSize > (options?.maxPageSize ?? VFSHTTP.defaultOptions.maxPageSize))
+          throw new Error(`${entry.pageSize} is over the maximum configured ` +
+            `${options?.maxPageSize ?? VFSHTTP.defaultOptions.maxPageSize}`);
       }
 
       try {
@@ -127,7 +128,7 @@ export function installSyncHttpVfs(sqlite3: SQLite3, options: VFSHTTP.Options) {
             // * the superpage was evicted before the subsegments
             pageStart = newPageStart;
           } else {
-            data = undefined as Uint8Array;
+            data = undefined as unknown as Uint8Array;
           }
         }
 
@@ -153,8 +154,8 @@ export function installSyncHttpVfs(sqlite3: SQLite3, options: VFSHTTP.Options) {
           debug['http'](`downloading page ${page} of size ${chunkSize} starting at ${pageStart}`);
           const xhr = new XMLHttpRequest();
           xhr.open('GET', entry.url, false);
-          for (const h of Object.keys(options.headers))
-            xhr.setRequestHeader(h, options.headers[h]);
+          for (const h of Object.keys(options?.headers ?? VFSHTTP.defaultOptions.headers))
+            xhr.setRequestHeader(h, (options?.headers ?? VFSHTTP.defaultOptions.headers)[h]);
           xhr.setRequestHeader('Range', `bytes=${pageStart}-${pageStart + BigInt(chunkSize - 1)}`);
           xhr.responseType = 'arraybuffer';
           xhr.onload = () => {
@@ -229,7 +230,7 @@ export function installSyncHttpVfs(sqlite3: SQLite3, options: VFSHTTP.Options) {
         wasm.poke(out, 1, 'i32');
       } else {
         wasm.poke(out, 0, 'i32');
-      }      
+      }
       return capi.SQLITE_OK;
     },
     xCurrentTime: function (vfs: Internal.CPointer, out: Internal.CPointer) {
@@ -242,7 +243,7 @@ export function installSyncHttpVfs(sqlite3: SQLite3, options: VFSHTTP.Options) {
       wasm.poke(out, (BigInt(2440587.5) * BigInt(86400000)) + BigInt(new Date().getTime()), 'i64');
       return 0;
     },
-    xDelete: function (vfs: Internal.CPointer, name: Internal.CPointer, doSyncDir) {
+    xDelete: function (vfs: Internal.CPointer, name: Internal.CPointer, doSyncDir: boolean) {
       debug['vfs']('xDelete', vfs, name, doSyncDir);
       return capi.SQLITE_READONLY;
     },
@@ -279,18 +280,18 @@ export function installSyncHttpVfs(sqlite3: SQLite3, options: VFSHTTP.Options) {
       try {
         const xhr = new XMLHttpRequest();
         xhr.open('HEAD', url, false);
-        for (const h of Object.keys(options.headers))
-          xhr.setRequestHeader(h, options.headers[h]);
+        for (const h of Object.keys(options?.headers ?? VFSHTTP.defaultOptions.headers))
+          xhr.setRequestHeader(h, (options?.headers ?? VFSHTTP.defaultOptions.headers)[h]);
         xhr.onload = () => {
           const fh = Object.create(null) as FileDescriptor;
           fh.fid = fid;
           fh.url = url;
           fh.sq3File = new sqlite3_file(fid);
           fh.sq3File.$pMethods = httpIoMethods.pointer;
-          fh.size = BigInt(xhr.getResponseHeader('Content-Length'));
-          fh.pageCache = new LRUCache<number, Uint8Array>({
-            maxSize: options.cacheSize * 1024,
-            sizeCalculation: (value) => value.byteLength ?? 4
+          fh.size = BigInt(xhr.getResponseHeader('Content-Length') ?? 0);
+          fh.pageCache = new LRUCache({
+            maxSize: (options?.cacheSize ?? VFSHTTP.defaultOptions.cacheSize) * 1024,
+            sizeCalculation: (value) => (value as Uint8Array).byteLength ?? 4
           });
           if (xhr.getResponseHeader('Accept-Ranges') !== 'bytes') {
             console.warn(`Server for ${url} does not advertise 'Accept-Ranges'. ` +
@@ -322,7 +323,7 @@ export function installSyncHttpVfs(sqlite3: SQLite3, options: VFSHTTP.Options) {
   sqlite3.oo1.DB.dbCtorHelper.setVfsPostOpenSql(
     httpVfs.pointer,
     function (oo1Db, sqlite3) {
-      sqlite3.capi.sqlite3_busy_timeout(oo1Db, options.timeout);
+      sqlite3.capi.sqlite3_busy_timeout(oo1Db, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
       sqlite3.capi.sqlite3_exec(oo1Db, [
         'PRAGMA journal_mode=DELETE;',
         'PRAGMA cache_size=0;'

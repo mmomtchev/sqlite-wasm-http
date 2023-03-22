@@ -26,13 +26,13 @@ globalThis.onmessage = ({ data }) => {
         (globalThis as any).XMLHttpRequest = class XMLHttpRequest extends _XMLHttpRequest {
           get response() {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const r = Uint8Array.from((this as any).responseText.split('').map(x => x.charCodeAt())).buffer;
+            const r = Uint8Array.from((this as any).responseText.split('').map((x: string) => x.charCodeAt(0))).buffer;
             return r;
           }
         };
       }
 
-      installSyncHttpVfs(sqlite3, VFSHTTP.defaultOptions(msg.httpOptions));
+      installSyncHttpVfs(sqlite3, msg.httpOptions);
     }
   });
 };

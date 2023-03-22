@@ -1,4 +1,4 @@
-import * as SQLite from '#sqlite3.js';
+import * as SQLite from '../deps/types/sqlite3.js';
 import { createSQLiteThread, createHttpBackend, VFSHTTP } from '../dist/index.js';
 
 import { assert } from 'chai';
@@ -10,7 +10,7 @@ const backTests = {
   sync: 'HTTP VFS (ersatz sync version)'
 };
 
-for (const back of Object.keys(backTests)) {
+for (const back of Object.keys(backTests) as (keyof typeof backTests)[]) {
   describe(backTests[back], () => {
     let httpBackend: VFSHTTP.Backend;
     let db: SQLite.Promiser;
@@ -64,7 +64,7 @@ for (const back of Object.keys(backTests)) {
     });
 
     it('should retrieve remote data', (done) => {
-      const rows: SQLite.Result[] = [];
+      const rows: SQLite.ResultArray[] = [];
       db('exec', {
         sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = 1',
         callback: (msg) => {
@@ -95,7 +95,7 @@ for (const back of Object.keys(backTests)) {
     });
 
     it('should support aggregation (VFS stress test)', (done) => {
-      const rows: SQLite.Result[] = [];
+      const rows: SQLite.ResultArray[] = [];
       db('exec', {
         sql: 'SELECT COUNT(*) AS total FROM tiles WHERE zoom_level < $maxZoom',
         bind: { $maxZoom: back === 'shared' ? 10 : 4},
@@ -133,7 +133,7 @@ for (const back of Object.keys(backTests)) {
         }
       });
       const dbAuthq = createSQLiteThread({ http: backend });
-      const rows: SQLite.Result[] = [];
+      const rows: SQLite.ResultArray[] = [];
       dbAuthq
         .then((dbAuth) => dbAuth('open', {
           filename: 'file:' + encodeURI(secretURL),
@@ -173,7 +173,7 @@ for (const back of Object.keys(backTests)) {
     });
 
     it('should support object row mode', (done) => {
-      const rows: SQLite.Result[] = [];
+      const rows: SQLite.ResultObject[] = [];
       db('exec', {
         sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = 1',
         rowMode: 'object',
@@ -205,7 +205,7 @@ for (const back of Object.keys(backTests)) {
     });
 
     it('should support passing bindable parameters in array', (done) => {
-      const rows: SQLite.Result[] = [];
+      const rows: SQLite.ResultArray[] = [];
       db('exec', {
         sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = ?',
         bind: [ 1 ],

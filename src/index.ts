@@ -93,7 +93,9 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
       type: 'sync',
       worker: null,
       options,
-      createNewChannel: () => undefined,
+      createNewChannel: () => {
+        throw new Error('Sync backend does not support channels');
+      },
       close: () => Promise.resolve(),
       terminate: () => undefined
     };
@@ -101,10 +103,10 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
 
   let nextId = 1;
   const worker = new Worker(new URL('./vfs-http-worker.js', import.meta.url));
-  options = VFSHTTP.defaultOptions(options);
   worker.postMessage({ msg: 'init', options });
 
-  const consumers = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const consumers: Record<string, Record<string, any>> = {};
 
   worker.onmessage = ({ data }) => {
     debug['threads']('Received control message reply', data);
@@ -139,7 +141,7 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
         const timeout = setTimeout(() => {
           delete consumers[id];
           reject('Timeout while waiting on backend');
-        }, options.timeout);
+        }, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
         consumers[id] = { id, channel, resolve, timeout };
       });
     },
@@ -152,7 +154,7 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
       return new Promise<void>((resolve, reject) => {
         const timeout = setTimeout(() => {
           reject('Timeout while waiting on backend');
-        }, options.timeout);
+        }, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
         worker.onmessage = ({ data }) => {
           debug['threads']('Received close response', data);
           if (data.msg === 'ack' && data.id === undefined) {
@@ -250,23 +252,24 @@ export async function createSQLiteHTTPPool(opts: {
           await Promise.race(workers.map((w) => w.busy)).catch(() => undefined);
       } while (!w);
 
-      const results: (SQLite.RowArray & SQLite.RowObject)[] = [];
+      const results: SQLite.RowArray[] | SQLite.RowObject[] = [];
       w.busy = w.worker('exec', {
         sql,
         bind,
         rowMode: opts?.rowMode,
-        callback: (row) => {
+        callback: (row: SQLite.RowArray & SQLite.RowObject) => {
           if (row.row)
             results.push(row);
         }
-      } as (SQLite.MessageExecArray & SQLite.MessageExecObject) )
+      } as (SQLite.MessageExecArray & SQLite.MessageExecObject))
         .then(() => undefined)
         .finally(() => {
+          if (!w) throw new Error('Lost worker pool');
           w.busy = null;
         });
       await w.busy;
 
-      return results;
+      return results as SQLite.RowArray[] & SQLite.RowObject[];
     }
   };
 }

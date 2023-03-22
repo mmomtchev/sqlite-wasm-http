@@ -36,8 +36,10 @@ describe('integration tests', () => {
           execSync('npm test');
         }
       } catch (e) {
-        console.error(e.stdout.toString());
-        console.error(e.stderr.toString());
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        console.error((e as any).stdout.toString());
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        console.error((e as any).stderr.toString());
         throw new Error('Test failed');
       }
     });

@@ -24,6 +24,13 @@ export interface Options {
   backendType?: 'sync' | 'shared';
 }
 
+export const defaultOptions = {
+  timeout: 20000,
+  maxPageSize: 4096,
+  cacheSize: 1024,
+  headers: {} as Record<string, string>
+};
+
 export interface BackendChannel {
   port: MessagePort;
   shm: SharedArrayBuffer;
@@ -53,16 +60,7 @@ export interface Backend {
   /**
    * The options object
    */
-  options: Options;
-}
-
-export function defaultOptions(options?: Options): Options {
-  return {
-    timeout: options?.timeout ?? 20000,
-    maxPageSize: options?.maxPageSize ?? 4096,
-    cacheSize: options?.cacheSize ?? 1024,
-    headers: options?.headers ?? {}
-  };
+  options?: Options;
 }
 
 export type Operation = 'xOpen' | 'xAccess' | 'xRead' | 'xFilesize';
@@ -71,7 +69,7 @@ export interface Message {
   url: string;
   offset?: bigint;
   n?: number;
-  [key: string]: string | number | bigint;
+  [key: string]: string | number | bigint | undefined;
 }
 
 declare const SQLITE_DEBUG: string[];
