@@ -1,6 +1,7 @@
 # 1.1.0
 
 - Support SQLite `rowMode: 'object'`
+- Support passing bindable parameters in an array
 
 # 1.0.0 2023-03-14
 

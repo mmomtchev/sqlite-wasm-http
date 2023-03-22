@@ -113,14 +113,14 @@ export type MessageType = 'open' | 'close' | 'exec' | 'config-get';
 export type MessageId = string;
 export type MessageExecArray = {
   sql: string;
-  bind?: Record<string, unknown>;
+  bind?: Record<string, unknown> | unknown[];
   callback: (row: ResultArray) => void;
   rowMode?: 'array';
   resultRows?: unknown[];
 };
 export type MessageExecObject = {
   sql: string;
-  bind?: Record<string, unknown>;
+  bind?: Record<string, unknown> | unknown[];
   callback: (row: ResultObject) => void;
   rowMode: 'object';
   resultRows?: unknown[];
