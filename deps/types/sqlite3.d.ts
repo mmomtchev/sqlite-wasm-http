@@ -1,16 +1,29 @@
-export interface Row {
+export interface RowArray {
+  type: string;
+  row: unknown[];
+  rowNumber: number;
+  columnNames: string[];
+}
+
+export interface RowObject {
   type: string;
   row: Record<string, unknown>;
   rowNumber: number;
   columnNames: string[];
 }
+
 export interface RowEOT {
   type: string;
   row: undefined;
   rowNumber: null;
   columnNames: string[];
 }
-export type Result = Row | RowEOT;
+
+export type ResultArray = RowArray | RowEOT;
+
+export type ResultObject = RowObject | RowEOT;
+
+export type Result = ResultArray | ResultObject;
 
 export namespace Internal {
   // Opaque C pointer type
@@ -94,13 +107,25 @@ export interface PromiserConfig {
   onunhandled?: (e: unknown) => void;
 }
 
+export type RowMode = 'array' | 'object' | 'stmt';
+
 export type MessageType = 'open' | 'close' | 'exec' | 'config-get';
 export type MessageId = string;
-export type MessageExec = {
+export type MessageExecArray = {
   sql: string;
   bind?: Record<string, unknown>;
-  callback: (row: Result) => void;
+  callback: (row: ResultArray) => void;
+  rowMode?: 'array';
+  resultRows?: unknown[];
 };
+export type MessageExecObject = {
+  sql: string;
+  bind?: Record<string, unknown>;
+  callback: (row: ResultObject) => void;
+  rowMode: 'object';
+  resultRows?: unknown[];
+};
+
 export type MessageOpen = {
   filename: string;
   vfs?: string;
@@ -108,7 +133,7 @@ export type MessageOpen = {
 
 export type MessageClose = { unlink?: boolean; };
 export type MessageConfigGet = {};
-export type Message = MessageExec | MessageOpen | MessageClose | MessageConfigGet;
+export type Message = MessageExecArray | MessageExecObject | MessageOpen | MessageClose | MessageConfigGet;
 
 export type ResponseError = {
   type: 'error';
@@ -163,8 +188,10 @@ export type ResponseClose = {
 
 export type Response = ResponseConfigGet | ResponseOpen | ResponseClose | ResponseExec;
 
-export type Promiser1Exec = (msgType: 'exec', args: MessageExec) => Promise<ResponseExec>;
-export type Promiser2Exec = (msg: { type: 'exec'; } & MessageExec) => Promise<ResponseExec>;
+export type Promiser1Exec = (msgType: 'exec', args: MessageExecArray) => Promise<ResponseExec>;
+export type Promiser2Exec = (msg: { type: 'exec'; } & MessageExecArray) => Promise<ResponseExec>;
+export type Promiser3Exec = (msgType: 'exec', args: MessageExecObject) => Promise<ResponseExec>;
+export type Promiser4Exec = (msg: { type: 'exec'; } & MessageExecObject) => Promise<ResponseExec>;
 export type Promiser1Open = (msgType: 'open', args: MessageOpen) => Promise<ResponseOpen>;
 export type Promiser2Open = (msg: { type: 'open'; } & MessageOpen) => Promise<ResponseOpen>;
 export type Promiser1Close = (msgType: 'close', args: MessageClose) => Promise<ResponseClose>;
