@@ -188,7 +188,7 @@ const backendAsyncMethods:
       const resp = fetch(msg.url, {
         method: 'GET',
         headers: {
-          ...options.headers,
+          ...(options?.headers ?? VFSHTTP.defaultOptions.headers),
           'Range': `bytes=${pageStart}-${pageStart + BigInt(chunkSize - 1)}`
         }
       })
