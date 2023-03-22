@@ -13,5 +13,5 @@ If you want to setup an environment that is not included you should be aware of 
 Node.js specific requirements (*these apply to stand-alone Node.js applications, bundling works fine without them*):
 * It is a an ESM-only module, which means that it cannot be `require`d from Node.js CJS code. When using in Node.js you should either use `.mjs` extension or you should set `"type": "module"` in your `package.json`. If you are using TypeScript, you should also set `"module": "es6"` or greater in `tsconfig.json` and use `ts-node-esm` instead of `ts-node`.
 * It uses `fetch` which requires Node.js 18
-* It uses `WebWorker` which require the `web-worker` package
+* It uses `WebWorker` which require the `web-worker` package (I have `@mmomtchev/web-worker` with a number of fixes)
 * The sync backend - which works in Node.js but should never be needed, since Node.js always exposes `SharedArrayBuffer` - is particularly inefficient as it uses an old polyfill which creates temporary files on the disk for every transferred segment

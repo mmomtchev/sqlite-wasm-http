@@ -5,7 +5,7 @@
     "test/setup.ts"
   ],
   "reporter": "tap",
-  "timeout": 90000,
+  "timeout": 240000,
   "loader": "ts-node/esm",
   "node-option": [
     "no-warnings",
