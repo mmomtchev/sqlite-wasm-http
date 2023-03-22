@@ -163,6 +163,38 @@ describe('HTTP VFS (multiplexed)', () => {
       });
   });
 
+  it('should support object row mode', (done) => {
+    const rows: SQLite.Result[] = [];
+    db('exec', {
+      sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = 1',
+      rowMode: 'object',
+      callback: (msg) => {
+        rows.push(msg);
+      }
+    })
+      .then((msg) => {
+        assert.strictEqual(msg.type, 'exec');
+        assert.sameMembers(msg.result.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
+        assert.lengthOf(rows, 5);
+        rows.forEach((row, idx) => {
+          assert.sameMembers(row.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
+          if (row.row) {
+            assert.isAtMost(idx, 3);
+            assert.isNumber(row.rowNumber);
+            assert.strictEqual(row.row.zoom_level, 1);
+            assert.isNumber(row.row.tile_column);
+            assert.isNumber(row.row.tile_row);
+            assert.instanceOf(row.row.tile_data, Uint8Array);
+          } else {
+            assert.isNull(row.rowNumber);
+            assert.strictEqual(idx, 4);
+          }
+        });
+        done();
+      })
+      .catch(done);
+  });
+
   it('should support multiple parallel connections', (done) => {
     const concurrentDb: Promise<SQLite.Promiser>[] = [];
     let tiles = 0;

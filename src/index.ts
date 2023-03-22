@@ -171,21 +171,26 @@ export interface SQLiteHTTPPool {
    * @param {string} url Remote database
    * @returns {Promise<void>}
    */
-  open: (url: string) => Promise<void>;
+  open(url: string): Promise<void>;
 
   /**
    * Dispose of the pool (stops the background workers)
    * @returns {Promise<void>}
    */
-  close: () => Promise<void>;
+  close(): Promise<void>;
 
   /**
    * Run an SQL statement
    * @param {string} sql SQL statement
    * @param {Record<string, unknown>} [bind] Optional map of values to be binded
-   * @returns {Promise<void>}
+   * @returns {Promise<SQLite.Row[]>}
    */
-  exec: (sql: string, bind?: Record<string, unknown>) => Promise<SQLite.Row[]>;
+  exec(sql: string, bind?: Record<string, unknown>, opts?: {
+    rowMode?: 'array';
+  }): Promise<SQLite.RowArray[]>;
+  exec(sql: string, bind: Record<string, unknown>, opts: {
+    rowMode: 'object';
+  }): Promise<SQLite.RowObject[]>;
 }
 
 type PoolThread = {
@@ -229,7 +234,13 @@ export async function createSQLiteHTTPPool(opts: {
       Promise.all(workers.map((w) => w.worker.close()))
         .then(() => backend.close()),
 
-    exec: async function (sql: string, bind?: Record<string, unknown>) {
+    exec: async function (
+      sql: string,
+      bind?: Record<string, unknown>,
+      opts?: {
+        rowMode?: SQLite.RowMode;
+      }
+    ) {
       let w: PoolThread | undefined;
       do {
         w = workers.find((w) => !w.busy);
@@ -237,15 +248,16 @@ export async function createSQLiteHTTPPool(opts: {
           await Promise.race(workers.map((w) => w.busy)).catch(() => undefined);
       } while (!w);
 
-      const results: SQLite.Row[] = [];
+      const results: (SQLite.RowArray & SQLite.RowObject)[] = [];
       w.busy = w.worker('exec', {
         sql,
         bind,
+        rowMode: opts?.rowMode,
         callback: (row) => {
           if (row.row)
             results.push(row);
         }
-      })
+      } as (SQLite.MessageExecArray & SQLite.MessageExecObject) )
         .then(() => undefined)
         .finally(() => {
           w.busy = null;
