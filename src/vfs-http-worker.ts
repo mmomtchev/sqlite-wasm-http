@@ -124,7 +124,8 @@ const backendAsyncMethods:
         cache.delete(entry.id + '|0');
       }
       if (entry.pageSize > (options?.maxPageSize ?? VFSHTTP.defaultOptions.maxPageSize))
-        throw new Error(`${entry.pageSize} is over the maximum configured ${options.maxPageSize}`);
+        throw new Error(`${entry.pageSize} is over the maximum configured ` +
+          `${options?.maxPageSize ?? VFSHTTP.defaultOptions.maxPageSize}`);
     }
 
     const pageSize = BigInt(entry.pageSize);
