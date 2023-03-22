@@ -204,6 +204,38 @@ for (const back of Object.keys(backTests)) {
         .catch(done);
     });
 
+    it('should support passing bindable parameters in array', (done) => {
+      const rows: SQLite.Result[] = [];
+      db('exec', {
+        sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = ?',
+        bind: [ 1 ],
+        callback: (msg) => {
+          rows.push(msg);
+        }
+      })
+        .then((msg) => {
+          assert.strictEqual(msg.type, 'exec');
+          assert.sameMembers(msg.result.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
+          assert.lengthOf(rows, 5);
+          rows.forEach((row, idx) => {
+            assert.sameMembers(row.columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
+            if (row.row) {
+              assert.isAtMost(idx, 3);
+              assert.isNumber(row.rowNumber);
+              assert.strictEqual(row.row[0], 1);
+              assert.isNumber(row.row[1]);
+              assert.isNumber(row.row[2]);
+              assert.instanceOf(row.row[3], Uint8Array);
+            } else {
+              assert.isNull(row.rowNumber);
+              assert.strictEqual(idx, 4);
+            }
+          });
+          done();
+        })
+        .catch(done);
+    });
+
     if (back === 'shared') {
       it('should support multiple parallel connections', (done) => {
         const concurrentDb: Promise<SQLite.Promiser>[] = [];
