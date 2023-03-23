@@ -69,6 +69,17 @@ declare class DB {
   dbVfsName(dbName?: string): string;
 
 
+  exec(sql: string, opts?: OpenOptions & {
+    returnValue?: 'this',
+    callback: (row: SQLValue[]) => void;
+    rowMode?: 'array';
+  }): this;
+  exec(sql: string, opts: OpenOptions & {
+    returnValue?: 'this',
+    callback: (row: Record<string, SQLValue>) => void;
+    rowMode: 'object';
+  }): this;
+
   exec(sql: string, opts: OpenOptions & {
     returnValue?: 'resultRows',
     rowMode: 'array';
@@ -80,13 +91,6 @@ declare class DB {
 
   exec(sql: string, opts?: OpenOptions & {
     returnValue?: 'this',
-    callback?: (row: SQLValue[]) => void;
-    rowMode?: 'array';
-  }): this;
-  exec(sql: string, opts: OpenOptions & {
-    returnValue?: 'this',
-    callback?: (row: Record<string, SQLValue>) => void;
-    rowMode: 'object';
   }): this;
 }
 

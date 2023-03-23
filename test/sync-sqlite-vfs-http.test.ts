@@ -77,8 +77,63 @@ for (const back of Object.keys(backTests) as (keyof typeof backTests)[]) {
     it('should support callbacks', () => {
       const columnNames: string[] = [];
       let calls = 0;
-      const r = db.exec('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = 1',
-        { columnNames, callback: (row) => {
+      const r = db.exec('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = 1', {
+        columnNames,
+        callback: (row) => {
+          assert.strictEqual(row[0], 1);
+          assert.isNumber(row[1]);
+          assert.isNumber(row[2]);
+          assert.instanceOf(row[3], Uint8Array);
+          calls++;
+        }
+      });
+      assert.instanceOf(r, sqlite3.oo1.DB);
+      assert.equal(calls, 4);
+    });
+
+    it('should support callbacks in row object mode', () => {
+      const columnNames: string[] = [];
+      let calls = 0;
+      const r = db.exec('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = 1', {
+        columnNames,
+        rowMode: 'object',
+        callback: (row) => {
+          assert.strictEqual(row.zoom_level, 1);
+          assert.isNumber(row.tile_column);
+          assert.isNumber(row.tile_row);
+          assert.instanceOf(row.tile_data, Uint8Array);
+          calls++;
+        }
+      });
+      assert.instanceOf(r, sqlite3.oo1.DB);
+      assert.equal(calls, 4);
+    });
+
+    it('should support binding values', () => {
+      const columnNames: string[] = [];
+      let calls = 0;
+      const r = db.exec('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = $zoom', {
+        bind: { $zoom: 1 },
+        columnNames,
+        callback: (row) => {
+          assert.strictEqual(row[0], 1);
+          assert.isNumber(row[1]);
+          assert.isNumber(row[2]);
+          assert.instanceOf(row[3], Uint8Array);
+          calls++;
+        }
+      });
+      assert.instanceOf(r, sqlite3.oo1.DB);
+      assert.equal(calls, 4);
+    });
+
+    it('should support binding values in arrays', () => {
+      const columnNames: string[] = [];
+      let calls = 0;
+      const r = db.exec('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = ?', {
+        bind: [1],
+        columnNames,
+        callback: (row) => {
           assert.strictEqual(row[0], 1);
           assert.isNumber(row[1]);
           assert.isNumber(row[2]);
