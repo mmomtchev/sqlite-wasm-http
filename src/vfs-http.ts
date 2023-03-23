@@ -3,7 +3,7 @@
 
 import * as VFSHTTP from './vfs-http-types.js';
 import { debug } from './vfs-http-types.js';
-import { SQLite3, Internal } from '../deps/types/sqlite3.js';
+import { SQLite3, Internal } from '#sqlite3.js';
 
 interface FileDescriptor {
   fid: Internal.FH;

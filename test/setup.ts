@@ -5,6 +5,8 @@
 import WebWorker from '@mmomtchev/web-worker';
 import { MessageChannel, MessagePort as MessagePort } from 'worker_threads';
 import { performance } from 'perf_hooks';
+// Binary version of the classic xmlhttprequest
+import { XMLHttpRequest as _XMLHttpRequest } from '#XMLHttpRequest.cjs';
 
 (globalThis as any).self = globalThis;
 (self as any).location = { href: 'http://localhost/' };
@@ -19,3 +21,14 @@ globalThis.Worker = class Worker extends WebWorker {
 (globalThis as any).MessageChannel = MessageChannel;
 
 (globalThis as any).performance = performance;
+
+if (typeof globalThis.XMLHttpRequest === 'undefined') {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (globalThis as any).XMLHttpRequest = class XMLHttpRequest extends _XMLHttpRequest {
+    get response() {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const r = Uint8Array.from((this as any).responseText.split('').map((x: string) => x.charCodeAt(0))).buffer;
+      return r;
+    }
+  };
+}

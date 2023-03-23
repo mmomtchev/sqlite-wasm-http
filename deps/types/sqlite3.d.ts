@@ -43,65 +43,110 @@ export namespace Internal {
   }
 }
 
-export type SQLite3 = typeof sqlite3;
+interface OpenOptions {
+  bind?: Record<string, SQLBindable> | SQLBindable[];
+  saveSql?: string[],
+  columnNames?: string[];
+  resultRows?: SQLValue[];
+}
 
-export default function (): Promise<SQLite3>;
+interface DbCtorHelper {
+  setVfsPostOpenSql(vfs: Internal.CPointer, cb: (db: DB, sqlite3: SQLite3) => void): void;
+}
 
-export namespace sqlite3 {
-  export function initWorker1API(): void;
-  export namespace capi {
-    export const sqlite3_vfs: typeof Internal.CStruct;
-    export const sqlite3_file: typeof Internal.CStruct;
-    export const sqlite3_io_methods: typeof Internal.CStruct;
+declare class DB {
+  constructor(filename?: string, flags?: number, vfs?: string);
+  constructor(opts: { filename?: string, flags?: number, vfs?: string; });
+  static dbCtorHelper: DbCtorHelper;
 
-    export function sqlite3_exec(
-      db: oo1.DB, sql: string | string[],
+  close(): void;
+  checkRc(resultCode: number): void;
+  static checkRc(db: DB, resultCode: number): void;
+  affirmOpen(): void;
+  isOpen(): boolean;
+  dbFilename(dbName?: string): string;
+  dbName(dbIndex?: number): string;
+  dbVfsName(dbName?: string): string;
+
+
+  exec(sql: string, opts?: OpenOptions & {
+    returnValue?: 'this',
+    callback: (row: SQLValue[]) => void;
+    rowMode?: 'array';
+  }): this;
+  exec(sql: string, opts: OpenOptions & {
+    returnValue?: 'this',
+    callback: (row: Record<string, SQLValue>) => void;
+    rowMode: 'object';
+  }): this;
+
+  exec(sql: string, opts: OpenOptions & {
+    returnValue?: 'resultRows',
+    rowMode: 'array';
+  }): SQLValue[][];
+  exec(sql: string, opts: OpenOptions & {
+    returnValue?: 'resultRows',
+    rowMode: 'object';
+  }): Record<string, SQLValue>[];
+
+  exec(sql: string, opts?: OpenOptions & {
+    returnValue?: 'this',
+  }): this;
+}
+
+export interface SQLite3 {
+  initWorker1API(): void;
+
+  capi: {
+    readonly sqlite3_vfs: typeof Internal.CStruct;
+    readonly sqlite3_file: typeof Internal.CStruct;
+    readonly sqlite3_io_methods: typeof Internal.CStruct;
+
+    sqlite3_exec(
+      db: DB, sql: string | string[],
       cb: Internal.CPointer,
       arg: Internal.CPointer,
-      err: Internal.CPointer): number;
-    export function sqlite3_vfs_find(vfs: unknown): unknown;
-    export function sqlite3_busy_timeout(db: oo1.DB, timeout: number): void;
+      err: Internal.CPointer
+    ): number;
+    sqlite3_vfs_find(vfs: unknown): unknown;
+    sqlite3_busy_timeout(db: DB, timeout: number): void;
 
-    export const OK = 0;
-    export const SQLITE_ERROR: number;
-    export const SQLITE_NOTFOUND: number;
-    export const SQLITE_IOERR: number;
-    export const SQLITE_TOOBIG: number;
-    export const SQLITE_OK: number;
-    export const SQLITE_CANTOPEN: number;
-    export const SQLITE_READONLY: number;
+    readonly OK: 0;
+    readonly SQLITE_ERROR: number;
+    readonly SQLITE_NOTFOUND: number;
+    readonly SQLITE_IOERR: number;
+    readonly SQLITE_TOOBIG: number;
+    readonly SQLITE_OK: number;
+    readonly SQLITE_CANTOPEN: number;
+    readonly SQLITE_READONLY: number;
 
-    export const SQLITE_OPEN_READONLY: number;
-    export const SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN: number;
-    export const SQLITE_IOCAP_IMMUTABLE: number;
-    export const SQLITE_LOCK_NONE: number;
-  }
+    readonly SQLITE_OPEN_READONLY: number;
+    readonly SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN: number;
+    readonly SQLITE_IOCAP_IMMUTABLE: number;
+    readonly SQLITE_LOCK_NONE: number;
+  };
 
-  export namespace wasm {
-    export function poke(ptr: Internal.CPointer, val: bigint, size: 'i64'): void;
-    export function poke(ptr: Internal.CPointer, val: number, size: 'i32'): void;
-    export function poke(ptr: Internal.CPointer, val: number, size: 'double'): void;
-    export function cstrToJs(ptr: Internal.CPointer): string;
-    export function cstrncpy(dst: Internal.CPointer, src: Internal.CPointer, len: number): number;
-    export function heap8u(): {
+  wasm: {
+    poke(ptr: Internal.CPointer, val: bigint, size: 'i64'): void;
+    poke(ptr: Internal.CPointer, val: number, size: 'i32'): void;
+    poke(ptr: Internal.CPointer, val: number, size: 'double'): void;
+    cstrToJs(ptr: Internal.CPointer): string;
+    cstrncpy(dst: Internal.CPointer, src: Internal.CPointer, len: number): number;
+    heap8u(): {
       set: (src: Uint8Array, dest: Internal.CPointer) => void;
     };
-    export function allocCString(s: string): Internal.CPointer;
-  }
+    allocCString(s: string): Internal.CPointer;
+  };
 
-  interface DbCtorHelper {
-    setVfsPostOpenSql(vfs: Internal.CPointer, cb: (db: oo1.DB, sqlite3: SQLite3) => void): void;
-  }
-
-  export namespace oo1 {
-    export class DB {
-      static dbCtorHelper: DbCtorHelper;
-    }
-  }
-  export namespace vfs {
-    export function installVfs(...args: unknown[]): void;
-  }
+  oo1: {
+    DB: typeof DB;
+  };
+  vfs: {
+    installVfs(...args: unknown[]): void;
+  };
 }
+
+export default function (): Promise<SQLite3>;
 
 export interface PromiserConfig {
   onready: () => void;

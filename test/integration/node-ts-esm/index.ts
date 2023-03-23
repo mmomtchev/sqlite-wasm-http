@@ -1,6 +1,12 @@
 import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
 import './setup.js';
 
+// "moduleResolution: node16" is tsconfig.json is needed only if
+// using direct access to the included sqlite3 distribution
+import sqlite from 'sqlite-wasm-http/sqlite3.js';
+if (typeof sqlite !== 'function')
+  throw new Error('Importing sqlite3 subpath export failed');
+
 (async function main() {
   const httpBackend = createHttpBackend({
     maxPageSize: 1024,
@@ -32,7 +38,7 @@ import './setup.js';
   });
 
   if (rows.length < 6)
-    throw new Error(('Could not retrieve all rows'));
+    throw new Error('Could not retrieve all rows');
 
   await db('close', {});
   db.close();

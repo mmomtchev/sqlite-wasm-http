@@ -1,5 +1,11 @@
 import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
 
+// "moduleResolution: node16" is tsconfig.json is needed only if
+// using direct access to the included sqlite3 distribution
+import sqlite from 'sqlite-wasm-http/sqlite3.js';
+if (typeof sqlite !== 'function')
+  throw new Error('Importing sqlite3 subpath export failed');
+
 it('test', async () => {
   const httpBackend = createHttpBackend({
     maxPageSize: 1024,

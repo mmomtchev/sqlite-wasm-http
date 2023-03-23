@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const EnhancedResolvePlugin = require('enhanced-resolve');
 
 module.exports = {
   entry: './examples/index.ts',

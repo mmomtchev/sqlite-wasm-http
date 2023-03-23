@@ -26,21 +26,28 @@ describe('integration tests', () => {
     it(test + (karma ? ' (karma)' : ' (node)'), async () => {
       try {
         process.chdir(path.resolve(testDir, test));
+        try {
+          fs.rmSync('package-lock.json');
+        } catch { /* empty */ }
+        try {
+          fs.rmdirSync('node_modules', { recursive: true });
+        } catch { /* empty */ }
         execSync('npm install');
         execSync(install);
         if (karma) {
-          execSync('npm run build', {stdio: 'pipe'});
+          execSync('npm run build', { stdio: 'pipe' });
           process.chdir(root);
           execSync(`karma start ${karmaPath}`);
         } else {
           execSync('npm test');
         }
       } catch (e) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        console.error((e as any).stdout.toString());
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        console.error((e as any).stderr.toString());
-        throw new Error('Test failed');
+        const execErr = e as Error & {stdout: Buffer, stderr: Buffer };
+        if (execErr.stdout)
+          console.error(execErr.stdout.toString());
+        if (execErr.stderr)
+          console.error(execErr.stderr.toString());
+        throw e;
       }
     });
   }

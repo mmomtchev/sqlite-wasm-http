@@ -6,7 +6,7 @@
       "webWorker", "dom"
     ],
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "sourceMap": true,
     "paths": {
       "sqlite-wasm-http": [

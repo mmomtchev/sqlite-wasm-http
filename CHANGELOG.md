@@ -1,5 +1,7 @@
 # 1.1.0
 
+- Support the fully synchronous SQLite OO1 API with both HTTP VFS backend
+- Transform the `sqlite3.js` import into a true TypeScript import that can be imported from user code without `sqlite-wasm-http`
 - Support SQLite `rowMode: 'object'`
 - Support passing bindable parameters in an array
 - Improve the TypeScript types to allow auto inferring of the overloaded argument of `Promiser`
