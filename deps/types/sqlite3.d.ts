@@ -1,13 +1,16 @@
+export type SQLValue = null | number | boolean | bigint | string | Uint8Array;
+export type SQLBindable = undefined | SQLValue | Int8Array | ArrayBuffer;
+
 export interface RowArray {
   type: string;
-  row: unknown[];
+  row: SQLValue[];
   rowNumber: number;
   columnNames: string[];
 }
 
 export interface RowObject {
   type: string;
-  row: Record<string, unknown>;
+  row: Record<string, SQLValue>;
   rowNumber: number;
   columnNames: string[];
 }
@@ -114,17 +117,17 @@ export type MessageType = 'open' | 'close' | 'exec' | 'config-get';
 export type MessageId = string;
 export type MessageExecArray = {
   sql: string;
-  bind?: Record<string, unknown> | unknown[];
+  bind?: Record<string, SQLBindable> | SQLBindable[];
   callback: (row: ResultArray) => void;
   rowMode?: 'array';
-  resultRows?: unknown[];
+  resultRows?: SQLValue[];
 };
 export type MessageExecObject = {
   sql: string;
-  bind?: Record<string, unknown> | unknown[];
+  bind?: Record<string, SQLBindable> | SQLBindable[];
   callback: (row: ResultObject) => void;
   rowMode: 'object';
-  resultRows?: unknown[];
+  resultRows?: SQLValue[];
 };
 
 export type MessageOpen = {
