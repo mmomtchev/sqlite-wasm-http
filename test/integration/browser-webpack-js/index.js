@@ -1,4 +1,8 @@
 import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
+import sqlite from 'sqlite-wasm-http/sqlite3.js';
+
+if (typeof sqlite !== 'function')
+  throw new Error('Importing sqlite3 subpath export failed');
 
 it('test', async () => {
   const httpBackend = createHttpBackend({
