@@ -94,8 +94,46 @@ export namespace sqlite3 {
   }
 
   export namespace oo1 {
+    interface OpenOptions {
+      bind?: Record<string, SQLBindable> | SQLBindable[];
+      saveSql?: string[],
+      columnNames?: string[];
+      resultRows?: SQLValue[];
+    }
     export class DB {
+      constructor(filename?: string, flags?: number, vfs?: string);
+      constructor(opts: {filename?: string, flags?: number, vfs?: string});
       static dbCtorHelper: DbCtorHelper;
+
+      close(): void;
+      checkRc(resultCode: number): void;
+      static checkRc(db: DB, resultCode: number): void;
+      affirmOpen(): void;
+      isOpen(): boolean;
+      dbFilename(dbName?: string): string;
+      dbName(dbIndex?: number): string;
+      dbVfsName(dbName?: string): string;
+
+
+      exec(sql: string, opts: OpenOptions & {
+        returnValue?: 'resultRows',
+        rowMode: 'array';
+      }): SQLValue[][];
+      exec(sql: string, opts: OpenOptions & {
+        returnValue?: 'resultRows',
+        rowMode: 'object';
+      }): Record<string, SQLValue>[];
+
+      exec(sql: string, opts?: OpenOptions & {
+        returnValue?: 'this',
+        callback?: (row: SQLValue[]) => void;
+        rowMode?: 'array'
+      }): this;
+      exec(sql: string, opts: OpenOptions & {
+        returnValue?: 'this',
+        callback?: (row: Record<string, SQLValue>) => void;
+        rowMode: 'object';
+      }): this;
     }
   }
   export namespace vfs {

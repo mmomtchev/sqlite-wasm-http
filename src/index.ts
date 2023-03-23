@@ -1,10 +1,11 @@
 // This is the user-facing API
 // It runs in the user-thread (which is probably the main UI thread)
-import '#sqlite3.js';
+import sqlite3q, * as SQLite from '#sqlite3.js';
 import '#sqlite3-worker1-promiser.js';
 import { debug } from './vfs-http-types.js';
 import * as VFSHTTP from './vfs-http-types.js';
-import * as SQLite from '../deps/types/sqlite3.js';
+import { installHttpVfs } from './vfs-http.js';
+import { installSyncHttpVfs } from './vfs-sync-http.js';
 
 export * as VFSHTTP from './vfs-http-types.js';
 
@@ -160,6 +161,35 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
       });
     },
   };
+}
+
+/**
+ * Initialize synchronous SQLite in the current thread, can accept an optional HTTP backend for HTTP support.
+ * 
+ * The sync backend is particularly inefficient in Node.js and should never be used except for unit-testing browser
+ * code.
+ * 
+ * @param {SQLiteOptions} [options] Options object
+ * @param {VFSHTTP.Backend | true} [options.http] Optional HTTP backend, either a shared one or a dedicated sync one
+ * @returns {Promise<SQLite.SQLite3>}
+ */
+export function initSyncSQLite(options?: SQLiteOptions): Promise<SQLite.SQLite3> {
+  debug['threads']('Initializing synchronous SQLite', options);
+
+  return sqlite3q().then((sqlite3) => {
+    const backend = options?.http;
+    if (backend?.type === 'shared') {
+      return backend.createNewChannel().then((channel) => {
+        installHttpVfs(sqlite3, channel, backend.options);
+        return sqlite3;
+      });
+    } else if (backend?.type === 'sync') {
+      installSyncHttpVfs(sqlite3, backend.options);
+      return sqlite3;
+    }
+
+    return sqlite3;
+  });
 }
 
 export interface SQLiteHTTPPool {
