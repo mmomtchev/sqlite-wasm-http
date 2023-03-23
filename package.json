@@ -23,7 +23,7 @@
     },
     "./sqlite3-worker1-promiser.js": {
       "types": {
-        "types": "./deps/types/sqlite3-promiser.d.ts"
+        "types": "./deps/types/sqlite3.d.ts"
       },
       "default": {
         "import": "./deps/dist/sqlite3-worker1-promiser-bundler-friendly.js"
@@ -41,6 +41,7 @@
     },
     "#sqlite3-worker1-promiser.js": {
       "node": "./deps/dist/sqlite3-worker1-promiser-node.js",
+      "types": "./deps/types/sqlite3.d.ts",
       "default": "./deps/dist/sqlite3-worker1-promiser-bundler-friendly.js"
     },
     "#XMLHttpRequest.cjs": {

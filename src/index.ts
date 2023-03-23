@@ -192,7 +192,7 @@ export interface SQLiteHTTPPool {
   exec(sql: string, bind?: Record<string, SQLite.SQLBindable> | SQLite.SQLBindable[], opts?: {
     rowMode?: 'array';
   }): Promise<SQLite.RowArray[]>;
-  exec(sql: string, bind: Record<string, SQLite.SQLBindable> | SQLite.SQLBindable[], opts: {
+  exec(sql: string, bind: Record<string, SQLite.SQLBindable> | SQLite.SQLBindable[] | undefined, opts: {
     rowMode: 'object';
   }): Promise<SQLite.RowObject[]>;
 }
