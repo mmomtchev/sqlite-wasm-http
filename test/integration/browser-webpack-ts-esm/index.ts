@@ -1,5 +1,4 @@
 import { createSQLiteThread, createHttpBackend } from 'sqlite-wasm-http';
-import './setup.js';
 
 // "moduleResolution: node16" is tsconfig.json is needed only if
 // using direct access to the included sqlite3 distribution
