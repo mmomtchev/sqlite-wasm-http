@@ -12,11 +12,6 @@ export interface SQLiteOptions {
   http?: VFSHTTP.Backend;
 }
 
-declare global {
-  // eslint-disable-next-line no-var
-  export var sqlite3Worker1Promiser: (config: SQLite.PromiserConfig) => SQLite.Promiser;
-}
-
 /**
  * Creates a new SQLite worker thread, can accept an optional HTTP backend for HTTP support.
  * 

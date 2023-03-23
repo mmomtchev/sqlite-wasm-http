@@ -204,3 +204,7 @@ export type Promiser = {
   (msgType: 'config-get', args: MessageConfigGet): Promise<ResponseConfigGet>;
   (msg: { type: 'config-get'; } & MessageConfigGet): Promise<ResponseConfigGet>;
 } & { close: () => void; };
+
+declare global {
+  export var sqlite3Worker1Promiser: (config: PromiserConfig) => Promiser;
+}
