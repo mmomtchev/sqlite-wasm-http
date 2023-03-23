@@ -184,15 +184,15 @@ export interface SQLiteHTTPPool {
   /**
    * Run an SQL statement
    * @param {string} sql SQL statement
-   * @param {Record<string, unknown>} [bind] Optional map of values to be bound
+   * @param {Record<string, unknown> | unknown[]} [bind] Optional map of values to be bound
    * @param {Record<string, any>} [options] Options
    * @param {'array' | 'object'} [options.rowMode] SQLite row format, @default array
    * @returns {Promise<SQLite.Row[]>}
    */
-  exec(sql: string, bind?: Record<string, unknown>, opts?: {
+  exec(sql: string, bind?: Record<string, unknown> | unknown[], opts?: {
     rowMode?: 'array';
   }): Promise<SQLite.RowArray[]>;
-  exec(sql: string, bind: Record<string, unknown>, opts: {
+  exec(sql: string, bind: Record<string, unknown> | unknown[], opts: {
     rowMode: 'object';
   }): Promise<SQLite.RowObject[]>;
 }
@@ -240,7 +240,7 @@ export async function createSQLiteHTTPPool(opts: {
 
     exec: async function (
       sql: string,
-      bind?: Record<string, unknown>,
+      bind?: Record<string, unknown> | unknown[],
       opts?: {
         rowMode?: SQLite.RowMode;
       }
