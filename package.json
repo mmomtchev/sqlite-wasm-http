@@ -11,25 +11,21 @@
       "import": "./dist/index.js"
     },
     "./sqlite3.js": {
-      "types": {
-        "types": "./deps/types/sqlite3.d.ts"
+      "types": "./deps/types/sqlite3.d.ts",
+      "node": {
+        "import": "./deps/dist/sqlite3-node.mjs"
       },
       "default": {
         "import": "./deps/dist/sqlite3-bundler-friendly.mjs"
-      },
-      "node": {
-        "import": "./deps/dist/sqlite3-node.mjs"
       }
     },
     "./sqlite3-worker1-promiser.js": {
-      "types": {
-        "types": "./deps/types/sqlite3.d.ts"
+      "types": "./deps/types/sqlite3.d.ts",
+      "node": {
+        "import": "./deps/dist/sqlite3-worker1-promiser-node.js"
       },
       "default": {
         "import": "./deps/dist/sqlite3-worker1-promiser-bundler-friendly.js"
-      },
-      "node": {
-        "import": "./deps/dist/sqlite3-worker1-promiser-node.js"
       }
     }
   },
