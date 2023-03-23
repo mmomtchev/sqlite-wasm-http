@@ -37,7 +37,7 @@ if (typeof sqlite !== 'function')
   });
 
   if (rows.length < 6)
-    throw new Error(('Could not retrieve all rows'));
+    throw new Error('Could not retrieve all rows');
 
   await db('close', {});
   db.close();

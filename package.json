@@ -31,18 +31,18 @@
   },
   "imports": {
     "#sqlite3.js": {
-      "node": "./deps/dist/sqlite3-node.mjs",
       "types": "./deps/types/sqlite3.d.ts",
+      "node": "./deps/dist/sqlite3-node.mjs",
       "default": "./deps/dist/sqlite3-bundler-friendly.mjs"
     },
     "#sqlite3-worker1-promiser.js": {
-      "node": "./deps/dist/sqlite3-worker1-promiser-node.js",
       "types": "./deps/types/sqlite3.d.ts",
+      "node": "./deps/dist/sqlite3-worker1-promiser-node.js",
       "default": "./deps/dist/sqlite3-worker1-promiser-bundler-friendly.js"
     },
     "#XMLHttpRequest.cjs": {
-      "node": "./deps/XMLHttpRequest.cjs",
       "types": "./deps/XMLHttpRequest.d.ts",
+      "node": "./deps/XMLHttpRequest.cjs",
       "default": "./deps/XMLHttpRequest-stub.js"
     }
   },
