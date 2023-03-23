@@ -46,8 +46,8 @@
     },
     "#XMLHttpRequest.cjs": {
       "node": "./deps/XMLHttpRequest.cjs",
-      "default": "./deps/XMLHttpRequest-stub.js",
-      "types": "./deps/XMLHttpRequest.d.ts"
+      "types": "./deps/XMLHttpRequest.d.ts",
+      "default": "./deps/XMLHttpRequest-stub.js"
     }
   },
   "scripts": {
