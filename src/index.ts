@@ -67,7 +67,10 @@ export function createSQLiteThread(options?: SQLiteOptions): Promise<SQLite.Prom
 const noSharedBufferMsg = 'SharedArrayBuffer is not available. ' +
   'If your browser supports it, the webserver must send ' +
   '"Cross-Origin-Opener-Policy: same-origin "' +
-  'and "Cross-Origin-Embedder-Policy: require-corp" headers.';
+  'and "Cross-Origin-Embedder-Policy: require-corp" headers. ' +
+  'Alternatively, if you do not intend to use concurrent connections, ' +
+  'pass `sync` to `createHttpBackend` to explicitly create a synchronous ' +
+  'HTTP backend and suppress this warning message.';
 /**
  * Creates a new HTTP backend worker that can support multiple SQLite threads.
  * The cache is shared only if the environment supports SharedArrayBuffer.
