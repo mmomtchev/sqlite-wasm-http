@@ -76,7 +76,9 @@ export function installHttpVfs(
     },
     xFileControl: function (fid: Internal.FH, op: number, arg: number): number {
       debug['vfs']('xFileControl', fid, op, arg);
-      return 0;
+      if (op === capi.SQLITE_FCNTL_SYNC)
+        return capi.SQLITE_OK;
+      return capi.SQLITE_NOTFOUND;
     },
     xFileSize: function (fid: Internal.FH, size: Internal.CPointer) {
       debug['vfs']('xFileSize', fid, size);

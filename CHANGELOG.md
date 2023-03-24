@@ -7,6 +7,7 @@
 - Improve the TypeScript types to allow auto inferring of the overloaded argument of `Promiser`
 - Add `SQLite.SQLValue` and `SQLite.SQLBindable` types for the data coming from or going to the DB
 - Expose `sqlite3Worker1Promiser` to user code
+- Fix [#13](https://github.com/mmomtchev/sqlite-wasm-http/issues/13), `PRAGMA TABLE_INFO()` returns an empty result set
 
 # 1.0.0 2023-03-14
 

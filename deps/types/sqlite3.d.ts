@@ -124,6 +124,9 @@ export interface SQLite3 {
     readonly SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN: number;
     readonly SQLITE_IOCAP_IMMUTABLE: number;
     readonly SQLITE_LOCK_NONE: number;
+
+    readonly SQLITE_FCNTL_SYNC: number;
+    readonly SQLITE_FCNTL_PRAGMA: number;
   };
 
   wasm: {

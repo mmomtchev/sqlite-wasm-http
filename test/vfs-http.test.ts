@@ -98,7 +98,7 @@ for (const back of Object.keys(backTests) as (keyof typeof backTests)[]) {
       const rows: SQLite.ResultArray[] = [];
       db('exec', {
         sql: 'SELECT COUNT(*) AS total FROM tiles WHERE zoom_level < $maxZoom',
-        bind: { $maxZoom: back === 'shared' ? 10 : 4},
+        bind: { $maxZoom: back === 'shared' ? 10 : 4 },
         callback: (msg) => {
           rows.push(msg);
         }
@@ -118,6 +118,28 @@ for (const back of Object.keys(backTests) as (keyof typeof backTests)[]) {
               assert.strictEqual(idx, 1);
             }
           });
+          done();
+        })
+        .catch(done);
+    });
+
+    it('should support PRAGMA TABLE_INFO()', (done) => {
+      const rows: SQLite.RowArray[] = [];
+      db('exec', {
+        sql: 'PRAGMA TABLE_INFO(tiles)',
+        callback: (msg) => {
+          if (msg.row)
+            rows.push(msg);
+        }
+      })
+        .then((msg) => {
+          assert.strictEqual(msg.type, 'exec');
+          assert.sameMembers(msg.result.columnNames, ['cid', 'name', 'type', 'notnull', 'dflt_value', 'pk']);
+          assert.lengthOf(rows, 4);
+          rows.map((row) => row.columnNames)
+            .forEach((columnNames) => assert.deepStrictEqual(columnNames, msg.result.columnNames));
+          assert.deepStrictEqual(rows.map((row) => row.row[1]), ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
+          assert.deepStrictEqual(rows.map((row) => row.row[2]), ['INTEGER', 'INTEGER', 'INTEGER', 'BLOB']);
           done();
         })
         .catch(done);
@@ -208,7 +230,7 @@ for (const back of Object.keys(backTests) as (keyof typeof backTests)[]) {
       const rows: SQLite.ResultArray[] = [];
       db('exec', {
         sql: 'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = ?',
-        bind: [ 1 ],
+        bind: [1],
         callback: (msg) => {
           rows.push(msg);
         }
