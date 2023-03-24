@@ -144,5 +144,21 @@ for (const back of Object.keys(backTests) as (keyof typeof backTests)[]) {
       assert.instanceOf(r, sqlite3.oo1.DB);
       assert.equal(calls, 4);
     });
+
+    it('should support preparing statements', () => {
+      let rows = 0;
+      const stmt = db.prepare('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles WHERE zoom_level = ?')
+        .bind(1);
+      assert.instanceOf(stmt, sqlite3.oo1.Stmt);
+      assert.deepStrictEqual(stmt.getColumnNames(), ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
+      while (stmt.step()) {
+        assert.strictEqual(stmt.getInt(0), 1);
+        assert.isNumber(stmt.getInt(1));
+        assert.isNumber(stmt.getInt(2));
+        assert.instanceOf(stmt.getBlob(3), Uint8Array);
+        rows++;
+      }
+      assert.equal(rows, 4);
+    });
   });
 }

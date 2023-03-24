@@ -54,6 +54,43 @@ interface DbCtorHelper {
   setVfsPostOpenSql(vfs: Internal.CPointer, cb: (db: DB, sqlite3: SQLite3) => void): void;
 }
 
+declare class Stmt {
+  readonly columnCount: number;
+  readonly parameterCount: number;
+  readonly pointer: Internal.CPointer;
+
+  bind(value: SQLBindable[]): this;
+  bind(value: Record<string, SQLBindable>): this;
+  bind(value: SQLBindable): this;
+  bind(ndx: number, value: SQLBindable): this;
+
+  bindAsBlob(value: SQLBindable[]): this;
+  bindAsBlob(value: Record<string, SQLBindable>): this;
+  bindAsBlob(value: SQLBindable): this;
+  bindAsBlob(ndx: number, value: SQLBindable): this;
+
+  clearBindings(): void;
+  finalize(): void;
+
+  get(ndx: number, type: number): SQLValue;
+  get(array: unknown[]): SQLValue[];
+  get(object: Record<string, unknown>): Record<string, SQLValue>;
+
+  getBlob(ndx: number): Uint8Array | null;
+  getColumnName(ndx: number): string;
+  getColumnNames(target?: string[]): string[];
+  getFloat(ndx: number): number | null;
+  getInt(ndx: number): number | null;
+  getJSON(ndx: number): Record<string, unknown>;
+  getParamIndex(name: string): number | undefined;
+  getString(ndx: number): string | null;
+
+  reset(alsoClearBinds?: boolean): this;
+  step(): boolean;
+  stepFinalize(): boolean;
+  stepReset(): boolean;
+}
+
 declare class DB {
   constructor(filename?: string, flags?: number, vfs?: string);
   constructor(opts: { filename?: string, flags?: number, vfs?: string; });
@@ -68,6 +105,11 @@ declare class DB {
   dbName(dbIndex?: number): string;
   dbVfsName(dbName?: string): string;
 
+  changes(total?: boolean, bigint?: false): number;
+  changes(total: boolean, bigint: true): bigint;
+
+  openStatementCount(): number;
+  prepare(sql: string): Stmt;
 
   exec(sql: string, opts?: OpenOptions & {
     returnValue?: 'this',
@@ -94,55 +136,66 @@ declare class DB {
   }): this;
 }
 
+interface CAPI {
+  readonly sqlite3_vfs: typeof Internal.CStruct;
+  readonly sqlite3_file: typeof Internal.CStruct;
+  readonly sqlite3_io_methods: typeof Internal.CStruct;
+
+  sqlite3_exec(
+    db: DB, sql: string | string[],
+    cb: Internal.CPointer,
+    arg: Internal.CPointer,
+    err: Internal.CPointer
+  ): number;
+  sqlite3_vfs_find(vfs: unknown): unknown;
+  sqlite3_busy_timeout(db: DB, timeout: number): void;
+
+  readonly OK: 0;
+  readonly SQLITE_ERROR: number;
+  readonly SQLITE_NOTFOUND: number;
+  readonly SQLITE_IOERR: number;
+  readonly SQLITE_TOOBIG: number;
+  readonly SQLITE_OK: number;
+  readonly SQLITE_CANTOPEN: number;
+  readonly SQLITE_READONLY: number;
+
+  readonly SQLITE_OPEN_READONLY: number;
+  readonly SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN: number;
+  readonly SQLITE_IOCAP_IMMUTABLE: number;
+  readonly SQLITE_LOCK_NONE: number;
+
+  readonly SQLITE_FCNTL_SYNC: number;
+  readonly SQLITE_FCNTL_PRAGMA: number;
+
+  readonly SQLITE_INTEGER: number;
+  readonly SQLITE_FLOAT: number;
+  readonly SQLITE_TEXT: number;
+  readonly SQLITE_BLOB: number;
+  readonly SQLITE_NULL: number;
+}
+
+interface WASM {
+  poke(ptr: Internal.CPointer, val: bigint, size: 'i64'): void;
+  poke(ptr: Internal.CPointer, val: number, size: 'i32'): void;
+  poke(ptr: Internal.CPointer, val: number, size: 'double'): void;
+  cstrToJs(ptr: Internal.CPointer): string;
+  cstrncpy(dst: Internal.CPointer, src: Internal.CPointer, len: number): number;
+  heap8u(): {
+    set: (src: Uint8Array, dest: Internal.CPointer) => void;
+  };
+  allocCString(s: string): Internal.CPointer;
+}
+
 export interface SQLite3 {
   initWorker1API(): void;
 
-  capi: {
-    readonly sqlite3_vfs: typeof Internal.CStruct;
-    readonly sqlite3_file: typeof Internal.CStruct;
-    readonly sqlite3_io_methods: typeof Internal.CStruct;
+  capi: CAPI;
 
-    sqlite3_exec(
-      db: DB, sql: string | string[],
-      cb: Internal.CPointer,
-      arg: Internal.CPointer,
-      err: Internal.CPointer
-    ): number;
-    sqlite3_vfs_find(vfs: unknown): unknown;
-    sqlite3_busy_timeout(db: DB, timeout: number): void;
-
-    readonly OK: 0;
-    readonly SQLITE_ERROR: number;
-    readonly SQLITE_NOTFOUND: number;
-    readonly SQLITE_IOERR: number;
-    readonly SQLITE_TOOBIG: number;
-    readonly SQLITE_OK: number;
-    readonly SQLITE_CANTOPEN: number;
-    readonly SQLITE_READONLY: number;
-
-    readonly SQLITE_OPEN_READONLY: number;
-    readonly SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN: number;
-    readonly SQLITE_IOCAP_IMMUTABLE: number;
-    readonly SQLITE_LOCK_NONE: number;
-
-    readonly SQLITE_FCNTL_SYNC: number;
-    readonly SQLITE_FCNTL_PRAGMA: number;
-  };
-
-  wasm: {
-    poke(ptr: Internal.CPointer, val: bigint, size: 'i64'): void;
-    poke(ptr: Internal.CPointer, val: number, size: 'i32'): void;
-    poke(ptr: Internal.CPointer, val: number, size: 'double'): void;
-    cstrToJs(ptr: Internal.CPointer): string;
-    cstrncpy(dst: Internal.CPointer, src: Internal.CPointer, len: number): number;
-    heap8u(): {
-      set: (src: Uint8Array, dest: Internal.CPointer) => void;
-    };
-    allocCString(s: string): Internal.CPointer;
-  };
+  wasm: WASM;
 
   oo1: {
     DB: typeof DB;
+    Stmt: typeof Stmt;
   };
   vfs: {
     installVfs(...args: unknown[]): void;
