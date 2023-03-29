@@ -15,37 +15,39 @@
 *   [options][11]
 *   [createHttpBackend][12]
     *   [Parameters][13]
-*   [open][14]
+*   [initSyncSQLite][14]
     *   [Parameters][15]
-*   [close][16]
-*   [exec][17]
-    *   [Parameters][18]
-*   [createSQLiteHTTPPool][19]
+*   [open][16]
+    *   [Parameters][17]
+*   [close][18]
+*   [exec][19]
     *   [Parameters][20]
+*   [createSQLiteHTTPPool][21]
+    *   [Parameters][22]
 
 ## timeout
 
 Timeout for SQL operations (must take HTTP transfers into account)
 
-Type: [number][21]
+Type: [number][23]
 
 ## maxPageSize
 
 Maximum supported page size
 
-Type: [number][21]
+Type: [number][23]
 
 ## cacheSize
 
 Cache size in Kb
 
-Type: [number][21]
+Type: [number][23]
 
 ## headers
 
 Optional custom headers to be used when requesting data
 
-Type: Record<[string][22], [string][22]>
+Type: Record<[string][24], [string][24]>
 
 ## backendType
 
@@ -66,7 +68,7 @@ code.
 
     *   `options.http` **(VFSHTTP.Backend | `true`)?** Optional HTTP backend, either a shared one or a dedicated sync one
 
-Returns **[Promise][23]\<SQLite.Promiser>**&#x20;
+Returns **[Promise][25]\<SQLite.Promiser>**&#x20;
 
 ## type
 
@@ -78,7 +80,7 @@ Type: (`"shared"` | `"sync"`)
 
 Close the HTTP backend waiting for clean shutdown
 
-Type: function (): [Promise][23]\<void>
+Type: function (): [Promise][25]\<void>
 
 ## terminate
 
@@ -106,38 +108,51 @@ environment in the browser.
 
 Returns **VFSHTTP.Backend**&#x20;
 
+## initSyncSQLite
+
+Initialize synchronous SQLite in the current thread, can accept an optional HTTP backend for HTTP support.
+
+The sync backend is particularly inefficient in Node.js and should never be used except for unit-testing browser
+code.
+
+### Parameters
+
+*   `options` **SQLiteOptions?** Options object
+
+    *   `options.http` **(VFSHTTP.Backend | `true`)?** Optional HTTP backend, either a shared one or a dedicated sync one
+
+Returns **[Promise][25]\<SQLite.SQLite3>**&#x20;
+
 ## open
 
 Open a new remote database
 
-Type: function (url: [string][22]): [Promise][23]\<void>
-
 ### Parameters
 
-*   `url` **[string][22]** Remote database
+*   `url` **[string][24]** Remote database
 
-Returns **[Promise][23]\<void>**&#x20;
+Returns **[Promise][25]\<void>**&#x20;
 
 ## close
 
 Dispose of the pool (stops the background workers)
 
-Type: function (): [Promise][23]\<void>
-
-Returns **[Promise][23]\<void>**&#x20;
+Returns **[Promise][25]\<void>**&#x20;
 
 ## exec
 
 Run an SQL statement
 
-Type: function (sql: [string][22], bind: Record<[string][22], any>): [Promise][23]<[Array][24]\<SQLite.Row>>
-
 ### Parameters
 
-*   `sql` **[string][22]** SQL statement
-*   `bind` **Record<[string][22], unknown>?** Optional map of values to be binded
+*   `sql` **[string][24]** SQL statement
+*   `bind` **(Record<[string][24], SQLite.SQLBindable> | [Array][26]\<SQLite.SQLBindable>)?** Optional map of values to be bound
+*   `opts` **{rowMode: `"array"`?}?**&#x20;
+*   `options` **Record<[string][24], any>?** Options
 
-Returns **[Promise][23]\<void>**&#x20;
+    *   `options.rowMode` **(`"array"` | `"object"`)?** SQLite row format, @default array
+
+Returns **[Promise][25]<[Array][26]\<SQLite.Row>>**&#x20;
 
 ## createSQLiteHTTPPool
 
@@ -145,9 +160,9 @@ Higher-level API for working with a pool
 
 ### Parameters
 
-*   `opts` **{workers: [number][21]?, httpOptions: VFSHTTP.Options?}**&#x20;
+*   `opts` **{workers: [number][23]?, httpOptions: VFSHTTP.Options?}**&#x20;
 
-Returns **[Promise][23]\<SQLiteHTTPPool>**&#x20;
+Returns **[Promise][25]\<SQLiteHTTPPool>**&#x20;
 
 [1]: #timeout
 
@@ -175,24 +190,28 @@ Returns **[Promise][23]\<SQLiteHTTPPool>**&#x20;
 
 [13]: #parameters-1
 
-[14]: #open
+[14]: #initsyncsqlite
 
 [15]: #parameters-2
 
-[16]: #close-1
+[16]: #open
 
-[17]: #exec
+[17]: #parameters-3
 
-[18]: #parameters-3
+[18]: #close-1
 
-[19]: #createsqlitehttppool
+[19]: #exec
 
 [20]: #parameters-4
 
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[21]: #createsqlitehttppool
 
-[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[22]: #parameters-5
 
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[25]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+[26]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
