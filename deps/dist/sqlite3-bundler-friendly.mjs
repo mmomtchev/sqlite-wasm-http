@@ -28,7 +28,7 @@
 **
 ** SQLITE_VERSION "3.42.0"
 ** SQLITE_VERSION_NUMBER 3042000
-** SQLITE_SOURCE_ID "2023-03-09 16:11:43 870de61f8ef8781f2f9969b012f5c1cb95b6bce1a9a4dcaf02945b7846c3aa83"
+** SQLITE_SOURCE_ID "2023-03-30 12:19:38 8724fe7426da55d19dba7b30e09321ba30c73286513864cb05de32f72e50ee31"
 **
 ** Using the Emscripten SDK version 3.1.32.
 */
@@ -5309,7 +5309,7 @@ Module.postRun.push(function(Module/*the Emscripten-style module object*/){
 **
 ** SQLITE_VERSION "3.42.0"
 ** SQLITE_VERSION_NUMBER 3042000
-** SQLITE_SOURCE_ID "2023-03-09 16:11:43 870de61f8ef8781f2f9969b012f5c1cb95b6bce1a9a4dcaf02945b7846c3aa83"
+** SQLITE_SOURCE_ID "2023-03-30 12:19:38 8724fe7426da55d19dba7b30e09321ba30c73286513864cb05de32f72e50ee31"
 **
 ** Using the Emscripten SDK version 3.1.32.
 */
@@ -6854,7 +6854,7 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
 
      Returns capi.SQLITE_MISUSE if op is not a valid operation ID.
   */
-  capi.sqlite3_db_config = function f(pDb, op, ...args){
+  capi.sqlite3_db_config = function(pDb, op, ...args){
     if(!this.s){
       this.s = wasm.xWrap('sqlite3_wasm_db_config_s','int',
                           ['sqlite3*', 'int', 'string:static']
@@ -6864,31 +6864,30 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
       this.ip = wasm.xWrap('sqlite3_wasm_db_config_ip','int',
                            ['sqlite3*', 'int', 'int','*']);
     }
-    const c = capi;
     switch(op){
-        case c.SQLITE_DBCONFIG_ENABLE_FKEY:
-        case c.SQLITE_DBCONFIG_ENABLE_TRIGGER:
-        case c.SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER:
-        case c.SQLITE_DBCONFIG_ENABLE_LOAD_EXTENSION:
-        case c.SQLITE_DBCONFIG_NO_CKPT_ON_CLOSE:
-        case c.SQLITE_DBCONFIG_ENABLE_QPSG:
-        case c.SQLITE_DBCONFIG_TRIGGER_EQP:
-        case c.SQLITE_DBCONFIG_RESET_DATABASE:
-        case c.SQLITE_DBCONFIG_DEFENSIVE:
-        case c.SQLITE_DBCONFIG_WRITABLE_SCHEMA:
-        case c.SQLITE_DBCONFIG_LEGACY_ALTER_TABLE:
-        case c.SQLITE_DBCONFIG_DQS_DML:
-        case c.SQLITE_DBCONFIG_DQS_DDL:
-        case c.SQLITE_DBCONFIG_ENABLE_VIEW:
-        case c.SQLITE_DBCONFIG_LEGACY_FILE_FORMAT:
-        case c.SQLITE_DBCONFIG_TRUSTED_SCHEMA:
+        case capi.SQLITE_DBCONFIG_ENABLE_FKEY:
+        case capi.SQLITE_DBCONFIG_ENABLE_TRIGGER:
+        case capi.SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER:
+        case capi.SQLITE_DBCONFIG_ENABLE_LOAD_EXTENSION:
+        case capi.SQLITE_DBCONFIG_NO_CKPT_ON_CLOSE:
+        case capi.SQLITE_DBCONFIG_ENABLE_QPSG:
+        case capi.SQLITE_DBCONFIG_TRIGGER_EQP:
+        case capi.SQLITE_DBCONFIG_RESET_DATABASE:
+        case capi.SQLITE_DBCONFIG_DEFENSIVE:
+        case capi.SQLITE_DBCONFIG_WRITABLE_SCHEMA:
+        case capi.SQLITE_DBCONFIG_LEGACY_ALTER_TABLE:
+        case capi.SQLITE_DBCONFIG_DQS_DML:
+        case capi.SQLITE_DBCONFIG_DQS_DDL:
+        case capi.SQLITE_DBCONFIG_ENABLE_VIEW:
+        case capi.SQLITE_DBCONFIG_LEGACY_FILE_FORMAT:
+        case capi.SQLITE_DBCONFIG_TRUSTED_SCHEMA:
           return this.ip(pDb, op, args[0], args[1] || 0);
-        case c.SQLITE_DBCONFIG_LOOKASIDE:
+        case capi.SQLITE_DBCONFIG_LOOKASIDE:
           return this.pii(pDb, op, args[0], args[1], args[2]);
-        case c.SQLITE_DBCONFIG_MAINDBNAME:
+        case capi.SQLITE_DBCONFIG_MAINDBNAME:
           return this.s(pDb, op, args[0]);
         default:
-          return c.SQLITE_MISUSE;
+          return capi.SQLITE_MISUSE;
     }
   }.bind(Object.create(null));
 
@@ -11945,7 +11944,7 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 /* END FILE: api/sqlite3-api-glue.js */
 /* BEGIN FILE: ./bld/sqlite3-api-build-version.js */
 globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
-  sqlite3.version = {"libVersion": "3.42.0", "libVersionNumber": 3042000, "sourceId": "2023-03-09 16:11:43 870de61f8ef8781f2f9969b012f5c1cb95b6bce1a9a4dcaf02945b7846c3aa83","downloadVersion": 3420000};
+  sqlite3.version = {"libVersion": "3.42.0", "libVersionNumber": 3042000, "sourceId": "2023-03-30 12:19:38 8724fe7426da55d19dba7b30e09321ba30c73286513864cb05de32f72e50ee31","downloadVersion": 3420000};
 });
 /* END FILE: ./bld/sqlite3-api-build-version.js */
 /* BEGIN FILE: api/sqlite3-api-oo1.js */
@@ -15306,7 +15305,7 @@ const installOpfsVfs = function callee(options){
   if('function' === typeof options.proxyUri){
     options.proxyUri = options.proxyUri();
   }
-  const thePromise = new Promise(function(promiseResolve, promiseReject_){
+  const thePromise = new Promise(function(promiseResolve_, promiseReject_){
     const loggers = {
       0:sqlite3.config.error,
       1:sqlite3.config.warn,
@@ -15382,12 +15381,30 @@ const installOpfsVfs = function callee(options){
     }/*metrics*/;
     const opfsVfs = new sqlite3_vfs();
     const opfsIoMethods = new sqlite3_io_methods();
-    const promiseReject = function(err){
+    let promiseWasRejected = undefined;
+    const promiseReject = (err)=>{
+      promiseWasRejected = true;
       opfsVfs.dispose();
       return promiseReject_(err);
     };
+    const promiseResolve = (value)=>{
+      promiseWasRejected = false;
+      return promiseResolve_(value);
+    };
     const W =
     new Worker(new URL("sqlite3-opfs-async-proxy.js", import.meta.url));
+    setTimeout(()=>{
+      /* At attempt to work around a browser-specific quirk in which
+         the Worker load is failing in such a way that we neither
+         resolve nor reject it. This workaround gives that resolve/reject
+         a time limit and rejects if that timer expires. Discussion:
+         https://sqlite.org/forum/forumpost/a708c98dcb3ef */
+      if(undefined===promiseWasRejected){
+        promiseReject(
+          new Error("Timeout while waiting for OPFS async proxy worker.")
+        );
+      }
+    }, 4000);
     W._originalOnError = W.onerror /* will be restored later */;
     W.onerror = function(err){
       // The error object doesn't contain any useful info when the
@@ -16452,6 +16469,9 @@ const installOpfsVfs = function callee(options){
             /*Indicates that the async partner has received the 'init'
               and has finished initializing, so the real work can
               begin...*/
+            if(true===promiseWasRejected){
+              break /* promise was already rejected via timer */;
+            }
             try {
               sqlite3.vfs.installVfs({
                 io: {struct: opfsIoMethods, methods: ioSyncWrappers},
@@ -16654,7 +16674,7 @@ const toExportForESM =
   }
 
   globalThis.sqlite3InitModule = function ff(...args){
-    //console.warn("Using replaced sqlite3InitModule()",self.location);
+    //console.warn("Using replaced sqlite3InitModule()",globalThis.location);
     return originalInit(...args).then((EmscriptenModule)=>{
       if('undefined'!==typeof WorkerGlobalScope &&
          (EmscriptenModule['ENVIRONMENT_IS_PTHREAD']
