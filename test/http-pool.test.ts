@@ -7,9 +7,9 @@ const remoteURL = 'https://velivole.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-eur
 
 describe('SQLite HTTP pool', () => {
   const workers = 8;
-  const requests = 32;
+  const requests = 128;
 
-  it('should handle automatically concurrent connections', (done) => {
+  it('should automatically handle concurrent connections', (done) => {
     const poolq = createSQLiteHTTPPool({ workers });
 
     poolq.then((pool) => pool.open(remoteURL).then(() => {
@@ -17,12 +17,12 @@ describe('SQLite HTTP pool', () => {
       for (let i = 0; i < requests; i++)
         r.push(pool.exec('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
           'WHERE zoom_level = 10 AND tile_column = $col AND tile_row = $row',
-          { $col: 600 + i, $row: 600 + i })
+          { $col: 500 + i, $row: 600 + i })
           .then((results) => {
             assert.lengthOf(results, 1);
             assert.sameMembers(results[0].columnNames, ['zoom_level', 'tile_column', 'tile_row', 'tile_data']);
             assert.strictEqual(results[0].row[0], 10);
-            assert.strictEqual(results[0].row[1], 600 + i);
+            assert.strictEqual(results[0].row[1], 500 + i);
             assert.strictEqual(results[0].row[2], 600 + i);
             assert.instanceOf(results[0].row[3], Uint8Array);
             return results[0];
