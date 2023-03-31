@@ -1,6 +1,7 @@
 ## 1.1.1
 
 - Rebuild the SQLite WASM distribution from the SQLite trunk 2023-03-30
+- Eliminate `sqlite3-worker1-promiser-node.mjs`
 
 # 1.1.0 2023-03-29
 
