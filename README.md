@@ -137,7 +137,7 @@ If you do not intend to run concurrent queries using multiple workers, both back
 
 The driver is smart enough to select the appropriate backend according to whether `SharedArrayBuffer` is available or not.
 
-# Will write-access ever be possible?
+# Will write access ever be possible?
 
 Short answer: Maybe, in some cases.
 
