@@ -176,24 +176,25 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
  * @param {VFSHTTP.Backend | true} [options.http] Optional HTTP backend, either a shared one or a dedicated sync one
  * @returns {Promise<SQLite.SQLite3>}
  */
-export async function initSyncSQLite(options?: SQLiteOptions): Promise<SQLite.SQLite3> {
+export function initSyncSQLite(options?: SQLiteOptions): Promise<SQLite.SQLite3> {
   debug['threads']('Initializing synchronous SQLite', options);
 
-  const sqlite3q = (await import('#sqlite3.js')).default;
-  return sqlite3q().then((sqlite3) => {
-    const backend = options?.http;
-    if (backend?.type === 'shared') {
-      return backend.createNewChannel().then((channel) => {
-        installHttpVfs(sqlite3, channel, backend.options);
+  return import('#sqlite3.js')
+    .then((mod) => mod.default())
+    .then((sqlite3) => {
+      const backend = options?.http;
+      if (backend?.type === 'shared') {
+        return backend.createNewChannel().then((channel) => {
+          installHttpVfs(sqlite3, channel, backend.options);
+          return sqlite3;
+        });
+      } else if (backend?.type === 'sync') {
+        installSyncHttpVfs(sqlite3, backend.options);
         return sqlite3;
-      });
-    } else if (backend?.type === 'sync') {
-      installSyncHttpVfs(sqlite3, backend.options);
-      return sqlite3;
-    }
+      }
 
-    return sqlite3;
-  });
+      return sqlite3;
+    });
 }
 
 export interface SQLiteHTTPPool {

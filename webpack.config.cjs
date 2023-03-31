@@ -54,8 +54,6 @@ module.exports = (env) => {
       splitChunks: {
         chunks: 'all'
       },
-      concatenateModules: false,
-      usedExports: true
     },
     stats: 'detailed',
     devtool: 'inline-source-map',
