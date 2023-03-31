@@ -1,7 +1,7 @@
 // This is the user-facing API
 // It runs in the user-thread (which is probably the main UI thread)
-import sqlite3q, * as SQLite from '#sqlite3.js';
 import '#sqlite3-worker1-promiser.js';
+import type * as SQLite from '#sqlite3-worker1-promiser.js';
 import { debug } from './vfs-http-types.js';
 import * as VFSHTTP from './vfs-http-types.js';
 import { installHttpVfs } from './vfs-http.js';
@@ -176,9 +176,10 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
  * @param {VFSHTTP.Backend | true} [options.http] Optional HTTP backend, either a shared one or a dedicated sync one
  * @returns {Promise<SQLite.SQLite3>}
  */
-export function initSyncSQLite(options?: SQLiteOptions): Promise<SQLite.SQLite3> {
+export async function initSyncSQLite(options?: SQLiteOptions): Promise<SQLite.SQLite3> {
   debug['threads']('Initializing synchronous SQLite', options);
 
+  const sqlite3q = (await import('#sqlite3.js')).default;
   return sqlite3q().then((sqlite3) => {
     const backend = options?.http;
     if (backend?.type === 'shared') {
