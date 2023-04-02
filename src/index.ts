@@ -1,7 +1,7 @@
 // This is the user-facing API
 // It runs in the user-thread (which is probably the main UI thread)
-import sqlite3q, * as SQLite from '#sqlite3.js';
 import '#sqlite3-worker1-promiser.js';
+import type * as SQLite from '#sqlite3-worker1-promiser.js';
 import { debug } from './vfs-http-types.js';
 import * as VFSHTTP from './vfs-http-types.js';
 import { installHttpVfs } from './vfs-http.js';
@@ -179,20 +179,22 @@ export function createHttpBackend(options?: VFSHTTP.Options): VFSHTTP.Backend {
 export function initSyncSQLite(options?: SQLiteOptions): Promise<SQLite.SQLite3> {
   debug['threads']('Initializing synchronous SQLite', options);
 
-  return sqlite3q().then((sqlite3) => {
-    const backend = options?.http;
-    if (backend?.type === 'shared') {
-      return backend.createNewChannel().then((channel) => {
-        installHttpVfs(sqlite3, channel, backend.options);
+  return import('#sqlite3.js')
+    .then((mod) => mod.default())
+    .then((sqlite3) => {
+      const backend = options?.http;
+      if (backend?.type === 'shared') {
+        return backend.createNewChannel().then((channel) => {
+          installHttpVfs(sqlite3, channel, backend.options);
+          return sqlite3;
+        });
+      } else if (backend?.type === 'sync') {
+        installSyncHttpVfs(sqlite3, backend.options);
         return sqlite3;
-      });
-    } else if (backend?.type === 'sync') {
-      installSyncHttpVfs(sqlite3, backend.options);
-      return sqlite3;
-    }
+      }
 
-    return sqlite3;
-  });
+      return sqlite3;
+    });
 }
 
 export interface SQLiteHTTPPool {

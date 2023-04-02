@@ -2,6 +2,7 @@
 
 - Rebuild the SQLite WASM distribution from the SQLite trunk 2023-03-30
 - Eliminate `sqlite3-worker1-promiser-node.mjs`
+- Greatly reduce the output bundle size by working around [webpack#16895](https://github.com/webpack/webpack/issues/16895)
 
 # 1.1.0 2023-03-29
 

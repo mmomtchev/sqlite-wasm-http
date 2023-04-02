@@ -143,6 +143,26 @@ Short answer: Maybe, in some cases.
 
 Long answer: It won't have the same universal support as read-only access though. There is a `Content-Range` header for HTTP bodies - that is used in the response of an HTTP `GET` request that carries a `Range` header. The RFC does not say anything about this header being used for `PUT` requests. Most web server do not support it. Apache does support it if the WebDAV extensions are enabled. Maybe other servers support in specific configurations too. Support on public infrastructure servers, especially the low-cost ones, will likely be very rare.
 
+# Performance
+
+## Prefetching and code-splitting
+
+This module has been designed for being bundled with a modern web bundler - which should correctly identify the chunks to be shared between main and the workers.
+
+Also, if you bundler supports preloading, preloading the WASM chunk can greatly improve the initial loading times. You should check [`webpack.config.cjs`](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/webpack.config.cjs) for an example that uses preloading.
+
+## Apache httpd configuration fragment
+
+These are all the options required for maximum performance:
+
+```
+Header always append Cross-Origin-Embedder-Policy "require-corp"
+Header always append Cross-Origin-Opener-Policy: "same-origin"
+AddOutputFilterByType DEFLATE application/wasm
+```
+
+They must be set on the origin - the main entry point as it is displayed in the user's URL bar. When using an `iframe`, the `iframe` must have them **as well as all of its parents up to the origin**, as well as the special `iframe` attribute: `<iframe allow="cross-origin-isolated">`. Be careful as depending on the Apache version and its default configuration, setting `AddOutputFilterByType` in a `VirtualHost` might override (instead of extending) the default compression configuration.
+
 # Developer mode
 
 ```
@@ -162,20 +182,6 @@ Node.js
 ```
 SQLITE_DEBUG=vfs,threads,cache mocha
 ```
-
-# Apache httpd configuration fragment
-
-These are all the options required for maximum performance:
-
-```
-<Location "/">
-  Header always append Cross-Origin-Embedder-Policy "require-corp"
-  Header always append Cross-Origin-Opener-Policy: "same-origin"
-  AddOutputFilterByType DEFLATE application/wasm
-</Location>
-```
-
-They must be set on the origin - the main entry point as it is displayed in the user's URL bar. When using an `iframe`, the `iframe` must have them **as well as all of its parents up to the origin**, as well as the special `iframe` attribute: `<iframe allow="cross-origin-isolated">`.
 
 # Overview
 

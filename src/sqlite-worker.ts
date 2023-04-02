@@ -1,5 +1,4 @@
 // This is the entry point for an SQLite worker thread
-import sqlite3q from '#sqlite3.js';
 import { installHttpVfs } from './vfs-http.js';
 import { installSyncHttpVfs } from './vfs-sync-http.js';
 import * as VFSHTTP from './vfs-http-types.js';
@@ -15,24 +14,27 @@ globalThis.onmessage = ({ data }) => {
     httpChannel?: VFSHTTP.BackendChannel | boolean | undefined;
     httpOptions?: VFSHTTP.Options;
   };
-  sqlite3q().then((sqlite3) => {
-    debug['threads']('SQLite init');
-    sqlite3.initWorker1API();
-    if (typeof msg.httpChannel === 'object') {
-      installHttpVfs(sqlite3, msg.httpChannel, msg.httpOptions);
-    } else if (msg.httpChannel === true) {
-      if (typeof globalThis.XMLHttpRequest === 'undefined') {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (globalThis as any).XMLHttpRequest = class XMLHttpRequest extends _XMLHttpRequest {
-          get response() {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const r = Uint8Array.from((this as any).responseText.split('').map((x: string) => x.charCodeAt(0))).buffer;
-            return r;
-          }
-        };
-      }
+  import('#sqlite3.js')
+    .then((mod) => mod.default())
+    .then((sqlite3) => {
+      debug['threads']('SQLite init');
+      sqlite3.initWorker1API();
+      if (typeof msg.httpChannel === 'object') {
+        installHttpVfs(sqlite3, msg.httpChannel, msg.httpOptions);
+      } else if (msg.httpChannel === true) {
+        if (typeof globalThis.XMLHttpRequest === 'undefined') {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (globalThis as any).XMLHttpRequest = class XMLHttpRequest extends _XMLHttpRequest {
+            get response() {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const r = Uint8Array.from((this as any).responseText.split('')
+                .map((x: string) => x.charCodeAt(0))).buffer;
+              return r;
+            }
+          };
+        }
 
-      installSyncHttpVfs(sqlite3, msg.httpOptions);
-    }
-  });
+        installSyncHttpVfs(sqlite3, msg.httpOptions);
+      }
+    });
 };
