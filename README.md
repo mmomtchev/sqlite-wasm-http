@@ -168,14 +168,12 @@ SQLITE_DEBUG=vfs,threads,cache mocha
 These are all the options required for maximum performance:
 
 ```
-<Location "/">
-  Header always append Cross-Origin-Embedder-Policy "require-corp"
-  Header always append Cross-Origin-Opener-Policy: "same-origin"
-  AddOutputFilterByType DEFLATE application/wasm
-</Location>
+Header always append Cross-Origin-Embedder-Policy "require-corp"
+Header always append Cross-Origin-Opener-Policy: "same-origin"
+AddOutputFilterByType DEFLATE application/wasm
 ```
 
-They must be set on the origin - the main entry point as it is displayed in the user's URL bar. When using an `iframe`, the `iframe` must have them **as well as all of its parents up to the origin**, as well as the special `iframe` attribute: `<iframe allow="cross-origin-isolated">`.
+They must be set on the origin - the main entry point as it is displayed in the user's URL bar. When using an `iframe`, the `iframe` must have them **as well as all of its parents up to the origin**, as well as the special `iframe` attribute: `<iframe allow="cross-origin-isolated">`. Be careful as depending on the Apache version and its default configuration, setting `AddOutputFilterByType` in a `VirtualHost` might override (instead of extending) the default compression configuration.
 
 # Overview
 
