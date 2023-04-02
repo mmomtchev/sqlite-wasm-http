@@ -53,7 +53,7 @@ export function installHttpVfs(
       console.error('Backend timeout', r, lock, msg);
       return -1;
     } else if (r === 'not-equal') {
-      console.warn('Operation finished too fast');
+      console.warn('Operation finished too fast', r, lock, msg, Atomics.load(lock, 0));
     }
     return Atomics.load(lock, 0);
   };
