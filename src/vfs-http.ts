@@ -51,13 +51,14 @@ export function installHttpVfs(
     Atomics.store(lock, 0, 0xffffff);
     backend.port.postMessage(msg);
     const r = Atomics.wait(lock, 0, 0xffffff, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
+    const rc = Atomics.load(lock, 0);
     if (r === 'timed-out') {
       console.error('Backend timeout', r, lock, msg);
       return -1;
     } else if (r === 'not-equal') {
-      console.warn('Operation finished too fast', tid, r, lock, msg, Atomics.load(lock, 0));
+      console.warn('Operation finished too fast', tid, r, lock, msg, rc);
     }
-    return Atomics.load(lock, 0);
+    return rc;
   };
 
   const ioSyncWrappers = {
