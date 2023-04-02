@@ -251,7 +251,8 @@ async function workMessage(this: Consumer, { data }: { data: VFSHTTP.Message }) 
   }
   if (Atomics.load(this.lock, 0) === 0xffffff)
     console.warn('0xffffff in sender', data);
-  Atomics.notify(this.lock, 0);
+  if (Atomics.notify(this.lock, 0) === 0)
+    console.warn('no one was notified');
 }
 
 globalThis.onmessage = ({ data }) => {
