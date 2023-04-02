@@ -46,9 +46,9 @@ export function installHttpVfs(
   httpVfs.$xDlOpen = httpVfs.$xDlError = httpVfs.$xDlSym = httpVfs.$xDlClose = null;
 
   const sendAndWait = (msg: VFSHTTP.Message) => {
-    Atomics.store(lock, 0, 0xffff);
+    Atomics.store(lock, 0, 0xffffff);
     backend.port.postMessage(msg);
-    const r = Atomics.wait(lock, 0, 0xffff, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
+    const r = Atomics.wait(lock, 0, 0xffffff, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
     if (r === 'timed-out') {
       console.error('Backend timeout', r, lock, msg);
       return -1;
