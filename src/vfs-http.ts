@@ -111,7 +111,7 @@ export function installHttpVfs(
       }
       const r = sendAndWait({ msg: 'xRead', url: openFiles[fid].url, n, offset });
       if (r !== 0) {
-        console.error('xRead', r);
+        console.error('xRead', r, n, offset);
         return capi.SQLITE_IOERR;
       }
       wasm.heap8u().set(shm.subarray(0, n), dest);
