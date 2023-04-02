@@ -249,6 +249,8 @@ async function workMessage(this: Consumer, { data }: { data: VFSHTTP.Message }) 
     console.error(e);
     Atomics.store(this.lock, 0, 1);
   }
+  if (Atomics.load(this.lock, 0) === 0xffffff)
+    console.warn('0xffffff in sender', data);
   Atomics.notify(this.lock, 0);
 }
 
