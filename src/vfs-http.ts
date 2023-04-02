@@ -58,6 +58,9 @@ export function installHttpVfs(
     } else if (r === 'not-equal') {
       console.warn('Operation finished too fast', tid, r, lock, msg, rc);
     }
+    if (rc === 0xffffff) {
+      console.warn('rc=0xffffff', tid, r, lock, msg, rc);
+    }
     return rc;
   };
 
