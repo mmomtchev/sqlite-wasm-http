@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StatoscopeWebpackPlugin = require('@statoscope/webpack-plugin').default;
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-module.exports = (env) => {
+module.exports = (env, argv) => {
   let profiler = [];
   switch (env.profiler) {
     case 'statoscope':
@@ -56,7 +56,7 @@ module.exports = (env) => {
       },
     },
     stats: 'detailed',
-    devtool: 'inline-source-map',
+    devtool: argv.mode === 'production' ? 'source-map' : 'inline-source-map',
     devServer: {
       static: {
         directory: path.join(__dirname, 'examples'),
