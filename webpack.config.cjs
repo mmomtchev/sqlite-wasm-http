@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin');
 const StatoscopeWebpackPlugin = require('@statoscope/webpack-plugin').default;
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -45,6 +46,7 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: 'examples/index.html'
       }),
+      new PreloadWebpackPlugin(),
       new webpack.DefinePlugin({
         SQLITE_DEBUG: JSON.stringify(process.env.SQLITE_DEBUG?.split(',') ?? [])
       }),
