@@ -50,17 +50,18 @@ export function installHttpVfs(
   const sendAndWait = (msg: VFSHTTP.Message) => {
     Atomics.store(lock, 0, 0xffffff);
     backend.port.postMessage(msg);
-    const r = Atomics.wait(lock, 0, 0xffffff, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
-    const rc = Atomics.load(lock, 0);
+    let r, rc;
+    do {
+      r = Atomics.wait(lock, 0, 0xffffff, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
+      rc = Atomics.load(lock, 0);
+      // If the backend manages to complete the operation before the wait
+      // on the next iteration will be having a pending notify that must
+      // be consumed
+    } while (r === 'ok' && rc === 0xffffff);
     if (r === 'timed-out') {
       console.error('Backend timeout', r, lock, msg);
       return -1;
-    } else if (r === 'not-equal') {
-      console.warn('Operation finished too fast', tid, r, lock, msg, rc);
-    }
-    if (rc === 0xffffff) {
-      console.warn('rc=0xffffff', tid, r, lock, msg, rc);
-    }
+    } 
     return rc;
   };
 
