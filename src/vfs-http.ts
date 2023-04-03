@@ -5,8 +5,6 @@ import * as VFSHTTP from './vfs-http-types.js';
 import { debug } from './vfs-http-types.js';
 import { SQLite3, Internal } from '#sqlite3.js';
 
-import { threadId as tid } from 'node:worker_threads';
-
 interface FileDescriptor {
   fid: Internal.FH;
   url: string;
@@ -118,7 +116,7 @@ export function installHttpVfs(
       }
       const r = sendAndWait({ msg: 'xRead', url: openFiles[fid].url, n, offset });
       if (r !== 0) {
-        console.error('xRead', tid, r, n, offset, Atomics.load(lock, 0));
+        console.error('xRead', r);
         return capi.SQLITE_IOERR;
       }
       wasm.heap8u().set(shm.subarray(0, n), dest);
