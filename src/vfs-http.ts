@@ -46,16 +46,16 @@ export function installHttpVfs(
   httpVfs.$xDlOpen = httpVfs.$xDlError = httpVfs.$xDlSym = httpVfs.$xDlClose = null;
 
   const sendAndWait = (msg: VFSHTTP.Message) => {
-    Atomics.store(lock, 0, 0xffffff);
+    Atomics.store(lock, 0, VFSHTTP.SYNC.WORKMSG);
     backend.port.postMessage(msg);
     let r, rc;
     do {
-      r = Atomics.wait(lock, 0, 0xffffff, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
+      r = Atomics.wait(lock, 0, VFSHTTP.SYNC.WORKMSG, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
       rc = Atomics.load(lock, 0);
       // If the backend manages to complete the operation before the wait
       // on the next iteration will be having a pending notify that must
       // be consumed
-    } while (r === 'ok' && rc === 0xffffff);
+    } while (r === 'ok' && rc === VFSHTTP.SYNC.WORKMSG);
     if (r === 'timed-out') {
       console.error('Backend timeout', r, lock, msg);
       return -1;
