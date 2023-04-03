@@ -261,10 +261,10 @@ globalThis.onmessage = ({ data }) => {
           + Int32Array.BYTES_PER_ELEMENT);
         const lock = new Int32Array(shm, (options?.maxPageSize ?? VFSHTTP.defaultOptions.maxPageSize));
         const buffer = new Uint8Array(shm, 0, (options?.maxPageSize ?? VFSHTTP.defaultOptions.maxPageSize));
-        lock[0] = 0xffff;
+        Atomics.store(lock, 0, VFSHTTP.SYNC.HANDSHAKE);
         consumers[data.id] = { id: data.id, port: data.port, shm, lock, buffer };
-        postMessage({ msg: 'ack', id: data.id, shm, lock });
         data.port.onmessage = workMessage.bind(consumers[data.id]);
+        postMessage({ msg: 'ack', id: data.id, shm, lock });
       }
       break;
     case 'init':

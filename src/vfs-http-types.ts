@@ -72,6 +72,12 @@ export interface Message {
   [key: string]: string | number | bigint | undefined;
 }
 
+// These must be different from any SQLite CAPI codes
+export enum SYNC {
+  WORKMSG = 0xffffff,
+  HANDSHAKE = 0xfffffe
+}
+
 declare const SQLITE_DEBUG: string[];
 const debugOptions = (typeof SQLITE_DEBUG !== 'undefined' && SQLITE_DEBUG) ||
   (typeof process !== 'undefined' && typeof process?.env?.SQLITE_DEBUG !== 'undefined' && process.env.SQLITE_DEBUG) ||

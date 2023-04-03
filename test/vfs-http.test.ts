@@ -18,7 +18,8 @@ for (const back of Object.keys(backTests) as (keyof typeof backTests)[]) {
     before((done) => {
       httpBackend = createHttpBackend({
         maxPageSize: 1024,
-        backendType: back === 'sync' ? 'sync' : undefined
+        backendType: back === 'sync' ? 'sync' : undefined,
+        timeout: 45000
       });
       createSQLiteThread({ http: httpBackend })
         .then((r) => {

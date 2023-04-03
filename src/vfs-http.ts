@@ -1,5 +1,6 @@
 // This is the VFS layer for the shared backend
 // It run in each SQLite worker thread that uses it
+// and it is fully synchronous
 
 import * as VFSHTTP from './vfs-http-types.js';
 import { debug } from './vfs-http-types.js';
@@ -45,15 +46,25 @@ export function installHttpVfs(
 
   httpVfs.$xDlOpen = httpVfs.$xDlError = httpVfs.$xDlSym = httpVfs.$xDlClose = null;
 
+  // This the sync/async wait mechanism
+  // We send messages to the async backend that manages multiple consumers
+  // Then we wait synchronously on a SharedArrayBuffer
   const sendAndWait = (msg: VFSHTTP.Message) => {
-    Atomics.store(lock, 0, 0xffff);
+    Atomics.store(lock, 0, VFSHTTP.SYNC.WORKMSG);
     backend.port.postMessage(msg);
-    const r = Atomics.wait(lock, 0, 0xffff, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
+    let r, rc;
+    do {
+      r = Atomics.wait(lock, 0, VFSHTTP.SYNC.WORKMSG, options?.timeout ?? VFSHTTP.defaultOptions.timeout);
+      rc = Atomics.load(lock, 0);
+      // If the backend manages to complete the operation before the wait
+      // on the next iteration will be having a pending notify that must
+      // be consumed
+    } while (r === 'ok' && rc === VFSHTTP.SYNC.WORKMSG);
     if (r === 'timed-out') {
       console.error('Backend timeout', r, lock, msg);
       return -1;
-    }
-    return Atomics.load(lock, 0);
+    } 
+    return rc;
   };
 
   const ioSyncWrappers = {
