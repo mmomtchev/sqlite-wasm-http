@@ -225,6 +225,8 @@ export interface SQLiteHTTPPool {
   exec(sql: string, bind: Record<string, SQLite.SQLBindable> | SQLite.SQLBindable[] | undefined, opts: {
     rowMode: 'object';
   }): Promise<SQLite.RowObject[]>;
+
+  readonly backendType: VFSHTTP.Backend['type'];
 }
 
 type PoolThread = {
@@ -257,6 +259,8 @@ export async function createSQLiteHTTPPool(opts: {
   await Promise.all(startq);
 
   return {
+    backendType: backend.type,
+
     open: (url: string) =>
       Promise.all(workers.map((w) => w.worker('open', {
         filename: 'file:' + encodeURI(url),
