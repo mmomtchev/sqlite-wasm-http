@@ -220,7 +220,7 @@ export function installHttpVfs(
         return capi.SQLITE_IOERR;
       }
       if (r !== 0) {
-        console.error('xOpen', r);
+        debug['vfs']('xOpen', r);
         return capi.SQLITE_CANTOPEN;
       }
       return capi.SQLITE_OK;

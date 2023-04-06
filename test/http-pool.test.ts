@@ -11,7 +11,7 @@ for (const type of ['sync', 'shared'] as const) {
     const requests = type === 'shared' ? 128 : 16;
 
     it('should automatically handle concurrent connections', (done) => {
-      const poolq = createSQLiteHTTPPool({ workers, httpOptions: { backendType: type} });
+      const poolq = createSQLiteHTTPPool({ workers, httpOptions: { backendType: type } });
 
       poolq.then((pool) => pool.open(remoteURL).then(() => {
         assert.strictEqual(pool.backendType, type);
@@ -42,7 +42,7 @@ for (const type of ['sync', 'shared'] as const) {
         .catch(done);
     });
 
-    it(`should handle errors gracefully (${type})`, (done) => {
+    it(`should handle SQL errors gracefully (${type})`, (done) => {
       const poolq = createSQLiteHTTPPool({ workers });
 
       poolq.then((pool) => pool.open(remoteURL).then(() => {
@@ -66,6 +66,20 @@ for (const type of ['sync', 'shared'] as const) {
           poolq.then((pool) => pool.close());
         })
         .catch(done);
+    });
+
+    it(`should handle opening errors gracefully (${type})`, (done) => {
+      createSQLiteHTTPPool({ workers: 1 })
+        .then((pool) => pool.open('https://black.hole')
+          .then(() => {
+            done('beyond the event horizon');
+          })
+          .catch((e) => {
+            pool.close();
+            assert.equal(e.result.message, 'sqlite3 result code 14: unable to open database file');
+            done();
+          })
+        );
     });
   });
 }
