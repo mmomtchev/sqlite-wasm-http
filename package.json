@@ -1,6 +1,6 @@
 {
   "name": "sqlite-wasm-http",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "HTTP backend for SQLite3-WASM VFS",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -55,10 +55,10 @@
     "profile:statoscope": "webpack --mode=production --env profiler='statoscope' --profile",
     "publish:shared": "tar -C docs/examples -zcf - `ls docs/examples` | mbuffer | ssh sqlite-wasm-http@pelikan.garga.net 'cat - | mbuffer | tar -C www -zxvf -'",
     "publish:gh": "ts-node-esm scripts/publish-ghpages.ts",
-    "publish": "npm run publish:shared && npm run publish:gh",
+    "publish:web": "npm run publish:shared && npm run publish:gh",
     "preversion": "npm run prepare && npm test",
     "version": "npm run doc && git add package.json docs",
-    "postversion": "git push && git push --tags && npm run publish",
+    "postversion": "git push && git push --tags && npm run publish:web",
     "postpublish": "gh workflow run npm.yml -F version=$npm_package_version"
   },
   "repository": {

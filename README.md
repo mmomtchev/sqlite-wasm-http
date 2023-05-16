@@ -38,6 +38,8 @@ Experimental
 
 If you are not already familiar with [@phiresky](https://github.com/phiresky/)/[sql.js-httpvfs](https://github.com/phiresky/sql.js-httpvfs), there is a brief presentation in the [Overview](#Overview) section.
 
+You can also check [`ol-mbtiles`](https://github.com/mmomtchev/ol-mbtiles) for an example project that uses this library - it implements remote rendering of HTTP-hosted `.mbtiles` in Openlayers.
+
 ## Page size
 
 It is highly recommended to decrease your SQLite page size to 1024 bytes for maximum performance:

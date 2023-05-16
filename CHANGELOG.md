@@ -1,4 +1,8 @@
-## 1.1.1
+## 1.1.2
+
+- Test and officially support a pool of sync workers
+
+## 1.1.1 2023-04-03
 
 - Rebuild the SQLite WASM distribution from the SQLite trunk 2023-03-30
 - Eliminate `sqlite3-worker1-promiser-node.mjs`

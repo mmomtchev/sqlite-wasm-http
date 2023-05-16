@@ -13,6 +13,7 @@
 
 var Url = require('url');
 var spawn = require('child_process').spawn;
+var tid = require('worker_threads').threadId;
 var fs = require('fs');
 
 exports.XMLHttpRequest = function() {
@@ -472,8 +473,8 @@ exports.XMLHttpRequest = function() {
       self.dispatchEvent('loadstart');
     } else { // Synchronous
       // Create a temporary file for communication with the other Node process
-      var contentFile = '.node-xmlhttprequest-content-' + process.pid;
-      var syncFile = '.node-xmlhttprequest-sync-' + process.pid;
+      var contentFile = '.node-xmlhttprequest-content-' + process.pid + '_' + tid;
+      var syncFile = '.node-xmlhttprequest-sync-' + process.pid + '_' + tid;
       fs.writeFileSync(syncFile, '', 'binary');
       // The async request the other Node process executes
       var execString = 'var http = require(\'http\'), https = require(\'https\'), fs = require(\'fs\');'
