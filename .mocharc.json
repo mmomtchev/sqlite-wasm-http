@@ -10,5 +10,6 @@
   "node-option": [
     "no-warnings",
     "loader=ts-node/esm"
-  ]
+  ],
+  "exit": true
 }
