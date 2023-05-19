@@ -7,7 +7,7 @@
 - Rebuild the SQLite WASM distribution from the SQLite trunk 2023-03-30
 - Eliminate `sqlite3-worker1-promiser-node.mjs`
 - Greatly reduce the output bundle size by working around [webpack#16895](https://github.com/webpack/webpack/issues/16895)
-- Fix [#18](https://github.com/mmomtchev/sqlite-wasm-http/issues/18), a race condition occurring only when running one single CPU core and using the shared backend
+- Fix [#18](https://github.com/mmomtchev/sqlite-wasm-http/issues/18), a race condition occurring only when running on a single CPU core and using the shared backend
 
 # 1.1.0 2023-03-29
 
