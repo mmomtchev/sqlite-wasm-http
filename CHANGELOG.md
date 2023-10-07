@@ -1,6 +1,7 @@
-## 1.1.2
+## 1.1.2 2023-10-07
 
 - Test and officially support a pool of sync workers
+- Add `"module": "node16"` to all integration tests
 
 ## 1.1.1 2023-04-03
 
