@@ -86,7 +86,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "@vue/preload-webpack-plugin": "^2.0.0",
     "c8": "^7.13.0",
-    "chai": "^4.3.7",
+    "chai": "^4.3.10",
     "documentation": "^14.0.1",
     "eslint": "^8.49.0",
     "eslint-plugin-mocha": "^10.1.0",
