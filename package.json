@@ -89,7 +89,7 @@
     "chai": "^4.3.10",
     "documentation": "^14.0.1",
     "eslint": "^8.51.0",
-    "eslint-plugin-mocha": "^10.1.0",
+    "eslint-plugin-mocha": "^10.2.0",
     "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.3",
     "karma": "^6.4.1",
