@@ -81,7 +81,7 @@
     "@statoscope/webpack-plugin": "^5.28.2",
     "@types/chai": "^4.3.9",
     "@types/gh-pages": "^3.2.3",
-    "@types/mocha": "^10.0.3",
+    "@types/mocha": "^10.0.4",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "@vue/preload-webpack-plugin": "^2.0.0",
