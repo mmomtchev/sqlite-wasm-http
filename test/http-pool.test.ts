@@ -76,7 +76,6 @@ for (const type of ['sync', 'shared'] as const) {
           })
           .catch((e) => {
             pool.close();
-            console.error(e);
             assert.include(e.result.message, 'sqlite3 result code 14: unable to open database file');
             done();
           })
