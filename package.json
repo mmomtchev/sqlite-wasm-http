@@ -53,7 +53,7 @@
     "lint:fix": "npx eslint --fix src test examples scripts",
     "profile:treemap": "npx webpack --mode=production --env profiler='treemap' --profile",
     "profile:statoscope": "npx webpack --mode=production --env profiler='statoscope' --profile",
-    "publish:shared": "tar -C docs/examples -zcf - `ls docs/examples` | mbuffer | ssh sqlite-wasm-http@pelikan.garga.net 'cat - | mbuffer | tar -C www -zxvf -'",
+    "publish:shared": "tar -C docs/examples -zcf - `ls docs/examples` | mbuffer | ssh sqlite-wasm-http@orel.garga.net 'cat - | mbuffer | tar -C www -zxvf -'",
     "publish:gh": "ts-node-esm scripts/publish-ghpages.ts",
     "publish:web": "npm run publish:shared && npm run publish:gh",
     "preversion": "npm run prepare && npm test",
