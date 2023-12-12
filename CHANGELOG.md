@@ -1,3 +1,9 @@
+## 1.1.3 2023-12-12
+
+ - Update the integration tests after the breaking changes in Node.js 18.19 [TypeStrong/ts-node#2094](https://github.com/TypeStrong/ts-node/issues/2094)
+ - Test the npm package on all platforms
+ - Update the dependencies
+
 ## 1.1.2 2023-10-07
 
 - Test and officially support a pool of sync workers
