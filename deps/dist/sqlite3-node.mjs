@@ -26,11 +26,11 @@
 /*
 ** This code was built from sqlite3 version...
 **
-** SQLITE_VERSION "3.42.0"
-** SQLITE_VERSION_NUMBER 3042000
-** SQLITE_SOURCE_ID "2023-03-30 12:19:38 8724fe7426da55d19dba7b30e09321ba30c73286513864cb05de32f72e50ee31"
+** SQLITE_VERSION "3.44.2"
+** SQLITE_VERSION_NUMBER 3044002
+** SQLITE_SOURCE_ID "2023-11-24 11:41:44 ebead0e7230cd33bcec9f95d2183069565b9e709bf745c9b5db65cc0cbf92c0f"
 **
-** Using the Emscripten SDK version 3.1.32.
+** Using the Emscripten SDK version 3.1.46.
 */
 
 import { createRequire } from 'module';
@@ -40,7 +40,7 @@ var sqlite3InitModule = (() => {
   var _scriptDir = import.meta.url;
   
   return (
-function(sqlite3InitModule = {})  {
+function(moduleArg = {}) {
 
 // include: shell.js
 // The Module object: Our interface to the outside world. We import
@@ -56,13 +56,21 @@ function(sqlite3InitModule = {})  {
 // after the generated code, you will need to define   var Module = {};
 // before the code. Then that object will be used in the code, and you
 // can continue to use Module afterwards as well.
-var Module = typeof sqlite3InitModule != 'undefined' ? sqlite3InitModule : {};
+var Module = moduleArg;
 
 // Set up the promise that indicates the Module is initialized
 var readyPromiseResolve, readyPromiseReject;
-Module['ready'] = new Promise(function(resolve, reject) {
+Module['ready'] = new Promise((resolve, reject) => {
   readyPromiseResolve = resolve;
   readyPromiseReject = reject;
+});
+["_malloc","_free","_realloc","_sqlite3_aggregate_context","_sqlite3_auto_extension","_sqlite3_bind_blob","_sqlite3_bind_double","_sqlite3_bind_int","_sqlite3_bind_int64","_sqlite3_bind_null","_sqlite3_bind_parameter_count","_sqlite3_bind_parameter_index","_sqlite3_bind_pointer","_sqlite3_bind_text","_sqlite3_busy_handler","_sqlite3_busy_timeout","_sqlite3_cancel_auto_extension","_sqlite3_changes","_sqlite3_changes64","_sqlite3_clear_bindings","_sqlite3_close_v2","_sqlite3_collation_needed","_sqlite3_column_blob","_sqlite3_column_bytes","_sqlite3_column_count","_sqlite3_column_double","_sqlite3_column_int","_sqlite3_column_int64","_sqlite3_column_name","_sqlite3_column_text","_sqlite3_column_type","_sqlite3_column_value","_sqlite3_commit_hook","_sqlite3_compileoption_get","_sqlite3_compileoption_used","_sqlite3_complete","_sqlite3_context_db_handle","_sqlite3_create_collation","_sqlite3_create_collation_v2","_sqlite3_create_function","_sqlite3_create_function_v2","_sqlite3_create_module","_sqlite3_create_module_v2","_sqlite3_create_window_function","_sqlite3_data_count","_sqlite3_db_filename","_sqlite3_db_handle","_sqlite3_db_name","_sqlite3_db_status","_sqlite3_declare_vtab","_sqlite3_deserialize","_sqlite3_drop_modules","_sqlite3_errcode","_sqlite3_errmsg","_sqlite3_error_offset","_sqlite3_errstr","_sqlite3_exec","_sqlite3_expanded_sql","_sqlite3_extended_errcode","_sqlite3_extended_result_codes","_sqlite3_file_control","_sqlite3_finalize","_sqlite3_free","_sqlite3_get_auxdata","_sqlite3_initialize","_sqlite3_keyword_count","_sqlite3_keyword_name","_sqlite3_keyword_check","_sqlite3_last_insert_rowid","_sqlite3_libversion","_sqlite3_libversion_number","_sqlite3_limit","_sqlite3_malloc","_sqlite3_malloc64","_sqlite3_msize","_sqlite3_open","_sqlite3_open_v2","_sqlite3_overload_function","_sqlite3_prepare_v2","_sqlite3_prepare_v3","_sqlite3_preupdate_blobwrite","_sqlite3_preupdate_count","_sqlite3_preupdate_depth","_sqlite3_preupdate_hook","_sqlite3_preupdate_new","_sqlite3_preupdate_old","_sqlite3_progress_handler","_sqlite3_randomness","_sqlite3_realloc","_sqlite3_realloc64","_sqlite3_reset","_sqlite3_reset_auto_extension","_sqlite3_result_blob","_sqlite3_result_double","_sqlite3_result_error","_sqlite3_result_error_code","_sqlite3_result_error_nomem","_sqlite3_result_error_toobig","_sqlite3_result_int","_sqlite3_result_int64","_sqlite3_result_null","_sqlite3_result_pointer","_sqlite3_result_subtype","_sqlite3_result_text","_sqlite3_result_zeroblob","_sqlite3_result_zeroblob64","_sqlite3_rollback_hook","_sqlite3_serialize","_sqlite3_set_authorizer","_sqlite3_set_auxdata","_sqlite3_set_last_insert_rowid","_sqlite3_shutdown","_sqlite3_sourceid","_sqlite3_sql","_sqlite3_status","_sqlite3_status64","_sqlite3_step","_sqlite3_stmt_isexplain","_sqlite3_stmt_readonly","_sqlite3_stmt_status","_sqlite3_strglob","_sqlite3_stricmp","_sqlite3_strlike","_sqlite3_strnicmp","_sqlite3_table_column_metadata","_sqlite3_total_changes","_sqlite3_total_changes64","_sqlite3_trace_v2","_sqlite3_txn_state","_sqlite3_update_hook","_sqlite3_uri_boolean","_sqlite3_uri_int64","_sqlite3_uri_key","_sqlite3_uri_parameter","_sqlite3_user_data","_sqlite3_value_blob","_sqlite3_value_bytes","_sqlite3_value_double","_sqlite3_value_dup","_sqlite3_value_free","_sqlite3_value_frombind","_sqlite3_value_int","_sqlite3_value_int64","_sqlite3_value_nochange","_sqlite3_value_numeric_type","_sqlite3_value_pointer","_sqlite3_value_subtype","_sqlite3_value_text","_sqlite3_value_type","_sqlite3_vfs_find","_sqlite3_vfs_register","_sqlite3_vfs_unregister","_sqlite3_vtab_collation","_sqlite3_vtab_distinct","_sqlite3_vtab_in","_sqlite3_vtab_in_first","_sqlite3_vtab_in_next","_sqlite3_vtab_nochange","_sqlite3_vtab_on_conflict","_sqlite3_vtab_rhs_value","_sqlite3changegroup_add","_sqlite3changegroup_add_strm","_sqlite3changegroup_delete","_sqlite3changegroup_new","_sqlite3changegroup_output","_sqlite3changegroup_output_strm","_sqlite3changeset_apply","_sqlite3changeset_apply_strm","_sqlite3changeset_apply_v2","_sqlite3changeset_apply_v2_strm","_sqlite3changeset_concat","_sqlite3changeset_concat_strm","_sqlite3changeset_conflict","_sqlite3changeset_finalize","_sqlite3changeset_fk_conflicts","_sqlite3changeset_invert","_sqlite3changeset_invert_strm","_sqlite3changeset_new","_sqlite3changeset_next","_sqlite3changeset_old","_sqlite3changeset_op","_sqlite3changeset_pk","_sqlite3changeset_start","_sqlite3changeset_start_strm","_sqlite3changeset_start_v2","_sqlite3changeset_start_v2_strm","_sqlite3session_attach","_sqlite3session_changeset","_sqlite3session_changeset_size","_sqlite3session_changeset_strm","_sqlite3session_config","_sqlite3session_create","_sqlite3session_delete","_sqlite3session_diff","_sqlite3session_enable","_sqlite3session_indirect","_sqlite3session_isempty","_sqlite3session_memory_used","_sqlite3session_object_config","_sqlite3session_patchset","_sqlite3session_patchset_strm","_sqlite3session_table_filter","_sqlite3_wasm_pstack_ptr","_sqlite3_wasm_pstack_restore","_sqlite3_wasm_pstack_alloc","_sqlite3_wasm_pstack_remaining","_sqlite3_wasm_pstack_quota","_sqlite3_wasm_db_error","_sqlite3_wasm_test_struct","_sqlite3_wasm_enum_json","_sqlite3_wasm_vfs_unlink","_sqlite3_wasm_db_vfs","_sqlite3_wasm_db_reset","_sqlite3_wasm_db_export_chunked","_sqlite3_wasm_db_serialize","_sqlite3_wasm_vfs_create_file","_sqlite3_wasm_posix_create_file","_sqlite3_wasm_kvvfsMakeKeyOnPstack","_sqlite3_wasm_kvvfs_methods","_sqlite3_wasm_vtab_config","_sqlite3_wasm_db_config_ip","_sqlite3_wasm_db_config_pii","_sqlite3_wasm_db_config_s","_sqlite3_wasm_config_i","_sqlite3_wasm_config_ii","_sqlite3_wasm_config_j","_sqlite3_wasm_init_wasmfs","_sqlite3_wasm_test_intptr","_sqlite3_wasm_test_voidptr","_sqlite3_wasm_test_int64_max","_sqlite3_wasm_test_int64_min","_sqlite3_wasm_test_int64_times2","_sqlite3_wasm_test_int64_minmax","_sqlite3_wasm_test_int64ptr","_sqlite3_wasm_test_stack_overflow","_sqlite3_wasm_test_str_hello","_sqlite3_wasm_SQLTester_strglob","___indirect_function_table","_fflush","onRuntimeInitialized"].forEach((prop) => {
+  if (!Object.getOwnPropertyDescriptor(Module['ready'], prop)) {
+    Object.defineProperty(Module['ready'], prop, {
+      get: () => abort('You are getting ' + prop + ' on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js'),
+      set: () => abort('You are setting ' + prop + ' on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js'),
+    });
+  }
 });
 
 // --pre-jses are emitted after the Module integration code, so that they can
@@ -81,6 +89,7 @@ const sqlite3InitModuleState = globalThis.sqlite3InitModuleState
       });
 delete globalThis.sqlite3InitModuleState;
 sqlite3InitModuleState.debugModule('globalThis.location =',globalThis.location);
+
 
 /**
    Bug warning: a custom Module.instantiateWasm() does not work
@@ -133,7 +142,6 @@ Module[xNameOfInstantiateWasm].uri = 'sqlite3.wasm';
    one. */
 
 
-
 // Sometimes an existing Module object exists with properties
 // meant to overwrite the default module functionality. Here
 // we collect those properties and reapply _after_ we configure
@@ -155,6 +163,10 @@ var ENVIRONMENT_IS_WORKER = false;
 var ENVIRONMENT_IS_NODE = true;
 var ENVIRONMENT_IS_SHELL = false;
 
+if (Module['ENVIRONMENT']) {
+  throw new Error('Module.ENVIRONMENT has been deprecated. To force the environment, use the ENVIRONMENT compile-time option (for example, -sENVIRONMENT=web or -sENVIRONMENT=node)');
+}
+
 // `/` should be present at the end if `scriptDirectory` is not empty
 var scriptDirectory = '';
 function locateFile(path) {
@@ -167,26 +179,19 @@ function locateFile(path) {
 // Hooks that are implemented differently in different runtime environments.
 var read_,
     readAsync,
-    readBinary,
-    setWindowTitle;
-
-// Normally we don't log exceptions but instead let them bubble out the top
-// level where the embedding environment (e.g. the browser) can handle
-// them.
-// However under v8 and node we sometimes exit the process direcly in which case
-// its up to use us to log the exception before exiting.
-// If we fix https://github.com/emscripten-core/emscripten/issues/15080
-// this may no longer be needed under node.
-function logExceptionOnExit(e) {
-  if (e instanceof ExitStatus) return;
-  let toLog = e;
-  if (e && typeof e == 'object' && e.stack) {
-    toLog = [e, e.stack];
-  }
-  err('exiting due to exception: ' + toLog);
-}
+    readBinary;
 
 if (ENVIRONMENT_IS_NODE) {
+  if (typeof process == 'undefined' || !process.release || process.release.name !== 'node') throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
+
+  var nodeVersion = process.versions.node;
+  var numericVersion = nodeVersion.split('.').slice(0, 3);
+  numericVersion = (numericVersion[0] * 10000) + (numericVersion[1] * 100) + (numericVersion[2].split('-')[0] * 1);
+  var minVersion = 160000;
+  if (numericVersion < 160000) {
+    throw new Error('This emscripten-generated code requires node v16.0.0 (detected v' + nodeVersion + ')');
+  }
+
   // `require()` is no-op in an ESM module, use `createRequire()` to construct
   // the require()` function.  This is only necessary for multi-environment
   // builds, `-sENVIRONMENT=node` emits a static import declaration instead.
@@ -218,20 +223,20 @@ readBinary = (filename) => {
   if (!ret.buffer) {
     ret = new Uint8Array(ret);
   }
+  assert(ret.buffer);
   return ret;
 };
 
-readAsync = (filename, onload, onerror) => {
+readAsync = (filename, onload, onerror, binary = true) => {
   // See the comment in the `read_` function.
   filename = isFileURI(filename) ? new URL(filename) : nodePath.normalize(filename);
-  fs.readFile(filename, function(err, data) {
+  fs.readFile(filename, binary ? undefined : 'utf8', (err, data) => {
     if (err) onerror(err);
-    else onload(data.buffer);
+    else onload(binary ? data.buffer : data);
   });
 };
-
 // end include: node_shell_read.js
-  if (process.argv.length > 1) {
+  if (!Module['thisProgram'] && process.argv.length > 1) {
     thisProgram = process.argv[1].replace(/\\/g, '/');
   }
 
@@ -239,33 +244,81 @@ readAsync = (filename, onload, onerror) => {
 
   // MODULARIZE will export the module in the proper place outside, we don't need to export here
 
-  process.on('uncaughtException', function(ex) {
-    // suppress ExitStatus exceptions from showing an error
-    if (!(ex instanceof ExitStatus)) {
-      throw ex;
-    }
-  });
-
-  // Without this older versions of node (< v15) will log unhandled rejections
-  // but return 0, which is not normally the desired behaviour.  This is
-  // not be needed with node v15 and about because it is now the default
-  // behaviour:
-  // See https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode
-  var nodeMajor = process.versions.node.split(".")[0];
-  if (nodeMajor < 15) {
-    process.on('unhandledRejection', function(reason) { throw reason; });
-  }
-
   quit_ = (status, toThrow) => {
-    if (keepRuntimeAlive()) {
-      process.exitCode = status;
-      throw toThrow;
-    }
-    logExceptionOnExit(toThrow);
-    process.exit(status);
+    process.exitCode = status;
+    throw toThrow;
   };
 
-  Module['inspect'] = function () { return '[Emscripten Module object]'; };
+  Module['inspect'] = () => '[Emscripten Module object]';
+
+} else
+if (ENVIRONMENT_IS_SHELL) {
+
+  if ((typeof process == 'object' && typeof require === 'function') || typeof window == 'object' || typeof importScripts == 'function') throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
+
+  if (typeof read != 'undefined') {
+    read_ = read;
+  }
+
+  readBinary = (f) => {
+    if (typeof readbuffer == 'function') {
+      return new Uint8Array(readbuffer(f));
+    }
+    let data = read(f, 'binary');
+    assert(typeof data == 'object');
+    return data;
+  };
+
+  readAsync = (f, onload, onerror) => {
+    setTimeout(() => onload(readBinary(f)));
+  };
+
+  if (typeof clearTimeout == 'undefined') {
+    globalThis.clearTimeout = (id) => {};
+  }
+
+  if (typeof setTimeout == 'undefined') {
+    // spidermonkey lacks setTimeout but we use it above in readAsync.
+    globalThis.setTimeout = (f) => (typeof f == 'function') ? f() : abort();
+  }
+
+  if (typeof scriptArgs != 'undefined') {
+    arguments_ = scriptArgs;
+  } else if (typeof arguments != 'undefined') {
+    arguments_ = arguments;
+  }
+
+  if (typeof quit == 'function') {
+    quit_ = (status, toThrow) => {
+      // Unlike node which has process.exitCode, d8 has no such mechanism. So we
+      // have no way to set the exit code and then let the program exit with
+      // that code when it naturally stops running (say, when all setTimeouts
+      // have completed). For that reason, we must call `quit` - the only way to
+      // set the exit code - but quit also halts immediately.  To increase
+      // consistency with node (and the web) we schedule the actual quit call
+      // using a setTimeout to give the current stack and any exception handlers
+      // a chance to run.  This enables features such as addOnPostRun (which
+      // expected to be able to run code after main returns).
+      setTimeout(() => {
+        if (!(toThrow instanceof ExitStatus)) {
+          let toLog = toThrow;
+          if (toThrow && typeof toThrow == 'object' && toThrow.stack) {
+            toLog = [toThrow, toThrow.stack];
+          }
+          err(`exiting due to exception: ${toLog}`);
+        }
+        quit(status);
+      });
+      throw toThrow;
+    };
+  }
+
+  if (typeof print != 'undefined') {
+    // Prefer to use print/printErr where they exist, as they usually work better.
+    if (typeof console == 'undefined') console = /** @type{!Console} */({});
+    console.log = /** @type{!function(this:Console, ...*): undefined} */ (print);
+    console.warn = console.error = /** @type{!function(this:Console, ...*): undefined} */ (typeof printErr != 'undefined' ? printErr : print);
+  }
 
 } else
 
@@ -273,29 +326,61 @@ readAsync = (filename, onload, onerror) => {
 // Node.js workers are detected as a combination of ENVIRONMENT_IS_WORKER and
 // ENVIRONMENT_IS_NODE.
 {
+  throw new Error('environment detection error');
 }
 
 var out = Module['print'] || console.log.bind(console);
-var err = Module['printErr'] || console.warn.bind(console);
+var err = Module['printErr'] || console.error.bind(console);
 
 // Merge back in the overrides
 Object.assign(Module, moduleOverrides);
 // Free the object hierarchy contained in the overrides, this lets the GC
 // reclaim data used e.g. in memoryInitializerRequest, which is a large typed array.
 moduleOverrides = null;
+checkIncomingModuleAPI();
 
 // Emit code to handle expected values on the Module object. This applies Module.x
 // to the proper local x. This has two benefits: first, we only emit it if it is
 // expected to arrive, and second, by using a local everywhere else that can be
 // minified.
 
-if (Module['arguments']) arguments_ = Module['arguments'];
+if (Module['arguments']) arguments_ = Module['arguments'];legacyModuleProp('arguments', 'arguments_');
 
-if (Module['thisProgram']) thisProgram = Module['thisProgram'];
+if (Module['thisProgram']) thisProgram = Module['thisProgram'];legacyModuleProp('thisProgram', 'thisProgram');
 
-if (Module['quit']) quit_ = Module['quit'];
+if (Module['quit']) quit_ = Module['quit'];legacyModuleProp('quit', 'quit_');
 
 // perform assertions in shell.js after we set up out() and err(), as otherwise if an assertion fails it cannot print the message
+// Assertions on removed incoming Module JS APIs.
+assert(typeof Module['memoryInitializerPrefixURL'] == 'undefined', 'Module.memoryInitializerPrefixURL option was removed, use Module.locateFile instead');
+assert(typeof Module['pthreadMainPrefixURL'] == 'undefined', 'Module.pthreadMainPrefixURL option was removed, use Module.locateFile instead');
+assert(typeof Module['cdInitializerPrefixURL'] == 'undefined', 'Module.cdInitializerPrefixURL option was removed, use Module.locateFile instead');
+assert(typeof Module['filePackagePrefixURL'] == 'undefined', 'Module.filePackagePrefixURL option was removed, use Module.locateFile instead');
+assert(typeof Module['read'] == 'undefined', 'Module.read option was removed (modify read_ in JS)');
+assert(typeof Module['readAsync'] == 'undefined', 'Module.readAsync option was removed (modify readAsync in JS)');
+assert(typeof Module['readBinary'] == 'undefined', 'Module.readBinary option was removed (modify readBinary in JS)');
+assert(typeof Module['setWindowTitle'] == 'undefined', 'Module.setWindowTitle option was removed (modify emscripten_set_window_title in JS)');
+assert(typeof Module['TOTAL_MEMORY'] == 'undefined', 'Module.TOTAL_MEMORY has been renamed Module.INITIAL_MEMORY');
+legacyModuleProp('asm', 'wasmExports');
+legacyModuleProp('read', 'read_');
+legacyModuleProp('readAsync', 'readAsync');
+legacyModuleProp('readBinary', 'readBinary');
+legacyModuleProp('setWindowTitle', 'setWindowTitle');
+var IDBFS = 'IDBFS is no longer included by default; build with -lidbfs.js';
+var PROXYFS = 'PROXYFS is no longer included by default; build with -lproxyfs.js';
+var WORKERFS = 'WORKERFS is no longer included by default; build with -lworkerfs.js';
+var FETCHFS = 'FETCHFS is no longer included by default; build with -lfetchfs.js';
+var ICASEFS = 'ICASEFS is no longer included by default; build with -licasefs.js';
+var JSFILEFS = 'JSFILEFS is no longer included by default; build with -ljsfilefs.js';
+var OPFS = 'OPFS is no longer included by default; build with -lopfs.js';
+
+var NODEFS = 'NODEFS is no longer included by default; build with -lnodefs.js';
+
+assert(!ENVIRONMENT_IS_WEB, "web environment detected but not enabled at build time.  Add 'web' to `-sENVIRONMENT` to enable.");
+
+assert(!ENVIRONMENT_IS_WORKER, "worker environment detected but not enabled at build time.  Add 'worker' to `-sENVIRONMENT` to enable.");
+
+assert(!ENVIRONMENT_IS_SHELL, "shell environment detected but not enabled at build time.  Add 'shell' to `-sENVIRONMENT` to enable.");
 
 
 // end include: shell.js
@@ -311,8 +396,8 @@ if (Module['quit']) quit_ = Module['quit'];
 //    is up at http://kripken.github.io/emscripten-site/docs/api_reference/preamble.js.html
 
 var wasmBinary;
-if (Module['wasmBinary']) wasmBinary = Module['wasmBinary'];
-var noExitRuntime = Module['noExitRuntime'] || true;
+if (Module['wasmBinary']) wasmBinary = Module['wasmBinary'];legacyModuleProp('wasmBinary', 'wasmBinary');
+var noExitRuntime = Module['noExitRuntime'] || true;legacyModuleProp('noExitRuntime', 'noExitRuntime');
 
 if (typeof WebAssembly != 'object') {
   abort('no native wasm support detected');
@@ -338,199 +423,13 @@ var EXITSTATUS;
 /** @type {function(*, string=)} */
 function assert(condition, text) {
   if (!condition) {
-    // This build was created without ASSERTIONS defined.  `assert()` should not
-    // ever be called in this configuration but in case there are callers in
-    // the wild leave this simple abort() implemenation here for now.
-    abort(text);
+    abort('Assertion failed' + (text ? ': ' + text : ''));
   }
 }
 
-// include: runtime_strings.js
-// runtime_strings.js: String related runtime functions that are part of both
-// MINIMAL_RUNTIME and regular runtime.
+// We used to include malloc/free by default in the past. Show a helpful error in
+// builds with assertions.
 
-var UTF8Decoder = typeof TextDecoder != 'undefined' ? new TextDecoder('utf8') : undefined;
-
-/**
- * Given a pointer 'idx' to a null-terminated UTF8-encoded string in the given
- * array that contains uint8 values, returns a copy of that string as a
- * Javascript String object.
- * heapOrArray is either a regular array, or a JavaScript typed array view.
- * @param {number} idx
- * @param {number=} maxBytesToRead
- * @return {string}
- */
-function UTF8ArrayToString(heapOrArray, idx, maxBytesToRead) {
-  var endIdx = idx + maxBytesToRead;
-  var endPtr = idx;
-  // TextDecoder needs to know the byte length in advance, it doesn't stop on
-  // null terminator by itself.  Also, use the length info to avoid running tiny
-  // strings through TextDecoder, since .subarray() allocates garbage.
-  // (As a tiny code save trick, compare endPtr against endIdx using a negation,
-  // so that undefined means Infinity)
-  while (heapOrArray[endPtr] && !(endPtr >= endIdx)) ++endPtr;
-
-  if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
-    return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
-  }
-  var str = '';
-  // If building with TextDecoder, we have already computed the string length
-  // above, so test loop end condition against that
-  while (idx < endPtr) {
-    // For UTF8 byte structure, see:
-    // http://en.wikipedia.org/wiki/UTF-8#Description
-    // https://www.ietf.org/rfc/rfc2279.txt
-    // https://tools.ietf.org/html/rfc3629
-    var u0 = heapOrArray[idx++];
-    if (!(u0 & 0x80)) { str += String.fromCharCode(u0); continue; }
-    var u1 = heapOrArray[idx++] & 63;
-    if ((u0 & 0xE0) == 0xC0) { str += String.fromCharCode(((u0 & 31) << 6) | u1); continue; }
-    var u2 = heapOrArray[idx++] & 63;
-    if ((u0 & 0xF0) == 0xE0) {
-      u0 = ((u0 & 15) << 12) | (u1 << 6) | u2;
-    } else {
-      u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (heapOrArray[idx++] & 63);
-    }
-
-    if (u0 < 0x10000) {
-      str += String.fromCharCode(u0);
-    } else {
-      var ch = u0 - 0x10000;
-      str += String.fromCharCode(0xD800 | (ch >> 10), 0xDC00 | (ch & 0x3FF));
-    }
-  }
-  return str;
-}
-
-/**
- * Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the
- * emscripten HEAP, returns a copy of that string as a Javascript String object.
- *
- * @param {number} ptr
- * @param {number=} maxBytesToRead - An optional length that specifies the
- *   maximum number of bytes to read. You can omit this parameter to scan the
- *   string until the first \0 byte. If maxBytesToRead is passed, and the string
- *   at [ptr, ptr+maxBytesToReadr[ contains a null byte in the middle, then the
- *   string will cut short at that byte index (i.e. maxBytesToRead will not
- *   produce a string of exact length [ptr, ptr+maxBytesToRead[) N.B. mixing
- *   frequent uses of UTF8ToString() with and without maxBytesToRead may throw
- *   JS JIT optimizations off, so it is worth to consider consistently using one
- * @return {string}
- */
-function UTF8ToString(ptr, maxBytesToRead) {
-  return ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead) : '';
-}
-
-/**
- * Copies the given Javascript String object 'str' to the given byte array at
- * address 'outIdx', encoded in UTF8 form and null-terminated. The copy will
- * require at most str.length*4+1 bytes of space in the HEAP.  Use the function
- * lengthBytesUTF8 to compute the exact number of bytes (excluding null
- * terminator) that this function will write.
- *
- * @param {string} str - The Javascript string to copy.
- * @param {ArrayBufferView|Array<number>} heap - The array to copy to. Each
- *                                               index in this array is assumed
- *                                               to be one 8-byte element.
- * @param {number} outIdx - The starting offset in the array to begin the copying.
- * @param {number} maxBytesToWrite - The maximum number of bytes this function
- *                                   can write to the array.  This count should
- *                                   include the null terminator, i.e. if
- *                                   maxBytesToWrite=1, only the null terminator
- *                                   will be written and nothing else.
- *                                   maxBytesToWrite=0 does not write any bytes
- *                                   to the output, not even the null
- *                                   terminator.
- * @return {number} The number of bytes written, EXCLUDING the null terminator.
- */
-function stringToUTF8Array(str, heap, outIdx, maxBytesToWrite) {
-  // Parameter maxBytesToWrite is not optional. Negative values, 0, null,
-  // undefined and false each don't write out any bytes.
-  if (!(maxBytesToWrite > 0))
-    return 0;
-
-  var startIdx = outIdx;
-  var endIdx = outIdx + maxBytesToWrite - 1; // -1 for string null terminator.
-  for (var i = 0; i < str.length; ++i) {
-    // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
-    // unit, not a Unicode code point of the character! So decode
-    // UTF16->UTF32->UTF8.
-    // See http://unicode.org/faq/utf_bom.html#utf16-3
-    // For UTF8 byte structure, see http://en.wikipedia.org/wiki/UTF-8#Description
-    // and https://www.ietf.org/rfc/rfc2279.txt
-    // and https://tools.ietf.org/html/rfc3629
-    var u = str.charCodeAt(i); // possibly a lead surrogate
-    if (u >= 0xD800 && u <= 0xDFFF) {
-      var u1 = str.charCodeAt(++i);
-      u = 0x10000 + ((u & 0x3FF) << 10) | (u1 & 0x3FF);
-    }
-    if (u <= 0x7F) {
-      if (outIdx >= endIdx) break;
-      heap[outIdx++] = u;
-    } else if (u <= 0x7FF) {
-      if (outIdx + 1 >= endIdx) break;
-      heap[outIdx++] = 0xC0 | (u >> 6);
-      heap[outIdx++] = 0x80 | (u & 63);
-    } else if (u <= 0xFFFF) {
-      if (outIdx + 2 >= endIdx) break;
-      heap[outIdx++] = 0xE0 | (u >> 12);
-      heap[outIdx++] = 0x80 | ((u >> 6) & 63);
-      heap[outIdx++] = 0x80 | (u & 63);
-    } else {
-      if (outIdx + 3 >= endIdx) break;
-      heap[outIdx++] = 0xF0 | (u >> 18);
-      heap[outIdx++] = 0x80 | ((u >> 12) & 63);
-      heap[outIdx++] = 0x80 | ((u >> 6) & 63);
-      heap[outIdx++] = 0x80 | (u & 63);
-    }
-  }
-  // Null-terminate the pointer to the buffer.
-  heap[outIdx] = 0;
-  return outIdx - startIdx;
-}
-
-/**
- * Copies the given Javascript String object 'str' to the emscripten HEAP at
- * address 'outPtr', null-terminated and encoded in UTF8 form. The copy will
- * require at most str.length*4+1 bytes of space in the HEAP.
- * Use the function lengthBytesUTF8 to compute the exact number of bytes
- * (excluding null terminator) that this function will write.
- *
- * @return {number} The number of bytes written, EXCLUDING the null terminator.
- */
-function stringToUTF8(str, outPtr, maxBytesToWrite) {
-  return stringToUTF8Array(str, HEAPU8,outPtr, maxBytesToWrite);
-}
-
-/**
- * Returns the number of bytes the given Javascript string takes if encoded as a
- * UTF8 byte array, EXCLUDING the null terminator byte.
- *
- * @param {string} str - JavaScript string to operator on
- * @return {number} Length, in bytes, of the UTF8 encoded string.
- */
-function lengthBytesUTF8(str) {
-  var len = 0;
-  for (var i = 0; i < str.length; ++i) {
-    // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
-    // unit, not a Unicode code point of the character! So decode
-    // UTF16->UTF32->UTF8.
-    // See http://unicode.org/faq/utf_bom.html#utf16-3
-    var c = str.charCodeAt(i); // possibly a lead surrogate
-    if (c <= 0x7F) {
-      len++;
-    } else if (c <= 0x7FF) {
-      len += 2;
-    } else if (c >= 0xD800 && c <= 0xDFFF) {
-      len += 4; ++i;
-    } else {
-      len += 3;
-    }
-  }
-  return len;
-}
-
-// end include: runtime_strings.js
 // Memory management
 
 var HEAP,
@@ -561,9 +460,9 @@ function updateMemoryViews() {
   var b = wasmMemory.buffer;
   Module['HEAP8'] = HEAP8 = new Int8Array(b);
   Module['HEAP16'] = HEAP16 = new Int16Array(b);
-  Module['HEAP32'] = HEAP32 = new Int32Array(b);
   Module['HEAPU8'] = HEAPU8 = new Uint8Array(b);
   Module['HEAPU16'] = HEAPU16 = new Uint16Array(b);
+  Module['HEAP32'] = HEAP32 = new Int32Array(b);
   Module['HEAPU32'] = HEAPU32 = new Uint32Array(b);
   Module['HEAPF32'] = HEAPF32 = new Float32Array(b);
   Module['HEAPF64'] = HEAPF64 = new Float64Array(b);
@@ -571,11 +470,16 @@ function updateMemoryViews() {
   Module['HEAPU64'] = HEAPU64 = new BigUint64Array(b);
 }
 
+assert(!Module['STACK_SIZE'], 'STACK_SIZE can no longer be set at runtime.  Use -sSTACK_SIZE at link time')
+
+assert(typeof Int32Array != 'undefined' && typeof Float64Array !== 'undefined' && Int32Array.prototype.subarray != undefined && Int32Array.prototype.set != undefined,
+       'JS engine does not provide full typed array support');
+
 // In non-standalone/normal mode, we create the memory here.
 // include: runtime_init_memory.js
 // Create the wasm memory. (Note: this only applies if IMPORTED_MEMORY is defined)
 
-var INITIAL_MEMORY = Module['INITIAL_MEMORY'] || 16777216;
+var INITIAL_MEMORY = Module['INITIAL_MEMORY'] || 16777216;legacyModuleProp('INITIAL_MEMORY', 'INITIAL_MEMORY');
 
 assert(INITIAL_MEMORY >= 524288, 'INITIAL_MEMORY should be larger than STACK_SIZE, was ' + INITIAL_MEMORY + '! (STACK_SIZE=' + 524288 + ')');
 
@@ -592,7 +496,7 @@ assert(INITIAL_MEMORY >= 524288, 'INITIAL_MEMORY should be larger than STACK_SIZ
       // https://github.com/emscripten-core/emscripten/issues/14130
       // And in the pthreads case we definitely need to emit a maximum. So
       // always emit one.
-      'maximum': 2147483648 / 65536
+      'maximum': 2147483648 / 65536,
     });
   }
 
@@ -601,19 +505,56 @@ updateMemoryViews();
 // If the user provides an incorrect length, just use that length instead rather than providing the user to
 // specifically provide the memory length with Module['INITIAL_MEMORY'].
 INITIAL_MEMORY = wasmMemory.buffer.byteLength;
-
+assert(INITIAL_MEMORY % 65536 === 0);
 // end include: runtime_init_memory.js
 
-// include: runtime_init_table.js
-// In regular non-RELOCATABLE mode the table is exported
-// from the wasm module and this will be assigned once
-// the exports are available.
-var wasmTable;
-
-// end include: runtime_init_table.js
 // include: runtime_stack_check.js
+// Initializes the stack cookie. Called at the startup of main and at the startup of each thread in pthreads mode.
+function writeStackCookie() {
+  var max = _emscripten_stack_get_end();
+  assert((max & 3) == 0);
+  // If the stack ends at address zero we write our cookies 4 bytes into the
+  // stack.  This prevents interference with SAFE_HEAP and ASAN which also
+  // monitor writes to address zero.
+  if (max == 0) {
+    max += 4;
+  }
+  // The stack grow downwards towards _emscripten_stack_get_end.
+  // We write cookies to the final two words in the stack and detect if they are
+  // ever overwritten.
+  HEAPU32[((max)>>2)] = 0x02135467;
+  HEAPU32[(((max)+(4))>>2)] = 0x89BACDFE;
+  // Also test the global address 0 for integrity.
+  HEAPU32[((0)>>2)] = 1668509029;
+}
+
+function checkStackCookie() {
+  if (ABORT) return;
+  var max = _emscripten_stack_get_end();
+  // See writeStackCookie().
+  if (max == 0) {
+    max += 4;
+  }
+  var cookie1 = HEAPU32[((max)>>2)];
+  var cookie2 = HEAPU32[(((max)+(4))>>2)];
+  if (cookie1 != 0x02135467 || cookie2 != 0x89BACDFE) {
+    abort(`Stack overflow! Stack cookie has been overwritten at ${ptrToString(max)}, expected hex dwords 0x89BACDFE and 0x2135467, but received ${ptrToString(cookie2)} ${ptrToString(cookie1)}`);
+  }
+  // Also test the global address 0 for integrity.
+  if (HEAPU32[((0)>>2)] != 0x63736d65 /* 'emsc' */) {
+    abort('Runtime error: The application has corrupted its heap memory area (address zero)!');
+  }
+}
 // end include: runtime_stack_check.js
 // include: runtime_assertions.js
+// Endianness check
+(function() {
+  var h16 = new Int16Array(1);
+  var h8 = new Int8Array(h16.buffer);
+  h16[0] = 0x6373;
+  if (h8[0] !== 0x73 || h8[1] !== 0x63) throw 'Runtime error: expected the system to be little-endian! (Run with -sSUPPORT_BIG_ENDIAN to bypass)';
+})();
+
 // end include: runtime_assertions.js
 var __ATPRERUN__  = []; // functions called before the runtime is initialized
 var __ATINIT__    = []; // functions called during startup
@@ -622,8 +563,10 @@ var __ATPOSTRUN__ = []; // functions called after the main() is called
 
 var runtimeInitialized = false;
 
+var runtimeKeepaliveCounter = 0;
+
 function keepRuntimeAlive() {
-  return noExitRuntime;
+  return noExitRuntime || runtimeKeepaliveCounter > 0;
 }
 
 function preRun() {
@@ -637,7 +580,10 @@ function preRun() {
 }
 
 function initRuntime() {
+  assert(!runtimeInitialized);
   runtimeInitialized = true;
+
+  checkStackCookie();
 
   
 if (!Module["noFSInit"] && !FS.init.initialized)
@@ -649,6 +595,7 @@ TTY.init();
 }
 
 function postRun() {
+  checkStackCookie();
 
   if (Module['postRun']) {
     if (typeof Module['postRun'] == 'function') Module['postRun'] = [Module['postRun']];
@@ -684,6 +631,10 @@ function addOnPostRun(cb) {
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc
 
+assert(Math.imul, 'This browser does not support Math.imul(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
+assert(Math.fround, 'This browser does not support Math.fround(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
+assert(Math.clz32, 'This browser does not support Math.clz32(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
+assert(Math.trunc, 'This browser does not support Math.trunc(), build with LEGACY_VM_SUPPORT or POLYFILL_OLD_MATH_FUNCTIONS to add in a polyfill');
 // end include: runtime_math.js
 // A counter of dependencies for calling run(). If we need to
 // do asynchronous work before running, increment this and
@@ -695,9 +646,14 @@ function addOnPostRun(cb) {
 var runDependencies = 0;
 var runDependencyWatcher = null;
 var dependenciesFulfilled = null; // overridden to take different actions when all run dependencies are fulfilled
+var runDependencyTracking = {};
 
 function getUniqueRunDependency(id) {
-  return id;
+  var orig = id;
+  while (1) {
+    if (!runDependencyTracking[id]) return id;
+    id = orig + Math.random();
+  }
 }
 
 function addRunDependency(id) {
@@ -707,6 +663,33 @@ function addRunDependency(id) {
     Module['monitorRunDependencies'](runDependencies);
   }
 
+  if (id) {
+    assert(!runDependencyTracking[id]);
+    runDependencyTracking[id] = 1;
+    if (runDependencyWatcher === null && typeof setInterval != 'undefined') {
+      // Check for missing dependencies every few seconds
+      runDependencyWatcher = setInterval(() => {
+        if (ABORT) {
+          clearInterval(runDependencyWatcher);
+          runDependencyWatcher = null;
+          return;
+        }
+        var shown = false;
+        for (var dep in runDependencyTracking) {
+          if (!shown) {
+            shown = true;
+            err('still waiting on run dependencies:');
+          }
+          err(`dependency: ${dep}`);
+        }
+        if (shown) {
+          err('(end of list)');
+        }
+      }, 10000);
+    }
+  } else {
+    err('warning: run dependency added without ID');
+  }
 }
 
 function removeRunDependency(id) {
@@ -716,6 +699,12 @@ function removeRunDependency(id) {
     Module['monitorRunDependencies'](runDependencies);
   }
 
+  if (id) {
+    assert(runDependencyTracking[id]);
+    delete runDependencyTracking[id];
+  } else {
+    err('warning: run dependency removed without ID');
+  }
   if (runDependencies == 0) {
     if (runDependencyWatcher !== null) {
       clearInterval(runDependencyWatcher);
@@ -742,8 +731,6 @@ function abort(what) {
 
   ABORT = true;
   EXITSTATUS = 1;
-
-  what += '. Build with -sASSERTIONS for more info.';
 
   // Use a wasm runtime error, because a JS error might be seen as a foreign
   // exception, which means we'd run destructors on it. We need the error to
@@ -784,8 +771,16 @@ function isDataURI(filename) {
 function isFileURI(filename) {
   return filename.startsWith('file://');
 }
-
 // end include: URIUtils.js
+function createExportWrapper(name) {
+  return function() {
+    assert(runtimeInitialized, `native function \`${name}\` called before runtime initialization`);
+    var f = wasmExports[name];
+    assert(f, `exported native function \`${name}\` not found`);
+    return f.apply(null, arguments);
+  };
+}
+
 // include: runtime_exceptions.js
 // end include: runtime_exceptions.js
 var wasmBinaryFile;
@@ -799,53 +794,51 @@ if (Module['locateFile']) {
   wasmBinaryFile = new URL('sqlite3.wasm', import.meta.url).href;
 }
 
-function getBinary(file) {
-  try {
-    if (file == wasmBinaryFile && wasmBinary) {
-      return new Uint8Array(wasmBinary);
-    }
-    if (readBinary) {
-      return readBinary(file);
-    }
-    throw "both async and sync fetching of the wasm failed";
+function getBinarySync(file) {
+  if (file == wasmBinaryFile && wasmBinary) {
+    return new Uint8Array(wasmBinary);
   }
-  catch (err) {
-    abort(err);
+  if (readBinary) {
+    return readBinary(file);
   }
+  throw "both async and sync fetching of the wasm failed";
 }
 
 function getBinaryPromise(binaryFile) {
-  // If we don't have the binary yet, try to to load it asynchronously.
+  // If we don't have the binary yet, try to load it asynchronously.
   // Fetch has some additional restrictions over XHR, like it can't be used on a file:// url.
   // See https://github.com/github/fetch/pull/92#issuecomment-140665932
   // Cordova or Electron apps are typically loaded from a file:// url.
   // So use fetch if it is available and the url is not a file, otherwise fall back to XHR.
-  if (!wasmBinary && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER)) {
+  if (!wasmBinary
+      && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER)) {
     if (typeof fetch == 'function'
     ) {
-      return fetch(binaryFile, { credentials: 'same-origin' }).then(function(response) {
+      return fetch(binaryFile, { credentials: 'same-origin' }).then((response) => {
         if (!response['ok']) {
           throw "failed to load wasm binary file at '" + binaryFile + "'";
         }
         return response['arrayBuffer']();
-      }).catch(function () {
-          return getBinary(binaryFile);
-      });
+      }).catch(() => getBinarySync(binaryFile));
     }
   }
 
-  // Otherwise, getBinary should be able to get it synchronously
-  return Promise.resolve().then(function() { return getBinary(binaryFile); });
+  // Otherwise, getBinarySync should be able to get it synchronously
+  return Promise.resolve().then(() => getBinarySync(binaryFile));
 }
 
 function instantiateArrayBuffer(binaryFile, imports, receiver) {
-  return getBinaryPromise(binaryFile).then(function(binary) {
+  return getBinaryPromise(binaryFile).then((binary) => {
     return WebAssembly.instantiate(binary, imports);
-  }).then(function (instance) {
+  }).then((instance) => {
     return instance;
-  }).then(receiver, function(reason) {
-    err('failed to asynchronously prepare wasm: ' + reason);
+  }).then(receiver, (reason) => {
+    err(`failed to asynchronously prepare wasm: ${reason}`);
 
+    // Warn on some common problems.
+    if (isFileURI(wasmBinaryFile)) {
+      err(`warning: Loading from a file URI (${wasmBinaryFile}) is not supported in most browsers. See https://emscripten.org/docs/getting_started/FAQ.html#how-do-i-run-a-local-webserver-for-testing-why-does-my-program-stall-in-downloading-or-preparing`);
+    }
     abort(reason);
   });
 }
@@ -862,7 +855,7 @@ function instantiateAsync(binary, binaryFile, imports, callback) {
       //   https://github.com/emscripten-core/emscripten/pull/16917
       !ENVIRONMENT_IS_NODE &&
       typeof fetch == 'function') {
-    return fetch(binaryFile, { credentials: 'same-origin' }).then(function(response) {
+    return fetch(binaryFile, { credentials: 'same-origin' }).then((response) => {
       // Suppress closure warning here since the upstream definition for
       // instantiateStreaming only allows Promise<Repsponse> rather than
       // an actual Response.
@@ -875,14 +868,13 @@ function instantiateAsync(binary, binaryFile, imports, callback) {
         function(reason) {
           // We expect the most common failure cause to be a bad MIME type for the binary,
           // in which case falling back to ArrayBuffer instantiation should work.
-          err('wasm streaming compile failed: ' + reason);
+          err(`wasm streaming compile failed: ${reason}`);
           err('falling back to ArrayBuffer instantiation');
           return instantiateArrayBuffer(binaryFile, imports, callback);
         });
     });
-  } else {
-    return instantiateArrayBuffer(binaryFile, imports, callback);
   }
+  return instantiateArrayBuffer(binaryFile, imports, callback);
 }
 
 // Create the wasm instance.
@@ -898,39 +890,45 @@ function createWasm() {
   // performing other necessary setup
   /** @param {WebAssembly.Module=} module*/
   function receiveInstance(instance, module) {
-    var exports = instance.exports;
+    wasmExports = instance.exports;
 
-    Module['asm'] = exports;
+    
 
-    wasmTable = Module['asm']['__indirect_function_table'];
-
-    addOnInit(Module['asm']['__wasm_call_ctors']);
+    addOnInit(wasmExports['__wasm_call_ctors']);
 
     removeRunDependency('wasm-instantiate');
-
-    return exports;
+    return wasmExports;
   }
   // wait for the pthread pool (if any)
   addRunDependency('wasm-instantiate');
 
   // Prefer streaming instantiation if available.
+  // Async compilation can be confusing when an error on the page overwrites Module
+  // (for example, if the order of elements is wrong, and the one defining Module is
+  // later), so we save Module and check it later.
+  var trueModule = Module;
   function receiveInstantiationResult(result) {
     // 'result' is a ResultObject object which has both the module and instance.
     // receiveInstance() will swap in the exports (to Module.asm) so they can be called
+    assert(Module === trueModule, 'the Module object should not be replaced during async compilation - perhaps the order of HTML elements is wrong?');
+    trueModule = null;
     // TODO: Due to Closure regression https://github.com/google/closure-compiler/issues/3193, the above line no longer optimizes out down to the following line.
-    // When the regression is fixed, can restore the above USE_PTHREADS-enabled path.
+    // When the regression is fixed, can restore the above PTHREADS-enabled path.
     receiveInstance(result['instance']);
   }
 
   // User shell pages can write their own Module.instantiateWasm = function(imports, successCallback) callback
-  // to manually instantiate the Wasm module themselves. This allows pages to run the instantiation parallel
-  // to any other async startup actions they are performing.
-  // Also pthreads and wasm workers initialize the wasm instance through this path.
+  // to manually instantiate the Wasm module themselves. This allows pages to
+  // run the instantiation parallel to any other async startup actions they are
+  // performing.
+  // Also pthreads and wasm workers initialize the wasm instance through this
+  // path.
   if (Module['instantiateWasm']) {
+
     try {
       return Module['instantiateWasm'](info, receiveInstance);
     } catch(e) {
-      err('Module.instantiateWasm callback failed with error: ' + e);
+      err(`Module.instantiateWasm callback failed with error: ${e}`);
         // If instantiation fails, reject the module ready promise.
         readyPromiseReject(e);
     }
@@ -941,30 +939,122 @@ function createWasm() {
   return {}; // no exports yet; we'll fill them in later
 }
 
-// Globals used by JS i64 conversions (see makeSetValue)
-var tempDouble;
-var tempI64;
-
 // include: runtime_debug.js
+function legacyModuleProp(prop, newName, incomming=true) {
+  if (!Object.getOwnPropertyDescriptor(Module, prop)) {
+    Object.defineProperty(Module, prop, {
+      configurable: true,
+      get() {
+        let extra = incomming ? ' (the initial value can be provided on Module, but after startup the value is only looked for on a local variable of that name)' : '';
+        abort(`\`Module.${prop}\` has been replaced by \`${newName}\`` + extra);
+
+      }
+    });
+  }
+}
+
+function ignoredModuleProp(prop) {
+  if (Object.getOwnPropertyDescriptor(Module, prop)) {
+    abort(`\`Module.${prop}\` was supplied but \`${prop}\` not included in INCOMING_MODULE_JS_API`);
+  }
+}
+
+// forcing the filesystem exports a few things by default
+function isExportedByForceFilesystem(name) {
+  return name === 'FS_createPath' ||
+         name === 'FS_createDataFile' ||
+         name === 'FS_createPreloadedFile' ||
+         name === 'FS_unlink' ||
+         name === 'addRunDependency' ||
+         // The old FS has some functionality that WasmFS lacks.
+         name === 'FS_createLazyFile' ||
+         name === 'FS_createDevice' ||
+         name === 'removeRunDependency';
+}
+
+function missingGlobal(sym, msg) {
+  if (typeof globalThis !== 'undefined') {
+    Object.defineProperty(globalThis, sym, {
+      configurable: true,
+      get() {
+        warnOnce('`' + sym + '` is not longer defined by emscripten. ' + msg);
+        return undefined;
+      }
+    });
+  }
+}
+
+missingGlobal('buffer', 'Please use HEAP8.buffer or wasmMemory.buffer');
+missingGlobal('asm', 'Please use wasmExports instead');
+
+function missingLibrarySymbol(sym) {
+  if (typeof globalThis !== 'undefined' && !Object.getOwnPropertyDescriptor(globalThis, sym)) {
+    Object.defineProperty(globalThis, sym, {
+      configurable: true,
+      get() {
+        // Can't `abort()` here because it would break code that does runtime
+        // checks.  e.g. `if (typeof SDL === 'undefined')`.
+        var msg = '`' + sym + '` is a library symbol and not included by default; add it to your library.js __deps or to DEFAULT_LIBRARY_FUNCS_TO_INCLUDE on the command line';
+        // DEFAULT_LIBRARY_FUNCS_TO_INCLUDE requires the name as it appears in
+        // library.js, which means $name for a JS name with no prefix, or name
+        // for a JS name like _name.
+        var librarySymbol = sym;
+        if (!librarySymbol.startsWith('_')) {
+          librarySymbol = '$' + sym;
+        }
+        msg += " (e.g. -sDEFAULT_LIBRARY_FUNCS_TO_INCLUDE='" + librarySymbol + "')";
+        if (isExportedByForceFilesystem(sym)) {
+          msg += '. Alternatively, forcing filesystem support (-sFORCE_FILESYSTEM) can export this for you';
+        }
+        warnOnce(msg);
+        return undefined;
+      }
+    });
+  }
+  // Any symbol that is not included from the JS libary is also (by definition)
+  // not exported on the Module object.
+  unexportedRuntimeSymbol(sym);
+}
+
+function unexportedRuntimeSymbol(sym) {
+  if (!Object.getOwnPropertyDescriptor(Module, sym)) {
+    Object.defineProperty(Module, sym, {
+      configurable: true,
+      get() {
+        var msg = "'" + sym + "' was not exported. add it to EXPORTED_RUNTIME_METHODS (see the Emscripten FAQ)";
+        if (isExportedByForceFilesystem(sym)) {
+          msg += '. Alternatively, forcing filesystem support (-sFORCE_FILESYSTEM) can export this for you';
+        }
+        abort(msg);
+      }
+    });
+  }
+}
+
+// Used by XXXXX_DEBUG settings to output debug messages.
+function dbg(text) {
+  // TODO(sbc): Make this configurable somehow.  Its not always convenient for
+  // logging to show up as warnings.
+  console.warn.apply(console, arguments);
+}
 // end include: runtime_debug.js
 // === Body ===
-
 
 // end include: preamble.js
 
   /** @constructor */
   function ExitStatus(status) {
       this.name = 'ExitStatus';
-      this.message = 'Program terminated with exit(' + status + ')';
+      this.message = `Program terminated with exit(${status})`;
       this.status = status;
     }
 
-  function callRuntimeCallbacks(callbacks) {
+  var callRuntimeCallbacks = (callbacks) => {
       while (callbacks.length > 0) {
         // Pass the module as the first argument.
         callbacks.shift()(Module);
       }
-    }
+    };
 
   
     /**
@@ -982,9 +1072,16 @@ var tempI64;
       case 'float': return HEAPF32[((ptr)>>2)];
       case 'double': return HEAPF64[((ptr)>>3)];
       case '*': return HEAPU32[((ptr)>>2)];
-      default: abort('invalid type for getValue: ' + type);
+      default: abort(`invalid type for getValue: ${type}`);
     }
   }
+
+  var ptrToString = (ptr) => {
+      assert(typeof ptr === 'number');
+      // With CAN_ADDRESS_2GB or MEMORY64, pointers are already unsigned.
+      ptr >>>= 0;
+      return '0x' + ptr.toString(16).padStart(8, '0');
+    };
 
   
     /**
@@ -999,18 +1096,30 @@ var tempI64;
       case 'i8': HEAP8[((ptr)>>0)] = value; break;
       case 'i16': HEAP16[((ptr)>>1)] = value; break;
       case 'i32': HEAP32[((ptr)>>2)] = value; break;
-      case 'i64': (tempI64 = [value>>>0,(tempDouble=value,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[((ptr)>>2)] = tempI64[0],HEAP32[(((ptr)+(4))>>2)] = tempI64[1]); break;
+      case 'i64': HEAP64[((ptr)>>3)] = BigInt(value); break;
       case 'float': HEAPF32[((ptr)>>2)] = value; break;
       case 'double': HEAPF64[((ptr)>>3)] = value; break;
       case '*': HEAPU32[((ptr)>>2)] = value; break;
-      default: abort('invalid type for setValue: ' + type);
+      default: abort(`invalid type for setValue: ${type}`);
     }
   }
 
-  var PATH = {isAbs:(path) => path.charAt(0) === '/',splitPath:(filename) => {
+  var warnOnce = (text) => {
+      if (!warnOnce.shown) warnOnce.shown = {};
+      if (!warnOnce.shown[text]) {
+        warnOnce.shown[text] = 1;
+        if (ENVIRONMENT_IS_NODE) text = 'warning: ' + text;
+        err(text);
+      }
+    };
+
+  var PATH = {
+  isAbs:(path) => path.charAt(0) === '/',
+  splitPath:(filename) => {
         var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
         return splitPathRe.exec(filename).slice(1);
-      },normalizeArray:(parts, allowAboveRoot) => {
+      },
+  normalizeArray:(parts, allowAboveRoot) => {
         // if the path tries to go above the root, `up` ends up > 0
         var up = 0;
         for (var i = parts.length - 1; i >= 0; i--) {
@@ -1032,7 +1141,8 @@ var tempI64;
           }
         }
         return parts;
-      },normalize:(path) => {
+      },
+  normalize:(path) => {
         var isAbsolute = PATH.isAbs(path),
             trailingSlash = path.substr(-1) === '/';
         // Normalize the path
@@ -1044,7 +1154,8 @@ var tempI64;
           path += '/';
         }
         return (isAbsolute ? '/' : '') + path;
-      },dirname:(path) => {
+      },
+  dirname:(path) => {
         var result = PATH.splitPath(path),
             root = result[0],
             dir = result[1];
@@ -1057,7 +1168,8 @@ var tempI64;
           dir = dir.substr(0, dir.length - 1);
         }
         return root + dir;
-      },basename:(path) => {
+      },
+  basename:(path) => {
         // EMSCRIPTEN return '/'' for '/', not an empty string
         if (path === '/') return '/';
         path = PATH.normalize(path);
@@ -1065,36 +1177,53 @@ var tempI64;
         var lastSlash = path.lastIndexOf('/');
         if (lastSlash === -1) return path;
         return path.substr(lastSlash+1);
-      },join:function() {
+      },
+  join:function() {
         var paths = Array.prototype.slice.call(arguments);
         return PATH.normalize(paths.join('/'));
-      },join2:(l, r) => {
+      },
+  join2:(l, r) => {
         return PATH.normalize(l + '/' + r);
-      }};
+      },
+  };
   
-  function getRandomDevice() {
+  var initRandomFill = () => {
       if (typeof crypto == 'object' && typeof crypto['getRandomValues'] == 'function') {
         // for modern web browsers
-        var randomBuffer = new Uint8Array(1);
-        return () => { crypto.getRandomValues(randomBuffer); return randomBuffer[0]; };
+        return (view) => crypto.getRandomValues(view);
       } else
       if (ENVIRONMENT_IS_NODE) {
         // for nodejs with or without crypto support included
         try {
           var crypto_module = require('crypto');
-          // nodejs has crypto support
-          return () => crypto_module['randomBytes'](1)[0];
+          var randomFillSync = crypto_module['randomFillSync'];
+          if (randomFillSync) {
+            // nodejs with LTS crypto support
+            return (view) => crypto_module['randomFillSync'](view);
+          }
+          // very old nodejs with the original crypto API
+          var randomBytes = crypto_module['randomBytes'];
+          return (view) => (
+            view.set(randomBytes(view.byteLength)),
+            // Return the original view to match modern native implementations.
+            view
+          );
         } catch (e) {
           // nodejs doesn't have crypto support
         }
       }
       // we couldn't find a proper implementation, as Math.random() is not suitable for /dev/random, see emscripten-core/emscripten/pull/7096
-      return () => abort("randomDevice");
-    }
+      abort("no cryptographic support found for randomDevice. consider polyfilling it if you want to use something insecure like Math.random(), e.g. put this in a --pre-js: var crypto = { getRandomValues: (array) => { for (var i = 0; i < array.length; i++) array[i] = (Math.random()*256)|0 } };");
+    };
+  var randomFill = (view) => {
+      // Lazily init on the first invocation.
+      return (randomFill = initRandomFill())(view);
+    };
   
   
   
-  var PATH_FS = {resolve:function() {
+  var PATH_FS = {
+  resolve:function() {
         var resolvedPath = '',
           resolvedAbsolute = false;
         for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
@@ -1112,7 +1241,8 @@ var tempI64;
         // handle relative paths to be safe (might happen when process.cwd() fails)
         resolvedPath = PATH.normalizeArray(resolvedPath.split('/').filter((p) => !!p), !resolvedAbsolute).join('/');
         return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
-      },relative:(from, to) => {
+      },
+  relative:(from, to) => {
         from = PATH_FS.resolve(from).substr(1);
         to = PATH_FS.resolve(to).substr(1);
         function trim(arr) {
@@ -1143,9 +1273,134 @@ var tempI64;
         }
         outputParts = outputParts.concat(toParts.slice(samePartsLength));
         return outputParts.join('/');
-      }};
+      },
+  };
   
   
+  var UTF8Decoder = typeof TextDecoder != 'undefined' ? new TextDecoder('utf8') : undefined;
+  
+    /**
+     * Given a pointer 'idx' to a null-terminated UTF8-encoded string in the given
+     * array that contains uint8 values, returns a copy of that string as a
+     * Javascript String object.
+     * heapOrArray is either a regular array, or a JavaScript typed array view.
+     * @param {number} idx
+     * @param {number=} maxBytesToRead
+     * @return {string}
+     */
+  var UTF8ArrayToString = (heapOrArray, idx, maxBytesToRead) => {
+      var endIdx = idx + maxBytesToRead;
+      var endPtr = idx;
+      // TextDecoder needs to know the byte length in advance, it doesn't stop on
+      // null terminator by itself.  Also, use the length info to avoid running tiny
+      // strings through TextDecoder, since .subarray() allocates garbage.
+      // (As a tiny code save trick, compare endPtr against endIdx using a negation,
+      // so that undefined means Infinity)
+      while (heapOrArray[endPtr] && !(endPtr >= endIdx)) ++endPtr;
+  
+      if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
+        return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
+      }
+      var str = '';
+      // If building with TextDecoder, we have already computed the string length
+      // above, so test loop end condition against that
+      while (idx < endPtr) {
+        // For UTF8 byte structure, see:
+        // http://en.wikipedia.org/wiki/UTF-8#Description
+        // https://www.ietf.org/rfc/rfc2279.txt
+        // https://tools.ietf.org/html/rfc3629
+        var u0 = heapOrArray[idx++];
+        if (!(u0 & 0x80)) { str += String.fromCharCode(u0); continue; }
+        var u1 = heapOrArray[idx++] & 63;
+        if ((u0 & 0xE0) == 0xC0) { str += String.fromCharCode(((u0 & 31) << 6) | u1); continue; }
+        var u2 = heapOrArray[idx++] & 63;
+        if ((u0 & 0xF0) == 0xE0) {
+          u0 = ((u0 & 15) << 12) | (u1 << 6) | u2;
+        } else {
+          if ((u0 & 0xF8) != 0xF0) warnOnce('Invalid UTF-8 leading byte ' + ptrToString(u0) + ' encountered when deserializing a UTF-8 string in wasm memory to a JS string!');
+          u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (heapOrArray[idx++] & 63);
+        }
+  
+        if (u0 < 0x10000) {
+          str += String.fromCharCode(u0);
+        } else {
+          var ch = u0 - 0x10000;
+          str += String.fromCharCode(0xD800 | (ch >> 10), 0xDC00 | (ch & 0x3FF));
+        }
+      }
+      return str;
+    };
+  
+  var FS_stdin_getChar_buffer = [];
+  
+  var lengthBytesUTF8 = (str) => {
+      var len = 0;
+      for (var i = 0; i < str.length; ++i) {
+        // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
+        // unit, not a Unicode code point of the character! So decode
+        // UTF16->UTF32->UTF8.
+        // See http://unicode.org/faq/utf_bom.html#utf16-3
+        var c = str.charCodeAt(i); // possibly a lead surrogate
+        if (c <= 0x7F) {
+          len++;
+        } else if (c <= 0x7FF) {
+          len += 2;
+        } else if (c >= 0xD800 && c <= 0xDFFF) {
+          len += 4; ++i;
+        } else {
+          len += 3;
+        }
+      }
+      return len;
+    };
+  
+  var stringToUTF8Array = (str, heap, outIdx, maxBytesToWrite) => {
+      assert(typeof str === 'string');
+      // Parameter maxBytesToWrite is not optional. Negative values, 0, null,
+      // undefined and false each don't write out any bytes.
+      if (!(maxBytesToWrite > 0))
+        return 0;
+  
+      var startIdx = outIdx;
+      var endIdx = outIdx + maxBytesToWrite - 1; // -1 for string null terminator.
+      for (var i = 0; i < str.length; ++i) {
+        // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
+        // unit, not a Unicode code point of the character! So decode
+        // UTF16->UTF32->UTF8.
+        // See http://unicode.org/faq/utf_bom.html#utf16-3
+        // For UTF8 byte structure, see http://en.wikipedia.org/wiki/UTF-8#Description
+        // and https://www.ietf.org/rfc/rfc2279.txt
+        // and https://tools.ietf.org/html/rfc3629
+        var u = str.charCodeAt(i); // possibly a lead surrogate
+        if (u >= 0xD800 && u <= 0xDFFF) {
+          var u1 = str.charCodeAt(++i);
+          u = 0x10000 + ((u & 0x3FF) << 10) | (u1 & 0x3FF);
+        }
+        if (u <= 0x7F) {
+          if (outIdx >= endIdx) break;
+          heap[outIdx++] = u;
+        } else if (u <= 0x7FF) {
+          if (outIdx + 1 >= endIdx) break;
+          heap[outIdx++] = 0xC0 | (u >> 6);
+          heap[outIdx++] = 0x80 | (u & 63);
+        } else if (u <= 0xFFFF) {
+          if (outIdx + 2 >= endIdx) break;
+          heap[outIdx++] = 0xE0 | (u >> 12);
+          heap[outIdx++] = 0x80 | ((u >> 6) & 63);
+          heap[outIdx++] = 0x80 | (u & 63);
+        } else {
+          if (outIdx + 3 >= endIdx) break;
+          if (u > 0x10FFFF) warnOnce('Invalid Unicode code point ' + ptrToString(u) + ' encountered when serializing a JS string to a UTF-8 string in wasm memory! (Valid unicode code points should be in range 0-0x10FFFF).');
+          heap[outIdx++] = 0xF0 | (u >> 18);
+          heap[outIdx++] = 0x80 | ((u >> 12) & 63);
+          heap[outIdx++] = 0x80 | ((u >> 6) & 63);
+          heap[outIdx++] = 0x80 | (u & 63);
+        }
+      }
+      // Null-terminate the pointer to the buffer.
+      heap[outIdx] = 0;
+      return outIdx - startIdx;
+    };
   /** @type {function(string, boolean=, number=)} */
   function intArrayFromString(stringy, dontAddNull, length) {
     var len = length > 0 ? length : lengthBytesUTF8(stringy)+1;
@@ -1154,7 +1409,63 @@ var tempI64;
     if (dontAddNull) u8array.length = numBytesWritten;
     return u8array;
   }
-  var TTY = {ttys:[],init:function () {
+  var FS_stdin_getChar = () => {
+      if (!FS_stdin_getChar_buffer.length) {
+        var result = null;
+        if (ENVIRONMENT_IS_NODE) {
+          // we will read data by chunks of BUFSIZE
+          var BUFSIZE = 256;
+          var buf = Buffer.alloc(BUFSIZE);
+          var bytesRead = 0;
+  
+          // For some reason we must suppress a closure warning here, even though
+          // fd definitely exists on process.stdin, and is even the proper way to
+          // get the fd of stdin,
+          // https://github.com/nodejs/help/issues/2136#issuecomment-523649904
+          // This started to happen after moving this logic out of library_tty.js,
+          // so it is related to the surrounding code in some unclear manner.
+          /** @suppress {missingProperties} */
+          var fd = process.stdin.fd;
+  
+          try {
+            bytesRead = fs.readSync(fd, buf);
+          } catch(e) {
+            // Cross-platform differences: on Windows, reading EOF throws an exception, but on other OSes,
+            // reading EOF returns 0. Uniformize behavior by treating the EOF exception to return 0.
+            if (e.toString().includes('EOF')) bytesRead = 0;
+            else throw e;
+          }
+  
+          if (bytesRead > 0) {
+            result = buf.slice(0, bytesRead).toString('utf-8');
+          } else {
+            result = null;
+          }
+        } else
+        if (typeof window != 'undefined' &&
+          typeof window.prompt == 'function') {
+          // Browser.
+          result = window.prompt('Input: ');  // returns null on cancel
+          if (result !== null) {
+            result += '\n';
+          }
+        } else if (typeof readline == 'function') {
+          // Command line.
+          result = readline();
+          if (result !== null) {
+            result += '\n';
+          }
+        }
+        if (!result) {
+          return null;
+        }
+        FS_stdin_getChar_buffer = intArrayFromString(result, true);
+      }
+      return FS_stdin_getChar_buffer.shift();
+    };
+  var TTY = {
+  ttys:[],
+  init() {
         // https://github.com/emscripten-core/emscripten/pull/1555
         // if (ENVIRONMENT_IS_NODE) {
         //   // currently, FS.init does not distinguish if process.stdin is a file or TTY
@@ -1163,7 +1474,8 @@ var tempI64;
         //   // with text files until FS.init can be refactored.
         //   process.stdin.setEncoding('utf8');
         // }
-      },shutdown:function() {
+      },
+  shutdown() {
         // https://github.com/emscripten-core/emscripten/pull/1555
         // if (ENVIRONMENT_IS_NODE) {
         //   // inolen: any idea as to why node -e 'process.stdin.read()' wouldn't exit immediately (with process.stdin being a tty)?
@@ -1173,22 +1485,28 @@ var tempI64;
         //   // isaacs: do process.stdin.pause() and i'd think it'd probably close the pending call
         //   process.stdin.pause();
         // }
-      },register:function(dev, ops) {
+      },
+  register(dev, ops) {
         TTY.ttys[dev] = { input: [], output: [], ops: ops };
         FS.registerDevice(dev, TTY.stream_ops);
-      },stream_ops:{open:function(stream) {
+      },
+  stream_ops:{
+  open(stream) {
           var tty = TTY.ttys[stream.node.rdev];
           if (!tty) {
             throw new FS.ErrnoError(43);
           }
           stream.tty = tty;
           stream.seekable = false;
-        },close:function(stream) {
+        },
+  close(stream) {
           // flush any pending line data
           stream.tty.ops.fsync(stream.tty);
-        },fsync:function(stream) {
+        },
+  fsync(stream) {
           stream.tty.ops.fsync(stream.tty);
-        },read:function(stream, buffer, offset, length, pos /* ignored */) {
+        },
+  read(stream, buffer, offset, length, pos /* ignored */) {
           if (!stream.tty || !stream.tty.ops.get_char) {
             throw new FS.ErrnoError(60);
           }
@@ -1211,7 +1529,8 @@ var tempI64;
             stream.node.timestamp = Date.now();
           }
           return bytesRead;
-        },write:function(stream, buffer, offset, length, pos) {
+        },
+  write(stream, buffer, offset, length, pos) {
           if (!stream.tty || !stream.tty.ops.put_char) {
             throw new FS.ErrnoError(60);
           }
@@ -1226,91 +1545,88 @@ var tempI64;
             stream.node.timestamp = Date.now();
           }
           return i;
-        }},default_tty_ops:{get_char:function(tty) {
-          if (!tty.input.length) {
-            var result = null;
-            if (ENVIRONMENT_IS_NODE) {
-              // we will read data by chunks of BUFSIZE
-              var BUFSIZE = 256;
-              var buf = Buffer.alloc(BUFSIZE);
-              var bytesRead = 0;
-  
-              try {
-                bytesRead = fs.readSync(process.stdin.fd, buf, 0, BUFSIZE, -1);
-              } catch(e) {
-                // Cross-platform differences: on Windows, reading EOF throws an exception, but on other OSes,
-                // reading EOF returns 0. Uniformize behavior by treating the EOF exception to return 0.
-                if (e.toString().includes('EOF')) bytesRead = 0;
-                else throw e;
-              }
-  
-              if (bytesRead > 0) {
-                result = buf.slice(0, bytesRead).toString('utf-8');
-              } else {
-                result = null;
-              }
-            } else
-            if (typeof window != 'undefined' &&
-              typeof window.prompt == 'function') {
-              // Browser.
-              result = window.prompt('Input: ');  // returns null on cancel
-              if (result !== null) {
-                result += '\n';
-              }
-            } else if (typeof readline == 'function') {
-              // Command line.
-              result = readline();
-              if (result !== null) {
-                result += '\n';
-              }
-            }
-            if (!result) {
-              return null;
-            }
-            tty.input = intArrayFromString(result, true);
-          }
-          return tty.input.shift();
-        },put_char:function(tty, val) {
+        },
+  },
+  default_tty_ops:{
+  get_char(tty) {
+          return FS_stdin_getChar();
+        },
+  put_char(tty, val) {
           if (val === null || val === 10) {
             out(UTF8ArrayToString(tty.output, 0));
             tty.output = [];
           } else {
             if (val != 0) tty.output.push(val); // val == 0 would cut text output off in the middle.
           }
-        },fsync:function(tty) {
+        },
+  fsync(tty) {
           if (tty.output && tty.output.length > 0) {
             out(UTF8ArrayToString(tty.output, 0));
             tty.output = [];
           }
-        }},default_tty1_ops:{put_char:function(tty, val) {
+        },
+  ioctl_tcgets(tty) {
+          // typical setting
+          return {
+            c_iflag: 25856,
+            c_oflag: 5,
+            c_cflag: 191,
+            c_lflag: 35387,
+            c_cc: [
+              0x03, 0x1c, 0x7f, 0x15, 0x04, 0x00, 0x01, 0x00, 0x11, 0x13, 0x1a, 0x00,
+              0x12, 0x0f, 0x17, 0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+              0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            ]
+          };
+        },
+  ioctl_tcsets(tty, optional_actions, data) {
+          // currently just ignore
+          return 0;
+        },
+  ioctl_tiocgwinsz(tty) {
+          return [24, 80];
+        },
+  },
+  default_tty1_ops:{
+  put_char(tty, val) {
           if (val === null || val === 10) {
             err(UTF8ArrayToString(tty.output, 0));
             tty.output = [];
           } else {
             if (val != 0) tty.output.push(val);
           }
-        },fsync:function(tty) {
+        },
+  fsync(tty) {
           if (tty.output && tty.output.length > 0) {
             err(UTF8ArrayToString(tty.output, 0));
             tty.output = [];
           }
-        }}};
+        },
+  },
+  };
   
   
-  function zeroMemory(address, size) {
+  var zeroMemory = (address, size) => {
       HEAPU8.fill(0, address, address + size);
       return address;
-    }
+    };
   
-  function alignMemory(size, alignment) {
+  var alignMemory = (size, alignment) => {
+      assert(alignment, "alignment argument is required");
       return Math.ceil(size / alignment) * alignment;
-    }
-  function mmapAlloc(size) {
-      abort();
-    }
-  var MEMFS = {ops_table:null,mount:function(mount) {
+    };
+  var mmapAlloc = (size) => {
+      size = alignMemory(size, 65536);
+      var ptr = _emscripten_builtin_memalign(65536, size);
+      if (!ptr) return 0;
+      return zeroMemory(ptr, size);
+    };
+  var MEMFS = {
+  ops_table:null,
+  mount(mount) {
         return MEMFS.createNode(null, '/', 16384 | 511 /* 0777 */, 0);
-      },createNode:function(parent, name, mode, dev) {
+      },
+  createNode(parent, name, mode, dev) {
         if (FS.isBlkdev(mode) || FS.isFIFO(mode)) {
           // no supported
           throw new FS.ErrnoError(63);
@@ -1391,11 +1707,13 @@ var tempI64;
           parent.timestamp = node.timestamp;
         }
         return node;
-      },getFileDataAsTypedArray:function(node) {
+      },
+  getFileDataAsTypedArray(node) {
         if (!node.contents) return new Uint8Array(0);
         if (node.contents.subarray) return node.contents.subarray(0, node.usedBytes); // Make sure to not return excess unused bytes.
         return new Uint8Array(node.contents);
-      },expandFileStorage:function(node, newCapacity) {
+      },
+  expandFileStorage(node, newCapacity) {
         var prevCapacity = node.contents ? node.contents.length : 0;
         if (prevCapacity >= newCapacity) return; // No need to expand, the storage was already large enough.
         // Don't expand strictly to the given requested limit if it's only a very small increase, but instead geometrically grow capacity.
@@ -1407,7 +1725,8 @@ var tempI64;
         var oldContents = node.contents;
         node.contents = new Uint8Array(newCapacity); // Allocate new storage.
         if (node.usedBytes > 0) node.contents.set(oldContents.subarray(0, node.usedBytes), 0); // Copy old data over to the new storage.
-      },resizeFileStorage:function(node, newSize) {
+      },
+  resizeFileStorage(node, newSize) {
         if (node.usedBytes == newSize) return;
         if (newSize == 0) {
           node.contents = null; // Fully decommit when requesting a resize to zero.
@@ -1420,7 +1739,9 @@ var tempI64;
           }
           node.usedBytes = newSize;
         }
-      },node_ops:{getattr:function(node) {
+      },
+  node_ops:{
+  getattr(node) {
           var attr = {};
           // device numbers reuse inode numbers.
           attr.dev = FS.isChrdev(node.mode) ? node.id : 1;
@@ -1447,7 +1768,8 @@ var tempI64;
           attr.blksize = 4096;
           attr.blocks = Math.ceil(attr.size / attr.blksize);
           return attr;
-        },setattr:function(node, attr) {
+        },
+  setattr(node, attr) {
           if (attr.mode !== undefined) {
             node.mode = attr.mode;
           }
@@ -1457,11 +1779,14 @@ var tempI64;
           if (attr.size !== undefined) {
             MEMFS.resizeFileStorage(node, attr.size);
           }
-        },lookup:function(parent, name) {
+        },
+  lookup(parent, name) {
           throw FS.genericErrors[44];
-        },mknod:function(parent, name, mode, dev) {
+        },
+  mknod(parent, name, mode, dev) {
           return MEMFS.createNode(parent, name, mode, dev);
-        },rename:function(old_node, new_dir, new_name) {
+        },
+  rename(old_node, new_dir, new_name) {
           // if we're overwriting a directory at new_name, make sure it's empty.
           if (FS.isDir(old_node.mode)) {
             var new_node;
@@ -1482,17 +1807,20 @@ var tempI64;
           new_dir.contents[new_name] = old_node;
           new_dir.timestamp = old_node.parent.timestamp;
           old_node.parent = new_dir;
-        },unlink:function(parent, name) {
+        },
+  unlink(parent, name) {
           delete parent.contents[name];
           parent.timestamp = Date.now();
-        },rmdir:function(parent, name) {
+        },
+  rmdir(parent, name) {
           var node = FS.lookupNode(parent, name);
           for (var i in node.contents) {
             throw new FS.ErrnoError(55);
           }
           delete parent.contents[name];
           parent.timestamp = Date.now();
-        },readdir:function(node) {
+        },
+  readdir(node) {
           var entries = ['.', '..'];
           for (var key in node.contents) {
             if (!node.contents.hasOwnProperty(key)) {
@@ -1501,26 +1829,35 @@ var tempI64;
             entries.push(key);
           }
           return entries;
-        },symlink:function(parent, newname, oldpath) {
+        },
+  symlink(parent, newname, oldpath) {
           var node = MEMFS.createNode(parent, newname, 511 /* 0777 */ | 40960, 0);
           node.link = oldpath;
           return node;
-        },readlink:function(node) {
+        },
+  readlink(node) {
           if (!FS.isLink(node.mode)) {
             throw new FS.ErrnoError(28);
           }
           return node.link;
-        }},stream_ops:{read:function(stream, buffer, offset, length, position) {
+        },
+  },
+  stream_ops:{
+  read(stream, buffer, offset, length, position) {
           var contents = stream.node.contents;
           if (position >= stream.node.usedBytes) return 0;
           var size = Math.min(stream.node.usedBytes - position, length);
+          assert(size >= 0);
           if (size > 8 && contents.subarray) { // non-trivial, and typed array
             buffer.set(contents.subarray(position, position + size), offset);
           } else {
             for (var i = 0; i < size; i++) buffer[offset + i] = contents[position + i];
           }
           return size;
-        },write:function(stream, buffer, offset, length, position, canOwn) {
+        },
+  write(stream, buffer, offset, length, position, canOwn) {
+          // The data buffer should be a typed array view
+          assert(!(buffer instanceof ArrayBuffer));
           // If the buffer is located in main memory (HEAP), and if
           // memory can grow, we can't hold on to references of the
           // memory buffer, as they may get invalidated. That means we
@@ -1535,6 +1872,7 @@ var tempI64;
   
           if (buffer.subarray && (!node.contents || node.contents.subarray)) { // This write is from a typed array to a typed array?
             if (canOwn) {
+              assert(position === 0, 'canOwn must imply no weird position inside the file');
               node.contents = buffer.subarray(offset, offset + length);
               node.usedBytes = length;
               return length;
@@ -1560,7 +1898,8 @@ var tempI64;
           }
           node.usedBytes = Math.max(node.usedBytes, position + length);
           return length;
-        },llseek:function(stream, offset, whence) {
+        },
+  llseek(stream, offset, whence) {
           var position = offset;
           if (whence === 1) {
             position += stream.position;
@@ -1573,10 +1912,12 @@ var tempI64;
             throw new FS.ErrnoError(28);
           }
           return position;
-        },allocate:function(stream, offset, length) {
+        },
+  allocate(stream, offset, length) {
           MEMFS.expandFileStorage(stream.node, offset + length);
           stream.node.usedBytes = Math.max(stream.node.usedBytes, offset + length);
-        },mmap:function(stream, length, position, prot, flags) {
+        },
+  mmap(stream, length, position, prot, flags) {
           if (!FS.isFile(stream.node.mode)) {
             throw new FS.ErrnoError(43);
           }
@@ -1605,31 +1946,264 @@ var tempI64;
             }
             HEAP8.set(contents, ptr);
           }
-          return { ptr: ptr, allocated: allocated };
-        },msync:function(stream, buffer, offset, length, mmapFlags) {
+          return { ptr, allocated };
+        },
+  msync(stream, buffer, offset, length, mmapFlags) {
           MEMFS.stream_ops.write(stream, buffer, 0, length, offset, false);
           // should we check if bytesWritten and length are the same?
           return 0;
-        }}};
+        },
+  },
+  };
   
   /** @param {boolean=} noRunDep */
-  function asyncLoad(url, onload, onerror, noRunDep) {
-      var dep = !noRunDep ? getUniqueRunDependency('al ' + url) : '';
+  var asyncLoad = (url, onload, onerror, noRunDep) => {
+      var dep = !noRunDep ? getUniqueRunDependency(`al ${url}`) : '';
       readAsync(url, (arrayBuffer) => {
-        assert(arrayBuffer, 'Loading data file "' + url + '" failed (no arrayBuffer).');
+        assert(arrayBuffer, `Loading data file "${url}" failed (no arrayBuffer).`);
         onload(new Uint8Array(arrayBuffer));
         if (dep) removeRunDependency(dep);
       }, (event) => {
         if (onerror) {
           onerror();
         } else {
-          throw 'Loading data file "' + url + '" failed.';
+          throw `Loading data file "${url}" failed.`;
         }
       });
       if (dep) addRunDependency(dep);
-    }
+    };
   
-  var FS = {root:null,mounts:[],devices:{},streams:[],nextInode:1,nameTable:null,currentPath:"/",initialized:false,ignorePermissions:true,ErrnoError:null,genericErrors:{},filesystems:null,syncFSRequests:0,lookupPath:(path, opts = {}) => {
+  
+  var FS_createDataFile = (parent, name, fileData, canRead, canWrite, canOwn) => {
+      return FS.createDataFile(parent, name, fileData, canRead, canWrite, canOwn);
+    };
+  
+  var preloadPlugins = Module['preloadPlugins'] || [];
+  var FS_handledByPreloadPlugin = (byteArray, fullname, finish, onerror) => {
+      // Ensure plugins are ready.
+      if (typeof Browser != 'undefined') Browser.init();
+  
+      var handled = false;
+      preloadPlugins.forEach((plugin) => {
+        if (handled) return;
+        if (plugin['canHandle'](fullname)) {
+          plugin['handle'](byteArray, fullname, finish, onerror);
+          handled = true;
+        }
+      });
+      return handled;
+    };
+  var FS_createPreloadedFile = (parent, name, url, canRead, canWrite, onload, onerror, dontCreateFile, canOwn, preFinish) => {
+      // TODO we should allow people to just pass in a complete filename instead
+      // of parent and name being that we just join them anyways
+      var fullname = name ? PATH_FS.resolve(PATH.join2(parent, name)) : parent;
+      var dep = getUniqueRunDependency(`cp ${fullname}`); // might have several active requests for the same fullname
+      function processData(byteArray) {
+        function finish(byteArray) {
+          if (preFinish) preFinish();
+          if (!dontCreateFile) {
+            FS_createDataFile(parent, name, byteArray, canRead, canWrite, canOwn);
+          }
+          if (onload) onload();
+          removeRunDependency(dep);
+        }
+        if (FS_handledByPreloadPlugin(byteArray, fullname, finish, () => {
+          if (onerror) onerror();
+          removeRunDependency(dep);
+        })) {
+          return;
+        }
+        finish(byteArray);
+      }
+      addRunDependency(dep);
+      if (typeof url == 'string') {
+        asyncLoad(url, (byteArray) => processData(byteArray), onerror);
+      } else {
+        processData(url);
+      }
+    };
+  
+  var FS_modeStringToFlags = (str) => {
+      var flagModes = {
+        'r': 0,
+        'r+': 2,
+        'w': 512 | 64 | 1,
+        'w+': 512 | 64 | 2,
+        'a': 1024 | 64 | 1,
+        'a+': 1024 | 64 | 2,
+      };
+      var flags = flagModes[str];
+      if (typeof flags == 'undefined') {
+        throw new Error(`Unknown file open mode: ${str}`);
+      }
+      return flags;
+    };
+  
+  var FS_getMode = (canRead, canWrite) => {
+      var mode = 0;
+      if (canRead) mode |= 292 | 73;
+      if (canWrite) mode |= 146;
+      return mode;
+    };
+  
+  
+  
+  
+  var ERRNO_MESSAGES = {
+  0:"Success",
+  1:"Arg list too long",
+  2:"Permission denied",
+  3:"Address already in use",
+  4:"Address not available",
+  5:"Address family not supported by protocol family",
+  6:"No more processes",
+  7:"Socket already connected",
+  8:"Bad file number",
+  9:"Trying to read unreadable message",
+  10:"Mount device busy",
+  11:"Operation canceled",
+  12:"No children",
+  13:"Connection aborted",
+  14:"Connection refused",
+  15:"Connection reset by peer",
+  16:"File locking deadlock error",
+  17:"Destination address required",
+  18:"Math arg out of domain of func",
+  19:"Quota exceeded",
+  20:"File exists",
+  21:"Bad address",
+  22:"File too large",
+  23:"Host is unreachable",
+  24:"Identifier removed",
+  25:"Illegal byte sequence",
+  26:"Connection already in progress",
+  27:"Interrupted system call",
+  28:"Invalid argument",
+  29:"I/O error",
+  30:"Socket is already connected",
+  31:"Is a directory",
+  32:"Too many symbolic links",
+  33:"Too many open files",
+  34:"Too many links",
+  35:"Message too long",
+  36:"Multihop attempted",
+  37:"File or path name too long",
+  38:"Network interface is not configured",
+  39:"Connection reset by network",
+  40:"Network is unreachable",
+  41:"Too many open files in system",
+  42:"No buffer space available",
+  43:"No such device",
+  44:"No such file or directory",
+  45:"Exec format error",
+  46:"No record locks available",
+  47:"The link has been severed",
+  48:"Not enough core",
+  49:"No message of desired type",
+  50:"Protocol not available",
+  51:"No space left on device",
+  52:"Function not implemented",
+  53:"Socket is not connected",
+  54:"Not a directory",
+  55:"Directory not empty",
+  56:"State not recoverable",
+  57:"Socket operation on non-socket",
+  59:"Not a typewriter",
+  60:"No such device or address",
+  61:"Value too large for defined data type",
+  62:"Previous owner died",
+  63:"Not super-user",
+  64:"Broken pipe",
+  65:"Protocol error",
+  66:"Unknown protocol",
+  67:"Protocol wrong type for socket",
+  68:"Math result not representable",
+  69:"Read only file system",
+  70:"Illegal seek",
+  71:"No such process",
+  72:"Stale file handle",
+  73:"Connection timed out",
+  74:"Text file busy",
+  75:"Cross-device link",
+  100:"Device not a stream",
+  101:"Bad font file fmt",
+  102:"Invalid slot",
+  103:"Invalid request code",
+  104:"No anode",
+  105:"Block device required",
+  106:"Channel number out of range",
+  107:"Level 3 halted",
+  108:"Level 3 reset",
+  109:"Link number out of range",
+  110:"Protocol driver not attached",
+  111:"No CSI structure available",
+  112:"Level 2 halted",
+  113:"Invalid exchange",
+  114:"Invalid request descriptor",
+  115:"Exchange full",
+  116:"No data (for no delay io)",
+  117:"Timer expired",
+  118:"Out of streams resources",
+  119:"Machine is not on the network",
+  120:"Package not installed",
+  121:"The object is remote",
+  122:"Advertise error",
+  123:"Srmount error",
+  124:"Communication error on send",
+  125:"Cross mount point (not really error)",
+  126:"Given log. name not unique",
+  127:"f.d. invalid for this operation",
+  128:"Remote address changed",
+  129:"Can   access a needed shared lib",
+  130:"Accessing a corrupted shared lib",
+  131:".lib section in a.out corrupted",
+  132:"Attempting to link in too many libs",
+  133:"Attempting to exec a shared library",
+  135:"Streams pipe error",
+  136:"Too many users",
+  137:"Socket type not supported",
+  138:"Not supported",
+  139:"Protocol family not supported",
+  140:"Can't send after socket shutdown",
+  141:"Too many references",
+  142:"Host is down",
+  148:"No medium (in tape drive)",
+  156:"Level 2 not synchronized",
+  };
+  
+  var ERRNO_CODES = {
+  };
+  
+  var demangle = (func) => {
+      warnOnce('warning: build with -sDEMANGLE_SUPPORT to link in libcxxabi demangling');
+      return func;
+    };
+  var demangleAll = (text) => {
+      var regex =
+        /\b_Z[\w\d_]+/g;
+      return text.replace(regex,
+        function(x) {
+          var y = demangle(x);
+          return x === y ? x : (y + ' [' + x + ']');
+        });
+    };
+  var FS = {
+  root:null,
+  mounts:[],
+  devices:{
+  },
+  streams:[],
+  nextInode:1,
+  nameTable:null,
+  currentPath:"/",
+  initialized:false,
+  ignorePermissions:true,
+  ErrnoError:null,
+  genericErrors:{
+  },
+  filesystems:null,
+  syncFSRequests:0,
+  lookupPath(path, opts = {}) {
         path = PATH_FS.resolve(path);
   
         if (!path) return { path: '', node: null };
@@ -1687,29 +2261,33 @@ var tempI64;
         }
   
         return { path: current_path, node: current };
-      },getPath:(node) => {
+      },
+  getPath(node) {
         var path;
         while (true) {
           if (FS.isRoot(node)) {
             var mount = node.mount.mountpoint;
             if (!path) return mount;
-            return mount[mount.length-1] !== '/' ? mount + '/' + path : mount + path;
+            return mount[mount.length-1] !== '/' ? `${mount}/${path}` : mount + path;
           }
-          path = path ? node.name + '/' + path : node.name;
+          path = path ? `${node.name}/${path}` : node.name;
           node = node.parent;
         }
-      },hashName:(parentid, name) => {
+      },
+  hashName(parentid, name) {
         var hash = 0;
   
         for (var i = 0; i < name.length; i++) {
           hash = ((hash << 5) - hash + name.charCodeAt(i)) | 0;
         }
         return ((parentid + hash) >>> 0) % FS.nameTable.length;
-      },hashAddNode:(node) => {
+      },
+  hashAddNode(node) {
         var hash = FS.hashName(node.parent.id, node.name);
         node.name_next = FS.nameTable[hash];
         FS.nameTable[hash] = node;
-      },hashRemoveNode:(node) => {
+      },
+  hashRemoveNode(node) {
         var hash = FS.hashName(node.parent.id, node.name);
         if (FS.nameTable[hash] === node) {
           FS.nameTable[hash] = node.name_next;
@@ -1723,7 +2301,8 @@ var tempI64;
             current = current.name_next;
           }
         }
-      },lookupNode:(parent, name) => {
+      },
+  lookupNode(parent, name) {
         var errCode = FS.mayLookup(parent);
         if (errCode) {
           throw new FS.ErrnoError(errCode, parent);
@@ -1737,45 +2316,53 @@ var tempI64;
         }
         // if we failed to find it in the cache, call into the VFS
         return FS.lookup(parent, name);
-      },createNode:(parent, name, mode, rdev) => {
+      },
+  createNode(parent, name, mode, rdev) {
+        assert(typeof parent == 'object')
         var node = new FS.FSNode(parent, name, mode, rdev);
   
         FS.hashAddNode(node);
   
         return node;
-      },destroyNode:(node) => {
+      },
+  destroyNode(node) {
         FS.hashRemoveNode(node);
-      },isRoot:(node) => {
+      },
+  isRoot(node) {
         return node === node.parent;
-      },isMountpoint:(node) => {
+      },
+  isMountpoint(node) {
         return !!node.mounted;
-      },isFile:(mode) => {
+      },
+  isFile(mode) {
         return (mode & 61440) === 32768;
-      },isDir:(mode) => {
+      },
+  isDir(mode) {
         return (mode & 61440) === 16384;
-      },isLink:(mode) => {
+      },
+  isLink(mode) {
         return (mode & 61440) === 40960;
-      },isChrdev:(mode) => {
+      },
+  isChrdev(mode) {
         return (mode & 61440) === 8192;
-      },isBlkdev:(mode) => {
+      },
+  isBlkdev(mode) {
         return (mode & 61440) === 24576;
-      },isFIFO:(mode) => {
+      },
+  isFIFO(mode) {
         return (mode & 61440) === 4096;
-      },isSocket:(mode) => {
+      },
+  isSocket(mode) {
         return (mode & 49152) === 49152;
-      },flagModes:{"r":0,"r+":2,"w":577,"w+":578,"a":1089,"a+":1090},modeStringToFlags:(str) => {
-        var flags = FS.flagModes[str];
-        if (typeof flags == 'undefined') {
-          throw new Error('Unknown file open mode: ' + str);
-        }
-        return flags;
-      },flagsToPermissionString:(flag) => {
+      },
+  flagsToPermissionString(flag) {
         var perms = ['r', 'w', 'rw'][flag & 3];
         if ((flag & 512)) {
           perms += 'w';
         }
         return perms;
-      },nodePermissions:(node, perms) => {
+      },
+  nodePermissions(node, perms) {
         if (FS.ignorePermissions) {
           return 0;
         }
@@ -1788,19 +2375,22 @@ var tempI64;
           return 2;
         }
         return 0;
-      },mayLookup:(dir) => {
+      },
+  mayLookup(dir) {
         var errCode = FS.nodePermissions(dir, 'x');
         if (errCode) return errCode;
         if (!dir.node_ops.lookup) return 2;
         return 0;
-      },mayCreate:(dir, name) => {
+      },
+  mayCreate(dir, name) {
         try {
           var node = FS.lookupNode(dir, name);
           return 20;
         } catch (e) {
         }
         return FS.nodePermissions(dir, 'wx');
-      },mayDelete:(dir, name, isdir) => {
+      },
+  mayDelete(dir, name, isdir) {
         var node;
         try {
           node = FS.lookupNode(dir, name);
@@ -1824,7 +2414,8 @@ var tempI64;
           }
         }
         return 0;
-      },mayOpen:(node, flags) => {
+      },
+  mayOpen(node, flags) {
         if (!node) {
           return 44;
         }
@@ -1837,14 +2428,25 @@ var tempI64;
           }
         }
         return FS.nodePermissions(node, FS.flagsToPermissionString(flags));
-      },MAX_OPEN_FDS:4096,nextfd:(fd_start = 0, fd_end = FS.MAX_OPEN_FDS) => {
-        for (var fd = fd_start; fd <= fd_end; fd++) {
+      },
+  MAX_OPEN_FDS:4096,
+  nextfd() {
+        for (var fd = 0; fd <= FS.MAX_OPEN_FDS; fd++) {
           if (!FS.streams[fd]) {
             return fd;
           }
         }
         throw new FS.ErrnoError(33);
-      },getStream:(fd) => FS.streams[fd],createStream:(stream, fd_start, fd_end) => {
+      },
+  getStreamChecked(fd) {
+        var stream = FS.getStream(fd);
+        if (!stream) {
+          throw new FS.ErrnoError(8);
+        }
+        return stream;
+      },
+  getStream:(fd) => FS.streams[fd],
+  createStream(stream, fd = -1) {
         if (!FS.FSStream) {
           FS.FSStream = /** @constructor */ function() {
             this.shared = { };
@@ -1853,45 +2455,50 @@ var tempI64;
           Object.defineProperties(FS.FSStream.prototype, {
             object: {
               /** @this {FS.FSStream} */
-              get: function() { return this.node; },
+              get() { return this.node; },
               /** @this {FS.FSStream} */
-              set: function(val) { this.node = val; }
+              set(val) { this.node = val; }
             },
             isRead: {
               /** @this {FS.FSStream} */
-              get: function() { return (this.flags & 2097155) !== 1; }
+              get() { return (this.flags & 2097155) !== 1; }
             },
             isWrite: {
               /** @this {FS.FSStream} */
-              get: function() { return (this.flags & 2097155) !== 0; }
+              get() { return (this.flags & 2097155) !== 0; }
             },
             isAppend: {
               /** @this {FS.FSStream} */
-              get: function() { return (this.flags & 1024); }
+              get() { return (this.flags & 1024); }
             },
             flags: {
               /** @this {FS.FSStream} */
-              get: function() { return this.shared.flags; },
+              get() { return this.shared.flags; },
               /** @this {FS.FSStream} */
-              set: function(val) { this.shared.flags = val; },
+              set(val) { this.shared.flags = val; },
             },
             position : {
               /** @this {FS.FSStream} */
-              get: function() { return this.shared.position; },
+              get() { return this.shared.position; },
               /** @this {FS.FSStream} */
-              set: function(val) { this.shared.position = val; },
+              set(val) { this.shared.position = val; },
             },
           });
         }
         // clone it, so we can return an instance of FSStream
         stream = Object.assign(new FS.FSStream(), stream);
-        var fd = FS.nextfd(fd_start, fd_end);
+        if (fd == -1) {
+          fd = FS.nextfd();
+        }
         stream.fd = fd;
         FS.streams[fd] = stream;
         return stream;
-      },closeStream:(fd) => {
+      },
+  closeStream(fd) {
         FS.streams[fd] = null;
-      },chrdev_stream_ops:{open:(stream) => {
+      },
+  chrdev_stream_ops:{
+  open(stream) {
           var device = FS.getDevice(stream.node.rdev);
           // override node's stream ops with the device's
           stream.stream_ops = device.stream_ops;
@@ -1899,11 +2506,19 @@ var tempI64;
           if (stream.stream_ops.open) {
             stream.stream_ops.open(stream);
           }
-        },llseek:() => {
+        },
+  llseek() {
           throw new FS.ErrnoError(70);
-        }},major:(dev) => ((dev) >> 8),minor:(dev) => ((dev) & 0xff),makedev:(ma, mi) => ((ma) << 8 | (mi)),registerDevice:(dev, ops) => {
+        },
+  },
+  major:(dev) => ((dev) >> 8),
+  minor:(dev) => ((dev) & 0xff),
+  makedev:(ma, mi) => ((ma) << 8 | (mi)),
+  registerDevice(dev, ops) {
         FS.devices[dev] = { stream_ops: ops };
-      },getDevice:(dev) => FS.devices[dev],getMounts:(mount) => {
+      },
+  getDevice:(dev) => FS.devices[dev],
+  getMounts(mount) {
         var mounts = [];
         var check = [mount];
   
@@ -1916,7 +2531,8 @@ var tempI64;
         }
   
         return mounts;
-      },syncfs:(populate, callback) => {
+      },
+  syncfs(populate, callback) {
         if (typeof populate == 'function') {
           callback = populate;
           populate = false;
@@ -1925,13 +2541,14 @@ var tempI64;
         FS.syncFSRequests++;
   
         if (FS.syncFSRequests > 1) {
-          err('warning: ' + FS.syncFSRequests + ' FS.syncfs operations in flight at once, probably just doing extra work');
+          err(`warning: ${FS.syncFSRequests} FS.syncfs operations in flight at once, probably just doing extra work`);
         }
   
         var mounts = FS.getMounts(FS.root.mount);
         var completed = 0;
   
         function doCallback(errCode) {
+          assert(FS.syncFSRequests > 0);
           FS.syncFSRequests--;
           return callback(errCode);
         }
@@ -1956,7 +2573,13 @@ var tempI64;
           }
           mount.type.syncfs(mount, populate, done);
         });
-      },mount:(type, opts, mountpoint) => {
+      },
+  mount(type, opts, mountpoint) {
+        if (typeof type == 'string') {
+          // The filesystem was not included, and instead we have an error
+          // message stored in the variable.
+          throw type;
+        }
         var root = mountpoint === '/';
         var pseudo = !mountpoint;
         var node;
@@ -1979,9 +2602,9 @@ var tempI64;
         }
   
         var mount = {
-          type: type,
-          opts: opts,
-          mountpoint: mountpoint,
+          type,
+          opts,
+          mountpoint,
           mounts: []
         };
   
@@ -2003,7 +2626,8 @@ var tempI64;
         }
   
         return mountRoot;
-      },unmount:(mountpoint) => {
+      },
+  unmount(mountpoint) {
         var lookup = FS.lookupPath(mountpoint, { follow_mount: false });
   
         if (!FS.isMountpoint(lookup.node)) {
@@ -2034,10 +2658,13 @@ var tempI64;
   
         // remove this mount from the child mounts
         var idx = node.mount.mounts.indexOf(mount);
+        assert(idx !== -1);
         node.mount.mounts.splice(idx, 1);
-      },lookup:(parent, name) => {
+      },
+  lookup(parent, name) {
         return parent.node_ops.lookup(parent, name);
-      },mknod:(path, mode, dev) => {
+      },
+  mknod(path, mode, dev) {
         var lookup = FS.lookupPath(path, { parent: true });
         var parent = lookup.node;
         var name = PATH.basename(path);
@@ -2052,17 +2679,20 @@ var tempI64;
           throw new FS.ErrnoError(63);
         }
         return parent.node_ops.mknod(parent, name, mode, dev);
-      },create:(path, mode) => {
+      },
+  create(path, mode) {
         mode = mode !== undefined ? mode : 438 /* 0666 */;
         mode &= 4095;
         mode |= 32768;
         return FS.mknod(path, mode, 0);
-      },mkdir:(path, mode) => {
+      },
+  mkdir(path, mode) {
         mode = mode !== undefined ? mode : 511 /* 0777 */;
         mode &= 511 | 512;
         mode |= 16384;
         return FS.mknod(path, mode, 0);
-      },mkdirTree:(path, mode) => {
+      },
+  mkdirTree(path, mode) {
         var dirs = path.split('/');
         var d = '';
         for (var i = 0; i < dirs.length; ++i) {
@@ -2074,14 +2704,16 @@ var tempI64;
             if (e.errno != 20) throw e;
           }
         }
-      },mkdev:(path, mode, dev) => {
+      },
+  mkdev(path, mode, dev) {
         if (typeof dev == 'undefined') {
           dev = mode;
           mode = 438 /* 0666 */;
         }
         mode |= 8192;
         return FS.mknod(path, mode, dev);
-      },symlink:(oldpath, newpath) => {
+      },
+  symlink(oldpath, newpath) {
         if (!PATH_FS.resolve(oldpath)) {
           throw new FS.ErrnoError(44);
         }
@@ -2099,7 +2731,8 @@ var tempI64;
           throw new FS.ErrnoError(63);
         }
         return parent.node_ops.symlink(parent, newname, oldpath);
-      },rename:(old_path, new_path) => {
+      },
+  rename(old_path, new_path) {
         var old_dirname = PATH.dirname(old_path);
         var new_dirname = PATH.dirname(new_path);
         var old_name = PATH.basename(old_path);
@@ -2180,7 +2813,8 @@ var tempI64;
           // changed its name)
           FS.hashAddNode(old_node);
         }
-      },rmdir:(path) => {
+      },
+  rmdir(path) {
         var lookup = FS.lookupPath(path, { parent: true });
         var parent = lookup.node;
         var name = PATH.basename(path);
@@ -2197,14 +2831,16 @@ var tempI64;
         }
         parent.node_ops.rmdir(parent, name);
         FS.destroyNode(node);
-      },readdir:(path) => {
+      },
+  readdir(path) {
         var lookup = FS.lookupPath(path, { follow: true });
         var node = lookup.node;
         if (!node.node_ops.readdir) {
           throw new FS.ErrnoError(54);
         }
         return node.node_ops.readdir(node);
-      },unlink:(path) => {
+      },
+  unlink(path) {
         var lookup = FS.lookupPath(path, { parent: true });
         var parent = lookup.node;
         if (!parent) {
@@ -2227,7 +2863,8 @@ var tempI64;
         }
         parent.node_ops.unlink(parent, name);
         FS.destroyNode(node);
-      },readlink:(path) => {
+      },
+  readlink(path) {
         var lookup = FS.lookupPath(path);
         var link = lookup.node;
         if (!link) {
@@ -2237,7 +2874,8 @@ var tempI64;
           throw new FS.ErrnoError(28);
         }
         return PATH_FS.resolve(FS.getPath(link.parent), link.node_ops.readlink(link));
-      },stat:(path, dontFollow) => {
+      },
+  stat(path, dontFollow) {
         var lookup = FS.lookupPath(path, { follow: !dontFollow });
         var node = lookup.node;
         if (!node) {
@@ -2247,9 +2885,11 @@ var tempI64;
           throw new FS.ErrnoError(63);
         }
         return node.node_ops.getattr(node);
-      },lstat:(path) => {
+      },
+  lstat(path) {
         return FS.stat(path, true);
-      },chmod:(path, mode, dontFollow) => {
+      },
+  chmod(path, mode, dontFollow) {
         var node;
         if (typeof path == 'string') {
           var lookup = FS.lookupPath(path, { follow: !dontFollow });
@@ -2264,15 +2904,15 @@ var tempI64;
           mode: (mode & 4095) | (node.mode & ~4095),
           timestamp: Date.now()
         });
-      },lchmod:(path, mode) => {
+      },
+  lchmod(path, mode) {
         FS.chmod(path, mode, true);
-      },fchmod:(fd, mode) => {
-        var stream = FS.getStream(fd);
-        if (!stream) {
-          throw new FS.ErrnoError(8);
-        }
+      },
+  fchmod(fd, mode) {
+        var stream = FS.getStreamChecked(fd);
         FS.chmod(stream.node, mode);
-      },chown:(path, uid, gid, dontFollow) => {
+      },
+  chown(path, uid, gid, dontFollow) {
         var node;
         if (typeof path == 'string') {
           var lookup = FS.lookupPath(path, { follow: !dontFollow });
@@ -2287,15 +2927,15 @@ var tempI64;
           timestamp: Date.now()
           // we ignore the uid / gid for now
         });
-      },lchown:(path, uid, gid) => {
+      },
+  lchown(path, uid, gid) {
         FS.chown(path, uid, gid, true);
-      },fchown:(fd, uid, gid) => {
-        var stream = FS.getStream(fd);
-        if (!stream) {
-          throw new FS.ErrnoError(8);
-        }
+      },
+  fchown(fd, uid, gid) {
+        var stream = FS.getStreamChecked(fd);
         FS.chown(stream.node, uid, gid);
-      },truncate:(path, len) => {
+      },
+  truncate(path, len) {
         if (len < 0) {
           throw new FS.ErrnoError(28);
         }
@@ -2323,26 +2963,26 @@ var tempI64;
           size: len,
           timestamp: Date.now()
         });
-      },ftruncate:(fd, len) => {
-        var stream = FS.getStream(fd);
-        if (!stream) {
-          throw new FS.ErrnoError(8);
-        }
+      },
+  ftruncate(fd, len) {
+        var stream = FS.getStreamChecked(fd);
         if ((stream.flags & 2097155) === 0) {
           throw new FS.ErrnoError(28);
         }
         FS.truncate(stream.node, len);
-      },utime:(path, atime, mtime) => {
+      },
+  utime(path, atime, mtime) {
         var lookup = FS.lookupPath(path, { follow: true });
         var node = lookup.node;
         node.node_ops.setattr(node, {
           timestamp: Math.max(atime, mtime)
         });
-      },open:(path, flags, mode) => {
+      },
+  open(path, flags, mode) {
         if (path === "") {
           throw new FS.ErrnoError(44);
         }
-        flags = typeof flags == 'string' ? FS.modeStringToFlags(flags) : flags;
+        flags = typeof flags == 'string' ? FS_modeStringToFlags(flags) : flags;
         mode = typeof mode == 'undefined' ? 438 /* 0666 */ : mode;
         if ((flags & 64)) {
           mode = (mode & 4095) | 32768;
@@ -2406,9 +3046,9 @@ var tempI64;
   
         // register the stream with the filesystem
         var stream = FS.createStream({
-          node: node,
+          node,
           path: FS.getPath(node),  // we want the absolute path to the node
-          flags: flags,
+          flags,
           seekable: true,
           position: 0,
           stream_ops: node.stream_ops,
@@ -2427,7 +3067,8 @@ var tempI64;
           }
         }
         return stream;
-      },close:(stream) => {
+      },
+  close(stream) {
         if (FS.isClosed(stream)) {
           throw new FS.ErrnoError(8);
         }
@@ -2442,9 +3083,11 @@ var tempI64;
           FS.closeStream(stream.fd);
         }
         stream.fd = null;
-      },isClosed:(stream) => {
+      },
+  isClosed(stream) {
         return stream.fd === null;
-      },llseek:(stream, offset, whence) => {
+      },
+  llseek(stream, offset, whence) {
         if (FS.isClosed(stream)) {
           throw new FS.ErrnoError(8);
         }
@@ -2457,7 +3100,9 @@ var tempI64;
         stream.position = stream.stream_ops.llseek(stream, offset, whence);
         stream.ungotten = [];
         return stream.position;
-      },read:(stream, buffer, offset, length, position) => {
+      },
+  read(stream, buffer, offset, length, position) {
+        assert(offset >= 0);
         if (length < 0 || position < 0) {
           throw new FS.ErrnoError(28);
         }
@@ -2482,7 +3127,9 @@ var tempI64;
         var bytesRead = stream.stream_ops.read(stream, buffer, offset, length, position);
         if (!seeking) stream.position += bytesRead;
         return bytesRead;
-      },write:(stream, buffer, offset, length, position, canOwn) => {
+      },
+  write(stream, buffer, offset, length, position, canOwn) {
+        assert(offset >= 0);
         if (length < 0 || position < 0) {
           throw new FS.ErrnoError(28);
         }
@@ -2511,7 +3158,8 @@ var tempI64;
         var bytesWritten = stream.stream_ops.write(stream, buffer, offset, length, position, canOwn);
         if (!seeking) stream.position += bytesWritten;
         return bytesWritten;
-      },allocate:(stream, offset, length) => {
+      },
+  allocate(stream, offset, length) {
         if (FS.isClosed(stream)) {
           throw new FS.ErrnoError(8);
         }
@@ -2528,7 +3176,8 @@ var tempI64;
           throw new FS.ErrnoError(138);
         }
         stream.stream_ops.allocate(stream, offset, length);
-      },mmap:(stream, length, position, prot, flags) => {
+      },
+  mmap(stream, length, position, prot, flags) {
         // User requests writing to file (prot & PROT_WRITE != 0).
         // Checking if we have permissions to write to the file unless
         // MAP_PRIVATE flag is set. According to POSIX spec it is possible
@@ -2547,21 +3196,26 @@ var tempI64;
           throw new FS.ErrnoError(43);
         }
         return stream.stream_ops.mmap(stream, length, position, prot, flags);
-      },msync:(stream, buffer, offset, length, mmapFlags) => {
+      },
+  msync(stream, buffer, offset, length, mmapFlags) {
+        assert(offset >= 0);
         if (!stream.stream_ops.msync) {
           return 0;
         }
         return stream.stream_ops.msync(stream, buffer, offset, length, mmapFlags);
-      },munmap:(stream) => 0,ioctl:(stream, cmd, arg) => {
+      },
+  munmap:(stream) => 0,
+  ioctl(stream, cmd, arg) {
         if (!stream.stream_ops.ioctl) {
           throw new FS.ErrnoError(59);
         }
         return stream.stream_ops.ioctl(stream, cmd, arg);
-      },readFile:(path, opts = {}) => {
+      },
+  readFile(path, opts = {}) {
         opts.flags = opts.flags || 0;
         opts.encoding = opts.encoding || 'binary';
         if (opts.encoding !== 'utf8' && opts.encoding !== 'binary') {
-          throw new Error('Invalid encoding type "' + opts.encoding + '"');
+          throw new Error(`Invalid encoding type "${opts.encoding}"`);
         }
         var ret;
         var stream = FS.open(path, opts.flags);
@@ -2576,7 +3230,8 @@ var tempI64;
         }
         FS.close(stream);
         return ret;
-      },writeFile:(path, data, opts = {}) => {
+      },
+  writeFile(path, data, opts = {}) {
         opts.flags = opts.flags || 577;
         var stream = FS.open(path, opts.flags, opts.mode);
         if (typeof data == 'string') {
@@ -2589,7 +3244,9 @@ var tempI64;
           throw new Error('Unsupported data type');
         }
         FS.close(stream);
-      },cwd:() => FS.currentPath,chdir:(path) => {
+      },
+  cwd:() => FS.currentPath,
+  chdir(path) {
         var lookup = FS.lookupPath(path, { follow: true });
         if (lookup.node === null) {
           throw new FS.ErrnoError(44);
@@ -2602,11 +3259,13 @@ var tempI64;
           throw new FS.ErrnoError(errCode);
         }
         FS.currentPath = lookup.path;
-      },createDefaultDirectories:() => {
+      },
+  createDefaultDirectories() {
         FS.mkdir('/tmp');
         FS.mkdir('/home');
         FS.mkdir('/home/web_user');
-      },createDefaultDevices:() => {
+      },
+  createDefaultDevices() {
         // create /dev
         FS.mkdir('/dev');
         // setup /dev/null
@@ -2623,27 +3282,34 @@ var tempI64;
         FS.mkdev('/dev/tty', FS.makedev(5, 0));
         FS.mkdev('/dev/tty1', FS.makedev(6, 0));
         // setup /dev/[u]random
-        var random_device = getRandomDevice();
-        FS.createDevice('/dev', 'random', random_device);
-        FS.createDevice('/dev', 'urandom', random_device);
+        // use a buffer to avoid overhead of individual crypto calls per byte
+        var randomBuffer = new Uint8Array(1024), randomLeft = 0;
+        var randomByte = () => {
+          if (randomLeft === 0) {
+            randomLeft = randomFill(randomBuffer).byteLength;
+          }
+          return randomBuffer[--randomLeft];
+        };
+        FS.createDevice('/dev', 'random', randomByte);
+        FS.createDevice('/dev', 'urandom', randomByte);
         // we're not going to emulate the actual shm device,
         // just create the tmp dirs that reside in it commonly
         FS.mkdir('/dev/shm');
         FS.mkdir('/dev/shm/tmp');
-      },createSpecialDirectories:() => {
+      },
+  createSpecialDirectories() {
         // create /proc/self/fd which allows /proc/self/fd/6 => readlink gives the
         // name of the stream for fd 6 (see test_unistd_ttyname)
         FS.mkdir('/proc');
         var proc_self = FS.mkdir('/proc/self');
         FS.mkdir('/proc/self/fd');
         FS.mount({
-          mount: () => {
+          mount() {
             var node = FS.createNode(proc_self, 'fd', 16384 | 511 /* 0777 */, 73);
             node.node_ops = {
-              lookup: (parent, name) => {
+              lookup(parent, name) {
                 var fd = +name;
-                var stream = FS.getStream(fd);
-                if (!stream) throw new FS.ErrnoError(8);
+                var stream = FS.getStreamChecked(fd);
                 var ret = {
                   parent: null,
                   mount: { mountpoint: 'fake' },
@@ -2656,7 +3322,8 @@ var tempI64;
             return node;
           }
         }, {}, '/proc/self/fd');
-      },createStandardStreams:() => {
+      },
+  createStandardStreams() {
         // TODO deprecate the old functionality of a single
         // input / output callback and that utilizes FS.createDevice
         // and instead require a unique set of stream ops
@@ -2685,7 +3352,11 @@ var tempI64;
         var stdin = FS.open('/dev/stdin', 0);
         var stdout = FS.open('/dev/stdout', 1);
         var stderr = FS.open('/dev/stderr', 1);
-      },ensureErrnoError:() => {
+        assert(stdin.fd === 0, `invalid handle for stdin (${stdin.fd})`);
+        assert(stdout.fd === 1, `invalid handle for stdout (${stdout.fd})`);
+        assert(stderr.fd === 2, `invalid handle for stderr (${stderr.fd})`);
+      },
+  ensureErrnoError() {
         if (FS.ErrnoError) return;
         FS.ErrnoError = /** @this{Object} */ function ErrnoError(errno, node) {
           // We set the `name` property to be able to identify `FS.ErrnoError`
@@ -2698,10 +3369,23 @@ var tempI64;
           this.node = node;
           this.setErrno = /** @this{Object} */ function(errno) {
             this.errno = errno;
+            for (var key in ERRNO_CODES) {
+              if (ERRNO_CODES[key] === errno) {
+                this.code = key;
+                break;
+              }
+            }
           };
           this.setErrno(errno);
-          this.message = 'FS error';
+          this.message = ERRNO_MESSAGES[errno];
   
+          // Try to get a maximally helpful stack trace. On Node.js, getting Error.stack
+          // now ensures it shows what we want.
+          if (this.stack) {
+            // Define the stack property for Node.js 4, which otherwise errors on the next line.
+            Object.defineProperty(this, "stack", { value: (new Error).stack, writable: true });
+            this.stack = demangleAll(this.stack);
+          }
         };
         FS.ErrnoError.prototype = new Error();
         FS.ErrnoError.prototype.constructor = FS.ErrnoError;
@@ -2710,7 +3394,8 @@ var tempI64;
           FS.genericErrors[code] = new FS.ErrnoError(code);
           FS.genericErrors[code].stack = '<generic error, no stack>';
         });
-      },staticInit:() => {
+      },
+  staticInit() {
         FS.ensureErrnoError();
   
         FS.nameTable = new Array(4096);
@@ -2724,7 +3409,9 @@ var tempI64;
         FS.filesystems = {
           'MEMFS': MEMFS,
         };
-      },init:(input, output, error) => {
+      },
+  init(input, output, error) {
+        assert(!FS.init.initialized, 'FS.init was previously called. If you want to initialize later with custom parameters, remove any earlier calls (note that one is automatically added to the generated code)');
         FS.init.initialized = true;
   
         FS.ensureErrnoError();
@@ -2735,9 +3422,11 @@ var tempI64;
         Module['stderr'] = error || Module['stderr'];
   
         FS.createStandardStreams();
-      },quit:() => {
+      },
+  quit() {
         FS.init.initialized = false;
         // force-flush all streams, so we get musl std streams printed out
+        _fflush(0);
         // close all of our streams
         for (var i = 0; i < FS.streams.length; i++) {
           var stream = FS.streams[i];
@@ -2746,18 +3435,15 @@ var tempI64;
           }
           FS.close(stream);
         }
-      },getMode:(canRead, canWrite) => {
-        var mode = 0;
-        if (canRead) mode |= 292 | 73;
-        if (canWrite) mode |= 146;
-        return mode;
-      },findObject:(path, dontResolveLastLink) => {
+      },
+  findObject(path, dontResolveLastLink) {
         var ret = FS.analyzePath(path, dontResolveLastLink);
         if (!ret.exists) {
           return null;
         }
         return ret.object;
-      },analyzePath:(path, dontResolveLastLink) => {
+      },
+  analyzePath(path, dontResolveLastLink) {
         // operate from within the context of the symlink's target
         try {
           var lookup = FS.lookupPath(path, { follow: !dontResolveLastLink });
@@ -2784,7 +3470,8 @@ var tempI64;
           ret.error = e.errno;
         };
         return ret;
-      },createPath:(parent, path, canRead, canWrite) => {
+      },
+  createPath(parent, path, canRead, canWrite) {
         parent = typeof parent == 'string' ? parent : FS.getPath(parent);
         var parts = path.split('/').reverse();
         while (parts.length) {
@@ -2799,17 +3486,19 @@ var tempI64;
           parent = current;
         }
         return current;
-      },createFile:(parent, name, properties, canRead, canWrite) => {
+      },
+  createFile(parent, name, properties, canRead, canWrite) {
         var path = PATH.join2(typeof parent == 'string' ? parent : FS.getPath(parent), name);
-        var mode = FS.getMode(canRead, canWrite);
+        var mode = FS_getMode(canRead, canWrite);
         return FS.create(path, mode);
-      },createDataFile:(parent, name, data, canRead, canWrite, canOwn) => {
+      },
+  createDataFile(parent, name, data, canRead, canWrite, canOwn) {
         var path = name;
         if (parent) {
           parent = typeof parent == 'string' ? parent : FS.getPath(parent);
           path = name ? PATH.join2(parent, name) : parent;
         }
-        var mode = FS.getMode(canRead, canWrite);
+        var mode = FS_getMode(canRead, canWrite);
         var node = FS.create(path, mode);
         if (data) {
           if (typeof data == 'string') {
@@ -2825,24 +3514,25 @@ var tempI64;
           FS.chmod(node, mode);
         }
         return node;
-      },createDevice:(parent, name, input, output) => {
+      },
+  createDevice(parent, name, input, output) {
         var path = PATH.join2(typeof parent == 'string' ? parent : FS.getPath(parent), name);
-        var mode = FS.getMode(!!input, !!output);
+        var mode = FS_getMode(!!input, !!output);
         if (!FS.createDevice.major) FS.createDevice.major = 64;
         var dev = FS.makedev(FS.createDevice.major++, 0);
         // Create a fake device that a set of stream ops to emulate
         // the old behavior.
         FS.registerDevice(dev, {
-          open: (stream) => {
+          open(stream) {
             stream.seekable = false;
           },
-          close: (stream) => {
+          close(stream) {
             // flush any pending line data
             if (output && output.buffer && output.buffer.length) {
               output(10);
             }
           },
-          read: (stream, buffer, offset, length, pos /* ignored */) => {
+          read(stream, buffer, offset, length, pos /* ignored */) {
             var bytesRead = 0;
             for (var i = 0; i < length; i++) {
               var result;
@@ -2863,7 +3553,7 @@ var tempI64;
             }
             return bytesRead;
           },
-          write: (stream, buffer, offset, length, pos) => {
+          write(stream, buffer, offset, length, pos) {
             for (var i = 0; i < length; i++) {
               try {
                 output(buffer[offset+i]);
@@ -2878,7 +3568,8 @@ var tempI64;
           }
         });
         return FS.mkdev(path, mode, dev);
-      },forceLoadFile:(obj) => {
+      },
+  forceLoadFile(obj) {
         if (obj.isDevice || obj.isFolder || obj.link || obj.contents) return true;
         if (typeof XMLHttpRequest != 'undefined') {
           throw new Error("Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread.");
@@ -2895,7 +3586,8 @@ var tempI64;
         } else {
           throw new Error('Cannot load without read() or XMLHttpRequest.');
         }
-      },createLazyFile:(parent, name, url, canRead, canWrite) => {
+      },
+  createLazyFile(parent, name, url, canRead, canWrite) {
         // Lazy chunked Uint8Array (implements get and length from Uint8Array). Actual getting is abstracted away for eventual reuse.
         /** @constructor */
         function LazyUint8Array() {
@@ -3033,6 +3725,7 @@ var tempI64;
           if (position >= contents.length)
             return 0;
           var size = Math.min(contents.length - position, length);
+          assert(size >= 0);
           if (contents.slice) { // normal array
             for (var i = 0; i < size; i++) {
               buffer[offset + i] = contents[position + i];
@@ -3057,108 +3750,54 @@ var tempI64;
             throw new FS.ErrnoError(48);
           }
           writeChunks(stream, HEAP8, ptr, length, position);
-          return { ptr: ptr, allocated: true };
+          return { ptr, allocated: true };
         };
         node.stream_ops = stream_ops;
         return node;
-      },createPreloadedFile:(parent, name, url, canRead, canWrite, onload, onerror, dontCreateFile, canOwn, preFinish) => {
-        // TODO we should allow people to just pass in a complete filename instead
-        // of parent and name being that we just join them anyways
-        var fullname = name ? PATH_FS.resolve(PATH.join2(parent, name)) : parent;
-        var dep = getUniqueRunDependency('cp ' + fullname); // might have several active requests for the same fullname
-        function processData(byteArray) {
-          function finish(byteArray) {
-            if (preFinish) preFinish();
-            if (!dontCreateFile) {
-              FS.createDataFile(parent, name, byteArray, canRead, canWrite, canOwn);
-            }
-            if (onload) onload();
-            removeRunDependency(dep);
-          }
-          if (Browser.handledByPreloadPlugin(byteArray, fullname, finish, () => {
-            if (onerror) onerror();
-            removeRunDependency(dep);
-          })) {
-            return;
-          }
-          finish(byteArray);
-        }
-        addRunDependency(dep);
-        if (typeof url == 'string') {
-          asyncLoad(url, (byteArray) => processData(byteArray), onerror);
-        } else {
-          processData(url);
-        }
-      },indexedDB:() => {
-        return window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-      },DB_NAME:() => {
-        return 'EM_FS_' + window.location.pathname;
-      },DB_VERSION:20,DB_STORE_NAME:"FILE_DATA",saveFilesToDB:(paths, onload = (() => {}), onerror = (() => {})) => {
-        var indexedDB = FS.indexedDB();
-        try {
-          var openRequest = indexedDB.open(FS.DB_NAME(), FS.DB_VERSION);
-        } catch (e) {
-          return onerror(e);
-        }
-        openRequest.onupgradeneeded = () => {
-          out('creating db');
-          var db = openRequest.result;
-          db.createObjectStore(FS.DB_STORE_NAME);
-        };
-        openRequest.onsuccess = () => {
-          var db = openRequest.result;
-          var transaction = db.transaction([FS.DB_STORE_NAME], 'readwrite');
-          var files = transaction.objectStore(FS.DB_STORE_NAME);
-          var ok = 0, fail = 0, total = paths.length;
-          function finish() {
-            if (fail == 0) onload(); else onerror();
-          }
-          paths.forEach((path) => {
-            var putRequest = files.put(FS.analyzePath(path).object.contents, path);
-            putRequest.onsuccess = () => { ok++; if (ok + fail == total) finish() };
-            putRequest.onerror = () => { fail++; if (ok + fail == total) finish() };
-          });
-          transaction.onerror = onerror;
-        };
-        openRequest.onerror = onerror;
-      },loadFilesFromDB:(paths, onload = (() => {}), onerror = (() => {})) => {
-        var indexedDB = FS.indexedDB();
-        try {
-          var openRequest = indexedDB.open(FS.DB_NAME(), FS.DB_VERSION);
-        } catch (e) {
-          return onerror(e);
-        }
-        openRequest.onupgradeneeded = onerror; // no database to load from
-        openRequest.onsuccess = () => {
-          var db = openRequest.result;
-          try {
-            var transaction = db.transaction([FS.DB_STORE_NAME], 'readonly');
-          } catch(e) {
-            onerror(e);
-            return;
-          }
-          var files = transaction.objectStore(FS.DB_STORE_NAME);
-          var ok = 0, fail = 0, total = paths.length;
-          function finish() {
-            if (fail == 0) onload(); else onerror();
-          }
-          paths.forEach((path) => {
-            var getRequest = files.get(path);
-            getRequest.onsuccess = () => {
-              if (FS.analyzePath(path).exists) {
-                FS.unlink(path);
-              }
-              FS.createDataFile(PATH.dirname(path), PATH.basename(path), getRequest.result, true, true, true);
-              ok++;
-              if (ok + fail == total) finish();
-            };
-            getRequest.onerror = () => { fail++; if (ok + fail == total) finish() };
-          });
-          transaction.onerror = onerror;
-        };
-        openRequest.onerror = onerror;
-      }};
-  var SYSCALLS = {DEFAULT_POLLMASK:5,calculateAt:function(dirfd, path, allowEmpty) {
+      },
+  absolutePath() {
+        abort('FS.absolutePath has been removed; use PATH_FS.resolve instead');
+      },
+  createFolder() {
+        abort('FS.createFolder has been removed; use FS.mkdir instead');
+      },
+  createLink() {
+        abort('FS.createLink has been removed; use FS.symlink instead');
+      },
+  joinPath() {
+        abort('FS.joinPath has been removed; use PATH.join instead');
+      },
+  mmapAlloc() {
+        abort('FS.mmapAlloc has been replaced by the top level function mmapAlloc');
+      },
+  standardizePath() {
+        abort('FS.standardizePath has been removed; use PATH.normalize instead');
+      },
+  };
+  
+  
+    /**
+     * Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the
+     * emscripten HEAP, returns a copy of that string as a Javascript String object.
+     *
+     * @param {number} ptr
+     * @param {number=} maxBytesToRead - An optional length that specifies the
+     *   maximum number of bytes to read. You can omit this parameter to scan the
+     *   string until the first 0 byte. If maxBytesToRead is passed, and the string
+     *   at [ptr, ptr+maxBytesToReadr[ contains a null byte in the middle, then the
+     *   string will cut short at that byte index (i.e. maxBytesToRead will not
+     *   produce a string of exact length [ptr, ptr+maxBytesToRead[) N.B. mixing
+     *   frequent uses of UTF8ToString() with and without maxBytesToRead may throw
+     *   JS JIT optimizations off, so it is worth to consider consistently using one
+     * @return {string}
+     */
+  var UTF8ToString = (ptr, maxBytesToRead) => {
+      assert(typeof ptr == 'number');
+      return ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead) : '';
+    };
+  var SYSCALLS = {
+  DEFAULT_POLLMASK:5,
+  calculateAt(dirfd, path, allowEmpty) {
         if (PATH.isAbs(path)) {
           return path;
         }
@@ -3177,7 +3816,8 @@ var tempI64;
           return dir;
         }
         return PATH.join2(dir, path);
-      },doStat:function(func, path, buf) {
+      },
+  doStat(func, path, buf) {
         try {
           var stat = func(path);
         } catch (e) {
@@ -3188,27 +3828,27 @@ var tempI64;
           throw e;
         }
         HEAP32[((buf)>>2)] = stat.dev;
-        HEAP32[(((buf)+(8))>>2)] = stat.ino;
-        HEAP32[(((buf)+(12))>>2)] = stat.mode;
-        HEAPU32[(((buf)+(16))>>2)] = stat.nlink;
-        HEAP32[(((buf)+(20))>>2)] = stat.uid;
-        HEAP32[(((buf)+(24))>>2)] = stat.gid;
-        HEAP32[(((buf)+(28))>>2)] = stat.rdev;
-        (tempI64 = [stat.size>>>0,(tempDouble=stat.size,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(40))>>2)] = tempI64[0],HEAP32[(((buf)+(44))>>2)] = tempI64[1]);
-        HEAP32[(((buf)+(48))>>2)] = 4096;
-        HEAP32[(((buf)+(52))>>2)] = stat.blocks;
+        HEAP32[(((buf)+(4))>>2)] = stat.mode;
+        HEAPU32[(((buf)+(8))>>2)] = stat.nlink;
+        HEAP32[(((buf)+(12))>>2)] = stat.uid;
+        HEAP32[(((buf)+(16))>>2)] = stat.gid;
+        HEAP32[(((buf)+(20))>>2)] = stat.rdev;
+        HEAP64[(((buf)+(24))>>3)] = BigInt(stat.size);
+        HEAP32[(((buf)+(32))>>2)] = 4096;
+        HEAP32[(((buf)+(36))>>2)] = stat.blocks;
         var atime = stat.atime.getTime();
         var mtime = stat.mtime.getTime();
         var ctime = stat.ctime.getTime();
-        (tempI64 = [Math.floor(atime / 1000)>>>0,(tempDouble=Math.floor(atime / 1000),(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(56))>>2)] = tempI64[0],HEAP32[(((buf)+(60))>>2)] = tempI64[1]);
-        HEAPU32[(((buf)+(64))>>2)] = (atime % 1000) * 1000;
-        (tempI64 = [Math.floor(mtime / 1000)>>>0,(tempDouble=Math.floor(mtime / 1000),(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(72))>>2)] = tempI64[0],HEAP32[(((buf)+(76))>>2)] = tempI64[1]);
-        HEAPU32[(((buf)+(80))>>2)] = (mtime % 1000) * 1000;
-        (tempI64 = [Math.floor(ctime / 1000)>>>0,(tempDouble=Math.floor(ctime / 1000),(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(88))>>2)] = tempI64[0],HEAP32[(((buf)+(92))>>2)] = tempI64[1]);
-        HEAPU32[(((buf)+(96))>>2)] = (ctime % 1000) * 1000;
-        (tempI64 = [stat.ino>>>0,(tempDouble=stat.ino,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((buf)+(104))>>2)] = tempI64[0],HEAP32[(((buf)+(108))>>2)] = tempI64[1]);
+        HEAP64[(((buf)+(40))>>3)] = BigInt(Math.floor(atime / 1000));
+        HEAPU32[(((buf)+(48))>>2)] = (atime % 1000) * 1000;
+        HEAP64[(((buf)+(56))>>3)] = BigInt(Math.floor(mtime / 1000));
+        HEAPU32[(((buf)+(64))>>2)] = (mtime % 1000) * 1000;
+        HEAP64[(((buf)+(72))>>3)] = BigInt(Math.floor(ctime / 1000));
+        HEAPU32[(((buf)+(80))>>2)] = (ctime % 1000) * 1000;
+        HEAP64[(((buf)+(88))>>3)] = BigInt(stat.ino);
         return 0;
-      },doMsync:function(addr, stream, len, flags, offset) {
+      },
+  doMsync(addr, stream, len, flags, offset) {
         if (!FS.isFile(stream.node.mode)) {
           throw new FS.ErrnoError(43);
         }
@@ -3218,18 +3858,25 @@ var tempI64;
         }
         var buffer = HEAPU8.slice(addr, addr + len);
         FS.msync(stream, buffer, offset, len, flags);
-      },varargs:undefined,get:function() {
+      },
+  varargs:undefined,
+  get() {
+        assert(SYSCALLS.varargs != undefined);
+        // the `+` prepended here is necessary to convince the JSCompiler that varargs is indeed a number.
+        var ret = HEAP32[((+SYSCALLS.varargs)>>2)];
         SYSCALLS.varargs += 4;
-        var ret = HEAP32[(((SYSCALLS.varargs)-(4))>>2)];
         return ret;
-      },getStr:function(ptr) {
+      },
+  getp() { return SYSCALLS.get() },
+  getStr(ptr) {
         var ret = UTF8ToString(ptr);
         return ret;
-      },getStreamFromFD:function(fd) {
-        var stream = FS.getStream(fd);
-        if (!stream) throw new FS.ErrnoError(8);
+      },
+  getStreamFromFD(fd) {
+        var stream = FS.getStreamChecked(fd);
         return stream;
-      }};
+      },
+  };
   function ___syscall_chmod(path, mode) {
   try {
   
@@ -3246,6 +3893,7 @@ var tempI64;
   try {
   
       path = SYSCALLS.getStr(path);
+      assert(flags === 0);
       path = SYSCALLS.calculateAt(dirfd, path);
       if (amode & ~7) {
         // need a valid mode
@@ -3292,10 +3940,10 @@ var tempI64;
   }
   }
 
-  function setErrNo(value) {
+  var setErrNo = (value) => {
       HEAP32[((___errno_location())>>2)] = value;
       return value;
-    }
+    };
   
   function ___syscall_fcntl64(fd, cmd, varargs) {
   SYSCALLS.varargs = varargs;
@@ -3307,6 +3955,9 @@ var tempI64;
           var arg = SYSCALLS.get();
           if (arg < 0) {
             return -28;
+          }
+          while (FS.streams[arg]) {
+            arg++;
           }
           var newStream;
           newStream = FS.createStream(stream, arg);
@@ -3322,10 +3973,8 @@ var tempI64;
           stream.flags |= arg;
           return 0;
         }
-        case 5:
-        /* case 5: Currently in musl F_GETLK64 has same value as F_GETLK, so omitted to avoid duplicate case blocks. If that changes, uncomment this */ {
-          
-          var arg = SYSCALLS.get();
+        case 5: {
+          var arg = SYSCALLS.getp();
           var offset = 0;
           // We're always unlocked.
           HEAP16[(((arg)+(offset))>>1)] = 2;
@@ -3333,10 +3982,6 @@ var tempI64;
         }
         case 6:
         case 7:
-        /* case 6: Currently in musl F_SETLK64 has same value as F_SETLK, so omitted to avoid duplicate case blocks. If that changes, uncomment this */
-        /* case 7: Currently in musl F_SETLKW64 has same value as F_SETLKW, so omitted to avoid duplicate case blocks. If that changes, uncomment this */
-          
-          
           return 0; // Pretend that the locking is successful.
         case 16:
         case 8:
@@ -3366,28 +4011,35 @@ var tempI64;
   }
   }
 
+  
   var MAX_INT53 = 9007199254740992;
   
   var MIN_INT53 = -9007199254740992;
-  function bigintToI53Checked(num) {
+  var bigintToI53Checked = (num) => {
       return (num < MIN_INT53 || num > MAX_INT53) ? NaN : Number(num);
-    }
+    };
+  function ___syscall_ftruncate64(fd, length) {
+    length = bigintToI53Checked(length);;
   
-  
-  
-  
-  function ___syscall_ftruncate64(fd, /** @type {!BigInt} */ length) {
+    
   try {
   
-      length = bigintToI53Checked(length); if (isNaN(length)) return -61;
+      if (isNaN(length)) return 61;
       FS.ftruncate(fd, length);
       return 0;
     } catch (e) {
     if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
     return -e.errno;
   }
+  ;
   }
 
+  
+  var stringToUTF8 = (str, outPtr, maxBytesToWrite) => {
+      assert(typeof maxBytesToWrite == 'number', 'stringToUTF8(str, outPtr, maxBytesToWrite) is missing the third parameter that specifies the length of the output buffer!');
+      return stringToUTF8Array(str, HEAPU8, outPtr, maxBytesToWrite);
+    };
+  
   function ___syscall_getcwd(buf, size) {
   try {
   
@@ -3409,23 +4061,53 @@ var tempI64;
   
       var stream = SYSCALLS.getStreamFromFD(fd);
       switch (op) {
-        case 21509:
+        case 21509: {
+          if (!stream.tty) return -59;
+          return 0;
+        }
         case 21505: {
           if (!stream.tty) return -59;
+          if (stream.tty.ops.ioctl_tcgets) {
+            var termios = stream.tty.ops.ioctl_tcgets(stream);
+            var argp = SYSCALLS.getp();
+            HEAP32[((argp)>>2)] = termios.c_iflag || 0;
+            HEAP32[(((argp)+(4))>>2)] = termios.c_oflag || 0;
+            HEAP32[(((argp)+(8))>>2)] = termios.c_cflag || 0;
+            HEAP32[(((argp)+(12))>>2)] = termios.c_lflag || 0;
+            for (var i = 0; i < 32; i++) {
+              HEAP8[(((argp + i)+(17))>>0)] = termios.c_cc[i] || 0;
+            }
+            return 0;
+          }
           return 0;
         }
         case 21510:
         case 21511:
-        case 21512:
+        case 21512: {
+          if (!stream.tty) return -59;
+          return 0; // no-op, not actually adjusting terminal settings
+        }
         case 21506:
         case 21507:
         case 21508: {
           if (!stream.tty) return -59;
+          if (stream.tty.ops.ioctl_tcsets) {
+            var argp = SYSCALLS.getp();
+            var c_iflag = HEAP32[((argp)>>2)];
+            var c_oflag = HEAP32[(((argp)+(4))>>2)];
+            var c_cflag = HEAP32[(((argp)+(8))>>2)];
+            var c_lflag = HEAP32[(((argp)+(12))>>2)];
+            var c_cc = []
+            for (var i = 0; i < 32; i++) {
+              c_cc.push(HEAP8[(((argp + i)+(17))>>0)]);
+            }
+            return stream.tty.ops.ioctl_tcsets(stream.tty, op, { c_iflag, c_oflag, c_cflag, c_lflag, c_cc });
+          }
           return 0; // no-op, not actually adjusting terminal settings
         }
         case 21519: {
           if (!stream.tty) return -59;
-          var argp = SYSCALLS.get();
+          var argp = SYSCALLS.getp();
           HEAP32[((argp)>>2)] = 0;
           return 0;
         }
@@ -3434,19 +4116,29 @@ var tempI64;
           return -28; // not supported
         }
         case 21531: {
-          var argp = SYSCALLS.get();
+          var argp = SYSCALLS.getp();
           return FS.ioctl(stream, op, argp);
         }
         case 21523: {
           // TODO: in theory we should write to the winsize struct that gets
           // passed in, but for now musl doesn't read anything on it
           if (!stream.tty) return -59;
+          if (stream.tty.ops.ioctl_tiocgwinsz) {
+            var winsize = stream.tty.ops.ioctl_tiocgwinsz(stream.tty);
+            var argp = SYSCALLS.getp();
+            HEAP16[((argp)>>1)] = winsize[0];
+            HEAP16[(((argp)+(2))>>1)] = winsize[1];
+          }
           return 0;
         }
         case 21524: {
           // TODO: technically, this ioctl call should change the window size.
           // but, since emscripten doesn't have any concept of a terminal window
           // yet, we'll just silently throw it away as we do TIOCGWINSZ
+          if (!stream.tty) return -59;
+          return 0;
+        }
+        case 21515: {
           if (!stream.tty) return -59;
           return 0;
         }
@@ -3493,6 +4185,7 @@ var tempI64;
       var nofollow = flags & 256;
       var allowEmpty = flags & 4096;
       flags = flags & (~6400);
+      assert(!flags, `unknown flags in __syscall_newfstatat: ${flags}`);
       path = SYSCALLS.calculateAt(dirfd, path, allowEmpty);
       return SYSCALLS.doStat(nofollow ? FS.lstat : FS.stat, path, buf);
     } catch (e) {
@@ -3515,6 +4208,8 @@ var tempI64;
   }
   }
 
+  
+  
   function ___syscall_readlinkat(dirfd, path, buf, bufsize) {
   try {
   
@@ -3578,14 +4273,15 @@ var tempI64;
   }
   }
 
-  function readI53FromI64(ptr) {
-      return HEAPU32[ptr>>2] + HEAP32[ptr+4>>2] * 4294967296;
-    }
+  var readI53FromI64 = (ptr) => {
+      return HEAPU32[((ptr)>>2)] + HEAP32[(((ptr)+(4))>>2)] * 4294967296;
+    };
   
   function ___syscall_utimensat(dirfd, path, times, flags) {
   try {
   
       path = SYSCALLS.getStr(path);
+      assert(flags === 0);
       path = SYSCALLS.calculateAt(dirfd, path, true);
       if (!times) {
         var atime = Date.now();
@@ -3608,27 +4304,28 @@ var tempI64;
   }
 
   var nowIsMonotonic = true;;
-  function __emscripten_get_now_is_monotonic() {
-      return nowIsMonotonic;
-    }
+  var __emscripten_get_now_is_monotonic = () => nowIsMonotonic;
 
-  
-  function __isLeapYear(year) {
+  var isLeapYear = (year) => {
         return year%4 === 0 && (year%100 !== 0 || year%400 === 0);
-    }
+    };
   
-  var __MONTH_DAYS_LEAP_CUMULATIVE = [0,31,60,91,121,152,182,213,244,274,305,335];
+  var MONTH_DAYS_LEAP_CUMULATIVE = [0,31,60,91,121,152,182,213,244,274,305,335];
   
-  var __MONTH_DAYS_REGULAR_CUMULATIVE = [0,31,59,90,120,151,181,212,243,273,304,334];
-  function __yday_from_date(date) {
-      var isLeapYear = __isLeapYear(date.getFullYear());
-      var monthDaysCumulative = (isLeapYear ? __MONTH_DAYS_LEAP_CUMULATIVE : __MONTH_DAYS_REGULAR_CUMULATIVE);
+  var MONTH_DAYS_REGULAR_CUMULATIVE = [0,31,59,90,120,151,181,212,243,273,304,334];
+  var ydayFromDate = (date) => {
+      var leap = isLeapYear(date.getFullYear());
+      var monthDaysCumulative = (leap ? MONTH_DAYS_LEAP_CUMULATIVE : MONTH_DAYS_REGULAR_CUMULATIVE);
       var yday = monthDaysCumulative[date.getMonth()] + date.getDate() - 1; // -1 since it's days since Jan 1
   
       return yday;
-    }
+    };
+  
   function __localtime_js(time, tmPtr) {
-      var date = new Date(readI53FromI64(time)*1000);
+    time = bigintToI53Checked(time);;
+  
+    
+      var date = new Date(time*1000);
       HEAP32[((tmPtr)>>2)] = date.getSeconds();
       HEAP32[(((tmPtr)+(4))>>2)] = date.getMinutes();
       HEAP32[(((tmPtr)+(8))>>2)] = date.getHours();
@@ -3637,7 +4334,7 @@ var tempI64;
       HEAP32[(((tmPtr)+(20))>>2)] = date.getFullYear()-1900;
       HEAP32[(((tmPtr)+(24))>>2)] = date.getDay();
   
-      var yday = __yday_from_date(date)|0;
+      var yday = ydayFromDate(date)|0;
       HEAP32[(((tmPtr)+(28))>>2)] = yday;
       HEAP32[(((tmPtr)+(36))>>2)] = -(date.getTimezoneOffset() * 60);
   
@@ -3647,15 +4344,66 @@ var tempI64;
       var winterOffset = start.getTimezoneOffset();
       var dst = (summerOffset != winterOffset && date.getTimezoneOffset() == Math.min(winterOffset, summerOffset))|0;
       HEAP32[(((tmPtr)+(32))>>2)] = dst;
-    }
+    ;
+  }
 
-  function allocateUTF8(str) {
+  
+  
+  
+  
+  
+  function __mmap_js(len, prot, flags, fd, offset, allocated, addr) {
+    offset = bigintToI53Checked(offset);;
+  
+    
+  try {
+  
+      if (isNaN(offset)) return 61;
+      var stream = SYSCALLS.getStreamFromFD(fd);
+      var res = FS.mmap(stream, len, offset, prot, flags);
+      var ptr = res.ptr;
+      HEAP32[((allocated)>>2)] = res.allocated;
+      HEAPU32[((addr)>>2)] = ptr;
+      return 0;
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
+    return -e.errno;
+  }
+  ;
+  }
+
+  
+  
+  
+  function __munmap_js(addr, len, prot, flags, fd, offset) {
+    offset = bigintToI53Checked(offset);;
+  
+    
+  try {
+  
+      if (isNaN(offset)) return 61;
+      var stream = SYSCALLS.getStreamFromFD(fd);
+      if (prot & 2) {
+        SYSCALLS.doMsync(addr, stream, len, flags, offset);
+      }
+      FS.munmap(stream);
+      // implicitly return 0
+    } catch (e) {
+    if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
+    return -e.errno;
+  }
+  ;
+  }
+
+  
+  
+  var stringToNewUTF8 = (str) => {
       var size = lengthBytesUTF8(str) + 1;
       var ret = _malloc(size);
-      if (ret) stringToUTF8Array(str, HEAP8, ret, size);
+      if (ret) stringToUTF8(str, ret, size);
       return ret;
-    }
-  function __tzset_js(timezone, daylight, tzname) {
+    };
+  var __tzset_js = (timezone, daylight, tzname) => {
       // TODO: Use (malleable) environment variables instead of system settings.
       var currentYear = new Date().getFullYear();
       var winter = new Date(currentYear, 0, 1);
@@ -3683,8 +4431,8 @@ var tempI64;
       };
       var winterName = extractZone(winter);
       var summerName = extractZone(summer);
-      var winterNamePtr = allocateUTF8(winterName);
-      var summerNamePtr = allocateUTF8(summerName);
+      var winterNamePtr = stringToNewUTF8(winterName);
+      var summerNamePtr = stringToNewUTF8(summerName);
       if (summerOffset < winterOffset) {
         // Northern hemisphere
         HEAPU32[((tzname)>>2)] = winterNamePtr;
@@ -3693,45 +4441,47 @@ var tempI64;
         HEAPU32[((tzname)>>2)] = summerNamePtr;
         HEAPU32[(((tzname)+(4))>>2)] = winterNamePtr;
       }
-    }
-
-  function _emscripten_date_now() {
-      return Date.now();
-    }
-
-  var _emscripten_get_now;if (ENVIRONMENT_IS_NODE) {
-    _emscripten_get_now = () => {
-      var t = process.hrtime();
-      return t[0] * 1e3 + t[1] / 1e6;
     };
-  } else _emscripten_get_now = () => performance.now();
+
+  var _emscripten_date_now = () => Date.now();
+
+  var _emscripten_get_now;
+      // Modern environment where performance.now() is supported:
+      // N.B. a shorter form "_emscripten_get_now = performance.now;" is
+      // unfortunately not allowed even in current browsers (e.g. FF Nightly 75).
+      _emscripten_get_now = () => performance.now();
   ;
 
-  function getHeapMax() {
+  var _emscripten_memcpy_js = (dest, src, num) => HEAPU8.copyWithin(dest, src, src + num);
+
+  var getHeapMax = () =>
       // Stay one Wasm page short of 4GB: while e.g. Chrome is able to allocate
       // full 4GB Wasm memories, the size will wrap back to 0 bytes in Wasm side
       // for any code that deals with heap sizes, which would require special
       // casing all heap size related code to treat 0 specially.
-      return 2147483648;
-    }
+      2147483648;
   
-  function emscripten_realloc_buffer(size) {
+  var growMemory = (size) => {
       var b = wasmMemory.buffer;
+      var pages = (size - b.byteLength + 65535) / 65536;
       try {
         // round size grow request up to wasm page size (fixed 64KB per spec)
-        wasmMemory.grow((size - b.byteLength + 65535) >>> 16); // .grow() takes a delta compared to the previous size
+        wasmMemory.grow(pages); // .grow() takes a delta compared to the previous size
         updateMemoryViews();
         return 1 /*success*/;
       } catch(e) {
+        err(`growMemory: Attempted to grow heap from ${b.byteLength} bytes to ${size} bytes, but got error: ${e}`);
       }
       // implicit 0 return to save code size (caller will cast "undefined" into 0
       // anyhow)
-    }
-  function _emscripten_resize_heap(requestedSize) {
+    };
+  var _emscripten_resize_heap = (requestedSize) => {
       var oldSize = HEAPU8.length;
-      requestedSize = requestedSize >>> 0;
+      // With CAN_ADDRESS_2GB or MEMORY64, pointers are already unsigned.
+      requestedSize >>>= 0;
       // With multithreaded builds, races can happen (another thread might increase the size
       // in between), so return a failure, and let the caller retry.
+      assert(requestedSize > oldSize);
   
       // Memory resize rules:
       // 1.  Always increase heap size to at least the requested size, rounded up
@@ -3754,10 +4504,11 @@ var tempI64;
       // (the wasm binary specifies it, so if we tried, we'd fail anyhow).
       var maxHeapSize = getHeapMax();
       if (requestedSize > maxHeapSize) {
+        err(`Cannot enlarge memory, requested ${requestedSize} bytes, but the limit is ${maxHeapSize} bytes!`);
         return false;
       }
   
-      let alignUp = (x, multiple) => x + (multiple - x % multiple) % multiple;
+      var alignUp = (x, multiple) => x + (multiple - x % multiple) % multiple;
   
       // Loop through potential heap size increases. If we attempt a too eager
       // reservation that fails, cut down on the attempted size and reserve a
@@ -3769,21 +4520,23 @@ var tempI64;
   
         var newSize = Math.min(maxHeapSize, alignUp(Math.max(requestedSize, overGrownHeapSize), 65536));
   
-        var replacement = emscripten_realloc_buffer(newSize);
+        var replacement = growMemory(newSize);
         if (replacement) {
   
           return true;
         }
       }
+      err(`Failed to grow the heap from ${oldSize} bytes to ${newSize} bytes, not enough memory!`);
       return false;
-    }
+    };
 
-  var ENV = {};
+  var ENV = {
+  };
   
-  function getExecutableName() {
+  var getExecutableName = () => {
       return thisProgram || './this.program';
-    }
-  function getEnvStrings() {
+    };
+  var getEnvStrings = () => {
       if (!getEnvStrings.strings) {
         // Default values.
         // Browser language detection #8751
@@ -3807,44 +4560,42 @@ var tempI64;
         }
         var strings = [];
         for (var x in env) {
-          strings.push(x + '=' + env[x]);
+          strings.push(`${x}=${env[x]}`);
         }
         getEnvStrings.strings = strings;
       }
       return getEnvStrings.strings;
-    }
+    };
   
-  /** @param {boolean=} dontAddNull */
-  function writeAsciiToMemory(str, buffer, dontAddNull) {
+  var stringToAscii = (str, buffer) => {
       for (var i = 0; i < str.length; ++i) {
+        assert(str.charCodeAt(i) === (str.charCodeAt(i) & 0xff));
         HEAP8[((buffer++)>>0)] = str.charCodeAt(i);
       }
-      // Null-terminate the pointer to the HEAP.
-      if (!dontAddNull) HEAP8[((buffer)>>0)] = 0;
-    }
+      // Null-terminate the string
+      HEAP8[((buffer)>>0)] = 0;
+    };
   
-  function _environ_get(__environ, environ_buf) {
+  var _environ_get = (__environ, environ_buf) => {
       var bufSize = 0;
-      getEnvStrings().forEach(function(string, i) {
+      getEnvStrings().forEach((string, i) => {
         var ptr = environ_buf + bufSize;
         HEAPU32[(((__environ)+(i*4))>>2)] = ptr;
-        writeAsciiToMemory(string, ptr);
+        stringToAscii(string, ptr);
         bufSize += string.length + 1;
       });
       return 0;
-    }
+    };
 
   
-  function _environ_sizes_get(penviron_count, penviron_buf_size) {
+  var _environ_sizes_get = (penviron_count, penviron_buf_size) => {
       var strings = getEnvStrings();
       HEAPU32[((penviron_count)>>2)] = strings.length;
       var bufSize = 0;
-      strings.forEach(function(string) {
-        bufSize += string.length + 1;
-      });
+      strings.forEach((string) => bufSize += string.length + 1);
       HEAPU32[((penviron_buf_size)>>2)] = bufSize;
       return 0;
-    }
+    };
 
   function _fd_close(fd) {
   try {
@@ -3861,17 +4612,22 @@ var tempI64;
   function _fd_fdstat_get(fd, pbuf) {
   try {
   
-      var stream = SYSCALLS.getStreamFromFD(fd);
-      // All character devices are terminals (other things a Linux system would
-      // assume is a character device, like the mouse, we have special APIs for).
-      var type = stream.tty ? 2 :
-                 FS.isDir(stream.mode) ? 3 :
-                 FS.isLink(stream.mode) ? 7 :
-                 4;
+      var rightsBase = 0;
+      var rightsInheriting = 0;
+      var flags = 0;
+      {
+        var stream = SYSCALLS.getStreamFromFD(fd);
+        // All character devices are terminals (other things a Linux system would
+        // assume is a character device, like the mouse, we have special APIs for).
+        var type = stream.tty ? 2 :
+                   FS.isDir(stream.mode) ? 3 :
+                   FS.isLink(stream.mode) ? 7 :
+                   4;
+      }
       HEAP8[((pbuf)>>0)] = type;
-      // TODO HEAP16[(((pbuf)+(2))>>1)] = ?;
-      // TODO (tempI64 = [?>>>0,(tempDouble=?,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((pbuf)+(8))>>2)] = tempI64[0],HEAP32[(((pbuf)+(12))>>2)] = tempI64[1]);
-      // TODO (tempI64 = [?>>>0,(tempDouble=?,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[(((pbuf)+(16))>>2)] = tempI64[0],HEAP32[(((pbuf)+(20))>>2)] = tempI64[1]);
+      HEAP16[(((pbuf)+(2))>>1)] = flags;
+      HEAP64[(((pbuf)+(8))>>3)] = BigInt(rightsBase);
+      HEAP64[(((pbuf)+(16))>>3)] = BigInt(rightsInheriting);
       return 0;
     } catch (e) {
     if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
@@ -3880,13 +4636,13 @@ var tempI64;
   }
 
   /** @param {number=} offset */
-  function doReadv(stream, iov, iovcnt, offset) {
+  var doReadv = (stream, iov, iovcnt, offset) => {
       var ret = 0;
       for (var i = 0; i < iovcnt; i++) {
         var ptr = HEAPU32[((iov)>>2)];
         var len = HEAPU32[(((iov)+(4))>>2)];
         iov += 8;
-        var curr = FS.read(stream, HEAP8,ptr, len, offset);
+        var curr = FS.read(stream, HEAP8, ptr, len, offset);
         if (curr < 0) return -1;
         ret += curr;
         if (curr < len) break; // nothing more to read
@@ -3895,7 +4651,7 @@ var tempI64;
         }
       }
       return ret;
-    }
+    };
   
   function _fd_read(fd, iov, iovcnt, pnum) {
   try {
@@ -3911,22 +4667,23 @@ var tempI64;
   }
 
   
+  function _fd_seek(fd, offset, whence, newOffset) {
+    offset = bigintToI53Checked(offset);;
   
-  
-  
-  function _fd_seek(fd, /** @type {!BigInt} */ offset, whence, newOffset) {
+    
   try {
   
-      offset = bigintToI53Checked(offset); if (isNaN(offset)) return 61;
+      if (isNaN(offset)) return 61;
       var stream = SYSCALLS.getStreamFromFD(fd);
       FS.llseek(stream, offset, whence);
-      (tempI64 = [stream.position>>>0,(tempDouble=stream.position,(+(Math.abs(tempDouble))) >= 1.0 ? (tempDouble > 0.0 ? ((Math.min((+(Math.floor((tempDouble)/4294967296.0))), 4294967295.0))|0)>>>0 : (~~((+(Math.ceil((tempDouble - +(((~~(tempDouble)))>>>0))/4294967296.0)))))>>>0) : 0)],HEAP32[((newOffset)>>2)] = tempI64[0],HEAP32[(((newOffset)+(4))>>2)] = tempI64[1]);
+      HEAP64[((newOffset)>>3)] = BigInt(stream.position);
       if (stream.getdents && offset === 0 && whence === 0) stream.getdents = null; // reset readdir state
       return 0;
     } catch (e) {
     if (typeof FS == 'undefined' || !(e.name === 'ErrnoError')) throw e;
     return e.errno;
   }
+  ;
   }
 
   function _fd_sync(fd) {
@@ -3944,13 +4701,13 @@ var tempI64;
   }
 
   /** @param {number=} offset */
-  function doWritev(stream, iov, iovcnt, offset) {
+  var doWritev = (stream, iov, iovcnt, offset) => {
       var ret = 0;
       for (var i = 0; i < iovcnt; i++) {
         var ptr = HEAPU32[((iov)>>2)];
         var len = HEAPU32[(((iov)+(4))>>2)];
         iov += 8;
-        var curr = FS.write(stream, HEAP8,ptr, len, offset);
+        var curr = FS.write(stream, HEAP8, ptr, len, offset);
         if (curr < 0) return -1;
         ret += curr;
         if (typeof offset !== 'undefined') {
@@ -3958,7 +4715,7 @@ var tempI64;
         }
       }
       return ret;
-    }
+    };
   
   function _fd_write(fd, iov, iovcnt, pnum) {
   try {
@@ -4018,1249 +4775,751 @@ var tempI64;
    }
   });
   FS.FSNode = FSNode;
+  FS.createPreloadedFile = FS_createPreloadedFile;
   FS.staticInit();;
+ERRNO_CODES = {
+      'EPERM': 63,
+      'ENOENT': 44,
+      'ESRCH': 71,
+      'EINTR': 27,
+      'EIO': 29,
+      'ENXIO': 60,
+      'E2BIG': 1,
+      'ENOEXEC': 45,
+      'EBADF': 8,
+      'ECHILD': 12,
+      'EAGAIN': 6,
+      'EWOULDBLOCK': 6,
+      'ENOMEM': 48,
+      'EACCES': 2,
+      'EFAULT': 21,
+      'ENOTBLK': 105,
+      'EBUSY': 10,
+      'EEXIST': 20,
+      'EXDEV': 75,
+      'ENODEV': 43,
+      'ENOTDIR': 54,
+      'EISDIR': 31,
+      'EINVAL': 28,
+      'ENFILE': 41,
+      'EMFILE': 33,
+      'ENOTTY': 59,
+      'ETXTBSY': 74,
+      'EFBIG': 22,
+      'ENOSPC': 51,
+      'ESPIPE': 70,
+      'EROFS': 69,
+      'EMLINK': 34,
+      'EPIPE': 64,
+      'EDOM': 18,
+      'ERANGE': 68,
+      'ENOMSG': 49,
+      'EIDRM': 24,
+      'ECHRNG': 106,
+      'EL2NSYNC': 156,
+      'EL3HLT': 107,
+      'EL3RST': 108,
+      'ELNRNG': 109,
+      'EUNATCH': 110,
+      'ENOCSI': 111,
+      'EL2HLT': 112,
+      'EDEADLK': 16,
+      'ENOLCK': 46,
+      'EBADE': 113,
+      'EBADR': 114,
+      'EXFULL': 115,
+      'ENOANO': 104,
+      'EBADRQC': 103,
+      'EBADSLT': 102,
+      'EDEADLOCK': 16,
+      'EBFONT': 101,
+      'ENOSTR': 100,
+      'ENODATA': 116,
+      'ETIME': 117,
+      'ENOSR': 118,
+      'ENONET': 119,
+      'ENOPKG': 120,
+      'EREMOTE': 121,
+      'ENOLINK': 47,
+      'EADV': 122,
+      'ESRMNT': 123,
+      'ECOMM': 124,
+      'EPROTO': 65,
+      'EMULTIHOP': 36,
+      'EDOTDOT': 125,
+      'EBADMSG': 9,
+      'ENOTUNIQ': 126,
+      'EBADFD': 127,
+      'EREMCHG': 128,
+      'ELIBACC': 129,
+      'ELIBBAD': 130,
+      'ELIBSCN': 131,
+      'ELIBMAX': 132,
+      'ELIBEXEC': 133,
+      'ENOSYS': 52,
+      'ENOTEMPTY': 55,
+      'ENAMETOOLONG': 37,
+      'ELOOP': 32,
+      'EOPNOTSUPP': 138,
+      'EPFNOSUPPORT': 139,
+      'ECONNRESET': 15,
+      'ENOBUFS': 42,
+      'EAFNOSUPPORT': 5,
+      'EPROTOTYPE': 67,
+      'ENOTSOCK': 57,
+      'ENOPROTOOPT': 50,
+      'ESHUTDOWN': 140,
+      'ECONNREFUSED': 14,
+      'EADDRINUSE': 3,
+      'ECONNABORTED': 13,
+      'ENETUNREACH': 40,
+      'ENETDOWN': 38,
+      'ETIMEDOUT': 73,
+      'EHOSTDOWN': 142,
+      'EHOSTUNREACH': 23,
+      'EINPROGRESS': 26,
+      'EALREADY': 7,
+      'EDESTADDRREQ': 17,
+      'EMSGSIZE': 35,
+      'EPROTONOSUPPORT': 66,
+      'ESOCKTNOSUPPORT': 137,
+      'EADDRNOTAVAIL': 4,
+      'ENETRESET': 39,
+      'EISCONN': 30,
+      'ENOTCONN': 53,
+      'ETOOMANYREFS': 141,
+      'EUSERS': 136,
+      'EDQUOT': 19,
+      'ESTALE': 72,
+      'ENOTSUP': 138,
+      'ENOMEDIUM': 148,
+      'EILSEQ': 25,
+      'EOVERFLOW': 61,
+      'ECANCELED': 11,
+      'ENOTRECOVERABLE': 56,
+      'EOWNERDEAD': 62,
+      'ESTRPIPE': 135,
+    };;
+function checkIncomingModuleAPI() {
+  ignoredModuleProp('fetchSettings');
+}
 var wasmImports = {
-  "__syscall_chmod": ___syscall_chmod,
-  "__syscall_faccessat": ___syscall_faccessat,
-  "__syscall_fchmod": ___syscall_fchmod,
-  "__syscall_fchown32": ___syscall_fchown32,
-  "__syscall_fcntl64": ___syscall_fcntl64,
-  "__syscall_fstat64": ___syscall_fstat64,
-  "__syscall_ftruncate64": ___syscall_ftruncate64,
-  "__syscall_getcwd": ___syscall_getcwd,
-  "__syscall_ioctl": ___syscall_ioctl,
-  "__syscall_lstat64": ___syscall_lstat64,
-  "__syscall_mkdirat": ___syscall_mkdirat,
-  "__syscall_newfstatat": ___syscall_newfstatat,
-  "__syscall_openat": ___syscall_openat,
-  "__syscall_readlinkat": ___syscall_readlinkat,
-  "__syscall_rmdir": ___syscall_rmdir,
-  "__syscall_stat64": ___syscall_stat64,
-  "__syscall_unlinkat": ___syscall_unlinkat,
-  "__syscall_utimensat": ___syscall_utimensat,
-  "_emscripten_get_now_is_monotonic": __emscripten_get_now_is_monotonic,
-  "_localtime_js": __localtime_js,
-  "_tzset_js": __tzset_js,
-  "emscripten_date_now": _emscripten_date_now,
-  "emscripten_get_now": _emscripten_get_now,
-  "emscripten_resize_heap": _emscripten_resize_heap,
-  "environ_get": _environ_get,
-  "environ_sizes_get": _environ_sizes_get,
-  "fd_close": _fd_close,
-  "fd_fdstat_get": _fd_fdstat_get,
-  "fd_read": _fd_read,
-  "fd_seek": _fd_seek,
-  "fd_sync": _fd_sync,
-  "fd_write": _fd_write,
-  "memory": wasmMemory
-};
-var asm = createWasm();
-/** @type {function(...*):?} */
-var ___wasm_call_ctors = function() {
-  return (___wasm_call_ctors = Module["asm"]["__wasm_call_ctors"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_status64 = Module["_sqlite3_status64"] = function() {
-  return (_sqlite3_status64 = Module["_sqlite3_status64"] = Module["asm"]["sqlite3_status64"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_status = Module["_sqlite3_status"] = function() {
-  return (_sqlite3_status = Module["_sqlite3_status"] = Module["asm"]["sqlite3_status"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_db_status = Module["_sqlite3_db_status"] = function() {
-  return (_sqlite3_db_status = Module["_sqlite3_db_status"] = Module["asm"]["sqlite3_db_status"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_msize = Module["_sqlite3_msize"] = function() {
-  return (_sqlite3_msize = Module["_sqlite3_msize"] = Module["asm"]["sqlite3_msize"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_vfs_find = Module["_sqlite3_vfs_find"] = function() {
-  return (_sqlite3_vfs_find = Module["_sqlite3_vfs_find"] = Module["asm"]["sqlite3_vfs_find"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_initialize = Module["_sqlite3_initialize"] = function() {
-  return (_sqlite3_initialize = Module["_sqlite3_initialize"] = Module["asm"]["sqlite3_initialize"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_malloc = Module["_sqlite3_malloc"] = function() {
-  return (_sqlite3_malloc = Module["_sqlite3_malloc"] = Module["asm"]["sqlite3_malloc"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_free = Module["_sqlite3_free"] = function() {
-  return (_sqlite3_free = Module["_sqlite3_free"] = Module["asm"]["sqlite3_free"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_vfs_register = Module["_sqlite3_vfs_register"] = function() {
-  return (_sqlite3_vfs_register = Module["_sqlite3_vfs_register"] = Module["asm"]["sqlite3_vfs_register"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_vfs_unregister = Module["_sqlite3_vfs_unregister"] = function() {
-  return (_sqlite3_vfs_unregister = Module["_sqlite3_vfs_unregister"] = Module["asm"]["sqlite3_vfs_unregister"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_malloc64 = Module["_sqlite3_malloc64"] = function() {
-  return (_sqlite3_malloc64 = Module["_sqlite3_malloc64"] = Module["asm"]["sqlite3_malloc64"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_realloc = Module["_sqlite3_realloc"] = function() {
-  return (_sqlite3_realloc = Module["_sqlite3_realloc"] = Module["asm"]["sqlite3_realloc"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_realloc64 = Module["_sqlite3_realloc64"] = function() {
-  return (_sqlite3_realloc64 = Module["_sqlite3_realloc64"] = Module["asm"]["sqlite3_realloc64"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_text = Module["_sqlite3_value_text"] = function() {
-  return (_sqlite3_value_text = Module["_sqlite3_value_text"] = Module["asm"]["sqlite3_value_text"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_randomness = Module["_sqlite3_randomness"] = function() {
-  return (_sqlite3_randomness = Module["_sqlite3_randomness"] = Module["asm"]["sqlite3_randomness"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_stricmp = Module["_sqlite3_stricmp"] = function() {
-  return (_sqlite3_stricmp = Module["_sqlite3_stricmp"] = Module["asm"]["sqlite3_stricmp"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_strnicmp = Module["_sqlite3_strnicmp"] = function() {
-  return (_sqlite3_strnicmp = Module["_sqlite3_strnicmp"] = Module["asm"]["sqlite3_strnicmp"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_uri_parameter = Module["_sqlite3_uri_parameter"] = function() {
-  return (_sqlite3_uri_parameter = Module["_sqlite3_uri_parameter"] = Module["asm"]["sqlite3_uri_parameter"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var ___errno_location = function() {
-  return (___errno_location = Module["asm"]["__errno_location"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_uri_boolean = Module["_sqlite3_uri_boolean"] = function() {
-  return (_sqlite3_uri_boolean = Module["_sqlite3_uri_boolean"] = Module["asm"]["sqlite3_uri_boolean"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_serialize = Module["_sqlite3_serialize"] = function() {
-  return (_sqlite3_serialize = Module["_sqlite3_serialize"] = Module["asm"]["sqlite3_serialize"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_prepare_v2 = Module["_sqlite3_prepare_v2"] = function() {
-  return (_sqlite3_prepare_v2 = Module["_sqlite3_prepare_v2"] = Module["asm"]["sqlite3_prepare_v2"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_step = Module["_sqlite3_step"] = function() {
-  return (_sqlite3_step = Module["_sqlite3_step"] = Module["asm"]["sqlite3_step"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_column_int64 = Module["_sqlite3_column_int64"] = function() {
-  return (_sqlite3_column_int64 = Module["_sqlite3_column_int64"] = Module["asm"]["sqlite3_column_int64"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_column_int = Module["_sqlite3_column_int"] = function() {
-  return (_sqlite3_column_int = Module["_sqlite3_column_int"] = Module["asm"]["sqlite3_column_int"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_finalize = Module["_sqlite3_finalize"] = function() {
-  return (_sqlite3_finalize = Module["_sqlite3_finalize"] = Module["asm"]["sqlite3_finalize"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_file_control = Module["_sqlite3_file_control"] = function() {
-  return (_sqlite3_file_control = Module["_sqlite3_file_control"] = Module["asm"]["sqlite3_file_control"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_reset = Module["_sqlite3_reset"] = function() {
-  return (_sqlite3_reset = Module["_sqlite3_reset"] = Module["asm"]["sqlite3_reset"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_deserialize = Module["_sqlite3_deserialize"] = function() {
-  return (_sqlite3_deserialize = Module["_sqlite3_deserialize"] = Module["asm"]["sqlite3_deserialize"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_clear_bindings = Module["_sqlite3_clear_bindings"] = function() {
-  return (_sqlite3_clear_bindings = Module["_sqlite3_clear_bindings"] = Module["asm"]["sqlite3_clear_bindings"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_blob = Module["_sqlite3_value_blob"] = function() {
-  return (_sqlite3_value_blob = Module["_sqlite3_value_blob"] = Module["asm"]["sqlite3_value_blob"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_bytes = Module["_sqlite3_value_bytes"] = function() {
-  return (_sqlite3_value_bytes = Module["_sqlite3_value_bytes"] = Module["asm"]["sqlite3_value_bytes"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_double = Module["_sqlite3_value_double"] = function() {
-  return (_sqlite3_value_double = Module["_sqlite3_value_double"] = Module["asm"]["sqlite3_value_double"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_int = Module["_sqlite3_value_int"] = function() {
-  return (_sqlite3_value_int = Module["_sqlite3_value_int"] = Module["asm"]["sqlite3_value_int"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_int64 = Module["_sqlite3_value_int64"] = function() {
-  return (_sqlite3_value_int64 = Module["_sqlite3_value_int64"] = Module["asm"]["sqlite3_value_int64"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_subtype = Module["_sqlite3_value_subtype"] = function() {
-  return (_sqlite3_value_subtype = Module["_sqlite3_value_subtype"] = Module["asm"]["sqlite3_value_subtype"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_pointer = Module["_sqlite3_value_pointer"] = function() {
-  return (_sqlite3_value_pointer = Module["_sqlite3_value_pointer"] = Module["asm"]["sqlite3_value_pointer"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_type = Module["_sqlite3_value_type"] = function() {
-  return (_sqlite3_value_type = Module["_sqlite3_value_type"] = Module["asm"]["sqlite3_value_type"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_nochange = Module["_sqlite3_value_nochange"] = function() {
-  return (_sqlite3_value_nochange = Module["_sqlite3_value_nochange"] = Module["asm"]["sqlite3_value_nochange"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_frombind = Module["_sqlite3_value_frombind"] = function() {
-  return (_sqlite3_value_frombind = Module["_sqlite3_value_frombind"] = Module["asm"]["sqlite3_value_frombind"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_dup = Module["_sqlite3_value_dup"] = function() {
-  return (_sqlite3_value_dup = Module["_sqlite3_value_dup"] = Module["asm"]["sqlite3_value_dup"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_free = Module["_sqlite3_value_free"] = function() {
-  return (_sqlite3_value_free = Module["_sqlite3_value_free"] = Module["asm"]["sqlite3_value_free"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_blob = Module["_sqlite3_result_blob"] = function() {
-  return (_sqlite3_result_blob = Module["_sqlite3_result_blob"] = Module["asm"]["sqlite3_result_blob"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_error_nomem = Module["_sqlite3_result_error_nomem"] = function() {
-  return (_sqlite3_result_error_nomem = Module["_sqlite3_result_error_nomem"] = Module["asm"]["sqlite3_result_error_nomem"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_error_toobig = Module["_sqlite3_result_error_toobig"] = function() {
-  return (_sqlite3_result_error_toobig = Module["_sqlite3_result_error_toobig"] = Module["asm"]["sqlite3_result_error_toobig"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_double = Module["_sqlite3_result_double"] = function() {
-  return (_sqlite3_result_double = Module["_sqlite3_result_double"] = Module["asm"]["sqlite3_result_double"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_error = Module["_sqlite3_result_error"] = function() {
-  return (_sqlite3_result_error = Module["_sqlite3_result_error"] = Module["asm"]["sqlite3_result_error"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_int = Module["_sqlite3_result_int"] = function() {
-  return (_sqlite3_result_int = Module["_sqlite3_result_int"] = Module["asm"]["sqlite3_result_int"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_int64 = Module["_sqlite3_result_int64"] = function() {
-  return (_sqlite3_result_int64 = Module["_sqlite3_result_int64"] = Module["asm"]["sqlite3_result_int64"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_null = Module["_sqlite3_result_null"] = function() {
-  return (_sqlite3_result_null = Module["_sqlite3_result_null"] = Module["asm"]["sqlite3_result_null"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_pointer = Module["_sqlite3_result_pointer"] = function() {
-  return (_sqlite3_result_pointer = Module["_sqlite3_result_pointer"] = Module["asm"]["sqlite3_result_pointer"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_subtype = Module["_sqlite3_result_subtype"] = function() {
-  return (_sqlite3_result_subtype = Module["_sqlite3_result_subtype"] = Module["asm"]["sqlite3_result_subtype"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_text = Module["_sqlite3_result_text"] = function() {
-  return (_sqlite3_result_text = Module["_sqlite3_result_text"] = Module["asm"]["sqlite3_result_text"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_zeroblob = Module["_sqlite3_result_zeroblob"] = function() {
-  return (_sqlite3_result_zeroblob = Module["_sqlite3_result_zeroblob"] = Module["asm"]["sqlite3_result_zeroblob"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_zeroblob64 = Module["_sqlite3_result_zeroblob64"] = function() {
-  return (_sqlite3_result_zeroblob64 = Module["_sqlite3_result_zeroblob64"] = Module["asm"]["sqlite3_result_zeroblob64"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_result_error_code = Module["_sqlite3_result_error_code"] = function() {
-  return (_sqlite3_result_error_code = Module["_sqlite3_result_error_code"] = Module["asm"]["sqlite3_result_error_code"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_user_data = Module["_sqlite3_user_data"] = function() {
-  return (_sqlite3_user_data = Module["_sqlite3_user_data"] = Module["asm"]["sqlite3_user_data"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_context_db_handle = Module["_sqlite3_context_db_handle"] = function() {
-  return (_sqlite3_context_db_handle = Module["_sqlite3_context_db_handle"] = Module["asm"]["sqlite3_context_db_handle"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_vtab_nochange = Module["_sqlite3_vtab_nochange"] = function() {
-  return (_sqlite3_vtab_nochange = Module["_sqlite3_vtab_nochange"] = Module["asm"]["sqlite3_vtab_nochange"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_vtab_in_first = Module["_sqlite3_vtab_in_first"] = function() {
-  return (_sqlite3_vtab_in_first = Module["_sqlite3_vtab_in_first"] = Module["asm"]["sqlite3_vtab_in_first"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_vtab_in_next = Module["_sqlite3_vtab_in_next"] = function() {
-  return (_sqlite3_vtab_in_next = Module["_sqlite3_vtab_in_next"] = Module["asm"]["sqlite3_vtab_in_next"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_aggregate_context = Module["_sqlite3_aggregate_context"] = function() {
-  return (_sqlite3_aggregate_context = Module["_sqlite3_aggregate_context"] = Module["asm"]["sqlite3_aggregate_context"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_get_auxdata = Module["_sqlite3_get_auxdata"] = function() {
-  return (_sqlite3_get_auxdata = Module["_sqlite3_get_auxdata"] = Module["asm"]["sqlite3_get_auxdata"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_set_auxdata = Module["_sqlite3_set_auxdata"] = function() {
-  return (_sqlite3_set_auxdata = Module["_sqlite3_set_auxdata"] = Module["asm"]["sqlite3_set_auxdata"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_column_count = Module["_sqlite3_column_count"] = function() {
-  return (_sqlite3_column_count = Module["_sqlite3_column_count"] = Module["asm"]["sqlite3_column_count"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_data_count = Module["_sqlite3_data_count"] = function() {
-  return (_sqlite3_data_count = Module["_sqlite3_data_count"] = Module["asm"]["sqlite3_data_count"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_column_blob = Module["_sqlite3_column_blob"] = function() {
-  return (_sqlite3_column_blob = Module["_sqlite3_column_blob"] = Module["asm"]["sqlite3_column_blob"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_column_bytes = Module["_sqlite3_column_bytes"] = function() {
-  return (_sqlite3_column_bytes = Module["_sqlite3_column_bytes"] = Module["asm"]["sqlite3_column_bytes"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_column_double = Module["_sqlite3_column_double"] = function() {
-  return (_sqlite3_column_double = Module["_sqlite3_column_double"] = Module["asm"]["sqlite3_column_double"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_column_text = Module["_sqlite3_column_text"] = function() {
-  return (_sqlite3_column_text = Module["_sqlite3_column_text"] = Module["asm"]["sqlite3_column_text"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_column_value = Module["_sqlite3_column_value"] = function() {
-  return (_sqlite3_column_value = Module["_sqlite3_column_value"] = Module["asm"]["sqlite3_column_value"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_column_type = Module["_sqlite3_column_type"] = function() {
-  return (_sqlite3_column_type = Module["_sqlite3_column_type"] = Module["asm"]["sqlite3_column_type"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_column_name = Module["_sqlite3_column_name"] = function() {
-  return (_sqlite3_column_name = Module["_sqlite3_column_name"] = Module["asm"]["sqlite3_column_name"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_bind_blob = Module["_sqlite3_bind_blob"] = function() {
-  return (_sqlite3_bind_blob = Module["_sqlite3_bind_blob"] = Module["asm"]["sqlite3_bind_blob"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_bind_double = Module["_sqlite3_bind_double"] = function() {
-  return (_sqlite3_bind_double = Module["_sqlite3_bind_double"] = Module["asm"]["sqlite3_bind_double"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_bind_int = Module["_sqlite3_bind_int"] = function() {
-  return (_sqlite3_bind_int = Module["_sqlite3_bind_int"] = Module["asm"]["sqlite3_bind_int"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_bind_int64 = Module["_sqlite3_bind_int64"] = function() {
-  return (_sqlite3_bind_int64 = Module["_sqlite3_bind_int64"] = Module["asm"]["sqlite3_bind_int64"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_bind_null = Module["_sqlite3_bind_null"] = function() {
-  return (_sqlite3_bind_null = Module["_sqlite3_bind_null"] = Module["asm"]["sqlite3_bind_null"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_bind_pointer = Module["_sqlite3_bind_pointer"] = function() {
-  return (_sqlite3_bind_pointer = Module["_sqlite3_bind_pointer"] = Module["asm"]["sqlite3_bind_pointer"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_bind_text = Module["_sqlite3_bind_text"] = function() {
-  return (_sqlite3_bind_text = Module["_sqlite3_bind_text"] = Module["asm"]["sqlite3_bind_text"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_bind_parameter_count = Module["_sqlite3_bind_parameter_count"] = function() {
-  return (_sqlite3_bind_parameter_count = Module["_sqlite3_bind_parameter_count"] = Module["asm"]["sqlite3_bind_parameter_count"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_bind_parameter_index = Module["_sqlite3_bind_parameter_index"] = function() {
-  return (_sqlite3_bind_parameter_index = Module["_sqlite3_bind_parameter_index"] = Module["asm"]["sqlite3_bind_parameter_index"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_db_handle = Module["_sqlite3_db_handle"] = function() {
-  return (_sqlite3_db_handle = Module["_sqlite3_db_handle"] = Module["asm"]["sqlite3_db_handle"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_stmt_readonly = Module["_sqlite3_stmt_readonly"] = function() {
-  return (_sqlite3_stmt_readonly = Module["_sqlite3_stmt_readonly"] = Module["asm"]["sqlite3_stmt_readonly"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_stmt_isexplain = Module["_sqlite3_stmt_isexplain"] = function() {
-  return (_sqlite3_stmt_isexplain = Module["_sqlite3_stmt_isexplain"] = Module["asm"]["sqlite3_stmt_isexplain"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_stmt_status = Module["_sqlite3_stmt_status"] = function() {
-  return (_sqlite3_stmt_status = Module["_sqlite3_stmt_status"] = Module["asm"]["sqlite3_stmt_status"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_sql = Module["_sqlite3_sql"] = function() {
-  return (_sqlite3_sql = Module["_sqlite3_sql"] = Module["asm"]["sqlite3_sql"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_expanded_sql = Module["_sqlite3_expanded_sql"] = function() {
-  return (_sqlite3_expanded_sql = Module["_sqlite3_expanded_sql"] = Module["asm"]["sqlite3_expanded_sql"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_preupdate_old = Module["_sqlite3_preupdate_old"] = function() {
-  return (_sqlite3_preupdate_old = Module["_sqlite3_preupdate_old"] = Module["asm"]["sqlite3_preupdate_old"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_preupdate_count = Module["_sqlite3_preupdate_count"] = function() {
-  return (_sqlite3_preupdate_count = Module["_sqlite3_preupdate_count"] = Module["asm"]["sqlite3_preupdate_count"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_preupdate_depth = Module["_sqlite3_preupdate_depth"] = function() {
-  return (_sqlite3_preupdate_depth = Module["_sqlite3_preupdate_depth"] = Module["asm"]["sqlite3_preupdate_depth"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_preupdate_blobwrite = Module["_sqlite3_preupdate_blobwrite"] = function() {
-  return (_sqlite3_preupdate_blobwrite = Module["_sqlite3_preupdate_blobwrite"] = Module["asm"]["sqlite3_preupdate_blobwrite"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_preupdate_new = Module["_sqlite3_preupdate_new"] = function() {
-  return (_sqlite3_preupdate_new = Module["_sqlite3_preupdate_new"] = Module["asm"]["sqlite3_preupdate_new"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_value_numeric_type = Module["_sqlite3_value_numeric_type"] = function() {
-  return (_sqlite3_value_numeric_type = Module["_sqlite3_value_numeric_type"] = Module["asm"]["sqlite3_value_numeric_type"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_errmsg = Module["_sqlite3_errmsg"] = function() {
-  return (_sqlite3_errmsg = Module["_sqlite3_errmsg"] = Module["asm"]["sqlite3_errmsg"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_set_authorizer = Module["_sqlite3_set_authorizer"] = function() {
-  return (_sqlite3_set_authorizer = Module["_sqlite3_set_authorizer"] = Module["asm"]["sqlite3_set_authorizer"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_strglob = Module["_sqlite3_strglob"] = function() {
-  return (_sqlite3_strglob = Module["_sqlite3_strglob"] = Module["asm"]["sqlite3_strglob"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_strlike = Module["_sqlite3_strlike"] = function() {
-  return (_sqlite3_strlike = Module["_sqlite3_strlike"] = Module["asm"]["sqlite3_strlike"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_exec = Module["_sqlite3_exec"] = function() {
-  return (_sqlite3_exec = Module["_sqlite3_exec"] = Module["asm"]["sqlite3_exec"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_auto_extension = Module["_sqlite3_auto_extension"] = function() {
-  return (_sqlite3_auto_extension = Module["_sqlite3_auto_extension"] = Module["asm"]["sqlite3_auto_extension"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_cancel_auto_extension = Module["_sqlite3_cancel_auto_extension"] = function() {
-  return (_sqlite3_cancel_auto_extension = Module["_sqlite3_cancel_auto_extension"] = Module["asm"]["sqlite3_cancel_auto_extension"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_reset_auto_extension = Module["_sqlite3_reset_auto_extension"] = function() {
-  return (_sqlite3_reset_auto_extension = Module["_sqlite3_reset_auto_extension"] = Module["asm"]["sqlite3_reset_auto_extension"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_prepare_v3 = Module["_sqlite3_prepare_v3"] = function() {
-  return (_sqlite3_prepare_v3 = Module["_sqlite3_prepare_v3"] = Module["asm"]["sqlite3_prepare_v3"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_create_module = Module["_sqlite3_create_module"] = function() {
-  return (_sqlite3_create_module = Module["_sqlite3_create_module"] = Module["asm"]["sqlite3_create_module"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_create_module_v2 = Module["_sqlite3_create_module_v2"] = function() {
-  return (_sqlite3_create_module_v2 = Module["_sqlite3_create_module_v2"] = Module["asm"]["sqlite3_create_module_v2"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_drop_modules = Module["_sqlite3_drop_modules"] = function() {
-  return (_sqlite3_drop_modules = Module["_sqlite3_drop_modules"] = Module["asm"]["sqlite3_drop_modules"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_declare_vtab = Module["_sqlite3_declare_vtab"] = function() {
-  return (_sqlite3_declare_vtab = Module["_sqlite3_declare_vtab"] = Module["asm"]["sqlite3_declare_vtab"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_vtab_on_conflict = Module["_sqlite3_vtab_on_conflict"] = function() {
-  return (_sqlite3_vtab_on_conflict = Module["_sqlite3_vtab_on_conflict"] = Module["asm"]["sqlite3_vtab_on_conflict"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_vtab_collation = Module["_sqlite3_vtab_collation"] = function() {
-  return (_sqlite3_vtab_collation = Module["_sqlite3_vtab_collation"] = Module["asm"]["sqlite3_vtab_collation"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_vtab_in = Module["_sqlite3_vtab_in"] = function() {
-  return (_sqlite3_vtab_in = Module["_sqlite3_vtab_in"] = Module["asm"]["sqlite3_vtab_in"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_vtab_rhs_value = Module["_sqlite3_vtab_rhs_value"] = function() {
-  return (_sqlite3_vtab_rhs_value = Module["_sqlite3_vtab_rhs_value"] = Module["asm"]["sqlite3_vtab_rhs_value"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_vtab_distinct = Module["_sqlite3_vtab_distinct"] = function() {
-  return (_sqlite3_vtab_distinct = Module["_sqlite3_vtab_distinct"] = Module["asm"]["sqlite3_vtab_distinct"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_keyword_name = Module["_sqlite3_keyword_name"] = function() {
-  return (_sqlite3_keyword_name = Module["_sqlite3_keyword_name"] = Module["asm"]["sqlite3_keyword_name"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_keyword_count = Module["_sqlite3_keyword_count"] = function() {
-  return (_sqlite3_keyword_count = Module["_sqlite3_keyword_count"] = Module["asm"]["sqlite3_keyword_count"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_keyword_check = Module["_sqlite3_keyword_check"] = function() {
-  return (_sqlite3_keyword_check = Module["_sqlite3_keyword_check"] = Module["asm"]["sqlite3_keyword_check"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_complete = Module["_sqlite3_complete"] = function() {
-  return (_sqlite3_complete = Module["_sqlite3_complete"] = Module["asm"]["sqlite3_complete"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_libversion = Module["_sqlite3_libversion"] = function() {
-  return (_sqlite3_libversion = Module["_sqlite3_libversion"] = Module["asm"]["sqlite3_libversion"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_libversion_number = Module["_sqlite3_libversion_number"] = function() {
-  return (_sqlite3_libversion_number = Module["_sqlite3_libversion_number"] = Module["asm"]["sqlite3_libversion_number"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_shutdown = Module["_sqlite3_shutdown"] = function() {
-  return (_sqlite3_shutdown = Module["_sqlite3_shutdown"] = Module["asm"]["sqlite3_shutdown"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_last_insert_rowid = Module["_sqlite3_last_insert_rowid"] = function() {
-  return (_sqlite3_last_insert_rowid = Module["_sqlite3_last_insert_rowid"] = Module["asm"]["sqlite3_last_insert_rowid"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_set_last_insert_rowid = Module["_sqlite3_set_last_insert_rowid"] = function() {
-  return (_sqlite3_set_last_insert_rowid = Module["_sqlite3_set_last_insert_rowid"] = Module["asm"]["sqlite3_set_last_insert_rowid"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_changes64 = Module["_sqlite3_changes64"] = function() {
-  return (_sqlite3_changes64 = Module["_sqlite3_changes64"] = Module["asm"]["sqlite3_changes64"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_changes = Module["_sqlite3_changes"] = function() {
-  return (_sqlite3_changes = Module["_sqlite3_changes"] = Module["asm"]["sqlite3_changes"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_total_changes64 = Module["_sqlite3_total_changes64"] = function() {
-  return (_sqlite3_total_changes64 = Module["_sqlite3_total_changes64"] = Module["asm"]["sqlite3_total_changes64"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_total_changes = Module["_sqlite3_total_changes"] = function() {
-  return (_sqlite3_total_changes = Module["_sqlite3_total_changes"] = Module["asm"]["sqlite3_total_changes"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_txn_state = Module["_sqlite3_txn_state"] = function() {
-  return (_sqlite3_txn_state = Module["_sqlite3_txn_state"] = Module["asm"]["sqlite3_txn_state"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_close_v2 = Module["_sqlite3_close_v2"] = function() {
-  return (_sqlite3_close_v2 = Module["_sqlite3_close_v2"] = Module["asm"]["sqlite3_close_v2"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_busy_handler = Module["_sqlite3_busy_handler"] = function() {
-  return (_sqlite3_busy_handler = Module["_sqlite3_busy_handler"] = Module["asm"]["sqlite3_busy_handler"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_progress_handler = Module["_sqlite3_progress_handler"] = function() {
-  return (_sqlite3_progress_handler = Module["_sqlite3_progress_handler"] = Module["asm"]["sqlite3_progress_handler"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_busy_timeout = Module["_sqlite3_busy_timeout"] = function() {
-  return (_sqlite3_busy_timeout = Module["_sqlite3_busy_timeout"] = Module["asm"]["sqlite3_busy_timeout"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_create_function = Module["_sqlite3_create_function"] = function() {
-  return (_sqlite3_create_function = Module["_sqlite3_create_function"] = Module["asm"]["sqlite3_create_function"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_create_function_v2 = Module["_sqlite3_create_function_v2"] = function() {
-  return (_sqlite3_create_function_v2 = Module["_sqlite3_create_function_v2"] = Module["asm"]["sqlite3_create_function_v2"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_create_window_function = Module["_sqlite3_create_window_function"] = function() {
-  return (_sqlite3_create_window_function = Module["_sqlite3_create_window_function"] = Module["asm"]["sqlite3_create_window_function"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_overload_function = Module["_sqlite3_overload_function"] = function() {
-  return (_sqlite3_overload_function = Module["_sqlite3_overload_function"] = Module["asm"]["sqlite3_overload_function"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_trace_v2 = Module["_sqlite3_trace_v2"] = function() {
-  return (_sqlite3_trace_v2 = Module["_sqlite3_trace_v2"] = Module["asm"]["sqlite3_trace_v2"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_commit_hook = Module["_sqlite3_commit_hook"] = function() {
-  return (_sqlite3_commit_hook = Module["_sqlite3_commit_hook"] = Module["asm"]["sqlite3_commit_hook"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_update_hook = Module["_sqlite3_update_hook"] = function() {
-  return (_sqlite3_update_hook = Module["_sqlite3_update_hook"] = Module["asm"]["sqlite3_update_hook"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_rollback_hook = Module["_sqlite3_rollback_hook"] = function() {
-  return (_sqlite3_rollback_hook = Module["_sqlite3_rollback_hook"] = Module["asm"]["sqlite3_rollback_hook"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_preupdate_hook = Module["_sqlite3_preupdate_hook"] = function() {
-  return (_sqlite3_preupdate_hook = Module["_sqlite3_preupdate_hook"] = Module["asm"]["sqlite3_preupdate_hook"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_error_offset = Module["_sqlite3_error_offset"] = function() {
-  return (_sqlite3_error_offset = Module["_sqlite3_error_offset"] = Module["asm"]["sqlite3_error_offset"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_errcode = Module["_sqlite3_errcode"] = function() {
-  return (_sqlite3_errcode = Module["_sqlite3_errcode"] = Module["asm"]["sqlite3_errcode"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_extended_errcode = Module["_sqlite3_extended_errcode"] = function() {
-  return (_sqlite3_extended_errcode = Module["_sqlite3_extended_errcode"] = Module["asm"]["sqlite3_extended_errcode"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_errstr = Module["_sqlite3_errstr"] = function() {
-  return (_sqlite3_errstr = Module["_sqlite3_errstr"] = Module["asm"]["sqlite3_errstr"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_limit = Module["_sqlite3_limit"] = function() {
-  return (_sqlite3_limit = Module["_sqlite3_limit"] = Module["asm"]["sqlite3_limit"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_open = Module["_sqlite3_open"] = function() {
-  return (_sqlite3_open = Module["_sqlite3_open"] = Module["asm"]["sqlite3_open"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_open_v2 = Module["_sqlite3_open_v2"] = function() {
-  return (_sqlite3_open_v2 = Module["_sqlite3_open_v2"] = Module["asm"]["sqlite3_open_v2"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_create_collation = Module["_sqlite3_create_collation"] = function() {
-  return (_sqlite3_create_collation = Module["_sqlite3_create_collation"] = Module["asm"]["sqlite3_create_collation"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_create_collation_v2 = Module["_sqlite3_create_collation_v2"] = function() {
-  return (_sqlite3_create_collation_v2 = Module["_sqlite3_create_collation_v2"] = Module["asm"]["sqlite3_create_collation_v2"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_collation_needed = Module["_sqlite3_collation_needed"] = function() {
-  return (_sqlite3_collation_needed = Module["_sqlite3_collation_needed"] = Module["asm"]["sqlite3_collation_needed"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_table_column_metadata = Module["_sqlite3_table_column_metadata"] = function() {
-  return (_sqlite3_table_column_metadata = Module["_sqlite3_table_column_metadata"] = Module["asm"]["sqlite3_table_column_metadata"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_extended_result_codes = Module["_sqlite3_extended_result_codes"] = function() {
-  return (_sqlite3_extended_result_codes = Module["_sqlite3_extended_result_codes"] = Module["asm"]["sqlite3_extended_result_codes"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_uri_key = Module["_sqlite3_uri_key"] = function() {
-  return (_sqlite3_uri_key = Module["_sqlite3_uri_key"] = Module["asm"]["sqlite3_uri_key"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_uri_int64 = Module["_sqlite3_uri_int64"] = function() {
-  return (_sqlite3_uri_int64 = Module["_sqlite3_uri_int64"] = Module["asm"]["sqlite3_uri_int64"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_db_name = Module["_sqlite3_db_name"] = function() {
-  return (_sqlite3_db_name = Module["_sqlite3_db_name"] = Module["asm"]["sqlite3_db_name"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_db_filename = Module["_sqlite3_db_filename"] = function() {
-  return (_sqlite3_db_filename = Module["_sqlite3_db_filename"] = Module["asm"]["sqlite3_db_filename"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_compileoption_used = Module["_sqlite3_compileoption_used"] = function() {
-  return (_sqlite3_compileoption_used = Module["_sqlite3_compileoption_used"] = Module["asm"]["sqlite3_compileoption_used"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_compileoption_get = Module["_sqlite3_compileoption_get"] = function() {
-  return (_sqlite3_compileoption_get = Module["_sqlite3_compileoption_get"] = Module["asm"]["sqlite3_compileoption_get"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_diff = Module["_sqlite3session_diff"] = function() {
-  return (_sqlite3session_diff = Module["_sqlite3session_diff"] = Module["asm"]["sqlite3session_diff"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_attach = Module["_sqlite3session_attach"] = function() {
-  return (_sqlite3session_attach = Module["_sqlite3session_attach"] = Module["asm"]["sqlite3session_attach"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_create = Module["_sqlite3session_create"] = function() {
-  return (_sqlite3session_create = Module["_sqlite3session_create"] = Module["asm"]["sqlite3session_create"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_delete = Module["_sqlite3session_delete"] = function() {
-  return (_sqlite3session_delete = Module["_sqlite3session_delete"] = Module["asm"]["sqlite3session_delete"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_table_filter = Module["_sqlite3session_table_filter"] = function() {
-  return (_sqlite3session_table_filter = Module["_sqlite3session_table_filter"] = Module["asm"]["sqlite3session_table_filter"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_changeset = Module["_sqlite3session_changeset"] = function() {
-  return (_sqlite3session_changeset = Module["_sqlite3session_changeset"] = Module["asm"]["sqlite3session_changeset"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_changeset_strm = Module["_sqlite3session_changeset_strm"] = function() {
-  return (_sqlite3session_changeset_strm = Module["_sqlite3session_changeset_strm"] = Module["asm"]["sqlite3session_changeset_strm"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_patchset_strm = Module["_sqlite3session_patchset_strm"] = function() {
-  return (_sqlite3session_patchset_strm = Module["_sqlite3session_patchset_strm"] = Module["asm"]["sqlite3session_patchset_strm"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_patchset = Module["_sqlite3session_patchset"] = function() {
-  return (_sqlite3session_patchset = Module["_sqlite3session_patchset"] = Module["asm"]["sqlite3session_patchset"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_enable = Module["_sqlite3session_enable"] = function() {
-  return (_sqlite3session_enable = Module["_sqlite3session_enable"] = Module["asm"]["sqlite3session_enable"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_indirect = Module["_sqlite3session_indirect"] = function() {
-  return (_sqlite3session_indirect = Module["_sqlite3session_indirect"] = Module["asm"]["sqlite3session_indirect"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_isempty = Module["_sqlite3session_isempty"] = function() {
-  return (_sqlite3session_isempty = Module["_sqlite3session_isempty"] = Module["asm"]["sqlite3session_isempty"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_memory_used = Module["_sqlite3session_memory_used"] = function() {
-  return (_sqlite3session_memory_used = Module["_sqlite3session_memory_used"] = Module["asm"]["sqlite3session_memory_used"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_object_config = Module["_sqlite3session_object_config"] = function() {
-  return (_sqlite3session_object_config = Module["_sqlite3session_object_config"] = Module["asm"]["sqlite3session_object_config"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_changeset_size = Module["_sqlite3session_changeset_size"] = function() {
-  return (_sqlite3session_changeset_size = Module["_sqlite3session_changeset_size"] = Module["asm"]["sqlite3session_changeset_size"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_start = Module["_sqlite3changeset_start"] = function() {
-  return (_sqlite3changeset_start = Module["_sqlite3changeset_start"] = Module["asm"]["sqlite3changeset_start"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_start_v2 = Module["_sqlite3changeset_start_v2"] = function() {
-  return (_sqlite3changeset_start_v2 = Module["_sqlite3changeset_start_v2"] = Module["asm"]["sqlite3changeset_start_v2"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_start_strm = Module["_sqlite3changeset_start_strm"] = function() {
-  return (_sqlite3changeset_start_strm = Module["_sqlite3changeset_start_strm"] = Module["asm"]["sqlite3changeset_start_strm"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_start_v2_strm = Module["_sqlite3changeset_start_v2_strm"] = function() {
-  return (_sqlite3changeset_start_v2_strm = Module["_sqlite3changeset_start_v2_strm"] = Module["asm"]["sqlite3changeset_start_v2_strm"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_next = Module["_sqlite3changeset_next"] = function() {
-  return (_sqlite3changeset_next = Module["_sqlite3changeset_next"] = Module["asm"]["sqlite3changeset_next"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_op = Module["_sqlite3changeset_op"] = function() {
-  return (_sqlite3changeset_op = Module["_sqlite3changeset_op"] = Module["asm"]["sqlite3changeset_op"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_pk = Module["_sqlite3changeset_pk"] = function() {
-  return (_sqlite3changeset_pk = Module["_sqlite3changeset_pk"] = Module["asm"]["sqlite3changeset_pk"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_old = Module["_sqlite3changeset_old"] = function() {
-  return (_sqlite3changeset_old = Module["_sqlite3changeset_old"] = Module["asm"]["sqlite3changeset_old"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_new = Module["_sqlite3changeset_new"] = function() {
-  return (_sqlite3changeset_new = Module["_sqlite3changeset_new"] = Module["asm"]["sqlite3changeset_new"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_conflict = Module["_sqlite3changeset_conflict"] = function() {
-  return (_sqlite3changeset_conflict = Module["_sqlite3changeset_conflict"] = Module["asm"]["sqlite3changeset_conflict"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_fk_conflicts = Module["_sqlite3changeset_fk_conflicts"] = function() {
-  return (_sqlite3changeset_fk_conflicts = Module["_sqlite3changeset_fk_conflicts"] = Module["asm"]["sqlite3changeset_fk_conflicts"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_finalize = Module["_sqlite3changeset_finalize"] = function() {
-  return (_sqlite3changeset_finalize = Module["_sqlite3changeset_finalize"] = Module["asm"]["sqlite3changeset_finalize"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_invert = Module["_sqlite3changeset_invert"] = function() {
-  return (_sqlite3changeset_invert = Module["_sqlite3changeset_invert"] = Module["asm"]["sqlite3changeset_invert"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_invert_strm = Module["_sqlite3changeset_invert_strm"] = function() {
-  return (_sqlite3changeset_invert_strm = Module["_sqlite3changeset_invert_strm"] = Module["asm"]["sqlite3changeset_invert_strm"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_apply_v2 = Module["_sqlite3changeset_apply_v2"] = function() {
-  return (_sqlite3changeset_apply_v2 = Module["_sqlite3changeset_apply_v2"] = Module["asm"]["sqlite3changeset_apply_v2"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_apply = Module["_sqlite3changeset_apply"] = function() {
-  return (_sqlite3changeset_apply = Module["_sqlite3changeset_apply"] = Module["asm"]["sqlite3changeset_apply"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_apply_v2_strm = Module["_sqlite3changeset_apply_v2_strm"] = function() {
-  return (_sqlite3changeset_apply_v2_strm = Module["_sqlite3changeset_apply_v2_strm"] = Module["asm"]["sqlite3changeset_apply_v2_strm"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_apply_strm = Module["_sqlite3changeset_apply_strm"] = function() {
-  return (_sqlite3changeset_apply_strm = Module["_sqlite3changeset_apply_strm"] = Module["asm"]["sqlite3changeset_apply_strm"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changegroup_new = Module["_sqlite3changegroup_new"] = function() {
-  return (_sqlite3changegroup_new = Module["_sqlite3changegroup_new"] = Module["asm"]["sqlite3changegroup_new"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changegroup_add = Module["_sqlite3changegroup_add"] = function() {
-  return (_sqlite3changegroup_add = Module["_sqlite3changegroup_add"] = Module["asm"]["sqlite3changegroup_add"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changegroup_output = Module["_sqlite3changegroup_output"] = function() {
-  return (_sqlite3changegroup_output = Module["_sqlite3changegroup_output"] = Module["asm"]["sqlite3changegroup_output"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changegroup_add_strm = Module["_sqlite3changegroup_add_strm"] = function() {
-  return (_sqlite3changegroup_add_strm = Module["_sqlite3changegroup_add_strm"] = Module["asm"]["sqlite3changegroup_add_strm"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changegroup_output_strm = Module["_sqlite3changegroup_output_strm"] = function() {
-  return (_sqlite3changegroup_output_strm = Module["_sqlite3changegroup_output_strm"] = Module["asm"]["sqlite3changegroup_output_strm"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changegroup_delete = Module["_sqlite3changegroup_delete"] = function() {
-  return (_sqlite3changegroup_delete = Module["_sqlite3changegroup_delete"] = Module["asm"]["sqlite3changegroup_delete"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_concat = Module["_sqlite3changeset_concat"] = function() {
-  return (_sqlite3changeset_concat = Module["_sqlite3changeset_concat"] = Module["asm"]["sqlite3changeset_concat"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3changeset_concat_strm = Module["_sqlite3changeset_concat_strm"] = function() {
-  return (_sqlite3changeset_concat_strm = Module["_sqlite3changeset_concat_strm"] = Module["asm"]["sqlite3changeset_concat_strm"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3session_config = Module["_sqlite3session_config"] = function() {
-  return (_sqlite3session_config = Module["_sqlite3session_config"] = Module["asm"]["sqlite3session_config"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_sourceid = Module["_sqlite3_sourceid"] = function() {
-  return (_sqlite3_sourceid = Module["_sqlite3_sourceid"] = Module["asm"]["sqlite3_sourceid"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_pstack_ptr = Module["_sqlite3_wasm_pstack_ptr"] = function() {
-  return (_sqlite3_wasm_pstack_ptr = Module["_sqlite3_wasm_pstack_ptr"] = Module["asm"]["sqlite3_wasm_pstack_ptr"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_pstack_restore = Module["_sqlite3_wasm_pstack_restore"] = function() {
-  return (_sqlite3_wasm_pstack_restore = Module["_sqlite3_wasm_pstack_restore"] = Module["asm"]["sqlite3_wasm_pstack_restore"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_pstack_alloc = Module["_sqlite3_wasm_pstack_alloc"] = function() {
-  return (_sqlite3_wasm_pstack_alloc = Module["_sqlite3_wasm_pstack_alloc"] = Module["asm"]["sqlite3_wasm_pstack_alloc"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_pstack_remaining = Module["_sqlite3_wasm_pstack_remaining"] = function() {
-  return (_sqlite3_wasm_pstack_remaining = Module["_sqlite3_wasm_pstack_remaining"] = Module["asm"]["sqlite3_wasm_pstack_remaining"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_pstack_quota = Module["_sqlite3_wasm_pstack_quota"] = function() {
-  return (_sqlite3_wasm_pstack_quota = Module["_sqlite3_wasm_pstack_quota"] = Module["asm"]["sqlite3_wasm_pstack_quota"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_error = Module["_sqlite3_wasm_db_error"] = function() {
-  return (_sqlite3_wasm_db_error = Module["_sqlite3_wasm_db_error"] = Module["asm"]["sqlite3_wasm_db_error"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_struct = Module["_sqlite3_wasm_test_struct"] = function() {
-  return (_sqlite3_wasm_test_struct = Module["_sqlite3_wasm_test_struct"] = Module["asm"]["sqlite3_wasm_test_struct"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_enum_json = Module["_sqlite3_wasm_enum_json"] = function() {
-  return (_sqlite3_wasm_enum_json = Module["_sqlite3_wasm_enum_json"] = Module["asm"]["sqlite3_wasm_enum_json"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_vfs_unlink = Module["_sqlite3_wasm_vfs_unlink"] = function() {
-  return (_sqlite3_wasm_vfs_unlink = Module["_sqlite3_wasm_vfs_unlink"] = Module["asm"]["sqlite3_wasm_vfs_unlink"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_vfs = Module["_sqlite3_wasm_db_vfs"] = function() {
-  return (_sqlite3_wasm_db_vfs = Module["_sqlite3_wasm_db_vfs"] = Module["asm"]["sqlite3_wasm_db_vfs"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_reset = Module["_sqlite3_wasm_db_reset"] = function() {
-  return (_sqlite3_wasm_db_reset = Module["_sqlite3_wasm_db_reset"] = Module["asm"]["sqlite3_wasm_db_reset"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_export_chunked = Module["_sqlite3_wasm_db_export_chunked"] = function() {
-  return (_sqlite3_wasm_db_export_chunked = Module["_sqlite3_wasm_db_export_chunked"] = Module["asm"]["sqlite3_wasm_db_export_chunked"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_serialize = Module["_sqlite3_wasm_db_serialize"] = function() {
-  return (_sqlite3_wasm_db_serialize = Module["_sqlite3_wasm_db_serialize"] = Module["asm"]["sqlite3_wasm_db_serialize"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_vfs_create_file = Module["_sqlite3_wasm_vfs_create_file"] = function() {
-  return (_sqlite3_wasm_vfs_create_file = Module["_sqlite3_wasm_vfs_create_file"] = Module["asm"]["sqlite3_wasm_vfs_create_file"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_kvvfsMakeKeyOnPstack = Module["_sqlite3_wasm_kvvfsMakeKeyOnPstack"] = function() {
-  return (_sqlite3_wasm_kvvfsMakeKeyOnPstack = Module["_sqlite3_wasm_kvvfsMakeKeyOnPstack"] = Module["asm"]["sqlite3_wasm_kvvfsMakeKeyOnPstack"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_kvvfs_methods = Module["_sqlite3_wasm_kvvfs_methods"] = function() {
-  return (_sqlite3_wasm_kvvfs_methods = Module["_sqlite3_wasm_kvvfs_methods"] = Module["asm"]["sqlite3_wasm_kvvfs_methods"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_vtab_config = Module["_sqlite3_wasm_vtab_config"] = function() {
-  return (_sqlite3_wasm_vtab_config = Module["_sqlite3_wasm_vtab_config"] = Module["asm"]["sqlite3_wasm_vtab_config"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_config_ip = Module["_sqlite3_wasm_db_config_ip"] = function() {
-  return (_sqlite3_wasm_db_config_ip = Module["_sqlite3_wasm_db_config_ip"] = Module["asm"]["sqlite3_wasm_db_config_ip"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_config_pii = Module["_sqlite3_wasm_db_config_pii"] = function() {
-  return (_sqlite3_wasm_db_config_pii = Module["_sqlite3_wasm_db_config_pii"] = Module["asm"]["sqlite3_wasm_db_config_pii"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_db_config_s = Module["_sqlite3_wasm_db_config_s"] = function() {
-  return (_sqlite3_wasm_db_config_s = Module["_sqlite3_wasm_db_config_s"] = Module["asm"]["sqlite3_wasm_db_config_s"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_config_i = Module["_sqlite3_wasm_config_i"] = function() {
-  return (_sqlite3_wasm_config_i = Module["_sqlite3_wasm_config_i"] = Module["asm"]["sqlite3_wasm_config_i"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_config_ii = Module["_sqlite3_wasm_config_ii"] = function() {
-  return (_sqlite3_wasm_config_ii = Module["_sqlite3_wasm_config_ii"] = Module["asm"]["sqlite3_wasm_config_ii"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_config_j = Module["_sqlite3_wasm_config_j"] = function() {
-  return (_sqlite3_wasm_config_j = Module["_sqlite3_wasm_config_j"] = Module["asm"]["sqlite3_wasm_config_j"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_init_wasmfs = Module["_sqlite3_wasm_init_wasmfs"] = function() {
-  return (_sqlite3_wasm_init_wasmfs = Module["_sqlite3_wasm_init_wasmfs"] = Module["asm"]["sqlite3_wasm_init_wasmfs"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_intptr = Module["_sqlite3_wasm_test_intptr"] = function() {
-  return (_sqlite3_wasm_test_intptr = Module["_sqlite3_wasm_test_intptr"] = Module["asm"]["sqlite3_wasm_test_intptr"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_voidptr = Module["_sqlite3_wasm_test_voidptr"] = function() {
-  return (_sqlite3_wasm_test_voidptr = Module["_sqlite3_wasm_test_voidptr"] = Module["asm"]["sqlite3_wasm_test_voidptr"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_int64_max = Module["_sqlite3_wasm_test_int64_max"] = function() {
-  return (_sqlite3_wasm_test_int64_max = Module["_sqlite3_wasm_test_int64_max"] = Module["asm"]["sqlite3_wasm_test_int64_max"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_int64_min = Module["_sqlite3_wasm_test_int64_min"] = function() {
-  return (_sqlite3_wasm_test_int64_min = Module["_sqlite3_wasm_test_int64_min"] = Module["asm"]["sqlite3_wasm_test_int64_min"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_int64_times2 = Module["_sqlite3_wasm_test_int64_times2"] = function() {
-  return (_sqlite3_wasm_test_int64_times2 = Module["_sqlite3_wasm_test_int64_times2"] = Module["asm"]["sqlite3_wasm_test_int64_times2"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_int64_minmax = Module["_sqlite3_wasm_test_int64_minmax"] = function() {
-  return (_sqlite3_wasm_test_int64_minmax = Module["_sqlite3_wasm_test_int64_minmax"] = Module["asm"]["sqlite3_wasm_test_int64_minmax"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_int64ptr = Module["_sqlite3_wasm_test_int64ptr"] = function() {
-  return (_sqlite3_wasm_test_int64ptr = Module["_sqlite3_wasm_test_int64ptr"] = Module["asm"]["sqlite3_wasm_test_int64ptr"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_stack_overflow = Module["_sqlite3_wasm_test_stack_overflow"] = function() {
-  return (_sqlite3_wasm_test_stack_overflow = Module["_sqlite3_wasm_test_stack_overflow"] = Module["asm"]["sqlite3_wasm_test_stack_overflow"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _sqlite3_wasm_test_str_hello = Module["_sqlite3_wasm_test_str_hello"] = function() {
-  return (_sqlite3_wasm_test_str_hello = Module["_sqlite3_wasm_test_str_hello"] = Module["asm"]["sqlite3_wasm_test_str_hello"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _malloc = Module["_malloc"] = function() {
-  return (_malloc = Module["_malloc"] = Module["asm"]["malloc"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _free = Module["_free"] = function() {
-  return (_free = Module["_free"] = Module["asm"]["free"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var _realloc = Module["_realloc"] = function() {
-  return (_realloc = Module["_realloc"] = Module["asm"]["realloc"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var stackSave = function() {
-  return (stackSave = Module["asm"]["stackSave"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var stackRestore = function() {
-  return (stackRestore = Module["asm"]["stackRestore"]).apply(null, arguments);
-};
-
-/** @type {function(...*):?} */
-var stackAlloc = function() {
-  return (stackAlloc = Module["asm"]["stackAlloc"]).apply(null, arguments);
-};
-
+  /** @export */
+  __syscall_chmod: ___syscall_chmod,
+  /** @export */
+  __syscall_faccessat: ___syscall_faccessat,
+  /** @export */
+  __syscall_fchmod: ___syscall_fchmod,
+  /** @export */
+  __syscall_fchown32: ___syscall_fchown32,
+  /** @export */
+  __syscall_fcntl64: ___syscall_fcntl64,
+  /** @export */
+  __syscall_fstat64: ___syscall_fstat64,
+  /** @export */
+  __syscall_ftruncate64: ___syscall_ftruncate64,
+  /** @export */
+  __syscall_getcwd: ___syscall_getcwd,
+  /** @export */
+  __syscall_ioctl: ___syscall_ioctl,
+  /** @export */
+  __syscall_lstat64: ___syscall_lstat64,
+  /** @export */
+  __syscall_mkdirat: ___syscall_mkdirat,
+  /** @export */
+  __syscall_newfstatat: ___syscall_newfstatat,
+  /** @export */
+  __syscall_openat: ___syscall_openat,
+  /** @export */
+  __syscall_readlinkat: ___syscall_readlinkat,
+  /** @export */
+  __syscall_rmdir: ___syscall_rmdir,
+  /** @export */
+  __syscall_stat64: ___syscall_stat64,
+  /** @export */
+  __syscall_unlinkat: ___syscall_unlinkat,
+  /** @export */
+  __syscall_utimensat: ___syscall_utimensat,
+  /** @export */
+  _emscripten_get_now_is_monotonic: __emscripten_get_now_is_monotonic,
+  /** @export */
+  _localtime_js: __localtime_js,
+  /** @export */
+  _mmap_js: __mmap_js,
+  /** @export */
+  _munmap_js: __munmap_js,
+  /** @export */
+  _tzset_js: __tzset_js,
+  /** @export */
+  emscripten_date_now: _emscripten_date_now,
+  /** @export */
+  emscripten_get_now: _emscripten_get_now,
+  /** @export */
+  emscripten_memcpy_js: _emscripten_memcpy_js,
+  /** @export */
+  emscripten_resize_heap: _emscripten_resize_heap,
+  /** @export */
+  environ_get: _environ_get,
+  /** @export */
+  environ_sizes_get: _environ_sizes_get,
+  /** @export */
+  fd_close: _fd_close,
+  /** @export */
+  fd_fdstat_get: _fd_fdstat_get,
+  /** @export */
+  fd_read: _fd_read,
+  /** @export */
+  fd_seek: _fd_seek,
+  /** @export */
+  fd_sync: _fd_sync,
+  /** @export */
+  fd_write: _fd_write,
+  /** @export */
+  memory: wasmMemory
+};
+var wasmExports = createWasm();
+var ___wasm_call_ctors = createExportWrapper('__wasm_call_ctors');
+var _sqlite3_status64 = Module['_sqlite3_status64'] = createExportWrapper('sqlite3_status64');
+var _sqlite3_status = Module['_sqlite3_status'] = createExportWrapper('sqlite3_status');
+var _sqlite3_db_status = Module['_sqlite3_db_status'] = createExportWrapper('sqlite3_db_status');
+var _sqlite3_msize = Module['_sqlite3_msize'] = createExportWrapper('sqlite3_msize');
+var _sqlite3_vfs_find = Module['_sqlite3_vfs_find'] = createExportWrapper('sqlite3_vfs_find');
+var _sqlite3_initialize = Module['_sqlite3_initialize'] = createExportWrapper('sqlite3_initialize');
+var _sqlite3_vfs_register = Module['_sqlite3_vfs_register'] = createExportWrapper('sqlite3_vfs_register');
+var _sqlite3_vfs_unregister = Module['_sqlite3_vfs_unregister'] = createExportWrapper('sqlite3_vfs_unregister');
+var _sqlite3_malloc = Module['_sqlite3_malloc'] = createExportWrapper('sqlite3_malloc');
+var _sqlite3_malloc64 = Module['_sqlite3_malloc64'] = createExportWrapper('sqlite3_malloc64');
+var _sqlite3_free = Module['_sqlite3_free'] = createExportWrapper('sqlite3_free');
+var _sqlite3_realloc = Module['_sqlite3_realloc'] = createExportWrapper('sqlite3_realloc');
+var _sqlite3_realloc64 = Module['_sqlite3_realloc64'] = createExportWrapper('sqlite3_realloc64');
+var _sqlite3_value_int64 = Module['_sqlite3_value_int64'] = createExportWrapper('sqlite3_value_int64');
+var _sqlite3_value_double = Module['_sqlite3_value_double'] = createExportWrapper('sqlite3_value_double');
+var _sqlite3_value_text = Module['_sqlite3_value_text'] = createExportWrapper('sqlite3_value_text');
+var _sqlite3_randomness = Module['_sqlite3_randomness'] = createExportWrapper('sqlite3_randomness');
+var _sqlite3_stricmp = Module['_sqlite3_stricmp'] = createExportWrapper('sqlite3_stricmp');
+var _sqlite3_strnicmp = Module['_sqlite3_strnicmp'] = createExportWrapper('sqlite3_strnicmp');
+var ___errno_location = createExportWrapper('__errno_location');
+var _sqlite3_serialize = Module['_sqlite3_serialize'] = createExportWrapper('sqlite3_serialize');
+var _sqlite3_prepare_v2 = Module['_sqlite3_prepare_v2'] = createExportWrapper('sqlite3_prepare_v2');
+var _sqlite3_step = Module['_sqlite3_step'] = createExportWrapper('sqlite3_step');
+var _sqlite3_column_int64 = Module['_sqlite3_column_int64'] = createExportWrapper('sqlite3_column_int64');
+var _sqlite3_column_int = Module['_sqlite3_column_int'] = createExportWrapper('sqlite3_column_int');
+var _sqlite3_finalize = Module['_sqlite3_finalize'] = createExportWrapper('sqlite3_finalize');
+var _sqlite3_file_control = Module['_sqlite3_file_control'] = createExportWrapper('sqlite3_file_control');
+var _sqlite3_reset = Module['_sqlite3_reset'] = createExportWrapper('sqlite3_reset');
+var _sqlite3_value_int = Module['_sqlite3_value_int'] = createExportWrapper('sqlite3_value_int');
+var _sqlite3_deserialize = Module['_sqlite3_deserialize'] = createExportWrapper('sqlite3_deserialize');
+var _sqlite3_clear_bindings = Module['_sqlite3_clear_bindings'] = createExportWrapper('sqlite3_clear_bindings');
+var _sqlite3_value_blob = Module['_sqlite3_value_blob'] = createExportWrapper('sqlite3_value_blob');
+var _sqlite3_value_bytes = Module['_sqlite3_value_bytes'] = createExportWrapper('sqlite3_value_bytes');
+var _sqlite3_value_subtype = Module['_sqlite3_value_subtype'] = createExportWrapper('sqlite3_value_subtype');
+var _sqlite3_value_pointer = Module['_sqlite3_value_pointer'] = createExportWrapper('sqlite3_value_pointer');
+var _sqlite3_value_type = Module['_sqlite3_value_type'] = createExportWrapper('sqlite3_value_type');
+var _sqlite3_value_nochange = Module['_sqlite3_value_nochange'] = createExportWrapper('sqlite3_value_nochange');
+var _sqlite3_value_frombind = Module['_sqlite3_value_frombind'] = createExportWrapper('sqlite3_value_frombind');
+var _sqlite3_value_dup = Module['_sqlite3_value_dup'] = createExportWrapper('sqlite3_value_dup');
+var _sqlite3_value_free = Module['_sqlite3_value_free'] = createExportWrapper('sqlite3_value_free');
+var _sqlite3_result_blob = Module['_sqlite3_result_blob'] = createExportWrapper('sqlite3_result_blob');
+var _sqlite3_result_error_toobig = Module['_sqlite3_result_error_toobig'] = createExportWrapper('sqlite3_result_error_toobig');
+var _sqlite3_result_error_nomem = Module['_sqlite3_result_error_nomem'] = createExportWrapper('sqlite3_result_error_nomem');
+var _sqlite3_result_double = Module['_sqlite3_result_double'] = createExportWrapper('sqlite3_result_double');
+var _sqlite3_result_error = Module['_sqlite3_result_error'] = createExportWrapper('sqlite3_result_error');
+var _sqlite3_result_int = Module['_sqlite3_result_int'] = createExportWrapper('sqlite3_result_int');
+var _sqlite3_result_int64 = Module['_sqlite3_result_int64'] = createExportWrapper('sqlite3_result_int64');
+var _sqlite3_result_null = Module['_sqlite3_result_null'] = createExportWrapper('sqlite3_result_null');
+var _sqlite3_result_pointer = Module['_sqlite3_result_pointer'] = createExportWrapper('sqlite3_result_pointer');
+var _sqlite3_result_subtype = Module['_sqlite3_result_subtype'] = createExportWrapper('sqlite3_result_subtype');
+var _sqlite3_result_text = Module['_sqlite3_result_text'] = createExportWrapper('sqlite3_result_text');
+var _sqlite3_result_zeroblob = Module['_sqlite3_result_zeroblob'] = createExportWrapper('sqlite3_result_zeroblob');
+var _sqlite3_result_zeroblob64 = Module['_sqlite3_result_zeroblob64'] = createExportWrapper('sqlite3_result_zeroblob64');
+var _sqlite3_result_error_code = Module['_sqlite3_result_error_code'] = createExportWrapper('sqlite3_result_error_code');
+var _sqlite3_sql = Module['_sqlite3_sql'] = createExportWrapper('sqlite3_sql');
+var _sqlite3_user_data = Module['_sqlite3_user_data'] = createExportWrapper('sqlite3_user_data');
+var _sqlite3_context_db_handle = Module['_sqlite3_context_db_handle'] = createExportWrapper('sqlite3_context_db_handle');
+var _sqlite3_vtab_nochange = Module['_sqlite3_vtab_nochange'] = createExportWrapper('sqlite3_vtab_nochange');
+var _sqlite3_vtab_in_first = Module['_sqlite3_vtab_in_first'] = createExportWrapper('sqlite3_vtab_in_first');
+var _sqlite3_vtab_in_next = Module['_sqlite3_vtab_in_next'] = createExportWrapper('sqlite3_vtab_in_next');
+var _sqlite3_aggregate_context = Module['_sqlite3_aggregate_context'] = createExportWrapper('sqlite3_aggregate_context');
+var _sqlite3_get_auxdata = Module['_sqlite3_get_auxdata'] = createExportWrapper('sqlite3_get_auxdata');
+var _sqlite3_set_auxdata = Module['_sqlite3_set_auxdata'] = createExportWrapper('sqlite3_set_auxdata');
+var _sqlite3_column_count = Module['_sqlite3_column_count'] = createExportWrapper('sqlite3_column_count');
+var _sqlite3_data_count = Module['_sqlite3_data_count'] = createExportWrapper('sqlite3_data_count');
+var _sqlite3_column_blob = Module['_sqlite3_column_blob'] = createExportWrapper('sqlite3_column_blob');
+var _sqlite3_column_bytes = Module['_sqlite3_column_bytes'] = createExportWrapper('sqlite3_column_bytes');
+var _sqlite3_column_double = Module['_sqlite3_column_double'] = createExportWrapper('sqlite3_column_double');
+var _sqlite3_column_text = Module['_sqlite3_column_text'] = createExportWrapper('sqlite3_column_text');
+var _sqlite3_column_value = Module['_sqlite3_column_value'] = createExportWrapper('sqlite3_column_value');
+var _sqlite3_column_type = Module['_sqlite3_column_type'] = createExportWrapper('sqlite3_column_type');
+var _sqlite3_column_name = Module['_sqlite3_column_name'] = createExportWrapper('sqlite3_column_name');
+var _sqlite3_bind_blob = Module['_sqlite3_bind_blob'] = createExportWrapper('sqlite3_bind_blob');
+var _sqlite3_bind_double = Module['_sqlite3_bind_double'] = createExportWrapper('sqlite3_bind_double');
+var _sqlite3_bind_int = Module['_sqlite3_bind_int'] = createExportWrapper('sqlite3_bind_int');
+var _sqlite3_bind_int64 = Module['_sqlite3_bind_int64'] = createExportWrapper('sqlite3_bind_int64');
+var _sqlite3_bind_null = Module['_sqlite3_bind_null'] = createExportWrapper('sqlite3_bind_null');
+var _sqlite3_bind_pointer = Module['_sqlite3_bind_pointer'] = createExportWrapper('sqlite3_bind_pointer');
+var _sqlite3_bind_text = Module['_sqlite3_bind_text'] = createExportWrapper('sqlite3_bind_text');
+var _sqlite3_bind_parameter_count = Module['_sqlite3_bind_parameter_count'] = createExportWrapper('sqlite3_bind_parameter_count');
+var _sqlite3_bind_parameter_index = Module['_sqlite3_bind_parameter_index'] = createExportWrapper('sqlite3_bind_parameter_index');
+var _sqlite3_db_handle = Module['_sqlite3_db_handle'] = createExportWrapper('sqlite3_db_handle');
+var _sqlite3_stmt_readonly = Module['_sqlite3_stmt_readonly'] = createExportWrapper('sqlite3_stmt_readonly');
+var _sqlite3_stmt_isexplain = Module['_sqlite3_stmt_isexplain'] = createExportWrapper('sqlite3_stmt_isexplain');
+var _sqlite3_stmt_status = Module['_sqlite3_stmt_status'] = createExportWrapper('sqlite3_stmt_status');
+var _sqlite3_expanded_sql = Module['_sqlite3_expanded_sql'] = createExportWrapper('sqlite3_expanded_sql');
+var _sqlite3_preupdate_old = Module['_sqlite3_preupdate_old'] = createExportWrapper('sqlite3_preupdate_old');
+var _sqlite3_preupdate_count = Module['_sqlite3_preupdate_count'] = createExportWrapper('sqlite3_preupdate_count');
+var _sqlite3_preupdate_depth = Module['_sqlite3_preupdate_depth'] = createExportWrapper('sqlite3_preupdate_depth');
+var _sqlite3_preupdate_blobwrite = Module['_sqlite3_preupdate_blobwrite'] = createExportWrapper('sqlite3_preupdate_blobwrite');
+var _sqlite3_preupdate_new = Module['_sqlite3_preupdate_new'] = createExportWrapper('sqlite3_preupdate_new');
+var _sqlite3_value_numeric_type = Module['_sqlite3_value_numeric_type'] = createExportWrapper('sqlite3_value_numeric_type');
+var _sqlite3_errmsg = Module['_sqlite3_errmsg'] = createExportWrapper('sqlite3_errmsg');
+var _sqlite3_set_authorizer = Module['_sqlite3_set_authorizer'] = createExportWrapper('sqlite3_set_authorizer');
+var _sqlite3_strglob = Module['_sqlite3_strglob'] = createExportWrapper('sqlite3_strglob');
+var _sqlite3_strlike = Module['_sqlite3_strlike'] = createExportWrapper('sqlite3_strlike');
+var _sqlite3_exec = Module['_sqlite3_exec'] = createExportWrapper('sqlite3_exec');
+var _sqlite3_auto_extension = Module['_sqlite3_auto_extension'] = createExportWrapper('sqlite3_auto_extension');
+var _sqlite3_cancel_auto_extension = Module['_sqlite3_cancel_auto_extension'] = createExportWrapper('sqlite3_cancel_auto_extension');
+var _sqlite3_reset_auto_extension = Module['_sqlite3_reset_auto_extension'] = createExportWrapper('sqlite3_reset_auto_extension');
+var _sqlite3_prepare_v3 = Module['_sqlite3_prepare_v3'] = createExportWrapper('sqlite3_prepare_v3');
+var _sqlite3_create_module = Module['_sqlite3_create_module'] = createExportWrapper('sqlite3_create_module');
+var _sqlite3_create_module_v2 = Module['_sqlite3_create_module_v2'] = createExportWrapper('sqlite3_create_module_v2');
+var _sqlite3_drop_modules = Module['_sqlite3_drop_modules'] = createExportWrapper('sqlite3_drop_modules');
+var _sqlite3_declare_vtab = Module['_sqlite3_declare_vtab'] = createExportWrapper('sqlite3_declare_vtab');
+var _sqlite3_vtab_on_conflict = Module['_sqlite3_vtab_on_conflict'] = createExportWrapper('sqlite3_vtab_on_conflict');
+var _sqlite3_vtab_collation = Module['_sqlite3_vtab_collation'] = createExportWrapper('sqlite3_vtab_collation');
+var _sqlite3_vtab_in = Module['_sqlite3_vtab_in'] = createExportWrapper('sqlite3_vtab_in');
+var _sqlite3_vtab_rhs_value = Module['_sqlite3_vtab_rhs_value'] = createExportWrapper('sqlite3_vtab_rhs_value');
+var _sqlite3_vtab_distinct = Module['_sqlite3_vtab_distinct'] = createExportWrapper('sqlite3_vtab_distinct');
+var _sqlite3_keyword_name = Module['_sqlite3_keyword_name'] = createExportWrapper('sqlite3_keyword_name');
+var _sqlite3_keyword_count = Module['_sqlite3_keyword_count'] = createExportWrapper('sqlite3_keyword_count');
+var _sqlite3_keyword_check = Module['_sqlite3_keyword_check'] = createExportWrapper('sqlite3_keyword_check');
+var _sqlite3_complete = Module['_sqlite3_complete'] = createExportWrapper('sqlite3_complete');
+var _sqlite3_libversion = Module['_sqlite3_libversion'] = createExportWrapper('sqlite3_libversion');
+var _sqlite3_libversion_number = Module['_sqlite3_libversion_number'] = createExportWrapper('sqlite3_libversion_number');
+var _sqlite3_shutdown = Module['_sqlite3_shutdown'] = createExportWrapper('sqlite3_shutdown');
+var _sqlite3_last_insert_rowid = Module['_sqlite3_last_insert_rowid'] = createExportWrapper('sqlite3_last_insert_rowid');
+var _sqlite3_set_last_insert_rowid = Module['_sqlite3_set_last_insert_rowid'] = createExportWrapper('sqlite3_set_last_insert_rowid');
+var _sqlite3_changes64 = Module['_sqlite3_changes64'] = createExportWrapper('sqlite3_changes64');
+var _sqlite3_changes = Module['_sqlite3_changes'] = createExportWrapper('sqlite3_changes');
+var _sqlite3_total_changes64 = Module['_sqlite3_total_changes64'] = createExportWrapper('sqlite3_total_changes64');
+var _sqlite3_total_changes = Module['_sqlite3_total_changes'] = createExportWrapper('sqlite3_total_changes');
+var _sqlite3_txn_state = Module['_sqlite3_txn_state'] = createExportWrapper('sqlite3_txn_state');
+var _sqlite3_close_v2 = Module['_sqlite3_close_v2'] = createExportWrapper('sqlite3_close_v2');
+var _sqlite3_busy_handler = Module['_sqlite3_busy_handler'] = createExportWrapper('sqlite3_busy_handler');
+var _sqlite3_progress_handler = Module['_sqlite3_progress_handler'] = createExportWrapper('sqlite3_progress_handler');
+var _sqlite3_busy_timeout = Module['_sqlite3_busy_timeout'] = createExportWrapper('sqlite3_busy_timeout');
+var _sqlite3_create_function = Module['_sqlite3_create_function'] = createExportWrapper('sqlite3_create_function');
+var _sqlite3_create_function_v2 = Module['_sqlite3_create_function_v2'] = createExportWrapper('sqlite3_create_function_v2');
+var _sqlite3_create_window_function = Module['_sqlite3_create_window_function'] = createExportWrapper('sqlite3_create_window_function');
+var _sqlite3_overload_function = Module['_sqlite3_overload_function'] = createExportWrapper('sqlite3_overload_function');
+var _sqlite3_trace_v2 = Module['_sqlite3_trace_v2'] = createExportWrapper('sqlite3_trace_v2');
+var _sqlite3_commit_hook = Module['_sqlite3_commit_hook'] = createExportWrapper('sqlite3_commit_hook');
+var _sqlite3_update_hook = Module['_sqlite3_update_hook'] = createExportWrapper('sqlite3_update_hook');
+var _sqlite3_rollback_hook = Module['_sqlite3_rollback_hook'] = createExportWrapper('sqlite3_rollback_hook');
+var _sqlite3_preupdate_hook = Module['_sqlite3_preupdate_hook'] = createExportWrapper('sqlite3_preupdate_hook');
+var _sqlite3_error_offset = Module['_sqlite3_error_offset'] = createExportWrapper('sqlite3_error_offset');
+var _sqlite3_errcode = Module['_sqlite3_errcode'] = createExportWrapper('sqlite3_errcode');
+var _sqlite3_extended_errcode = Module['_sqlite3_extended_errcode'] = createExportWrapper('sqlite3_extended_errcode');
+var _sqlite3_errstr = Module['_sqlite3_errstr'] = createExportWrapper('sqlite3_errstr');
+var _sqlite3_limit = Module['_sqlite3_limit'] = createExportWrapper('sqlite3_limit');
+var _sqlite3_open = Module['_sqlite3_open'] = createExportWrapper('sqlite3_open');
+var _sqlite3_open_v2 = Module['_sqlite3_open_v2'] = createExportWrapper('sqlite3_open_v2');
+var _sqlite3_create_collation = Module['_sqlite3_create_collation'] = createExportWrapper('sqlite3_create_collation');
+var _sqlite3_create_collation_v2 = Module['_sqlite3_create_collation_v2'] = createExportWrapper('sqlite3_create_collation_v2');
+var _sqlite3_collation_needed = Module['_sqlite3_collation_needed'] = createExportWrapper('sqlite3_collation_needed');
+var _sqlite3_table_column_metadata = Module['_sqlite3_table_column_metadata'] = createExportWrapper('sqlite3_table_column_metadata');
+var _sqlite3_extended_result_codes = Module['_sqlite3_extended_result_codes'] = createExportWrapper('sqlite3_extended_result_codes');
+var _sqlite3_uri_parameter = Module['_sqlite3_uri_parameter'] = createExportWrapper('sqlite3_uri_parameter');
+var _sqlite3_uri_key = Module['_sqlite3_uri_key'] = createExportWrapper('sqlite3_uri_key');
+var _sqlite3_uri_boolean = Module['_sqlite3_uri_boolean'] = createExportWrapper('sqlite3_uri_boolean');
+var _sqlite3_uri_int64 = Module['_sqlite3_uri_int64'] = createExportWrapper('sqlite3_uri_int64');
+var _sqlite3_db_name = Module['_sqlite3_db_name'] = createExportWrapper('sqlite3_db_name');
+var _sqlite3_db_filename = Module['_sqlite3_db_filename'] = createExportWrapper('sqlite3_db_filename');
+var _sqlite3_compileoption_used = Module['_sqlite3_compileoption_used'] = createExportWrapper('sqlite3_compileoption_used');
+var _sqlite3_compileoption_get = Module['_sqlite3_compileoption_get'] = createExportWrapper('sqlite3_compileoption_get');
+var _sqlite3session_diff = Module['_sqlite3session_diff'] = createExportWrapper('sqlite3session_diff');
+var _sqlite3session_attach = Module['_sqlite3session_attach'] = createExportWrapper('sqlite3session_attach');
+var _sqlite3session_create = Module['_sqlite3session_create'] = createExportWrapper('sqlite3session_create');
+var _sqlite3session_delete = Module['_sqlite3session_delete'] = createExportWrapper('sqlite3session_delete');
+var _sqlite3session_table_filter = Module['_sqlite3session_table_filter'] = createExportWrapper('sqlite3session_table_filter');
+var _sqlite3session_changeset = Module['_sqlite3session_changeset'] = createExportWrapper('sqlite3session_changeset');
+var _sqlite3session_changeset_strm = Module['_sqlite3session_changeset_strm'] = createExportWrapper('sqlite3session_changeset_strm');
+var _sqlite3session_patchset_strm = Module['_sqlite3session_patchset_strm'] = createExportWrapper('sqlite3session_patchset_strm');
+var _sqlite3session_patchset = Module['_sqlite3session_patchset'] = createExportWrapper('sqlite3session_patchset');
+var _sqlite3session_enable = Module['_sqlite3session_enable'] = createExportWrapper('sqlite3session_enable');
+var _sqlite3session_indirect = Module['_sqlite3session_indirect'] = createExportWrapper('sqlite3session_indirect');
+var _sqlite3session_isempty = Module['_sqlite3session_isempty'] = createExportWrapper('sqlite3session_isempty');
+var _sqlite3session_memory_used = Module['_sqlite3session_memory_used'] = createExportWrapper('sqlite3session_memory_used');
+var _sqlite3session_object_config = Module['_sqlite3session_object_config'] = createExportWrapper('sqlite3session_object_config');
+var _sqlite3session_changeset_size = Module['_sqlite3session_changeset_size'] = createExportWrapper('sqlite3session_changeset_size');
+var _sqlite3changeset_start = Module['_sqlite3changeset_start'] = createExportWrapper('sqlite3changeset_start');
+var _sqlite3changeset_start_v2 = Module['_sqlite3changeset_start_v2'] = createExportWrapper('sqlite3changeset_start_v2');
+var _sqlite3changeset_start_strm = Module['_sqlite3changeset_start_strm'] = createExportWrapper('sqlite3changeset_start_strm');
+var _sqlite3changeset_start_v2_strm = Module['_sqlite3changeset_start_v2_strm'] = createExportWrapper('sqlite3changeset_start_v2_strm');
+var _sqlite3changeset_next = Module['_sqlite3changeset_next'] = createExportWrapper('sqlite3changeset_next');
+var _sqlite3changeset_op = Module['_sqlite3changeset_op'] = createExportWrapper('sqlite3changeset_op');
+var _sqlite3changeset_pk = Module['_sqlite3changeset_pk'] = createExportWrapper('sqlite3changeset_pk');
+var _sqlite3changeset_old = Module['_sqlite3changeset_old'] = createExportWrapper('sqlite3changeset_old');
+var _sqlite3changeset_new = Module['_sqlite3changeset_new'] = createExportWrapper('sqlite3changeset_new');
+var _sqlite3changeset_conflict = Module['_sqlite3changeset_conflict'] = createExportWrapper('sqlite3changeset_conflict');
+var _sqlite3changeset_fk_conflicts = Module['_sqlite3changeset_fk_conflicts'] = createExportWrapper('sqlite3changeset_fk_conflicts');
+var _sqlite3changeset_finalize = Module['_sqlite3changeset_finalize'] = createExportWrapper('sqlite3changeset_finalize');
+var _sqlite3changeset_invert = Module['_sqlite3changeset_invert'] = createExportWrapper('sqlite3changeset_invert');
+var _sqlite3changeset_invert_strm = Module['_sqlite3changeset_invert_strm'] = createExportWrapper('sqlite3changeset_invert_strm');
+var _sqlite3changeset_apply_v2 = Module['_sqlite3changeset_apply_v2'] = createExportWrapper('sqlite3changeset_apply_v2');
+var _sqlite3changeset_apply = Module['_sqlite3changeset_apply'] = createExportWrapper('sqlite3changeset_apply');
+var _sqlite3changeset_apply_v2_strm = Module['_sqlite3changeset_apply_v2_strm'] = createExportWrapper('sqlite3changeset_apply_v2_strm');
+var _sqlite3changeset_apply_strm = Module['_sqlite3changeset_apply_strm'] = createExportWrapper('sqlite3changeset_apply_strm');
+var _sqlite3changegroup_new = Module['_sqlite3changegroup_new'] = createExportWrapper('sqlite3changegroup_new');
+var _sqlite3changegroup_add = Module['_sqlite3changegroup_add'] = createExportWrapper('sqlite3changegroup_add');
+var _sqlite3changegroup_output = Module['_sqlite3changegroup_output'] = createExportWrapper('sqlite3changegroup_output');
+var _sqlite3changegroup_add_strm = Module['_sqlite3changegroup_add_strm'] = createExportWrapper('sqlite3changegroup_add_strm');
+var _sqlite3changegroup_output_strm = Module['_sqlite3changegroup_output_strm'] = createExportWrapper('sqlite3changegroup_output_strm');
+var _sqlite3changegroup_delete = Module['_sqlite3changegroup_delete'] = createExportWrapper('sqlite3changegroup_delete');
+var _sqlite3changeset_concat = Module['_sqlite3changeset_concat'] = createExportWrapper('sqlite3changeset_concat');
+var _sqlite3changeset_concat_strm = Module['_sqlite3changeset_concat_strm'] = createExportWrapper('sqlite3changeset_concat_strm');
+var _sqlite3session_config = Module['_sqlite3session_config'] = createExportWrapper('sqlite3session_config');
+var _sqlite3_sourceid = Module['_sqlite3_sourceid'] = createExportWrapper('sqlite3_sourceid');
+var _sqlite3_wasm_pstack_ptr = Module['_sqlite3_wasm_pstack_ptr'] = createExportWrapper('sqlite3_wasm_pstack_ptr');
+var _sqlite3_wasm_pstack_restore = Module['_sqlite3_wasm_pstack_restore'] = createExportWrapper('sqlite3_wasm_pstack_restore');
+var _sqlite3_wasm_pstack_alloc = Module['_sqlite3_wasm_pstack_alloc'] = createExportWrapper('sqlite3_wasm_pstack_alloc');
+var _sqlite3_wasm_pstack_remaining = Module['_sqlite3_wasm_pstack_remaining'] = createExportWrapper('sqlite3_wasm_pstack_remaining');
+var _sqlite3_wasm_pstack_quota = Module['_sqlite3_wasm_pstack_quota'] = createExportWrapper('sqlite3_wasm_pstack_quota');
+var _sqlite3_wasm_db_error = Module['_sqlite3_wasm_db_error'] = createExportWrapper('sqlite3_wasm_db_error');
+var _sqlite3_wasm_test_struct = Module['_sqlite3_wasm_test_struct'] = createExportWrapper('sqlite3_wasm_test_struct');
+var _sqlite3_wasm_enum_json = Module['_sqlite3_wasm_enum_json'] = createExportWrapper('sqlite3_wasm_enum_json');
+var _sqlite3_wasm_vfs_unlink = Module['_sqlite3_wasm_vfs_unlink'] = createExportWrapper('sqlite3_wasm_vfs_unlink');
+var _sqlite3_wasm_db_vfs = Module['_sqlite3_wasm_db_vfs'] = createExportWrapper('sqlite3_wasm_db_vfs');
+var _sqlite3_wasm_db_reset = Module['_sqlite3_wasm_db_reset'] = createExportWrapper('sqlite3_wasm_db_reset');
+var _sqlite3_wasm_db_export_chunked = Module['_sqlite3_wasm_db_export_chunked'] = createExportWrapper('sqlite3_wasm_db_export_chunked');
+var _sqlite3_wasm_db_serialize = Module['_sqlite3_wasm_db_serialize'] = createExportWrapper('sqlite3_wasm_db_serialize');
+var _sqlite3_wasm_vfs_create_file = Module['_sqlite3_wasm_vfs_create_file'] = createExportWrapper('sqlite3_wasm_vfs_create_file');
+var _sqlite3_wasm_posix_create_file = Module['_sqlite3_wasm_posix_create_file'] = createExportWrapper('sqlite3_wasm_posix_create_file');
+var _sqlite3_wasm_kvvfsMakeKeyOnPstack = Module['_sqlite3_wasm_kvvfsMakeKeyOnPstack'] = createExportWrapper('sqlite3_wasm_kvvfsMakeKeyOnPstack');
+var _sqlite3_wasm_kvvfs_methods = Module['_sqlite3_wasm_kvvfs_methods'] = createExportWrapper('sqlite3_wasm_kvvfs_methods');
+var _sqlite3_wasm_vtab_config = Module['_sqlite3_wasm_vtab_config'] = createExportWrapper('sqlite3_wasm_vtab_config');
+var _sqlite3_wasm_db_config_ip = Module['_sqlite3_wasm_db_config_ip'] = createExportWrapper('sqlite3_wasm_db_config_ip');
+var _sqlite3_wasm_db_config_pii = Module['_sqlite3_wasm_db_config_pii'] = createExportWrapper('sqlite3_wasm_db_config_pii');
+var _sqlite3_wasm_db_config_s = Module['_sqlite3_wasm_db_config_s'] = createExportWrapper('sqlite3_wasm_db_config_s');
+var _sqlite3_wasm_config_i = Module['_sqlite3_wasm_config_i'] = createExportWrapper('sqlite3_wasm_config_i');
+var _sqlite3_wasm_config_ii = Module['_sqlite3_wasm_config_ii'] = createExportWrapper('sqlite3_wasm_config_ii');
+var _sqlite3_wasm_config_j = Module['_sqlite3_wasm_config_j'] = createExportWrapper('sqlite3_wasm_config_j');
+var _sqlite3_wasm_init_wasmfs = Module['_sqlite3_wasm_init_wasmfs'] = createExportWrapper('sqlite3_wasm_init_wasmfs');
+var _sqlite3_wasm_test_intptr = Module['_sqlite3_wasm_test_intptr'] = createExportWrapper('sqlite3_wasm_test_intptr');
+var _sqlite3_wasm_test_voidptr = Module['_sqlite3_wasm_test_voidptr'] = createExportWrapper('sqlite3_wasm_test_voidptr');
+var _sqlite3_wasm_test_int64_max = Module['_sqlite3_wasm_test_int64_max'] = createExportWrapper('sqlite3_wasm_test_int64_max');
+var _sqlite3_wasm_test_int64_min = Module['_sqlite3_wasm_test_int64_min'] = createExportWrapper('sqlite3_wasm_test_int64_min');
+var _sqlite3_wasm_test_int64_times2 = Module['_sqlite3_wasm_test_int64_times2'] = createExportWrapper('sqlite3_wasm_test_int64_times2');
+var _sqlite3_wasm_test_int64_minmax = Module['_sqlite3_wasm_test_int64_minmax'] = createExportWrapper('sqlite3_wasm_test_int64_minmax');
+var _sqlite3_wasm_test_int64ptr = Module['_sqlite3_wasm_test_int64ptr'] = createExportWrapper('sqlite3_wasm_test_int64ptr');
+var _sqlite3_wasm_test_stack_overflow = Module['_sqlite3_wasm_test_stack_overflow'] = createExportWrapper('sqlite3_wasm_test_stack_overflow');
+var _sqlite3_wasm_test_str_hello = Module['_sqlite3_wasm_test_str_hello'] = createExportWrapper('sqlite3_wasm_test_str_hello');
+var _sqlite3_wasm_SQLTester_strglob = Module['_sqlite3_wasm_SQLTester_strglob'] = createExportWrapper('sqlite3_wasm_SQLTester_strglob');
+var _malloc = Module['_malloc'] = createExportWrapper('malloc');
+var _free = Module['_free'] = createExportWrapper('free');
+var _realloc = Module['_realloc'] = createExportWrapper('realloc');
+var _fflush = Module['_fflush'] = createExportWrapper('fflush');
+var _emscripten_builtin_memalign = createExportWrapper('emscripten_builtin_memalign');
+var _emscripten_stack_init = () => (_emscripten_stack_init = wasmExports['emscripten_stack_init'])();
+var _emscripten_stack_get_free = () => (_emscripten_stack_get_free = wasmExports['emscripten_stack_get_free'])();
+var _emscripten_stack_get_base = () => (_emscripten_stack_get_base = wasmExports['emscripten_stack_get_base'])();
+var _emscripten_stack_get_end = () => (_emscripten_stack_get_end = wasmExports['emscripten_stack_get_end'])();
+var stackSave = createExportWrapper('stackSave');
+var stackRestore = createExportWrapper('stackRestore');
+var stackAlloc = createExportWrapper('stackAlloc');
+var _emscripten_stack_get_current = () => (_emscripten_stack_get_current = wasmExports['emscripten_stack_get_current'])();
 
 
 // include: postamble.js
 // === Auto-generated postamble setup entry stuff ===
 
-Module["wasmMemory"] = wasmMemory;
+Module['wasmMemory'] = wasmMemory;
+var missingLibrarySymbols = [
+  'writeI53ToI64',
+  'writeI53ToI64Clamped',
+  'writeI53ToI64Signaling',
+  'writeI53ToU64Clamped',
+  'writeI53ToU64Signaling',
+  'readI53FromU64',
+  'convertI32PairToI53',
+  'convertI32PairToI53Checked',
+  'convertU32PairToI53',
+  'exitJS',
+  'arraySum',
+  'addDays',
+  'inetPton4',
+  'inetNtop4',
+  'inetPton6',
+  'inetNtop6',
+  'readSockaddr',
+  'writeSockaddr',
+  'getHostByName',
+  'getCallstack',
+  'emscriptenLog',
+  'convertPCtoSourceLocation',
+  'readEmAsmArgs',
+  'jstoi_q',
+  'jstoi_s',
+  'listenOnce',
+  'autoResumeAudioContext',
+  'getDynCaller',
+  'dynCall',
+  'handleException',
+  'runtimeKeepalivePush',
+  'runtimeKeepalivePop',
+  'callUserCallback',
+  'maybeExit',
+  'safeSetTimeout',
+  'asmjsMangle',
+  'handleAllocatorInit',
+  'HandleAllocator',
+  'getNativeTypeSize',
+  'STACK_SIZE',
+  'STACK_ALIGN',
+  'POINTER_SIZE',
+  'ASSERTIONS',
+  'getCFunc',
+  'ccall',
+  'cwrap',
+  'uleb128Encode',
+  'sigToWasmTypes',
+  'generateFuncType',
+  'convertJsFunctionToWasm',
+  'getEmptyTableSlot',
+  'updateTableMap',
+  'getFunctionAddress',
+  'addFunction',
+  'removeFunction',
+  'reallyNegative',
+  'unSign',
+  'strLen',
+  'reSign',
+  'formatString',
+  'intArrayToString',
+  'AsciiToString',
+  'UTF16ToString',
+  'stringToUTF16',
+  'lengthBytesUTF16',
+  'UTF32ToString',
+  'stringToUTF32',
+  'lengthBytesUTF32',
+  'stringToUTF8OnStack',
+  'writeArrayToMemory',
+  'registerKeyEventCallback',
+  'maybeCStringToJsString',
+  'findEventTarget',
+  'findCanvasEventTarget',
+  'getBoundingClientRect',
+  'fillMouseEventData',
+  'registerMouseEventCallback',
+  'registerWheelEventCallback',
+  'registerUiEventCallback',
+  'registerFocusEventCallback',
+  'fillDeviceOrientationEventData',
+  'registerDeviceOrientationEventCallback',
+  'fillDeviceMotionEventData',
+  'registerDeviceMotionEventCallback',
+  'screenOrientation',
+  'fillOrientationChangeEventData',
+  'registerOrientationChangeEventCallback',
+  'fillFullscreenChangeEventData',
+  'registerFullscreenChangeEventCallback',
+  'JSEvents_requestFullscreen',
+  'JSEvents_resizeCanvasForFullscreen',
+  'registerRestoreOldStyle',
+  'hideEverythingExceptGivenElement',
+  'restoreHiddenElements',
+  'setLetterbox',
+  'softFullscreenResizeWebGLRenderTarget',
+  'doRequestFullscreen',
+  'fillPointerlockChangeEventData',
+  'registerPointerlockChangeEventCallback',
+  'registerPointerlockErrorEventCallback',
+  'requestPointerLock',
+  'fillVisibilityChangeEventData',
+  'registerVisibilityChangeEventCallback',
+  'registerTouchEventCallback',
+  'fillGamepadEventData',
+  'registerGamepadEventCallback',
+  'registerBeforeUnloadEventCallback',
+  'fillBatteryEventData',
+  'battery',
+  'registerBatteryEventCallback',
+  'setCanvasElementSize',
+  'getCanvasElementSize',
+  'jsStackTrace',
+  'stackTrace',
+  'checkWasiClock',
+  'wasiRightsToMuslOFlags',
+  'wasiOFlagsToMuslOFlags',
+  'createDyncallWrapper',
+  'setImmediateWrapped',
+  'clearImmediateWrapped',
+  'polyfillSetImmediate',
+  'getPromise',
+  'makePromise',
+  'idsToPromises',
+  'makePromiseCallback',
+  'ExceptionInfo',
+  'findMatchingCatch',
+  'setMainLoop',
+  'getSocketFromFD',
+  'getSocketAddress',
+  'FS_unlink',
+  'FS_mkdirTree',
+  '_setNetworkCallback',
+  'heapObjectForWebGLType',
+  'heapAccessShiftForWebGLHeap',
+  'webgl_enable_ANGLE_instanced_arrays',
+  'webgl_enable_OES_vertex_array_object',
+  'webgl_enable_WEBGL_draw_buffers',
+  'webgl_enable_WEBGL_multi_draw',
+  'emscriptenWebGLGet',
+  'computeUnpackAlignedImageSize',
+  'colorChannelsInGlTextureFormat',
+  'emscriptenWebGLGetTexPixelData',
+  '__glGenObject',
+  'emscriptenWebGLGetUniform',
+  'webglGetUniformLocation',
+  'webglPrepareUniformLocationsBeforeFirstUse',
+  'webglGetLeftBracePos',
+  'emscriptenWebGLGetVertexAttrib',
+  '__glGetActiveAttribOrUniform',
+  'writeGLArray',
+  'registerWebGlEventCallback',
+  'runAndAbortIfError',
+  'SDL_unicode',
+  'SDL_ttfContext',
+  'SDL_audio',
+  'ALLOC_NORMAL',
+  'ALLOC_STACK',
+  'allocate',
+  'writeStringToMemory',
+  'writeAsciiToMemory',
+];
+missingLibrarySymbols.forEach(missingLibrarySymbol)
+
+var unexportedSymbols = [
+  'run',
+  'addOnPreRun',
+  'addOnInit',
+  'addOnPreMain',
+  'addOnExit',
+  'addOnPostRun',
+  'addRunDependency',
+  'removeRunDependency',
+  'FS_createFolder',
+  'FS_createPath',
+  'FS_createLazyFile',
+  'FS_createLink',
+  'FS_createDevice',
+  'FS_readFile',
+  'out',
+  'err',
+  'callMain',
+  'abort',
+  'keepRuntimeAlive',
+  'wasmExports',
+  'stackAlloc',
+  'stackSave',
+  'stackRestore',
+  'getTempRet0',
+  'setTempRet0',
+  'writeStackCookie',
+  'checkStackCookie',
+  'readI53FromI64',
+  'MAX_INT53',
+  'MIN_INT53',
+  'bigintToI53Checked',
+  'ptrToString',
+  'zeroMemory',
+  'getHeapMax',
+  'growMemory',
+  'ENV',
+  'MONTH_DAYS_REGULAR',
+  'MONTH_DAYS_LEAP',
+  'MONTH_DAYS_REGULAR_CUMULATIVE',
+  'MONTH_DAYS_LEAP_CUMULATIVE',
+  'isLeapYear',
+  'ydayFromDate',
+  'ERRNO_CODES',
+  'ERRNO_MESSAGES',
+  'setErrNo',
+  'DNS',
+  'Protocols',
+  'Sockets',
+  'initRandomFill',
+  'randomFill',
+  'timers',
+  'warnOnce',
+  'UNWIND_CACHE',
+  'readEmAsmArgsArray',
+  'getExecutableName',
+  'asyncLoad',
+  'alignMemory',
+  'mmapAlloc',
+  'wasmTable',
+  'freeTableIndexes',
+  'functionsInTableMap',
+  'setValue',
+  'getValue',
+  'PATH',
+  'PATH_FS',
+  'UTF8Decoder',
+  'UTF8ArrayToString',
+  'UTF8ToString',
+  'stringToUTF8Array',
+  'stringToUTF8',
+  'lengthBytesUTF8',
+  'intArrayFromString',
+  'stringToAscii',
+  'UTF16Decoder',
+  'stringToNewUTF8',
+  'JSEvents',
+  'specialHTMLTargets',
+  'currentFullscreenStrategy',
+  'restoreOldWindowedStyle',
+  'demangle',
+  'demangleAll',
+  'ExitStatus',
+  'getEnvStrings',
+  'doReadv',
+  'doWritev',
+  'promiseMap',
+  'uncaughtExceptionCount',
+  'exceptionLast',
+  'exceptionCaught',
+  'Browser',
+  'wget',
+  'SYSCALLS',
+  'preloadPlugins',
+  'FS_createPreloadedFile',
+  'FS_modeStringToFlags',
+  'FS_getMode',
+  'FS_stdin_getChar_buffer',
+  'FS_stdin_getChar',
+  'FS',
+  'FS_createDataFile',
+  'MEMFS',
+  'TTY',
+  'PIPEFS',
+  'SOCKFS',
+  'tempFixedLengthArray',
+  'miniTempWebGLFloatBuffers',
+  'miniTempWebGLIntBuffers',
+  'GL',
+  'emscripten_webgl_power_preferences',
+  'AL',
+  'GLUT',
+  'EGL',
+  'GLEW',
+  'IDBStore',
+  'SDL',
+  'SDL_gfx',
+  'allocateUTF8',
+  'allocateUTF8OnStack',
+];
+unexportedSymbols.forEach(unexportedRuntimeSymbol);
+
 
 
 var calledRun;
@@ -5271,11 +5530,22 @@ dependenciesFulfilled = function runCaller() {
   if (!calledRun) dependenciesFulfilled = runCaller; // try this again later, after new deps are fulfilled
 };
 
+function stackCheckInit() {
+  // This is normally called automatically during __wasm_call_ctors but need to
+  // get these values before even running any of the ctors so we call it redundantly
+  // here.
+  _emscripten_stack_init();
+  // TODO(sbc): Move writeStackCookie to native to to avoid this.
+  writeStackCookie();
+}
+
 function run() {
 
   if (runDependencies > 0) {
     return;
   }
+
+    stackCheckInit();
 
   preRun();
 
@@ -5298,6 +5568,8 @@ function run() {
     readyPromiseResolve(Module);
     if (Module['onRuntimeInitialized']) Module['onRuntimeInitialized']();
 
+    assert(!Module['_main'], 'compiled without a main, but one is present. if you added it from JS, use Module["onRuntimeInitialized"]');
+
     postRun();
   }
 
@@ -5313,6 +5585,46 @@ function run() {
   {
     doRun();
   }
+  checkStackCookie();
+}
+
+function checkUnflushedContent() {
+  // Compiler settings do not allow exiting the runtime, so flushing
+  // the streams is not possible. but in ASSERTIONS mode we check
+  // if there was something to flush, and if so tell the user they
+  // should request that the runtime be exitable.
+  // Normally we would not even include flush() at all, but in ASSERTIONS
+  // builds we do so just for this check, and here we see if there is any
+  // content to flush, that is, we check if there would have been
+  // something a non-ASSERTIONS build would have not seen.
+  // How we flush the streams depends on whether we are in SYSCALLS_REQUIRE_FILESYSTEM=0
+  // mode (which has its own special function for this; otherwise, all
+  // the code is inside libc)
+  var oldOut = out;
+  var oldErr = err;
+  var has = false;
+  out = err = (x) => {
+    has = true;
+  }
+  try { // it doesn't matter if it fails
+    _fflush(0);
+    // also flush in the JS FS layer
+    ['stdout', 'stderr'].forEach(function(name) {
+      var info = FS.analyzePath('/dev/' + name);
+      if (!info) return;
+      var stream = info.object;
+      var rdev = stream.rdev;
+      var tty = TTY.ttys[rdev];
+      if (tty && tty.output && tty.output.length) {
+        has = true;
+      }
+    });
+  } catch(e) {}
+  out = oldOut;
+  err = oldErr;
+  if (has) {
+    warnOnce('stdio streams had content in them that was not flushed. you should set EXIT_RUNTIME to 1 (see the Emscripten FAQ), or make sure to emit a newline when you printf etc.');
+  }
 }
 
 if (Module['preInit']) {
@@ -5326,7 +5638,7 @@ run();
 
 
 // end include: postamble.js
-// include: /home/mmom/src/sqlite-wasm-http/deps/sqlite/ext/wasm/bld/post-js.node.js
+// include: /home/mmom/src/sqlite-wasm-http/deps/sqlite/ext/wasm/bld/post-js.sqlite3-node.js
 /* BEGIN FILE: api/post-js-header.js */
 /**
    post-js-header.js is to be prepended to other code to create
@@ -5385,11 +5697,11 @@ Module.postRun.push(function(Module/*the Emscripten-style module object*/){
 /*
 ** This code was built from sqlite3 version...
 **
-** SQLITE_VERSION "3.42.0"
-** SQLITE_VERSION_NUMBER 3042000
-** SQLITE_SOURCE_ID "2023-03-30 12:19:38 8724fe7426da55d19dba7b30e09321ba30c73286513864cb05de32f72e50ee31"
+** SQLITE_VERSION "3.44.2"
+** SQLITE_VERSION_NUMBER 3044002
+** SQLITE_SOURCE_ID "2023-11-24 11:41:44 ebead0e7230cd33bcec9f95d2183069565b9e709bf745c9b5db65cc0cbf92c0f"
 **
-** Using the Emscripten SDK version 3.1.32.
+** Using the Emscripten SDK version 3.1.46.
 */
 /* END FILE: ./bld/sqlite3-license-version.js */
 /* BEGIN FILE: api/sqlite3-api-prologue.js */
@@ -5448,7 +5760,7 @@ Module.postRun.push(function(Module/*the Emscripten-style module object*/){
 
    - `memory`[^1]: optional WebAssembly.Memory object, defaulting to
      `exports.memory`. In Emscripten environments this should be set
-     to `Module.wasmMemory` if the build uses `-sIMPORT_MEMORY`, or be
+     to `Module.wasmMemory` if the build uses `-sIMPORTED_MEMORY`, or be
      left undefined/falsy to default to `exports.memory` when using
      WASM-exported memory.
 
@@ -5483,12 +5795,12 @@ Module.postRun.push(function(Module/*the Emscripten-style module object*/){
      can be replaced with (e.g.) empty functions to squelch all such
      output.
 
-   - `wasmfsOpfsDir`[^1]: As of 2022-12-17, this feature does not
-     currently work due to incompatible Emscripten-side changes made
-     in the WASMFS+OPFS combination. This option is currently ignored.
+   - `wasmfsOpfsDir`[^1]: Specifies the "mount point" of the OPFS-backed
+     filesystem in WASMFS-capable builds.
 
-   [^1] = This property may optionally be a function, in which case this
-          function re-assigns calls that function to fetch the value,
+
+   [^1] = This property may optionally be a function, in which case
+          this function calls that function to fetch the value,
           enabling delayed evaluation.
 
    The returned object is the top-level sqlite3 namespace object.
@@ -5520,11 +5832,11 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
     log: console.log.bind(console),
     wasmfsOpfsDir: '/opfs',
     /**
-       useStdAlloc is just for testing an allocator discrepancy. The
+       useStdAlloc is just for testing allocator discrepancies. The
        docs guarantee that this is false in the canonical builds. For
        99% of purposes it doesn't matter which allocators we use, but
-       it becomes significant with, e.g., sqlite3_deserialize()
-       and certain wasm.xWrap.resultAdapter()s.
+       it becomes significant with, e.g., sqlite3_deserialize() and
+       certain wasm.xWrap.resultAdapter()s.
     */
     useStdAlloc: false
   }, apiConfig || {});
@@ -5544,11 +5856,6 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
       config[k] = config[k]();
     }
   });
-  config.wasmOpfsDir =
-    /* 2022-12-17: WASMFS+OPFS can no longer be activated from the
-       main thread (aborts via a failed assert() if it's attempted),
-       which eliminates any(?) benefit to supporting it. */  false;
-
   /**
       The main sqlite3 binding API gets installed into this object,
       mimicking the C API as closely as we can. The numerous members
@@ -5703,6 +6010,7 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
   const isTypedArray = (v)=>{
     return (v && v.constructor && isInt32(v.constructor.BYTES_PER_ELEMENT)) ? v : false;
   };
+
 
   /** Internal helper to use in operations which need to distinguish
       between TypedArrays which are backed by a SharedArrayBuffer
@@ -6171,8 +6479,43 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
     isSharedTypedArray,
     toss: function(...args){throw new Error(args.join(' '))},
     toss3,
-    typedArrayPart
-  };
+    typedArrayPart,
+    /**
+       Given a byte array or ArrayBuffer, this function throws if the
+       lead bytes of that buffer do not hold a SQLite3 database header,
+       else it returns without side effects.
+
+       Added in 3.44.
+    */
+    affirmDbHeader: function(bytes){
+      if(bytes instanceof ArrayBuffer) bytes = new Uint8Array(bytes);
+      const header = "SQLite format 3";
+      if( header.length > bytes.byteLength ){
+        toss3("Input does not contain an SQLite3 database header.");
+      }
+      for(let i = 0; i < header.length; ++i){
+        if( header.charCodeAt(i) !== bytes[i] ){
+          toss3("Input does not contain an SQLite3 database header.");
+        }
+      }
+    },
+    /**
+       Given a byte array or ArrayBuffer, this function throws if the
+       database does not, at a cursory glance, appear to be an SQLite3
+       database. It only examines the size and header, but further
+       checks may be added in the future.
+
+       Added in 3.44.
+    */
+    affirmIsDb: function(bytes){
+      if(bytes instanceof ArrayBuffer) bytes = new Uint8Array(bytes);
+      const n = bytes.byteLength;
+      if(n<512 || n%512!==0) {
+        toss3("Byte array size",n,"is invalid for an SQLite3 db.");
+      }
+      util.affirmDbHeader(bytes);
+    }
+  }/*util*/;
 
   Object.assign(wasm, {
     /**
@@ -6203,7 +6546,7 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
       || toss3("Missing API config.exports (WASM module exports)."),
 
     /**
-       When Emscripten compiles with `-sIMPORT_MEMORY`, it
+       When Emscripten compiles with `-sIMPORTED_MEMORY`, it
        initalizes the heap and imports it into wasm, as opposed to
        the other way around. In this case, the memory is not
        available via this.exports.memory.
@@ -6499,7 +6842,23 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
       return 1===n
         ? wasm.pstack.alloc(safePtrSize ? 8 : wasm.ptrSizeof)
         : wasm.pstack.allocChunks(n, safePtrSize ? 8 : wasm.ptrSizeof);
+    },
+
+    /**
+       Records the current pstack position, calls the given function,
+       passing it the sqlite3 object, then restores the pstack
+       regardless of whether the function throws. Returns the result
+       of the call or propagates an exception on error.
+
+       Added in 3.44.
+    */
+    call: function(f){
+      const stackPos = wasm.pstack.pointer;
+      try{ return f(sqlite3) } finally{
+        wasm.pstack.restore(stackPos);
+      }
     }
+
   })/*wasm.pstack*/;
   Object.defineProperties(wasm.pstack, {
     /**
@@ -6571,31 +6930,31 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
   /** State for sqlite3_wasmfs_opfs_dir(). */
   let __wasmfsOpfsDir = undefined;
   /**
-     2022-12-17: incompatible WASMFS changes have made WASMFS+OPFS
-     unavailable from the main thread, which eliminates the most
-     significant benefit of supporting WASMFS. This function is now a
-     no-op which always returns a falsy value. Before that change,
-     this function behaved as documented below (and how it will again
-     if we can find a compelling reason to support it).
-
      If the wasm environment has a WASMFS/OPFS-backed persistent
      storage directory, its path is returned by this function. If it
      does not then it returns "" (noting that "" is a falsy value).
 
      The first time this is called, this function inspects the current
      environment to determine whether persistence support is available
-     and, if it is, enables it (if needed).
+     and, if it is, enables it (if needed). After the first call it
+     always returns the cached result.
 
-     This function currently only recognizes the WASMFS/OPFS storage
-     combination and its path refers to storage rooted in the
-     Emscripten-managed virtual filesystem.
+     If the returned string is not empty, any files stored under the
+     given path (recursively) are housed in OPFS storage. If the
+     returned string is empty, this particular persistent storage
+     option is not available on the client.
+
+     Though the mount point name returned by this function is intended
+     to remain stable, clients should not hard-coded it anywhere. Always call this function to get the path.
+
+     Note that this function is a no-op in must builds of this
+     library, as the WASMFS capability requires a custom
+     build.
   */
   capi.sqlite3_wasmfs_opfs_dir = function(){
     if(undefined !== __wasmfsOpfsDir) return __wasmfsOpfsDir;
     // If we have no OPFS, there is no persistent dir
     const pdir = config.wasmfsOpfsDir;
-    console.error("sqlite3_wasmfs_opfs_dir() can no longer work due "+
-                  "to incompatible WASMFS changes. It will be removed.");
     if(!pdir
        || !globalThis.FileSystemHandle
        || !globalThis.FileSystemDirectoryHandle
@@ -6617,8 +6976,6 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
   };
 
   /**
-     Experimental and subject to change or removal.
-
      Returns true if sqlite3.capi.sqlite3_wasmfs_opfs_dir() is a
      non-empty string and the given name starts with (that string +
      '/'), else returns false.
@@ -6627,13 +6984,6 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
     const p = capi.sqlite3_wasmfs_opfs_dir();
     return (p && name) ? name.startsWith(p+'/') : false;
   };
-
-  // This bit is highly arguable and is incompatible with the fiddle shell.
-  if(false && 0===wasm.exports.sqlite3_vfs_find(0)){
-    /* Assume that sqlite3_initialize() has not yet been called.
-       This will be the case in an SQLITE_OS_KV build. */
-    wasm.exports.sqlite3_initialize();
-  }
 
   /**
      Given an `sqlite3*`, an sqlite3_vfs name, and an optional db name
@@ -6765,6 +7115,74 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
   };
 
   /**
+     If the current environment supports the POSIX file APIs, this routine
+     creates (or overwrites) the given file using those APIs. This is
+     primarily intended for use in Emscripten-based builds where the POSIX
+     APIs are transparently proxied by an in-memory virtual filesystem.
+     It may behave diffrently in other environments.
+
+     The first argument must be either a JS string or WASM C-string
+     holding the filename. Note that this routine does _not_ create
+     intermediary directories if the filename has a directory part.
+
+     The 2nd argument may either a valid WASM memory pointer, an
+     ArrayBuffer, or a Uint8Array. The 3rd must be the length, in
+     bytes, of the data array to copy. If the 2nd argument is an
+     ArrayBuffer or Uint8Array and the 3rd is not a positive integer
+     then the 3rd defaults to the array's byteLength value.
+
+     Results are undefined if data is a WASM pointer and dataLen is
+     exceeds data's bounds.
+
+     Throws if any arguments are invalid or if creating or writing to
+     the file fails.
+
+     Added in 3.43 as an alternative for the deprecated
+     sqlite3_js_vfs_create_file().
+  */
+  capi.sqlite3_js_posix_create_file = function(filename, data, dataLen){
+    let pData;
+    if(data && wasm.isPtr(data)){
+      pData = data;
+    }else if(data instanceof ArrayBuffer || data instanceof Uint8Array){
+      pData = wasm.allocFromTypedArray(data);
+      if(arguments.length<3 || !util.isInt32(dataLen) || dataLen<0){
+        dataLen = data.byteLength;
+      }
+    }else{
+      SQLite3Error.toss("Invalid 2nd argument for sqlite3_js_posix_create_file().");
+    }
+    try{
+      if(!util.isInt32(dataLen) || dataLen<0){
+        SQLite3Error.toss("Invalid 3rd argument for sqlite3_js_posix_create_file().");
+      }
+      const rc = wasm.sqlite3_wasm_posix_create_file(filename, pData, dataLen);
+      if(rc) SQLite3Error.toss("Creation of file failed with sqlite3 result code",
+                               capi.sqlite3_js_rc_str(rc));
+    }finally{
+       wasm.dealloc(pData);
+    }
+  };
+
+  /**
+     Deprecation warning: this function does not work properly in
+     debug builds of sqlite3 because its out-of-scope use of the
+     sqlite3_vfs API triggers assertions in the core library.  That
+     was unfortunately not discovered until 2023-08-11. This function
+     is now deprecated and should not be used in new code.
+
+     Alternative options:
+
+     - "unix" VFS and its variants can get equivalent functionality
+       with sqlite3_js_posix_create_file().
+
+     - OPFS: use either sqlite3.oo1.OpfsDb.importDb(), for the "opfs"
+       VFS, or the importDb() method of the PoolUtil object provided
+       by the "opfs-sahpool" OPFS (noting that its VFS name may differ
+       depending on client-side configuration). We cannot proxy those
+       from here because the former is necessarily asynchronous and
+       the latter requires information not available to this function.
+
      Creates a file using the storage appropriate for the given
      sqlite3_vfs.  The first argument may be a VFS name (JS string
      only, NOT a WASM C-string), WASM-managed `sqlite3_vfs*`, or
@@ -6810,9 +7228,13 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
        VFS nor the WASM environment imposes requirements which break it.
 
      - "opfs": uses OPFS storage and creates directory parts of the
-       filename.
+       filename. It can only be used to import an SQLite3 database
+       file and will fail if given anything else.
   */
   capi.sqlite3_js_vfs_create_file = function(vfs, filename, data, dataLen){
+    config.warn("sqlite3_js_vfs_create_file() is deprecated and",
+                "should be avoided because it can lead to C-level crashes.",
+                "See its documentation for alternative options.");
     let pData;
     if(data){
       if(wasm.isPtr(data)){
@@ -6840,9 +7262,29 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
       if(rc) SQLite3Error.toss("Creation of file failed with sqlite3 result code",
                                capi.sqlite3_js_rc_str(rc));
     }finally{
-      wasm.dealloc(pData);
+       wasm.dealloc(pData);
     }
   };
+
+  /**
+     Converts SQL input from a variety of convenient formats
+     to plain strings.
+
+     If v is a string, it is returned as-is. If it is-a Array, its
+     join("") result is returned.  If is is a Uint8Array, Int8Array,
+     or ArrayBuffer, it is assumed to hold UTF-8-encoded text and is
+     decoded to a string. If it looks like a WASM pointer,
+     wasm.cstrToJs(sql) is returned. Else undefined is returned.
+
+     Added in 3.44
+  */
+  capi.sqlite3_js_sql_to_string = (sql)=>{
+    if('string' === typeof sql){
+      return sql;
+    }
+    const x = flexibleString(v);
+    return x===v ? undefined : x;
+  }
 
   if( util.isUIThread() ){
     /* Features specific to the main window thread... */
@@ -6931,6 +7373,9 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
      Full docs: https://sqlite.org/c3ref/db_config.html
 
      Returns capi.SQLITE_MISUSE if op is not a valid operation ID.
+
+     The variants which take `(int, int*)` arguments treat a
+     missing or falsy pointer argument as 0.
   */
   capi.sqlite3_db_config = function(pDb, op, ...args){
     if(!this.s){
@@ -6959,6 +7404,8 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
         case capi.SQLITE_DBCONFIG_ENABLE_VIEW:
         case capi.SQLITE_DBCONFIG_LEGACY_FILE_FORMAT:
         case capi.SQLITE_DBCONFIG_TRUSTED_SCHEMA:
+        case capi.SQLITE_DBCONFIG_STMT_SCANSTATUS:
+        case capi.SQLITE_DBCONFIG_REVERSE_SCANORDER:
           return this.ip(pDb, op, args[0], args[1] || 0);
         case capi.SQLITE_DBCONFIG_LOOKASIDE:
           return this.pii(pDb, op, args[0], args[1], args[2]);
@@ -7048,7 +7495,8 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
          do not.
       */
       tgt.push(capi.sqlite3_value_to_js(
-        wasm.peekPtr(pArgv + (wasm.ptrSizeof * i))
+        wasm.peekPtr(pArgv + (wasm.ptrSizeof * i)),
+        throwIfCannotConvert
       ));
     }
     return tgt;
@@ -7264,6 +7712,9 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
     client: undefined,
 
     /**
+       This function is not part of the public interface, but a
+       piece of internal bootstrapping infrastructure.
+
        Performs any optional asynchronous library-level initialization
        which might be required. This function returns a Promise which
        resolves to the sqlite3 namespace object. Any error in the
@@ -7279,27 +7730,19 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
        then it must be called by client-level code, which must not use
        the library until the returned promise resolves.
 
-       Bug: if called while a prior call is still resolving, the 2nd
-       call will resolve prematurely, before the 1st call has finished
-       resolving. The current build setup precludes that possibility,
-       so it's only a hypothetical problem if/when this function
-       ever needs to be invoked by clients.
+       If called multiple times it will return the same promise on
+       subsequent calls. The current build setup precludes that
+       possibility, so it's only a hypothetical problem if/when this
+       function ever needs to be invoked by clients.
 
        In Emscripten-based builds, this function is called
        automatically and deleted from this object.
     */
-    asyncPostInit: async function(){
-      let lip = sqlite3ApiBootstrap.initializersAsync;
+    asyncPostInit: async function ff(){
+      if(ff.isReady instanceof Promise) return ff.isReady;
+      let lia = sqlite3ApiBootstrap.initializersAsync;
       delete sqlite3ApiBootstrap.initializersAsync;
-      if(!lip || !lip.length) return Promise.resolve(sqlite3);
-      lip = lip.map((f)=>{
-        const p = (f instanceof Promise) ? f : f(sqlite3);
-        return p.catch((e)=>{
-          console.error("an async sqlite3 initializer failed:",e);
-          throw e;
-        });
-      });
-      const postInit = ()=>{
+      const postInit = async ()=>{
         if(!sqlite3.__isUnderTest){
           /* Delete references to internal-only APIs which are used by
              some initializers. Retain them when running in test mode
@@ -7308,23 +7751,25 @@ globalThis.sqlite3ApiBootstrap = function sqlite3ApiBootstrap(
           /* It's conceivable that we might want to expose
              StructBinder to client-side code, but it's only useful if
              clients build their own sqlite3.wasm which contains their
-             one C struct types. */
+             own C struct types. */
           delete sqlite3.StructBinder;
         }
         return sqlite3;
       };
-      if(1){
-        /* Run all initializers in sequence. The advantage is that it
-           allows us to have post-init cleanup defined outside of this
-           routine at the end of the list and have it run at a
-           well-defined time. */
-        let p = lip.shift();
-        while(lip.length) p = p.then(lip.shift());
-        return p.then(postInit);
-      }else{
-        /* Run them in an arbitrary order. */
-        return Promise.all(lip).then(postInit);
+      const catcher = (e)=>{
+        config.error("an async sqlite3 initializer failed:",e);
+        throw e;
+      };
+      if(!lia || !lia.length){
+        return ff.isReady = postInit().catch(catcher);
       }
+      lia = lia.map((f)=>{
+        return (f instanceof Function) ? async x=>f(sqlite3) : f;
+      });
+      lia.push(postInit);
+      let p = Promise.resolve(sqlite3);
+      while(lia.length) p = p.then(lia.shift());
+      return ff.isReady = p.catch(catcher);
     },
     /**
        scriptInfo ideally gets injected into this object by the
@@ -7384,7 +7829,7 @@ globalThis.sqlite3ApiBootstrap.initializers = [];
   specifically for initializers which are asynchronous. All entries in
   this list must be either async functions, non-async functions which
   return a Promise, or a Promise. Each function in the list is called
-  with the sqlite3 ojbect as its only argument.
+  with the sqlite3 object as its only argument.
 
   The resolved value of any Promise is ignored and rejection will kill
   the asyncPostInit() process (at an indeterminate point because all
@@ -7529,7 +7974,8 @@ globalThis.sqlite3ApiBootstrap.sqlite3 = undefined;
      of `target.instance` (a WebAssembly.Module instance) and it must
      contain the symbols exported by the WASM module associated with
      this code. In an Enscripten environment it must be set to
-     `Module['asm']`. The exports object must contain a minimum of the
+     `Module['asm']` (versions <=3.1.43) or `wasmExports` (versions
+     >=3.1.44). The exports object must contain a minimum of the
      following symbols:
 
      - `memory`: a WebAssembly.Memory object representing the WASM
@@ -7592,7 +8038,7 @@ globalThis.sqlite3ApiBootstrap.sqlite3 = undefined;
 globalThis.WhWasmUtilInstaller = function(target){
   'use strict';
   if(undefined===target.bigIntEnabled){
-    target.bigIntEnabled = !!self['BigInt64Array'];
+    target.bigIntEnabled = !!globalThis['BigInt64Array'];
   }
 
   /** Throws a new Error, the message of which is the concatenation of
@@ -7773,8 +8219,8 @@ globalThis.WhWasmUtilInstaller = function(target){
           break;
         default:
           if(target.bigIntEnabled){
-            if(n===self['BigUint64Array']) return c.HEAP64U;
-            else if(n===self['BigInt64Array']) return c.HEAP64;
+            if(n===globalThis['BigUint64Array']) return c.HEAP64U;
+            else if(n===globalThis['BigInt64Array']) return c.HEAP64;
             break;
           }
     }
@@ -8030,8 +8476,6 @@ globalThis.WhWasmUtilInstaller = function(target){
   target.installFunction = (func, sig)=>__installFunction(func, sig, false);
 
   /**
-     EXPERIMENTAL! DO NOT USE IN CLIENT CODE!
-
      Works exactly like installFunction() but requires that a
      scopedAllocPush() is active and uninstalls the given function
      when that alloc scope is popped via scopedAllocPop().
@@ -8597,7 +9041,7 @@ globalThis.WhWasmUtilInstaller = function(target){
     cache.scopedAlloc.splice(n,1);
     for(let p; (p = state.pop()); ){
       if(target.functionEntry(p)){
-        //console.warn("scopedAllocPop() uninstalling transient function",p);
+        //console.warn("scopedAllocPop() uninstalling function",p);
         target.uninstallFunction(p);
       }
       else target.dealloc(p);
@@ -9054,6 +9498,7 @@ globalThis.WhWasmUtilInstaller = function(target){
                      'and is not intended to be invoked from',
                      'client-level code. Invoked with:',opt);
       }
+      this.name = opt.name || "unnamed";
       this.signature = opt.signature;
       if(opt.contextKey instanceof Function){
         this.contextKey = opt.contextKey;
@@ -9074,25 +9519,11 @@ globalThis.WhWasmUtilInstaller = function(target){
         ? opt.callProxy : undefined;
     }
 
-    /** If true, the constructor emits a warning. The intent is that
-        this be set to true after bootstrapping of the higher-level
-        client library is complete, to warn downstream clients that
-        they shouldn't be relying on this implemenation detail which
-        does not have a stable interface. */
-    static warnOnUse = false;
-
-    /** If true, convertArg() will FuncPtrAdapter.debugOut() when it
-        (un)installs a function binding to/from WASM. Note that
-        deinstallation of bindScope=transient bindings happens
-        via scopedAllocPop() so will not be output. */
-    static debugFuncInstall = false;
-
-    /** Function used for debug output. */
-    static debugOut = console.debug.bind(console);
-
-    static bindScopes = [
-      'transient', 'context', 'singleton', 'permanent'
-    ];
+    /**
+       Note that static class members are defined outside of the class
+       to work around an emcc toolchain build problem: one of the
+       tools in emsdk v3.1.42 does not support the static keyword.
+    */
 
     /* Dummy impl. Overwritten per-instance as needed. */
     contextKey(argv,argIndex){
@@ -9129,14 +9560,16 @@ globalThis.WhWasmUtilInstaller = function(target){
        exactly the 2nd and 3rd arguments are.
     */
     convertArg(v,argv,argIndex){
-      //FuncPtrAdapter.debugOut("FuncPtrAdapter.convertArg()",this.signature,this.transient,v);
+      //FuncPtrAdapter.debugOut("FuncPtrAdapter.convertArg()",this.name,this.signature,this.transient,v);
       let pair = this.singleton;
       if(!pair && this.isContext){
         pair = this.contextMap(this.contextKey(argv,argIndex));
+        //FuncPtrAdapter.debugOut(this.name, this.signature, "contextKey() =",this.contextKey(argv,argIndex), pair);
       }
       if(pair && pair[0]===v) return pair[1];
       if(v instanceof Function){
         /* Install a WASM binding and return its pointer. */
+        //FuncPtrAdapter.debugOut("FuncPtrAdapter.convertArg()",this.name,this.signature,this.transient,v,pair);
         if(this.callProxy) v = this.callProxy(v);
         const fp = __installFunction(v, this.signature, this.isTransient);
         if(FuncPtrAdapter.debugFuncInstall){
@@ -9150,7 +9583,18 @@ globalThis.WhWasmUtilInstaller = function(target){
               FuncPtrAdapter.debugOut("FuncPtrAdapter uninstalling", this,
                                       this.contextKey(argv,argIndex), '@'+pair[1], v);
             }
-            try{target.uninstallFunction(pair[1])}
+            try{
+              /* Because the pending native call might rely on the
+                 pointer we're replacing, e.g. as is normally the case
+                 with sqlite3's xDestroy() methods, we don't
+                 immediately uninstall but instead add its pointer to
+                 the scopedAlloc stack, which will be cleared when the
+                 xWrap() mechanism is done calling the native
+                 function. We're relying very much here on xWrap()
+                 having pushed an alloc scope.
+              */
+              cache.scopedAlloc[cache.scopedAlloc.length-1].push(pair[1]);
+            }
             catch(e){/*ignored*/}
           }
           pair[0] = v;
@@ -9158,13 +9602,14 @@ globalThis.WhWasmUtilInstaller = function(target){
         }
         return fp;
       }else if(target.isPtr(v) || null===v || undefined===v){
+        //FuncPtrAdapter.debugOut("FuncPtrAdapter.convertArg()",this.name,this.signature,this.transient,v,pair);
         if(pair && pair[1] && pair[1]!==v){
           /* uninstall stashed mapping and replace stashed mapping with v. */
           if(FuncPtrAdapter.debugFuncInstall){
             FuncPtrAdapter.debugOut("FuncPtrAdapter uninstalling", this,
                                     this.contextKey(argv,argIndex), '@'+pair[1], v);
           }
-          try{target.uninstallFunction(pair[1])}
+          try{ cache.scopedAlloc[cache.scopedAlloc.length-1].push(pair[1]) }
           catch(e){/*ignored*/}
           pair[0] = pair[1] = (v | 0);
         }
@@ -9178,6 +9623,26 @@ globalThis.WhWasmUtilInstaller = function(target){
       }
     }/*convertArg()*/
   }/*FuncPtrAdapter*/;
+
+  /** If true, the constructor emits a warning. The intent is that
+      this be set to true after bootstrapping of the higher-level
+      client library is complete, to warn downstream clients that
+      they shouldn't be relying on this implemenation detail which
+      does not have a stable interface. */
+  xArg.FuncPtrAdapter.warnOnUse = false;
+
+  /** If true, convertArg() will FuncPtrAdapter.debugOut() when it
+      (un)installs a function binding to/from WASM. Note that
+      deinstallation of bindScope=transient bindings happens
+      via scopedAllocPop() so will not be output. */
+  xArg.FuncPtrAdapter.debugFuncInstall = false;
+
+  /** Function used for debug output. */
+  xArg.FuncPtrAdapter.debugOut = console.debug.bind(console);
+
+  xArg.FuncPtrAdapter.bindScopes = [
+    'transient', 'context', 'singleton', 'permanent'
+  ];
 
   const __xArgAdapterCheck =
         (t)=>xArg.get(t) || toss("Argument adapter not found:",t);
@@ -9723,9 +10188,9 @@ globalThis.Jaccwabyt = function StructBinderFactory(config){
         memberPrefix = (config.memberPrefix || ""),
         memberSuffix = (config.memberSuffix || ""),
         bigIntEnabled = (undefined===config.bigIntEnabled
-                         ? !!self['BigInt64Array'] : !!config.bigIntEnabled),
-        BigInt = self['BigInt'],
-        BigInt64Array = self['BigInt64Array'],
+                         ? !!globalThis['BigInt64Array'] : !!config.bigIntEnabled),
+        BigInt = globalThis['BigInt'],
+        BigInt64Array = globalThis['BigInt64Array'],
         /* Undocumented (on purpose) config options: */
         ptrSizeof = config.ptrSizeof || 4,
         ptrIR = config.ptrIR || 'i32'
@@ -10969,6 +11434,7 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
     ["sqlite3_wasm_db_vfs", "sqlite3_vfs*", "sqlite3*","string"],
     ["sqlite3_wasm_vfs_create_file", "int",
      "sqlite3_vfs*","string","*", "int"],
+    ["sqlite3_wasm_posix_create_file", "int", "string","*", "int"],
     ["sqlite3_wasm_vfs_unlink", "int", "sqlite3_vfs*","string"]
   ];
 
@@ -11089,6 +11555,15 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
        Populate api object with sqlite3_...() by binding the "raw" wasm
        exports into type-converting proxies using wasm.xWrap().
     */
+    if(0 === wasm.exports.sqlite3_step.length){
+      /* This environment wraps exports in nullary functions, which means
+         we must disable the arg-count validation we otherwise perform
+         on the wrappers. */
+      wasm.xWrap.doArgcCheck = false;
+      sqlite3.config.warn(
+        "Disabling sqlite3.wasm.xWrap.doArgcCheck due to environmental quirks."
+      );
+    }
     for(const e of wasm.bindingSignatures){
       capi[e[0]] = wasm.xWrap.apply(null, e);
     }
@@ -11239,9 +11714,9 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
      consistency with non-special-case wrappings.
   */
   const __dbArgcMismatch = (pDb,f,n)=>{
-    return sqlite3.util.sqlite3_wasm_db_error(pDb, capi.SQLITE_MISUSE,
-                                              f+"() requires "+n+" argument"+
-                                              (1===n?"":'s')+".");
+    return util.sqlite3_wasm_db_error(pDb, capi.SQLITE_MISUSE,
+                                      f+"() requires "+n+" argument"+
+                                      (1===n?"":'s')+".");
   };
 
   /** Code duplication reducer for functions which take an encoding
@@ -12022,7 +12497,7 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 /* END FILE: api/sqlite3-api-glue.js */
 /* BEGIN FILE: ./bld/sqlite3-api-build-version.js */
 globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
-  sqlite3.version = {"libVersion": "3.42.0", "libVersionNumber": 3042000, "sourceId": "2023-03-30 12:19:38 8724fe7426da55d19dba7b30e09321ba30c73286513864cb05de32f72e50ee31","downloadVersion": 3420000};
+  sqlite3.version = {"libVersion": "3.44.2", "libVersionNumber": 3044002, "sourceId": "2023-11-24 11:41:44 ebead0e7230cd33bcec9f95d2183069565b9e709bf745c9b5db65cc0cbf92c0f","downloadVersion": 3440200};
 });
 /* END FILE: ./bld/sqlite3-api-build-version.js */
 /* BEGIN FILE: api/sqlite3-api-oo1.js */
@@ -12083,6 +12558,7 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
     if(sqliteResultCode){
       if(dbPtr instanceof DB) dbPtr = dbPtr.pointer;
       toss3(
+        sqliteResultCode,
         "sqlite3 result code",sqliteResultCode+":",
         (dbPtr
          ? capi.sqlite3_errmsg(dbPtr)
@@ -12358,10 +12834,15 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 
      - `db`: the DB object which created the statement.
 
-     - `columnCount`: the number of result columns in the query, or 0 for
-     queries which cannot return results.
+     - `columnCount`: the number of result columns in the query, or 0
+     for queries which cannot return results. This property is a proxy
+     for sqlite3_column_count() and its use in loops should be avoided
+     because of the call overhead associated with that. The
+     `columnCount` is not cached when the Stmt is created because a
+     schema change made via a separate db connection between this
+     statement's preparation and when it is stepped may invalidate it.
 
-     - `parameterCount`: the number of bindable paramters in the query.
+     - `parameterCount`: the number of bindable parameters in the query.
   */
   const Stmt = function(){
     if(BindTypes!==arguments[2]){
@@ -12369,7 +12850,6 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
     }
     this.db = arguments[0];
     __ptrMap.set(this, arguments[1]);
-    this.columnCount = capi.sqlite3_column_count(this.pointer);
     this.parameterCount = capi.sqlite3_bind_parameter_count(this.pointer);
   };
 
@@ -12501,7 +12981,9 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
   const __selectFirstRow = (db, sql, bind, ...getArgs)=>{
     const stmt = db.prepare(sql);
     try {
-      return stmt.bind(bind).step() ? stmt.get(...getArgs) : undefined;
+      const rc = stmt.bind(bind).step() ? stmt.get(...getArgs) : undefined;
+      stmt.reset(/*for INSERT...RETURNING locking case*/);
+      return rc;
     }finally{
       stmt.finalize();
     }
@@ -12526,6 +13008,9 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
      or SQLITE_DONE, it will still throw but the error string might be
      "Not an error."  The various non-0 non-error codes need to be
      checked for in client code where they are expected.
+
+     The thrown exception's `resultCode` property will be the value of
+     the second argument to this function.
 
      If it does not throw, it returns its first argument.
   */
@@ -12574,7 +13059,10 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
         }
         const pDb = this.pointer;
         Object.keys(__stmtMap.get(this)).forEach((k,s)=>{
-          if(s && s.pointer) s.finalize();
+          if(s && s.pointer){
+            try{s.finalize()}
+            catch(e){/*ignore*/}
+          }
         });
         __ptrMap.delete(this);
         __stmtMap.delete(this);
@@ -12729,18 +13217,18 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
        with identical names.
 
        - `callback` = a function which gets called for each row of the
-       result set, but only if that statement has any result
-       _rows_. The callback's "this" is the options object, noting
-       that this function synthesizes one if the caller does not pass
-       one to exec(). The second argument passed to the callback is
-       always the current Stmt object, as it's needed if the caller
-       wants to fetch the column names or some such (noting that they
-       could also be fetched via `this.columnNames`, if the client
-       provides the `columnNames` option). If the callback returns a
-       literal `false` (as opposed to any other falsy value, e.g.  an
-       implicit `undefined` return), any ongoing statement-`step()`
-       iteration stops without an error. The return value of the
-       callback is otherwise ignored.
+       result set, but only if that statement has any result rows. The
+       callback's "this" is the options object, noting that this
+       function synthesizes one if the caller does not pass one to
+       exec(). The second argument passed to the callback is always
+       the current Stmt object, as it's needed if the caller wants to
+       fetch the column names or some such (noting that they could
+       also be fetched via `this.columnNames`, if the client provides
+       the `columnNames` option). If the callback returns a literal
+       `false` (as opposed to any other falsy value, e.g. an implicit
+       `undefined` return), any ongoing statement-`step()` iteration
+       stops without an error. The return value of the callback is
+       otherwise ignored.
 
        ACHTUNG: The callback MUST NOT modify the Stmt object. Calling
        any of the Stmt.get() variants, Stmt.getColumnName(), or
@@ -12761,7 +13249,7 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 
          A.1) `'array'` (the default) causes the results of
          `stmt.get([])` to be passed to the `callback` and/or appended
-         to `resultRows`
+         to `resultRows`.
 
          A.2) `'object'` causes the results of
          `stmt.get(Object.create(null))` to be passed to the
@@ -12772,8 +13260,8 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 
          A.3) `'stmt'` causes the current Stmt to be passed to the
          callback, but this mode will trigger an exception if
-         `resultRows` is an array because appending the statement to
-         the array would be downright unhelpful.
+         `resultRows` is an array because appending the transient
+         statement to the array would be downright unhelpful.
 
        B) An integer, indicating a zero-based column in the result
        row. Only that one single value will be passed on.
@@ -12803,7 +13291,7 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
        should return:
 
          A) The default value is (usually) `"this"`, meaning that the
-            DB object itself should be returned. The exceptions is if
+            DB object itself should be returned. The exception is if
             the caller passes neither of `callback` nor `returnValue`
             but does pass an explicit `rowMode` then the default
             `returnValue` is `"resultRows"`, described below.
@@ -12885,38 +13373,53 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
             bind = null;
           }
           if(evalFirstResult && stmt.columnCount){
-            /* Only forward SELECT results for the FIRST query
+            /* Only forward SELECT-style results for the FIRST query
                in the SQL which potentially has them. */
+            let gotColNames = Array.isArray(
+              opt.columnNames
+              /* As reported in
+                 https://sqlite.org/forum/forumpost/7774b773937cbe0a
+                 we need to delay fetching of the column names until
+                 after the first step() (if we step() at all) because
+                 a schema change between the prepare() and step(), via
+                 another connection, may invalidate the column count
+                 and names. */) ? 0 : 1;
             evalFirstResult = false;
-            if(Array.isArray(opt.columnNames)){
-              stmt.getColumnNames(opt.columnNames);
-            }
             if(arg.cbArg || resultRows){
-              for(; stmt.step(); stmt._isLocked = false){
-                stmt._isLocked = true;
+              for(; stmt.step(); stmt._lockedByExec = false){
+                if(0===gotColNames++) stmt.getColumnNames(opt.columnNames);
+                stmt._lockedByExec = true;
                 const row = arg.cbArg(stmt);
                 if(resultRows) resultRows.push(row);
                 if(callback && false === callback.call(opt, row, stmt)){
                   break;
                 }
               }
-              stmt._isLocked = false;
+              stmt._lockedByExec = false;
+            }
+            if(0===gotColNames){
+              /* opt.columnNames was provided but we visited no result rows */
+              stmt.getColumnNames(opt.columnNames);
             }
           }else{
             stmt.step();
           }
-          stmt.finalize();
+          stmt.reset(
+            /* In order to trigger an exception in the
+               INSERT...RETURNING locking scenario:
+               https://sqlite.org/forum/forumpost/36f7a2e7494897df
+            */).finalize();
           stmt = null;
-        }
+        }/*prepare() loop*/
       }/*catch(e){
         sqlite3.config.warn("DB.exec() is propagating exception",opt,e);
         throw e;
       }*/finally{
+        wasm.scopedAllocPop(stack);
         if(stmt){
-          delete stmt._isLocked;
+          delete stmt._lockedByExec;
           stmt.finalize();
         }
-        wasm.scopedAllocPop(stack);
       }
       return arg.returnVal();
     }/*exec()*/,
@@ -13135,6 +13638,7 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
       try {
         stmt.bind(bind);
         while(stmt.step()) rc.push(stmt.get(0,asType));
+        stmt.reset(/*for INSERT...RETURNING locking case*/);
       }finally{
         stmt.finalize();
       }
@@ -13269,9 +13773,10 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
        not throw, it returns this object.
     */
     checkRc: function(resultCode){
-      return DB.checkRc(this, resultCode);
+      return checkSqlite3Rc(this, resultCode);
     }
   }/*DB.prototype*/;
+
 
   /** Throws if the given Stmt has been finalized, else stmt is
       returned. */
@@ -13329,15 +13834,15 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
   };
 
   /**
-     If stmt._isLocked is truthy, this throws an exception
+     If stmt._lockedByExec is truthy, this throws an exception
      complaining that the 2nd argument (an operation name,
      e.g. "bind()") is not legal while the statement is "locked".
      Locking happens before an exec()-like callback is passed a
      statement, to ensure that the callback does not mutate or
      finalize the statement. If it does not throw, it returns stmt.
   */
-  const affirmUnlocked = function(stmt,currentOpName){
-    if(stmt._isLocked){
+  const affirmNotLockedByExec = function(stmt,currentOpName){
+    if(stmt._lockedByExec){
       toss3("Operation is illegal when statement is locked:",currentOpName);
     }
     return stmt;
@@ -13350,14 +13855,11 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
      success.
   */
   const bindOne = function f(stmt,ndx,bindType,val){
-    affirmUnlocked(affirmStmtOpen(stmt), 'bind()');
+    affirmNotLockedByExec(affirmStmtOpen(stmt), 'bind()');
     if(!f._){
       f._tooBigInt = (v)=>toss3(
         "BigInt value is too big to store without precision loss:", v
       );
-      /* Reminder: when not in BigInt mode, it's impossible for
-         JS to represent a number out of the range we can bind,
-         so we have no range checking. */
       f._ = {
         string: function(stmt, ndx, val, asBlob){
           const [pStr, n] = wasm.allocCString(val, true);
@@ -13431,46 +13933,67 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 
   Stmt.prototype = {
     /**
-       "Finalizes" this statement. This is a no-op if the
-       statement has already been finalizes. Returns
-       undefined. Most methods in this class will throw if called
-       after this is.
+       "Finalizes" this statement. This is a no-op if the statement
+       has already been finalized. Returns the result of
+       sqlite3_finalize() (0 on success, non-0 on error), or the
+       undefined value if the statement has already been
+       finalized. Regardless of success or failure, most methods in
+       this class will throw if called after this is.
+
+       This method always throws if called when it is illegal to do
+       so. Namely, when triggered via a per-row callback handler of a
+       DB.exec() call.
     */
     finalize: function(){
       if(this.pointer){
-        affirmUnlocked(this,'finalize()');
+        affirmNotLockedByExec(this,'finalize()');
+        const rc = capi.sqlite3_finalize(this.pointer);
         delete __stmtMap.get(this.db)[this.pointer];
-        capi.sqlite3_finalize(this.pointer);
         __ptrMap.delete(this);
         delete this._mayGet;
-        delete this.columnCount;
         delete this.parameterCount;
+        delete this._lockedByExec;
         delete this.db;
-        delete this._isLocked;
+        return rc;
       }
     },
-    /** Clears all bound values. Returns this object.
-        Throws if this statement has been finalized. */
+    /**
+       Clears all bound values. Returns this object.  Throws if this
+       statement has been finalized or if modification of the
+       statement is currently illegal (e.g. in the per-row callback of
+       a DB.exec() call).
+    */
     clearBindings: function(){
-      affirmUnlocked(affirmStmtOpen(this), 'clearBindings()')
+      affirmNotLockedByExec(affirmStmtOpen(this), 'clearBindings()')
       capi.sqlite3_clear_bindings(this.pointer);
       this._mayGet = false;
       return this;
     },
     /**
-       Resets this statement so that it may be step()ed again
-       from the beginning. Returns this object. Throws if this
-       statement has been finalized.
+       Resets this statement so that it may be step()ed again from the
+       beginning. Returns this object. Throws if this statement has
+       been finalized, if it may not legally be reset because it is
+       currently being used from a DB.exec() callback, or if the
+       underlying call to sqlite3_reset() returns non-0.
 
        If passed a truthy argument then this.clearBindings() is
        also called, otherwise any existing bindings, along with
        any memory allocated for them, are retained.
+
+       In versions 3.42.0 and earlier, this function did not throw if
+       sqlite3_reset() returns non-0, but it was discovered that
+       throwing (or significant extra client-side code) is necessary
+       in order to avoid certain silent failure scenarios, as
+       discussed at:
+
+       https://sqlite.org/forum/forumpost/36f7a2e7494897df
     */
     reset: function(alsoClearBinds){
-      affirmUnlocked(this,'reset()');
+      affirmNotLockedByExec(this,'reset()');
       if(alsoClearBinds) this.clearBindings();
-      capi.sqlite3_reset(affirmStmtOpen(this).pointer);
+      const rc = capi.sqlite3_reset(affirmStmtOpen(this).pointer);
       this._mayGet = false;
+      checkSqlite3Rc(this.db, rc);
       return this;
     },
     /**
@@ -13619,7 +14142,7 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
        value is returned.  Throws on error.
     */
     step: function(){
-      affirmUnlocked(this, 'step()');
+      affirmNotLockedByExec(this, 'step()');
       const rc = capi.sqlite3_step(affirmStmtOpen(this).pointer);
       switch(rc){
           case capi.SQLITE_DONE: return this._mayGet = false;
@@ -13654,11 +14177,9 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
       return this.reset();
     },
     /**
-       Functions like step() except that it finalizes this statement
-       immediately after stepping unless the step cannot be performed
-       because the statement is locked. Throws on error, but any error
-       other than the statement-is-locked case will also trigger
-       finalization of this statement.
+       Functions like step() except that it calls finalize() on this
+       statement immediately after stepping, even if the step() call
+       throws.
 
        On success, it returns true if the step indicated that a row of
        data was available, else it returns false.
@@ -13670,9 +14191,14 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
        ```
     */
     stepFinalize: function(){
-      const rc = this.step();
-      this.finalize();
-      return rc;
+      try{
+        const rc = this.step();
+        this.reset(/*for INSERT...RETURNING locking case*/);
+        return rc;
+      }finally{
+        try{this.finalize()}
+        catch(e){/*ignored*/}
+      }
     },
     /**
        Fetches the value from the given 0-based column index of
@@ -13713,13 +14239,15 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
       }
       if(Array.isArray(ndx)){
         let i = 0;
-        while(i<this.columnCount){
+        const n = this.columnCount;
+        while(i<n){
           ndx[i] = this.get(i++);
         }
         return ndx;
       }else if(ndx && 'object'===typeof ndx){
         let i = 0;
-        while(i<this.columnCount){
+        const n = this.columnCount;
+        while(i<n){
           ndx[capi.sqlite3_column_name(this.pointer,i)] = this.get(i++);
         }
         return ndx;
@@ -13817,16 +14345,17 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
       );
     },
     /**
-       If this statement potentially has result columns, this
-       function returns an array of all such names. If passed an
-       array, it is used as the target and all names are appended
-       to it. Returns the target array. Throws if this statement
-       cannot have result columns. This object's columnCount member
-       holds the number of columns.
+       If this statement potentially has result columns, this function
+       returns an array of all such names. If passed an array, it is
+       used as the target and all names are appended to it. Returns
+       the target array. Throws if this statement cannot have result
+       columns. This object's columnCount property holds the number of
+       columns.
     */
     getColumnNames: function(tgt=[]){
       affirmColIndex(affirmStmtOpen(this),0);
-      for(let i = 0; i < this.columnCount; ++i){
+      const n = this.columnCount;
+      for(let i = 0; i < n; ++i){
         tgt.push(capi.sqlite3_column_name(this.pointer, i));
       }
       return tgt;
@@ -13853,6 +14382,20 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
     Object.defineProperty(Stmt.prototype, 'pointer', prop);
     Object.defineProperty(DB.prototype, 'pointer', prop);
   }
+  /**
+     Stmt.columnCount is an interceptor for sqlite3_column_count().
+
+     This requires an unfortunate performance hit compared to caching
+     columnCount when the Stmt is created/prepared (as was done in
+     SQLite <=3.42.0), but is necessary in order to handle certain
+     corner cases, as described in
+     https://sqlite.org/forum/forumpost/7774b773937cbe0a.
+  */
+  Object.defineProperty(Stmt.prototype, 'columnCount', {
+    enumerable: false,
+    get: function(){return capi.sqlite3_column_count(this.pointer)},
+    set: ()=>toss3("The columnCount property is read-only.")
+  });
 
   /** The OO API's public namespace. */
   sqlite3.oo1 = {
@@ -14034,6 +14577,7 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
   }
   ```
 
+
   ====================================================================
   "config-get"
 
@@ -14066,6 +14610,7 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
    }
   }
   ```
+
 
   ====================================================================
   "open" a database
@@ -14181,6 +14726,19 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
   The arguments are in the same form accepted by oo1.DB.exec(), with
   the exceptions noted below.
 
+  If the `countChanges` arguments property (added in version 3.43) is
+  truthy then the `result` property contained by the returned object
+  will have a `changeCount` property which holds the number of changes
+  made by the provided SQL. Because the SQL may contain an arbitrary
+  number of statements, the `changeCount` is calculated by calling
+  `sqlite3_total_changes()` before and after the SQL is evaluated. If
+  the value of `countChanges` is 64 then the `changeCount` property
+  will be returned as a 64-bit integer in the form of a BigInt (noting
+  that that will trigger an exception if used in a BigInt-incapable
+  build).  In the latter case, the number of changes is calculated by
+  calling `sqlite3_total_changes64()` before and after the SQL is
+  evaluated.
+
   A function-type args.callback property cannot cross
   the window/Worker boundary, so is not useful here. If
   args.callback is a string then it is assumed to be a
@@ -14223,7 +14781,6 @@ sqlite3.initWorker1API = function(){
   if(!(globalThis.WorkerGlobalScope instanceof Function)){
     toss("initWorker1API() must be run from a Worker thread.");
   }
-  const self = this.self;
   const sqlite3 = this.sqlite3 || toss("Missing this.sqlite3 object.");
   const DB = sqlite3.oo1.DB;
 
@@ -14426,7 +14983,13 @@ sqlite3.initWorker1API = function(){
         }
       }
       try {
+        const changeCount = !!rc.countChanges
+              ? db.changes(true,(64===rc.countChanges))
+              : undefined;
         db.exec(rc);
+        if(undefined !== changeCount){
+          rc.changeCount = db.changes(true,64===rc.countChanges) - changeCount;
+        }
         if(rc.callback instanceof Function){
           rc.callback = theCallback;
           /* Post a sentinel message to tell the client that the end
@@ -14541,7 +15104,7 @@ sqlite3.initWorker1API = function(){
     }, wState.xfer);
   };
   globalThis.postMessage({type:'sqlite3-api',result:'worker1-ready'});
-}.bind({self, sqlite3});
+}.bind({sqlite3});
 });
 /* END FILE: api/sqlite3-api-worker1.js */
 /* BEGIN FILE: api/sqlite3-v-helper.js */
@@ -14647,7 +15210,7 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 
      ACHTUNG: because we cannot generically know how to transform JS
      exceptions into result codes, the installed functions do no
-     automatic catching of exceptions. It is critical, to avoid 
+     automatic catching of exceptions. It is critical, to avoid
      undefined behavior in the C layer, that methods mapped via
      this function do not throw. The exception, as it were, to that
      rule is...
@@ -14842,7 +15405,8 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 
      - If `struct.$zName` is falsy and the entry has a string-type
        `name` property, `struct.$zName` is set to the C-string form of
-       that `name` value before registerVfs() is called.
+       that `name` value before registerVfs() is called. That string
+       gets added to the on-dispose state of the struct.
 
      On success returns this object. Throws on error.
   */
@@ -15155,7 +15719,7 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
      This is to facilitate creation of those methods inline in the
      passed-in object without requiring the client to explicitly get a
      reference to one of them in order to assign it to the other
-     one. 
+     one.
 
      The `catchExceptions`-installed handlers will account for
      identical references to the above functions and will install the
@@ -15264,1352 +15828,14 @@ globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
 }/*sqlite3ApiBootstrap.initializers.push()*/);
 /* END FILE: api/sqlite3-v-helper.js */
 /* BEGIN FILE: api/sqlite3-vfs-opfs.c-pp.js */
-/*
-  2022-09-18
-
-  The author disclaims copyright to this source code.  In place of a
-  legal notice, here is a blessing:
-
-  *   May you do good and not evil.
-  *   May you find forgiveness for yourself and forgive others.
-  *   May you share freely, never taking more than you give.
-
-  ***********************************************************************
-
-  This file holds the synchronous half of an sqlite3_vfs
-  implementation which proxies, in a synchronous fashion, the
-  asynchronous Origin-Private FileSystem (OPFS) APIs using a second
-  Worker, implemented in sqlite3-opfs-async-proxy.js.  This file is
-  intended to be appended to the main sqlite3 JS deliverable somewhere
-  after sqlite3-api-oo1.js and before sqlite3-api-cleanup.js.
-*/
-'use strict';
-globalThis.sqlite3ApiBootstrap.initializers.push(function(sqlite3){
-/**
-   installOpfsVfs() returns a Promise which, on success, installs an
-   sqlite3_vfs named "opfs", suitable for use with all sqlite3 APIs
-   which accept a VFS. It is intended to be called via
-   sqlite3ApiBootstrap.initializersAsync or an equivalent mechanism.
-
-   The installed VFS uses the Origin-Private FileSystem API for
-   all file storage. On error it is rejected with an exception
-   explaining the problem. Reasons for rejection include, but are
-   not limited to:
-
-   - The counterpart Worker (see below) could not be loaded.
-
-   - The environment does not support OPFS. That includes when
-     this function is called from the main window thread.
-
-  Significant notes and limitations:
-
-  - As of this writing, OPFS is still very much in flux and only
-    available in bleeding-edge versions of Chrome (v102+, noting that
-    that number will increase as the OPFS API matures).
-
-  - The OPFS features used here are only available in dedicated Worker
-    threads. This file tries to detect that case, resulting in a
-    rejected Promise if those features do not seem to be available.
-
-  - It requires the SharedArrayBuffer and Atomics classes, and the
-    former is only available if the HTTP server emits the so-called
-    COOP and COEP response headers. These features are required for
-    proxying OPFS's synchronous API via the synchronous interface
-    required by the sqlite3_vfs API.
-
-  - This function may only be called a single time. When called, this
-    function removes itself from the sqlite3 object.
-
-  All arguments to this function are for internal/development purposes
-  only. They do not constitute a public API and may change at any
-  time.
-
-  The argument may optionally be a plain object with the following
-  configuration options:
-
-  - proxyUri: as described above
-
-  - verbose (=2): an integer 0-3. 0 disables all logging, 1 enables
-    logging of errors. 2 enables logging of warnings and errors. 3
-    additionally enables debugging info.
-
-  - sanityChecks (=false): if true, some basic sanity tests are
-    run on the OPFS VFS API after it's initialized, before the
-    returned Promise resolves.
-
-  On success, the Promise resolves to the top-most sqlite3 namespace
-  object and that object gets a new object installed in its
-  `opfs` property, containing several OPFS-specific utilities.
-*/
-const installOpfsVfs = function callee(options){
-  if(!globalThis.SharedArrayBuffer
-    || !globalThis.Atomics){
-    return Promise.reject(
-      new Error("Cannot install OPFS: Missing SharedArrayBuffer and/or Atomics. "+
-                "The server must emit the COOP/COEP response headers to enable those. "+
-                "See https://sqlite.org/wasm/doc/trunk/persistence.md#coop-coep")
-    );
-  }else if('undefined'===typeof WorkerGlobalScope){
-    return Promise.reject(
-      new Error("The OPFS sqlite3_vfs cannot run in the main thread "+
-                "because it requires Atomics.wait().")
-    );
-  }else if(!globalThis.FileSystemHandle ||
-           !globalThis.FileSystemDirectoryHandle ||
-           !globalThis.FileSystemFileHandle ||
-           !globalThis.FileSystemFileHandle.prototype.createSyncAccessHandle ||
-           !navigator?.storage?.getDirectory){
-    return Promise.reject(
-      new Error("Missing required OPFS APIs.")
-    );
-  }
-  if(!options || 'object'!==typeof options){
-    options = Object.create(null);
-  }
-  const urlParams = new URL(globalThis.location.href).searchParams;
-  if(undefined===options.verbose){
-    options.verbose = urlParams.has('opfs-verbose')
-      ? (+urlParams.get('opfs-verbose') || 2) : 1;
-  }
-  if(undefined===options.sanityChecks){
-    options.sanityChecks = urlParams.has('opfs-sanity-check');
-  }
-  if(undefined===options.proxyUri){
-    options.proxyUri = callee.defaultProxyUri;
-  }
-
-  //sqlite3.config.warn("OPFS options =",options,globalThis.location);
-
-  if('function' === typeof options.proxyUri){
-    options.proxyUri = options.proxyUri();
-  }
-  const thePromise = new Promise(function(promiseResolve_, promiseReject_){
-    const loggers = {
-      0:sqlite3.config.error,
-      1:sqlite3.config.warn,
-      2:sqlite3.config.log
-    };
-    const logImpl = (level,...args)=>{
-      if(options.verbose>level) loggers[level]("OPFS syncer:",...args);
-    };
-    const log =    (...args)=>logImpl(2, ...args);
-    const warn =   (...args)=>logImpl(1, ...args);
-    const error =  (...args)=>logImpl(0, ...args);
-    const toss = sqlite3.util.toss;
-    const capi = sqlite3.capi;
-    const wasm = sqlite3.wasm;
-    const sqlite3_vfs = capi.sqlite3_vfs;
-    const sqlite3_file = capi.sqlite3_file;
-    const sqlite3_io_methods = capi.sqlite3_io_methods;
-    /**
-       Generic utilities for working with OPFS. This will get filled out
-       by the Promise setup and, on success, installed as sqlite3.opfs.
-
-       ACHTUNG: do not rely on these APIs in client code. They are
-       experimental and subject to change or removal as the
-       OPFS-specific sqlite3_vfs evolves.
-    */
-    const opfsUtil = Object.create(null);
-
-    /**
-       Returns true if _this_ thread has access to the OPFS APIs.
-    */
-    const thisThreadHasOPFS = ()=>{
-      return globalThis.FileSystemHandle &&
-        globalThis.FileSystemDirectoryHandle &&
-        globalThis.FileSystemFileHandle &&
-        globalThis.FileSystemFileHandle.prototype.createSyncAccessHandle &&
-        navigator?.storage?.getDirectory;
-    };
-
-    /**
-       Not part of the public API. Solely for internal/development
-       use.
-    */
-    opfsUtil.metrics = {
-      dump: function(){
-        let k, n = 0, t = 0, w = 0;
-        for(k in state.opIds){
-          const m = metrics[k];
-          n += m.count;
-          t += m.time;
-          w += m.wait;
-          m.avgTime = (m.count && m.time) ? (m.time / m.count) : 0;
-          m.avgWait = (m.count && m.wait) ? (m.wait / m.count) : 0;
-        }
-        sqlite3.config.log(globalThis.location.href,
-                    "metrics for",globalThis.location.href,":",metrics,
-                    "\nTotal of",n,"op(s) for",t,
-                    "ms (incl. "+w+" ms of waiting on the async side)");
-        sqlite3.config.log("Serialization metrics:",metrics.s11n);
-        W.postMessage({type:'opfs-async-metrics'});
-      },
-      reset: function(){
-        let k;
-        const r = (m)=>(m.count = m.time = m.wait = 0);
-        for(k in state.opIds){
-          r(metrics[k] = Object.create(null));
-        }
-        let s = metrics.s11n = Object.create(null);
-        s = s.serialize = Object.create(null);
-        s.count = s.time = 0;
-        s = metrics.s11n.deserialize = Object.create(null);
-        s.count = s.time = 0;
-      }
-    }/*metrics*/;
-    const opfsVfs = new sqlite3_vfs();
-    const opfsIoMethods = new sqlite3_io_methods();
-    let promiseWasRejected = undefined;
-    const promiseReject = (err)=>{
-      promiseWasRejected = true;
-      opfsVfs.dispose();
-      return promiseReject_(err);
-    };
-    const promiseResolve = (value)=>{
-      promiseWasRejected = false;
-      return promiseResolve_(value);
-    };
-    const W =
-    new Worker(new URL("sqlite3-opfs-async-proxy.js", import.meta.url));
-    setTimeout(()=>{
-      /* At attempt to work around a browser-specific quirk in which
-         the Worker load is failing in such a way that we neither
-         resolve nor reject it. This workaround gives that resolve/reject
-         a time limit and rejects if that timer expires. Discussion:
-         https://sqlite.org/forum/forumpost/a708c98dcb3ef */
-      if(undefined===promiseWasRejected){
-        promiseReject(
-          new Error("Timeout while waiting for OPFS async proxy worker.")
-        );
-      }
-    }, 4000);
-    W._originalOnError = W.onerror /* will be restored later */;
-    W.onerror = function(err){
-      // The error object doesn't contain any useful info when the
-      // failure is, e.g., that the remote script is 404.
-      error("Error initializing OPFS asyncer:",err);
-      promiseReject(new Error("Loading OPFS async Worker failed for unknown reasons."));
-    };
-    const pDVfs = capi.sqlite3_vfs_find(null)/*pointer to default VFS*/;
-    const dVfs = pDVfs
-          ? new sqlite3_vfs(pDVfs)
-          : null /* dVfs will be null when sqlite3 is built with
-                    SQLITE_OS_OTHER. */;
-    opfsVfs.$iVersion = 2/*yes, two*/;
-    opfsVfs.$szOsFile = capi.sqlite3_file.structInfo.sizeof;
-    opfsVfs.$mxPathname = 1024/*sure, why not?*/;
-    opfsVfs.$zName = wasm.allocCString("opfs");
-    // All C-side memory of opfsVfs is zeroed out, but just to be explicit:
-    opfsVfs.$xDlOpen = opfsVfs.$xDlError = opfsVfs.$xDlSym = opfsVfs.$xDlClose = null;
-    opfsVfs.ondispose = [
-      '$zName', opfsVfs.$zName,
-      'cleanup default VFS wrapper', ()=>(dVfs ? dVfs.dispose() : null),
-      'cleanup opfsIoMethods', ()=>opfsIoMethods.dispose()
-    ];
-    /**
-       Pedantic sidebar about opfsVfs.ondispose: the entries in that array
-       are items to clean up when opfsVfs.dispose() is called, but in this
-       environment it will never be called. The VFS instance simply
-       hangs around until the WASM module instance is cleaned up. We
-       "could" _hypothetically_ clean it up by "importing" an
-       sqlite3_os_end() impl into the wasm build, but the shutdown order
-       of the wasm engine and the JS one are undefined so there is no
-       guaranty that the opfsVfs instance would be available in one
-       environment or the other when sqlite3_os_end() is called (_if_ it
-       gets called at all in a wasm build, which is undefined).
-    */
-    /**
-       State which we send to the async-api Worker or share with it.
-       This object must initially contain only cloneable or sharable
-       objects. After the worker's "inited" message arrives, other types
-       of data may be added to it.
-
-       For purposes of Atomics.wait() and Atomics.notify(), we use a
-       SharedArrayBuffer with one slot reserved for each of the API
-       proxy's methods. The sync side of the API uses Atomics.wait()
-       on the corresponding slot and the async side uses
-       Atomics.notify() on that slot.
-
-       The approach of using a single SAB to serialize comms for all
-       instances might(?) lead to deadlock situations in multi-db
-       cases. We should probably have one SAB here with a single slot
-       for locking a per-file initialization step and then allocate a
-       separate SAB like the above one for each file. That will
-       require a bit of acrobatics but should be feasible. The most
-       problematic part is that xOpen() would have to use
-       postMessage() to communicate its SharedArrayBuffer, and mixing
-       that approach with Atomics.wait/notify() gets a bit messy.
-    */
-    const state = Object.create(null);
-    state.verbose = options.verbose;
-    state.littleEndian = (()=>{
-      const buffer = new ArrayBuffer(2);
-      new DataView(buffer).setInt16(0, 256, true /* ==>littleEndian */);
-      // Int16Array uses the platform's endianness.
-      return new Int16Array(buffer)[0] === 256;
-    })();
-    /**
-       asyncIdleWaitTime is how long (ms) to wait, in the async proxy,
-       for each Atomics.wait() when waiting on inbound VFS API calls.
-       We need to wake up periodically to give the thread a chance to
-       do other things. If this is too high (e.g. 500ms) then even two
-       workers/tabs can easily run into locking errors. Some multiple
-       of this value is also used for determining how long to wait on
-       lock contention to free up.
-    */
-    state.asyncIdleWaitTime = 150;
-    /**
-       Whether the async counterpart should log exceptions to
-       the serialization channel. That produces a great deal of
-       noise for seemingly innocuous things like xAccess() checks
-       for missing files, so this option may have one of 3 values:
-
-       0 = no exception logging.
-
-       1 = only log exceptions for "significant" ops like xOpen(),
-       xRead(), and xWrite().
-
-       2 = log all exceptions.
-    */
-    state.asyncS11nExceptions = 1;
-    /* Size of file I/O buffer block. 64k = max sqlite3 page size, and
-       xRead/xWrite() will never deal in blocks larger than that. */
-    state.fileBufferSize = 1024 * 64;
-    state.sabS11nOffset = state.fileBufferSize;
-    /**
-       The size of the block in our SAB for serializing arguments and
-       result values. Needs to be large enough to hold serialized
-       values of any of the proxied APIs. Filenames are the largest
-       part but are limited to opfsVfs.$mxPathname bytes. We also
-       store exceptions there, so it needs to be long enough to hold
-       a reasonably long exception string.
-    */
-    state.sabS11nSize = opfsVfs.$mxPathname * 2;
-    /**
-       The SAB used for all data I/O between the synchronous and
-       async halves (file i/o and arg/result s11n).
-    */
-    state.sabIO = new SharedArrayBuffer(
-      state.fileBufferSize/* file i/o block */
-      + state.sabS11nSize/* argument/result serialization block */
-    );
-    state.opIds = Object.create(null);
-    const metrics = Object.create(null);
-    {
-      /* Indexes for use in our SharedArrayBuffer... */
-      let i = 0;
-      /* SAB slot used to communicate which operation is desired
-         between both workers. This worker writes to it and the other
-         listens for changes. */
-      state.opIds.whichOp = i++;
-      /* Slot for storing return values. This worker listens to that
-         slot and the other worker writes to it. */
-      state.opIds.rc = i++;
-      /* Each function gets an ID which this worker writes to
-         the whichOp slot. The async-api worker uses Atomic.wait()
-         on the whichOp slot to figure out which operation to run
-         next. */
-      state.opIds.xAccess = i++;
-      state.opIds.xClose = i++;
-      state.opIds.xDelete = i++;
-      state.opIds.xDeleteNoWait = i++;
-      state.opIds.xFileControl = i++;
-      state.opIds.xFileSize = i++;
-      state.opIds.xLock = i++;
-      state.opIds.xOpen = i++;
-      state.opIds.xRead = i++;
-      state.opIds.xSleep = i++;
-      state.opIds.xSync = i++;
-      state.opIds.xTruncate = i++;
-      state.opIds.xUnlock = i++;
-      state.opIds.xWrite = i++;
-      state.opIds.mkdir = i++;
-      state.opIds['opfs-async-metrics'] = i++;
-      state.opIds['opfs-async-shutdown'] = i++;
-      /* The retry slot is used by the async part for wait-and-retry
-         semantics. Though we could hypothetically use the xSleep slot
-         for that, doing so might lead to undesired side effects. */
-      state.opIds.retry = i++;
-      state.sabOP = new SharedArrayBuffer(
-        i * 4/* ==sizeof int32, noting that Atomics.wait() and friends
-                can only function on Int32Array views of an SAB. */);
-      opfsUtil.metrics.reset();
-    }
-    /**
-       SQLITE_xxx constants to export to the async worker
-       counterpart...
-    */
-    state.sq3Codes = Object.create(null);
-    [
-      'SQLITE_ACCESS_EXISTS',
-      'SQLITE_ACCESS_READWRITE',
-      'SQLITE_BUSY',
-      'SQLITE_ERROR',
-      'SQLITE_IOERR',
-      'SQLITE_IOERR_ACCESS',
-      'SQLITE_IOERR_CLOSE',
-      'SQLITE_IOERR_DELETE',
-      'SQLITE_IOERR_FSYNC',
-      'SQLITE_IOERR_LOCK',
-      'SQLITE_IOERR_READ',
-      'SQLITE_IOERR_SHORT_READ',
-      'SQLITE_IOERR_TRUNCATE',
-      'SQLITE_IOERR_UNLOCK',
-      'SQLITE_IOERR_WRITE',
-      'SQLITE_LOCK_EXCLUSIVE',
-      'SQLITE_LOCK_NONE',
-      'SQLITE_LOCK_PENDING',
-      'SQLITE_LOCK_RESERVED',
-      'SQLITE_LOCK_SHARED',
-      'SQLITE_LOCKED',
-      'SQLITE_MISUSE',
-      'SQLITE_NOTFOUND',
-      'SQLITE_OPEN_CREATE',
-      'SQLITE_OPEN_DELETEONCLOSE',
-      'SQLITE_OPEN_MAIN_DB',
-      'SQLITE_OPEN_READONLY'
-    ].forEach((k)=>{
-      if(undefined === (state.sq3Codes[k] = capi[k])){
-        toss("Maintenance required: not found:",k);
-      }
-    });
-    state.opfsFlags = Object.assign(Object.create(null),{
-      /**
-         Flag for use with xOpen(). "opfs-unlock-asap=1" enables
-         this. See defaultUnlockAsap, below.
-       */
-      OPFS_UNLOCK_ASAP: 0x01,
-      /**
-         If true, any async routine which implicitly acquires a sync
-         access handle (i.e. an OPFS lock) will release that locks at
-         the end of the call which acquires it. If false, such
-         "autolocks" are not released until the VFS is idle for some
-         brief amount of time.
-
-         The benefit of enabling this is much higher concurrency. The
-         down-side is much-reduced performance (as much as a 4x decrease
-         in speedtest1).
-      */
-      defaultUnlockAsap: false
-    });
-
-    /**
-       Runs the given operation (by name) in the async worker
-       counterpart, waits for its response, and returns the result
-       which the async worker writes to SAB[state.opIds.rc]. The
-       2nd and subsequent arguments must be the aruguments for the
-       async op.
-    */
-    const opRun = (op,...args)=>{
-      const opNdx = state.opIds[op] || toss("Invalid op ID:",op);
-      state.s11n.serialize(...args);
-      Atomics.store(state.sabOPView, state.opIds.rc, -1);
-      Atomics.store(state.sabOPView, state.opIds.whichOp, opNdx);
-      Atomics.notify(state.sabOPView, state.opIds.whichOp)
-      /* async thread will take over here */;
-      const t = performance.now();
-      Atomics.wait(state.sabOPView, state.opIds.rc, -1)
-      /* When this wait() call returns, the async half will have
-         completed the operation and reported its results. */;
-      const rc = Atomics.load(state.sabOPView, state.opIds.rc);
-      metrics[op].wait += performance.now() - t;
-      if(rc && state.asyncS11nExceptions){
-        const err = state.s11n.deserialize();
-        if(err) error(op+"() async error:",...err);
-      }
-      return rc;
-    };
-
-    /**
-       Not part of the public API. Only for test/development use.
-    */
-    opfsUtil.debug = {
-      asyncShutdown: ()=>{
-        warn("Shutting down OPFS async listener. The OPFS VFS will no longer work.");
-        opRun('opfs-async-shutdown');
-      },
-      asyncRestart: ()=>{
-        warn("Attempting to restart OPFS VFS async listener. Might work, might not.");
-        W.postMessage({type: 'opfs-async-restart'});
-      }
-    };
-
-    const initS11n = ()=>{
-      /**
-         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-         ACHTUNG: this code is 100% duplicated in the other half of
-         this proxy! The documentation is maintained in the
-         "synchronous half".
-         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-         This proxy de/serializes cross-thread function arguments and
-         output-pointer values via the state.sabIO SharedArrayBuffer,
-         using the region defined by (state.sabS11nOffset,
-         state.sabS11nOffset]. Only one dataset is recorded at a time.
-
-         This is not a general-purpose format. It only supports the
-         range of operations, and data sizes, needed by the
-         sqlite3_vfs and sqlite3_io_methods operations. Serialized
-         data are transient and this serialization algorithm may
-         change at any time.
-
-         The data format can be succinctly summarized as:
-
-         Nt...Td...D
-
-         Where:
-
-         - N = number of entries (1 byte)
-
-         - t = type ID of first argument (1 byte)
-
-         - ...T = type IDs of the 2nd and subsequent arguments (1 byte
-         each).
-
-         - d = raw bytes of first argument (per-type size).
-
-         - ...D = raw bytes of the 2nd and subsequent arguments (per-type
-         size).
-
-         All types except strings have fixed sizes. Strings are stored
-         using their TextEncoder/TextDecoder representations. It would
-         arguably make more sense to store them as Int16Arrays of
-         their JS character values, but how best/fastest to get that
-         in and out of string form is an open point. Initial
-         experimentation with that approach did not gain us any speed.
-
-         Historical note: this impl was initially about 1% this size by
-         using using JSON.stringify/parse(), but using fit-to-purpose
-         serialization saves considerable runtime.
-      */
-      if(state.s11n) return state.s11n;
-      const textDecoder = new TextDecoder(),
-            textEncoder = new TextEncoder('utf-8'),
-            viewU8 = new Uint8Array(state.sabIO, state.sabS11nOffset, state.sabS11nSize),
-            viewDV = new DataView(state.sabIO, state.sabS11nOffset, state.sabS11nSize);
-      state.s11n = Object.create(null);
-      /* Only arguments and return values of these types may be
-         serialized. This covers the whole range of types needed by the
-         sqlite3_vfs API. */
-      const TypeIds = Object.create(null);
-      TypeIds.number  = { id: 1, size: 8, getter: 'getFloat64', setter: 'setFloat64' };
-      TypeIds.bigint  = { id: 2, size: 8, getter: 'getBigInt64', setter: 'setBigInt64' };
-      TypeIds.boolean = { id: 3, size: 4, getter: 'getInt32', setter: 'setInt32' };
-      TypeIds.string =  { id: 4 };
-
-      const getTypeId = (v)=>(
-        TypeIds[typeof v]
-          || toss("Maintenance required: this value type cannot be serialized.",v)
-      );
-      const getTypeIdById = (tid)=>{
-        switch(tid){
-            case TypeIds.number.id: return TypeIds.number;
-            case TypeIds.bigint.id: return TypeIds.bigint;
-            case TypeIds.boolean.id: return TypeIds.boolean;
-            case TypeIds.string.id: return TypeIds.string;
-            default: toss("Invalid type ID:",tid);
-        }
-      };
-
-      /**
-         Returns an array of the deserialized state stored by the most
-         recent serialize() operation (from from this thread or the
-         counterpart thread), or null if the serialization buffer is
-         empty.  If passed a truthy argument, the serialization buffer
-         is cleared after deserialization.
-      */
-      state.s11n.deserialize = function(clear=false){
-        ++metrics.s11n.deserialize.count;
-        const t = performance.now();
-        const argc = viewU8[0];
-        const rc = argc ? [] : null;
-        if(argc){
-          const typeIds = [];
-          let offset = 1, i, n, v;
-          for(i = 0; i < argc; ++i, ++offset){
-            typeIds.push(getTypeIdById(viewU8[offset]));
-          }
-          for(i = 0; i < argc; ++i){
-            const t = typeIds[i];
-            if(t.getter){
-              v = viewDV[t.getter](offset, state.littleEndian);
-              offset += t.size;
-            }else{/*String*/
-              n = viewDV.getInt32(offset, state.littleEndian);
-              offset += 4;
-              v = textDecoder.decode(viewU8.slice(offset, offset+n));
-              offset += n;
-            }
-            rc.push(v);
-          }
-        }
-        if(clear) viewU8[0] = 0;
-        //log("deserialize:",argc, rc);
-        metrics.s11n.deserialize.time += performance.now() - t;
-        return rc;
-      };
-
-      /**
-         Serializes all arguments to the shared buffer for consumption
-         by the counterpart thread.
-
-         This routine is only intended for serializing OPFS VFS
-         arguments and (in at least one special case) result values,
-         and the buffer is sized to be able to comfortably handle
-         those.
-
-         If passed no arguments then it zeroes out the serialization
-         state.
-      */
-      state.s11n.serialize = function(...args){
-        const t = performance.now();
-        ++metrics.s11n.serialize.count;
-        if(args.length){
-          //log("serialize():",args);
-          const typeIds = [];
-          let i = 0, offset = 1;
-          viewU8[0] = args.length & 0xff /* header = # of args */;
-          for(; i < args.length; ++i, ++offset){
-            /* Write the TypeIds.id value into the next args.length
-               bytes. */
-            typeIds.push(getTypeId(args[i]));
-            viewU8[offset] = typeIds[i].id;
-          }
-          for(i = 0; i < args.length; ++i) {
-            /* Deserialize the following bytes based on their
-               corresponding TypeIds.id from the header. */
-            const t = typeIds[i];
-            if(t.setter){
-              viewDV[t.setter](offset, args[i], state.littleEndian);
-              offset += t.size;
-            }else{/*String*/
-              const s = textEncoder.encode(args[i]);
-              viewDV.setInt32(offset, s.byteLength, state.littleEndian);
-              offset += 4;
-              viewU8.set(s, offset);
-              offset += s.byteLength;
-            }
-          }
-          //log("serialize() result:",viewU8.slice(0,offset));
-        }else{
-          viewU8[0] = 0;
-        }
-        metrics.s11n.serialize.time += performance.now() - t;
-      };
-      return state.s11n;
-    }/*initS11n()*/;
-
-    /**
-       Generates a random ASCII string len characters long, intended for
-       use as a temporary file name.
-    */
-    const randomFilename = function f(len=16){
-      if(!f._chars){
-        f._chars = "abcdefghijklmnopqrstuvwxyz"+
-          "ABCDEFGHIJKLMNOPQRSTUVWXYZ"+
-          "012346789";
-        f._n = f._chars.length;
-      }
-      const a = [];
-      let i = 0;
-      for( ; i < len; ++i){
-        const ndx = Math.random() * (f._n * 64) % f._n | 0;
-        a[i] = f._chars[ndx];
-      }
-      return a.join("");
-      /*
-        An alternative impl. with an unpredictable length
-        but much simpler:
-
-        Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(36)
-      */
-    };
-
-    /**
-       Map of sqlite3_file pointers to objects constructed by xOpen().
-    */
-    const __openFiles = Object.create(null);
-
-    const opTimer = Object.create(null);
-    opTimer.op = undefined;
-    opTimer.start = undefined;
-    const mTimeStart = (op)=>{
-      opTimer.start = performance.now();
-      opTimer.op = op;
-      ++metrics[op].count;
-    };
-    const mTimeEnd = ()=>(
-      metrics[opTimer.op].time += performance.now() - opTimer.start
-    );
-
-    /**
-       Impls for the sqlite3_io_methods methods. Maintenance reminder:
-       members are in alphabetical order to simplify finding them.
-    */
-    const ioSyncWrappers = {
-      xCheckReservedLock: function(pFile,pOut){
-        /**
-           As of late 2022, only a single lock can be held on an OPFS
-           file. We have no way of checking whether any _other_ db
-           connection has a lock except by trying to obtain and (on
-           success) release a sync-handle for it, but doing so would
-           involve an inherent race condition. For the time being,
-           pending a better solution, we simply report whether the
-           given pFile is open.
-        */
-        const f = __openFiles[pFile];
-        wasm.poke(pOut, f.lockType ? 1 : 0, 'i32');
-        return 0;
-      },
-      xClose: function(pFile){
-        mTimeStart('xClose');
-        let rc = 0;
-        const f = __openFiles[pFile];
-        if(f){
-          delete __openFiles[pFile];
-          rc = opRun('xClose', pFile);
-          if(f.sq3File) f.sq3File.dispose();
-        }
-        mTimeEnd();
-        return rc;
-      },
-      xDeviceCharacteristics: function(pFile){
-        //debug("xDeviceCharacteristics(",pFile,")");
-        return capi.SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN;
-      },
-      xFileControl: function(pFile, opId, pArg){
-        mTimeStart('xFileControl');
-        const rc = (capi.SQLITE_FCNTL_SYNC===opId)
-              ? opRun('xSync', pFile, 0)
-              : capi.SQLITE_NOTFOUND;
-        mTimeEnd();
-        return rc;
-      },
-      xFileSize: function(pFile,pSz64){
-        mTimeStart('xFileSize');
-        let rc = opRun('xFileSize', pFile);
-        if(0==rc){
-          try {
-            const sz = state.s11n.deserialize()[0];
-            wasm.poke(pSz64, sz, 'i64');
-          }catch(e){
-            error("Unexpected error reading xFileSize() result:",e);
-            rc = state.sq3Codes.SQLITE_IOERR;
-          }
-        }
-        mTimeEnd();
-        return rc;
-      },
-      xLock: function(pFile,lockType){
-        mTimeStart('xLock');
-        const f = __openFiles[pFile];
-        let rc = 0;
-        /* All OPFS locks are exclusive locks. If xLock() has
-           previously succeeded, do nothing except record the lock
-           type. If no lock is active, have the async counterpart
-           lock the file. */
-        if( !f.lockType ) {
-          rc = opRun('xLock', pFile, lockType);
-          if( 0===rc ) f.lockType = lockType;
-        }else{
-          f.lockType = lockType;
-        }
-        mTimeEnd();
-        return rc;
-      },
-      xRead: function(pFile,pDest,n,offset64){
-        mTimeStart('xRead');
-        const f = __openFiles[pFile];
-        let rc;
-        try {
-          rc = opRun('xRead',pFile, n, Number(offset64));
-          if(0===rc || capi.SQLITE_IOERR_SHORT_READ===rc){
-            /**
-               Results get written to the SharedArrayBuffer f.sabView.
-               Because the heap is _not_ a SharedArrayBuffer, we have
-               to copy the results. TypedArray.set() seems to be the
-               fastest way to copy this. */
-            wasm.heap8u().set(f.sabView.subarray(0, n), pDest);
-          }
-        }catch(e){
-          error("xRead(",arguments,") failed:",e,f);
-          rc = capi.SQLITE_IOERR_READ;
-        }
-        mTimeEnd();
-        return rc;
-      },
-      xSync: function(pFile,flags){
-        ++metrics.xSync.count;
-        return 0; // impl'd in xFileControl()
-      },
-      xTruncate: function(pFile,sz64){
-        mTimeStart('xTruncate');
-        const rc = opRun('xTruncate', pFile, Number(sz64));
-        mTimeEnd();
-        return rc;
-      },
-      xUnlock: function(pFile,lockType){
-        mTimeStart('xUnlock');
-        const f = __openFiles[pFile];
-        let rc = 0;
-        if( capi.SQLITE_LOCK_NONE === lockType
-          && f.lockType ){
-          rc = opRun('xUnlock', pFile, lockType);
-        }
-        if( 0===rc ) f.lockType = lockType;
-        mTimeEnd();
-        return rc;
-      },
-      xWrite: function(pFile,pSrc,n,offset64){
-        mTimeStart('xWrite');
-        const f = __openFiles[pFile];
-        let rc;
-        try {
-          f.sabView.set(wasm.heap8u().subarray(pSrc, pSrc+n));
-          rc = opRun('xWrite', pFile, n, Number(offset64));
-        }catch(e){
-          error("xWrite(",arguments,") failed:",e,f);
-          rc = capi.SQLITE_IOERR_WRITE;
-        }
-        mTimeEnd();
-        return rc;
-      }
-    }/*ioSyncWrappers*/;
-
-    /**
-       Impls for the sqlite3_vfs methods. Maintenance reminder: members
-       are in alphabetical order to simplify finding them.
-    */
-    const vfsSyncWrappers = {
-      xAccess: function(pVfs,zName,flags,pOut){
-        mTimeStart('xAccess');
-        const rc = opRun('xAccess', wasm.cstrToJs(zName));
-        wasm.poke( pOut, (rc ? 0 : 1), 'i32' );
-        mTimeEnd();
-        return 0;
-      },
-      xCurrentTime: function(pVfs,pOut){
-        /* If it turns out that we need to adjust for timezone, see:
-           https://stackoverflow.com/a/11760121/1458521 */
-        wasm.poke(pOut, 2440587.5 + (new Date().getTime()/86400000),
-                         'double');
-        return 0;
-      },
-      xCurrentTimeInt64: function(pVfs,pOut){
-        // TODO: confirm that this calculation is correct
-        wasm.poke(pOut, (2440587.5 * 86400000) + new Date().getTime(),
-                         'i64');
-        return 0;
-      },
-      xDelete: function(pVfs, zName, doSyncDir){
-        mTimeStart('xDelete');
-        opRun('xDelete', wasm.cstrToJs(zName), doSyncDir, false);
-        /* We're ignoring errors because we cannot yet differentiate
-           between harmless and non-harmless failures. */
-        mTimeEnd();
-        return 0;
-      },
-      xFullPathname: function(pVfs,zName,nOut,pOut){
-        /* Until/unless we have some notion of "current dir"
-           in OPFS, simply copy zName to pOut... */
-        const i = wasm.cstrncpy(pOut, zName, nOut);
-        return i<nOut ? 0 : capi.SQLITE_CANTOPEN
-        /*CANTOPEN is required by the docs but SQLITE_RANGE would be a closer match*/;
-      },
-      xGetLastError: function(pVfs,nOut,pOut){
-        /* TODO: store exception.message values from the async
-           partner in a dedicated SharedArrayBuffer, noting that we'd have
-           to encode them... TextEncoder can do that for us. */
-        warn("OPFS xGetLastError() has nothing sensible to return.");
-        return 0;
-      },
-      //xSleep is optionally defined below
-      xOpen: function f(pVfs, zName, pFile, flags, pOutFlags){
-        mTimeStart('xOpen');
-        let opfsFlags = 0;
-        if(0===zName){
-          zName = randomFilename();
-        }else if('number'===typeof zName){
-          if(capi.sqlite3_uri_boolean(zName, "opfs-unlock-asap", 0)){
-            /* -----------------------^^^^^ MUST pass the untranslated
-               C-string here. */
-            opfsFlags |= state.opfsFlags.OPFS_UNLOCK_ASAP;
-          }
-          zName = wasm.cstrToJs(zName);
-        }
-        const fh = Object.create(null);
-        fh.fid = pFile;
-        fh.filename = zName;
-        fh.sab = new SharedArrayBuffer(state.fileBufferSize);
-        fh.flags = flags;
-        const rc = opRun('xOpen', pFile, zName, flags, opfsFlags);
-        if(!rc){
-          /* Recall that sqlite3_vfs::xClose() will be called, even on
-             error, unless pFile->pMethods is NULL. */
-          if(fh.readOnly){
-            wasm.poke(pOutFlags, capi.SQLITE_OPEN_READONLY, 'i32');
-          }
-          __openFiles[pFile] = fh;
-          fh.sabView = state.sabFileBufView;
-          fh.sq3File = new sqlite3_file(pFile);
-          fh.sq3File.$pMethods = opfsIoMethods.pointer;
-          fh.lockType = capi.SQLITE_LOCK_NONE;
-        }
-        mTimeEnd();
-        return rc;
-      }/*xOpen()*/
-    }/*vfsSyncWrappers*/;
-
-    if(dVfs){
-      opfsVfs.$xRandomness = dVfs.$xRandomness;
-      opfsVfs.$xSleep = dVfs.$xSleep;
-    }
-    if(!opfsVfs.$xRandomness){
-      /* If the default VFS has no xRandomness(), add a basic JS impl... */
-      vfsSyncWrappers.xRandomness = function(pVfs, nOut, pOut){
-        const heap = wasm.heap8u();
-        let i = 0;
-        for(; i < nOut; ++i) heap[pOut + i] = (Math.random()*255000) & 0xFF;
-        return i;
-      };
-    }
-    if(!opfsVfs.$xSleep){
-      /* If we can inherit an xSleep() impl from the default VFS then
-         assume it's sane and use it, otherwise install a JS-based
-         one. */
-      vfsSyncWrappers.xSleep = function(pVfs,ms){
-        Atomics.wait(state.sabOPView, state.opIds.xSleep, 0, ms);
-        return 0;
-      };
-    }
-
-    /**
-       Expects an OPFS file path. It gets resolved, such that ".."
-       components are properly expanded, and returned. If the 2nd arg
-       is true, the result is returned as an array of path elements,
-       else an absolute path string is returned.
-    */
-    opfsUtil.getResolvedPath = function(filename,splitIt){
-      const p = new URL(filename, "file://irrelevant").pathname;
-      return splitIt ? p.split('/').filter((v)=>!!v) : p;
-    };
-
-    /**
-       Takes the absolute path to a filesystem element. Returns an
-       array of [handleOfContainingDir, filename]. If the 2nd argument
-       is truthy then each directory element leading to the file is
-       created along the way. Throws if any creation or resolution
-       fails.
-    */
-    opfsUtil.getDirForFilename = async function f(absFilename, createDirs = false){
-      const path = opfsUtil.getResolvedPath(absFilename, true);
-      const filename = path.pop();
-      let dh = opfsUtil.rootDirectory;
-      for(const dirName of path){
-        if(dirName){
-          dh = await dh.getDirectoryHandle(dirName, {create: !!createDirs});
-        }
-      }
-      return [dh, filename];
-    };
-
-    /**
-       Creates the given directory name, recursively, in
-       the OPFS filesystem. Returns true if it succeeds or the
-       directory already exists, else false.
-    */
-    opfsUtil.mkdir = async function(absDirName){
-      try {
-        await opfsUtil.getDirForFilename(absDirName+"/filepart", true);
-        return true;
-      }catch(e){
-        //sqlite3.config.warn("mkdir(",absDirName,") failed:",e);
-        return false;
-      }
-    };
-    /**
-       Checks whether the given OPFS filesystem entry exists,
-       returning true if it does, false if it doesn't.
-    */
-    opfsUtil.entryExists = async function(fsEntryName){
-      try {
-        const [dh, fn] = await opfsUtil.getDirForFilename(fsEntryName);
-        await dh.getFileHandle(fn);
-        return true;
-      }catch(e){
-        return false;
-      }
-    };
-
-    /**
-       Generates a random ASCII string, intended for use as a
-       temporary file name. Its argument is the length of the string,
-       defaulting to 16.
-    */
-    opfsUtil.randomFilename = randomFilename;
-
-    /**
-       Re-registers the OPFS VFS. This is intended only for odd use
-       cases which have to call sqlite3_shutdown() as part of their
-       initialization process, which will unregister the VFS
-       registered by installOpfsVfs(). If passed a truthy value, the
-       OPFS VFS is registered as the default VFS, else it is not made
-       the default. Returns the result of the the
-       sqlite3_vfs_register() call.
-
-       Design note: the problem of having to re-register things after
-       a shutdown/initialize pair is more general. How to best plug
-       that in to the library is unclear. In particular, we cannot
-       hook in to any C-side calls to sqlite3_initialize(), so we
-       cannot add an after-initialize callback mechanism.
-    */
-    opfsUtil.registerVfs = (asDefault=false)=>{
-      return wasm.exports.sqlite3_vfs_register(
-        opfsVfs.pointer, asDefault ? 1 : 0
-      );
-    };
-
-    /**
-       Returns a promise which resolves to an object which represents
-       all files and directories in the OPFS tree. The top-most object
-       has two properties: `dirs` is an array of directory entries
-       (described below) and `files` is a list of file names for all
-       files in that directory.
-
-       Traversal starts at sqlite3.opfs.rootDirectory.
-
-       Each `dirs` entry is an object in this form:
-
-       ```
-       { name: directoryName,
-         dirs: [...subdirs],
-         files: [...file names]
-       }
-       ```
-
-       The `files` and `subdirs` entries are always set but may be
-       empty arrays.
-
-       The returned object has the same structure but its `name` is
-       an empty string. All returned objects are created with
-       Object.create(null), so have no prototype.
-
-       Design note: the entries do not contain more information,
-       e.g. file sizes, because getting such info is not only
-       expensive but is subject to locking-related errors.
-    */
-    opfsUtil.treeList = async function(){
-      const doDir = async function callee(dirHandle,tgt){
-        tgt.name = dirHandle.name;
-        tgt.dirs = [];
-        tgt.files = [];
-        for await (const handle of dirHandle.values()){
-          if('directory' === handle.kind){
-            const subDir = Object.create(null);
-            tgt.dirs.push(subDir);
-            await callee(handle, subDir);
-          }else{
-            tgt.files.push(handle.name);
-          }
-        }
-      };
-      const root = Object.create(null);
-      await doDir(opfsUtil.rootDirectory, root);
-      return root;
-    };
-
-    /**
-       Irrevocably deletes _all_ files in the current origin's OPFS.
-       Obviously, this must be used with great caution. It may throw
-       an exception if removal of anything fails (e.g. a file is
-       locked), but the precise conditions under which the underlying
-       APIs will throw are not documented (so we cannot tell you what
-       they are).
-    */
-    opfsUtil.rmfr = async function(){
-      const dir = opfsUtil.rootDirectory, opt = {recurse: true};
-      for await (const handle of dir.values()){
-        dir.removeEntry(handle.name, opt);
-      }
-    };
-
-    /**
-       Deletes the given OPFS filesystem entry.  As this environment
-       has no notion of "current directory", the given name must be an
-       absolute path. If the 2nd argument is truthy, deletion is
-       recursive (use with caution!).
-
-       The returned Promise resolves to true if the deletion was
-       successful, else false (but...). The OPFS API reports the
-       reason for the failure only in human-readable form, not
-       exceptions which can be type-checked to determine the
-       failure. Because of that...
-
-       If the final argument is truthy then this function will
-       propagate any exception on error, rather than returning false.
-    */
-    opfsUtil.unlink = async function(fsEntryName, recursive = false,
-                                          throwOnError = false){
-      try {
-        const [hDir, filenamePart] =
-              await opfsUtil.getDirForFilename(fsEntryName, false);
-        await hDir.removeEntry(filenamePart, {recursive});
-        return true;
-      }catch(e){
-        if(throwOnError){
-          throw new Error("unlink(",arguments[0],") failed: "+e.message,{
-            cause: e
-          });
-        }
-        return false;
-      }
-    };
-
-    /**
-       Traverses the OPFS filesystem, calling a callback for each one.
-       The argument may be either a callback function or an options object
-       with any of the following properties:
-
-       - `callback`: function which gets called for each filesystem
-         entry.  It gets passed 3 arguments: 1) the
-         FileSystemFileHandle or FileSystemDirectoryHandle of each
-         entry (noting that both are instanceof FileSystemHandle). 2)
-         the FileSystemDirectoryHandle of the parent directory. 3) the
-         current depth level, with 0 being at the top of the tree
-         relative to the starting directory. If the callback returns a
-         literal false, as opposed to any other falsy value, traversal
-         stops without an error. Any exceptions it throws are
-         propagated. Results are undefined if the callback manipulate
-         the filesystem (e.g. removing or adding entries) because the
-         how OPFS iterators behave in the face of such changes is
-         undocumented.
-
-       - `recursive` [bool=true]: specifies whether to recurse into
-         subdirectories or not. Whether recursion is depth-first or
-         breadth-first is unspecified!
-
-       - `directory` [FileSystemDirectoryEntry=sqlite3.opfs.rootDirectory]
-         specifies the starting directory.
-
-       If this function is passed a function, it is assumed to be the
-       callback.
-
-       Returns a promise because it has to (by virtue of being async)
-       but that promise has no specific meaning: the traversal it
-       performs is synchronous. The promise must be used to catch any
-       exceptions propagated by the callback, however.
-
-       TODO: add an option which specifies whether to traverse
-       depth-first or breadth-first. We currently do depth-first but
-       an incremental file browsing widget would benefit more from
-       breadth-first.
-    */
-    opfsUtil.traverse = async function(opt){
-      const defaultOpt = {
-        recursive: true,
-        directory: opfsUtil.rootDirectory
-      };
-      if('function'===typeof opt){
-        opt = {callback:opt};
-      }
-      opt = Object.assign(defaultOpt, opt||{});
-      const doDir = async function callee(dirHandle, depth){
-        for await (const handle of dirHandle.values()){
-          if(false === opt.callback(handle, dirHandle, depth)) return false;
-          else if(opt.recursive && 'directory' === handle.kind){
-            if(false === await callee(handle, depth + 1)) break;
-          }
-        }
-      };
-      doDir(opt.directory, 0);
-    };
-
-    //TODO to support fiddle and worker1 db upload:
-    //opfsUtil.createFile = function(absName, content=undefined){...}
-    //We have sqlite3.wasm.sqlite3_wasm_vfs_create_file() for this
-    //purpose but its interface and name are still under
-    //consideration.
-
-    if(sqlite3.oo1){
-      const OpfsDb = function(...args){
-        const opt = sqlite3.oo1.DB.dbCtorHelper.normalizeArgs(...args);
-        opt.vfs = opfsVfs.$zName;
-        sqlite3.oo1.DB.dbCtorHelper.call(this, opt);
-      };
-      OpfsDb.prototype = Object.create(sqlite3.oo1.DB.prototype);
-      sqlite3.oo1.OpfsDb = OpfsDb;
-      sqlite3.oo1.DB.dbCtorHelper.setVfsPostOpenSql(
-        opfsVfs.pointer,
-        function(oo1Db, sqlite3){
-          /* Set a relatively high default busy-timeout handler to
-             help OPFS dbs deal with multi-tab/multi-worker
-             contention. */
-          sqlite3.capi.sqlite3_busy_timeout(oo1Db, 10000);
-          sqlite3.capi.sqlite3_exec(oo1Db, [
-            /* Truncate journal mode is faster than delete for
-               this vfs, per speedtest1. That gap seems to have closed with
-               Chrome version 108 or 109, but "persist" is very roughly 5-6%
-               faster than truncate in initial tests. */
-            "pragma journal_mode=persist;",
-            /*
-              This vfs benefits hugely from cache on moderate/large
-              speedtest1 --size 50 and --size 100 workloads. We
-              currently rely on setting a non-default cache size when
-              building sqlite3.wasm. If that policy changes, the cache
-              can be set here.
-            */
-            "pragma cache_size=-16384;"
-          ], 0, 0, 0);
-        }
-      );
-    }/*extend sqlite3.oo1*/
-
-    const sanityCheck = function(){
-      const scope = wasm.scopedAllocPush();
-      const sq3File = new sqlite3_file();
-      try{
-        const fid = sq3File.pointer;
-        const openFlags = capi.SQLITE_OPEN_CREATE
-              | capi.SQLITE_OPEN_READWRITE
-        //| capi.SQLITE_OPEN_DELETEONCLOSE
-              | capi.SQLITE_OPEN_MAIN_DB;
-        const pOut = wasm.scopedAlloc(8);
-        const dbFile = "/sanity/check/file"+randomFilename(8);
-        const zDbFile = wasm.scopedAllocCString(dbFile);
-        let rc;
-        state.s11n.serialize("This is ä string.");
-        rc = state.s11n.deserialize();
-        log("deserialize() says:",rc);
-        if("This is ä string."!==rc[0]) toss("String d13n error.");
-        vfsSyncWrappers.xAccess(opfsVfs.pointer, zDbFile, 0, pOut);
-        rc = wasm.peek(pOut,'i32');
-        log("xAccess(",dbFile,") exists ?=",rc);
-        rc = vfsSyncWrappers.xOpen(opfsVfs.pointer, zDbFile,
-                                   fid, openFlags, pOut);
-        log("open rc =",rc,"state.sabOPView[xOpen] =",
-            state.sabOPView[state.opIds.xOpen]);
-        if(0!==rc){
-          error("open failed with code",rc);
-          return;
-        }
-        vfsSyncWrappers.xAccess(opfsVfs.pointer, zDbFile, 0, pOut);
-        rc = wasm.peek(pOut,'i32');
-        if(!rc) toss("xAccess() failed to detect file.");
-        rc = ioSyncWrappers.xSync(sq3File.pointer, 0);
-        if(rc) toss('sync failed w/ rc',rc);
-        rc = ioSyncWrappers.xTruncate(sq3File.pointer, 1024);
-        if(rc) toss('truncate failed w/ rc',rc);
-        wasm.poke(pOut,0,'i64');
-        rc = ioSyncWrappers.xFileSize(sq3File.pointer, pOut);
-        if(rc) toss('xFileSize failed w/ rc',rc);
-        log("xFileSize says:",wasm.peek(pOut, 'i64'));
-        rc = ioSyncWrappers.xWrite(sq3File.pointer, zDbFile, 10, 1);
-        if(rc) toss("xWrite() failed!");
-        const readBuf = wasm.scopedAlloc(16);
-        rc = ioSyncWrappers.xRead(sq3File.pointer, readBuf, 6, 2);
-        wasm.poke(readBuf+6,0);
-        let jRead = wasm.cstrToJs(readBuf);
-        log("xRead() got:",jRead);
-        if("sanity"!==jRead) toss("Unexpected xRead() value.");
-        if(vfsSyncWrappers.xSleep){
-          log("xSleep()ing before close()ing...");
-          vfsSyncWrappers.xSleep(opfsVfs.pointer,2000);
-          log("waking up from xSleep()");
-        }
-        rc = ioSyncWrappers.xClose(fid);
-        log("xClose rc =",rc,"sabOPView =",state.sabOPView);
-        log("Deleting file:",dbFile);
-        vfsSyncWrappers.xDelete(opfsVfs.pointer, zDbFile, 0x1234);
-        vfsSyncWrappers.xAccess(opfsVfs.pointer, zDbFile, 0, pOut);
-        rc = wasm.peek(pOut,'i32');
-        if(rc) toss("Expecting 0 from xAccess(",dbFile,") after xDelete().");
-        warn("End of OPFS sanity checks.");
-      }finally{
-        sq3File.dispose();
-        wasm.scopedAllocPop(scope);
-      }
-    }/*sanityCheck()*/;
-
-    W.onmessage = function({data}){
-      //log("Worker.onmessage:",data);
-      switch(data.type){
-          case 'opfs-unavailable':
-            /* Async proxy has determined that OPFS is unavailable. There's
-               nothing more for us to do here. */
-            promiseReject(new Error(data.payload.join(' ')));
-            break;
-          case 'opfs-async-loaded':
-            /*Arrives as soon as the asyc proxy finishes loading.
-              Pass our config and shared state on to the async worker.*/
-            W.postMessage({type: 'opfs-async-init',args: state});
-            break;
-          case 'opfs-async-inited':{
-            /*Indicates that the async partner has received the 'init'
-              and has finished initializing, so the real work can
-              begin...*/
-            if(true===promiseWasRejected){
-              break /* promise was already rejected via timer */;
-            }
-            try {
-              sqlite3.vfs.installVfs({
-                io: {struct: opfsIoMethods, methods: ioSyncWrappers},
-                vfs: {struct: opfsVfs, methods: vfsSyncWrappers}
-              });
-              state.sabOPView = new Int32Array(state.sabOP);
-              state.sabFileBufView = new Uint8Array(state.sabIO, 0, state.fileBufferSize);
-              state.sabS11nView = new Uint8Array(state.sabIO, state.sabS11nOffset, state.sabS11nSize);
-              initS11n();
-              if(options.sanityChecks){
-                warn("Running sanity checks because of opfs-sanity-check URL arg...");
-                sanityCheck();
-              }
-              if(thisThreadHasOPFS()){
-                navigator.storage.getDirectory().then((d)=>{
-                  W.onerror = W._originalOnError;
-                  delete W._originalOnError;
-                  sqlite3.opfs = opfsUtil;
-                  opfsUtil.rootDirectory = d;
-                  log("End of OPFS sqlite3_vfs setup.", opfsVfs);
-                  promiseResolve(sqlite3);
-                }).catch(promiseReject);
-              }else{
-                promiseResolve(sqlite3);
-              }
-            }catch(e){
-              error(e);
-              promiseReject(e);
-            }
-            break;
-          }
-          default:
-            promiseReject(e);
-            error("Unexpected message from the async worker:",data);
-            break;
-      }/*switch(data.type)*/
-    }/*W.onmessage()*/;
-  })/*thePromise*/;
-  return thePromise;
-}/*installOpfsVfs()*/;
-installOpfsVfs.defaultProxyUri =
-  "sqlite3-opfs-async-proxy.js";
-globalThis.sqlite3ApiBootstrap.initializersAsync.push(async (sqlite3)=>{
-  try{
-    let proxyJs = installOpfsVfs.defaultProxyUri;
-    if(sqlite3.scriptInfo.sqlite3Dir){
-      installOpfsVfs.defaultProxyUri =
-        sqlite3.scriptInfo.sqlite3Dir + proxyJs;
-      //sqlite3.config.warn("installOpfsVfs.defaultProxyUri =",installOpfsVfs.defaultProxyUri);
-    }
-    return installOpfsVfs().catch((e)=>{
-      sqlite3.config.warn("Ignoring inability to install OPFS sqlite3_vfs:",e.message);
-    });
-  }catch(e){
-    sqlite3.config.error("installOpfsVfs() exception:",e);
-    throw e;
-  }
-});
-}/*sqlite3ApiBootstrap.initializers.push()*/);
+/* The OPFS VFS parts are elided from builds targeting node.js. */
 /* END FILE: api/sqlite3-vfs-opfs.c-pp.js */
+/* BEGIN FILE: api/sqlite3-vfs-opfs-sahpool.c-pp.js */
+/*
+  The OPFS SAH Pool VFS parts are elided from builds targeting
+  node.js.
+*/
+/* END FILE: api/sqlite3-vfs-opfs-sahpool.c-pp.js */
 /* BEGIN FILE: api/sqlite3-api-cleanup.js */
 /*
   2022-07-22
@@ -16635,8 +15861,10 @@ if('undefined' !== typeof Module){ // presumably an Emscripten build
   */
   const SABC = Object.assign(
     Object.create(null), {
-      exports: Module['asm'],
-      memory: Module.wasmMemory /* gets set if built with -sIMPORT_MEMORY */
+      exports: ('undefined'===typeof wasmExports)
+        ? Module['asm']/* emscripten <=3.1.43 */
+        : wasmExports  /* emscripten >=3.1.44 */,
+      memory: Module.wasmMemory /* gets set if built with -sIMPORTED_MEMORY */
     },
     globalThis.sqlite3ApiConfig || {}
   );
@@ -16681,11 +15909,10 @@ if('undefined' !== typeof Module){ // presumably an Emscripten build
 })/*postRun.push(...)*/;
 /* END FILE: api/post-js-footer.js */
 
+// end include: /home/mmom/src/sqlite-wasm-http/deps/sqlite/ext/wasm/bld/post-js.sqlite3-node.js
 
-// end include: /home/mmom/src/sqlite-wasm-http/deps/sqlite/ext/wasm/bld/post-js.node.js
 
-
-  return sqlite3InitModule.ready
+  return moduleArg.ready
 }
 
 );
@@ -16712,10 +15939,7 @@ const toExportForESM =
      impls which Emscripten installs at some point in the file above
      this.
   */
-  const originalInit =
-        /* Maintenance reminder: DO NOT use `self.` here. It's correct
-           for non-ES6 Module cases but wrong for ES6 modules because those
-           resolve this symbol differently. */ sqlite3InitModule;
+  const originalInit = sqlite3InitModule;
   if(!originalInit){
     throw new Error("Expecting globalThis.sqlite3InitModule to be defined by the Emscripten build.");
   }
@@ -16754,19 +15978,7 @@ const toExportForESM =
   globalThis.sqlite3InitModule = function ff(...args){
     //console.warn("Using replaced sqlite3InitModule()",globalThis.location);
     return originalInit(...args).then((EmscriptenModule)=>{
-      if('undefined'!==typeof WorkerGlobalScope &&
-         (EmscriptenModule['ENVIRONMENT_IS_PTHREAD']
-          || EmscriptenModule['_pthread_self']
-          || 'function'===typeof threadAlert
-          || globalThis?.location?.pathname?.endsWith?.('.worker.js')
-         )){
-        /** Workaround for wasmfs-generated worker, which calls this
-            routine from each individual thread and requires that its
-            argument be returned. All of the criteria above are fragile,
-            based solely on inspection of the offending code, not public
-            Emscripten details. */
-        return EmscriptenModule;
-      }
+      //console.warn("sqlite3InitModule() returning sqlite3 object.");
       const s = EmscriptenModule.sqlite3;
       s.scriptInfo = initModuleState;
       //console.warn("sqlite3.scriptInfo =",s.scriptInfo);
@@ -16798,4 +16010,5 @@ const toExportForESM =
   }
   return globalThis.sqlite3InitModule /* required for ESM */;
 })();
-export default toExportForESM;
+sqlite3InitModule = toExportForESM;
+export default sqlite3InitModule;

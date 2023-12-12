@@ -76,8 +76,12 @@ for (const type of ['sync', 'shared'] as const) {
           })
           .catch((e) => {
             pool.close();
-            assert.equal(e.result.message, 'sqlite3 result code 14: unable to open database file');
+            assert.include(e.result.message, 'sqlite3 result code 14: unable to open database file');
             done();
+          })
+          .catch((e) => {
+            // Obviously a major malfunction, the above code should never throw
+            done(e);
           })
         );
     });
