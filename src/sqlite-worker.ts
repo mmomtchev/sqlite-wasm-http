@@ -25,16 +25,15 @@ globalThis.onmessage = ({ data }) => {
       sqlite3.initWorker1API();
 
       // Install the close interceptor
-      const sqlite3Handler = globalThis.onmessage;
-      if (!sqlite3Handler) throw new Error('SQL3 WASM failed to init');
+      let sqlite3Handler = globalThis.onmessage;
       globalThis.onmessage = function (ev) {
         if (ev.data && ev.data.type === 'destroy') {
           debug['threads']('SQLite Worker received destroy');
+          sqlite3Handler = null;
           globalThis.postMessage({ type: 'ack' });
-          globalThis.close();
-          return;
+          this.setTimeout(() => globalThis.close(), 1000);
         }
-        sqlite3Handler.call(this, ev);
+        if (sqlite3Handler) sqlite3Handler.call(this, ev);
       };
 
       if (typeof msg.httpChannel === 'object') {
