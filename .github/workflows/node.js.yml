@@ -13,11 +13,6 @@ jobs:
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
         node: [18.x, 20.x]
-        exclude:
-          - platform: windows-latest
-            node: 20.x
-          - platform: macos-latest
-            node: 20.x
 
     steps:
     - uses: actions/checkout@v3
