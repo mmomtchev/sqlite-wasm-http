@@ -64,7 +64,7 @@ export function installHttpVfs(
     if (r === 'timed-out') {
       console.error('Backend timeout', r, lock, msg);
       return -1;
-    } 
+    }
     return rc;
   };
 

@@ -296,7 +296,7 @@ for (const back of Object.keys(backTests) as (keyof typeof backTests)[]) {
           .then(() => {
             assert.strictEqual(tiles, concurrentDb.length);
           })
-          .finally(() => 
+          .finally(() =>
             Promise.all(concurrentDb.map((dbq) => dbq.then((db) => db.close())))
           )
           .then(done)

@@ -237,7 +237,7 @@ const backendAsyncMethods:
   }
 };
 
-async function workMessage(this: Consumer, { data }: { data: VFSHTTP.Message }) {
+async function workMessage(this: Consumer, { data }: { data: VFSHTTP.Message; }) {
   debug['io']('Received new work message', this, data);
   let r;
   try {
