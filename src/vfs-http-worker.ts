@@ -1,4 +1,4 @@
-// This is the entry point for an HTTP backend thread
+// This is the entry point the shared HTTP backend thread
 // It can serve multiple SQLite worker threads
 
 import LRUCache from 'lru-cache';
@@ -237,13 +237,13 @@ const backendAsyncMethods:
   }
 };
 
-async function workMessage(this: Consumer, { data }: { data: VFSHTTP.Message }) {
-  debug['threads']('Received new work message', this, data);
+async function workMessage(this: Consumer, { data }: { data: VFSHTTP.Message; }) {
+  debug['io']('Received new work message', this, data);
   let r;
   try {
     r = await backendAsyncMethods[data.msg](data, this);
 
-    debug['threads']('operation successful', this, r);
+    debug['io']('operation successful', this, r);
     Atomics.store(this.lock, 0, r);
   } catch (e) {
     console.error(e);

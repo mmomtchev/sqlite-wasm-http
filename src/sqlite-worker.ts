@@ -1,4 +1,8 @@
 // This is the entry point for an SQLite worker thread
+// It launches the WASM binary in each thread and installs the HTTP VFS driver
+// It also intercepts the incoming messages to implement a close protocol
+// (as this feature is missing from SQLite WASM)
+
 import { installHttpVfs } from './vfs-http.js';
 import { installSyncHttpVfs } from './vfs-sync-http.js';
 import * as VFSHTTP from './vfs-http-types.js';
@@ -19,6 +23,19 @@ globalThis.onmessage = ({ data }) => {
     .then((sqlite3) => {
       debug['threads']('SQLite init');
       sqlite3.initWorker1API();
+
+      // Install the close interceptor
+      let sqlite3Handler = globalThis.onmessage;
+      globalThis.onmessage = function (ev) {
+        if (ev.data && ev.data.type === 'destroy') {
+          debug['threads']('SQLite Worker received destroy');
+          sqlite3Handler = null;
+          globalThis.postMessage({ type: 'ack' });
+          this.setTimeout(() => globalThis.close(), 1000);
+        }
+        if (sqlite3Handler) sqlite3Handler.call(this, ev);
+      };
+
       if (typeof msg.httpChannel === 'object') {
         installHttpVfs(sqlite3, msg.httpChannel, msg.httpOptions);
       } else if (msg.httpChannel === true) {

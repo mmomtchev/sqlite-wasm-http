@@ -83,7 +83,7 @@ const debugOptions = (typeof SQLITE_DEBUG !== 'undefined' && SQLITE_DEBUG) ||
   (typeof process !== 'undefined' && typeof process?.env?.SQLITE_DEBUG !== 'undefined' && process.env.SQLITE_DEBUG) ||
   '';
 
-export const debugSys = ['threads', 'vfs', 'cache', 'http'] as const;
+export const debugSys = ['threads', 'io', 'vfs', 'cache', 'http'] as const;
 export const debug = {} as Record<typeof debugSys[number], (...args: unknown[]) => void>;
 for (const d of debugSys) {
   debug[d] = debugOptions.includes(d) ?

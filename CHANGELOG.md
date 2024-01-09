@@ -1,3 +1,7 @@
+### 1.2.1 2024-01-09
+
+- Fix [#65](https://github.com/mmomtchev/sqlite-wasm-http/issues/65), a minor issue preventing proper shutdown when using pools in Node.js
+
 ## 1.2.0 2023-12-12
 
 - Update the SQLite WASM distribution to an official release, 3.44.2 built to WASM with emscripten 3.1.46
