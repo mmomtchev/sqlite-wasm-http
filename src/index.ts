@@ -61,6 +61,8 @@ export function createSQLiteThread(options?: SQLiteOptions): Promise<SQLite.Prom
       debug['threads']('Sending destroy to SQL Worker');
       return new Promise<void>((resolve, reject) => {
         const tmout = setTimeout(() => {
+          // .terminate() should be used only as a last resort since there seems to
+          // be an issue in recent Node.js versions when using WASM in a worker_thread
           worker.terminate();
           reject('Timeout when destroying worker');
         }, VFSHTTP.defaultOptions.timeout);
