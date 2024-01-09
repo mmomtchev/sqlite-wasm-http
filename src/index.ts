@@ -55,8 +55,24 @@ export function createSQLiteThread(options?: SQLiteOptions): Promise<SQLite.Prom
       }
     });
   }).then((p) => {
+    // The original SQLite WASM Promiser interface is enriched with a close
+    // method that can properly dispose of a thread
     p.close = () => {
-      worker.terminate();
+      debug['threads']('Sending destroy to SQL Worker');
+      return new Promise<void>((resolve, reject) => {
+        const tmout = setTimeout(() => {
+          worker.terminate();
+          reject('Timeout when destroying worker');
+        }, VFSHTTP.defaultOptions.timeout);
+        worker.onmessage = ({ data }) => {
+          debug['threads']('Received response from SQL Worker being destroyed', data);
+          if (data.type === 'ack') {
+            clearTimeout(tmout);
+            resolve();
+          }
+        };
+        worker.postMessage({ type: 'destroy' });
+      });
     };
     return p;
   });

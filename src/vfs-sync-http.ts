@@ -1,6 +1,6 @@
 // This is the ersatz HTTP backend
 // It does not require SharedArrayBuffer and does not share its cache
-// It runs in the SQLite worker thread
+// It runs in each SQLite worker thread
 
 import LRUCache from 'lru-cache';
 import { ntoh16 } from './endianness.js';

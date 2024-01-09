@@ -75,15 +75,11 @@ for (const type of ['sync', 'shared'] as const) {
             done('beyond the event horizon');
           })
           .catch((e) => {
-            pool.close();
             assert.include(e.result.message, 'sqlite3 result code 14: unable to open database file');
-            done();
+            pool.close().then(done);
           })
-          .catch((e) => {
-            // Obviously a major malfunction, the above code should never throw
-            done(e);
-          })
-        );
+        )
+        .catch(done);
     });
   });
 }
