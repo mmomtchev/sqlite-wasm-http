@@ -7,7 +7,7 @@ SQLite WASM with HTTP VFS
 [![codecov](https://codecov.io/gh/mmomtchev/sqlite-wasm-http/branch/main/graph/badge.svg?token=SLQOP9XTEV)](https://codecov.io/gh/mmomtchev/sqlite-wasm-http)
 
 
-This project is inspired from [@phiresky](https://github.com/phiresky/)/[sql.js-httpvfs](https://github.com/phiresky/sql.js-httpvfs) but uses the new official SQLite WASM distribution.
+This project is inspired by [@phiresky](https://github.com/phiresky/)/[sql.js-httpvfs](https://github.com/phiresky/sql.js-httpvfs) but uses the new official SQLite WASM distribution.
 
 It includes a number of improvements over the first version:
 * Based upon what will probably be the industry reference (backed by SQLite and Google)
@@ -20,9 +20,9 @@ It includes a number of improvements over the first version:
 
 You can see a [live demo of the shared cache version here](https://sqlite-wasm-http.momtchev.com/).
 
-The [Github Pages live demo](https://mmomtchev.github.io/sqlite-wasm-http/) uses the sync backend since as of March 2023 Github Pages still does not support cross-origin isolation.
+The [Github Pages live demo](https://mmomtchev.github.io/sqlite-wasm-http/) uses the sync backend since as of February 2024 Github Pages still does not support cross-origin isolation (please, [upvote](https://github.com/orgs/community/discussions/13309)).
 
-Ony ES6 module mode is supported at the moment, CommonJS is not supported and this includes TypeScript transpiled to CommonJS - you have to transpile to ES6 in order to use this module
+Ony ES6 module mode is supported at the moment, CommonJS is not supported and this includes TypeScript transpiled to CommonJS - you have to transpile to ES6 in order to use this module.
 
 You can check [test/integration](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/test/integration) for examples for the various environments that are currently tested and supported.
 
@@ -38,7 +38,7 @@ Experimental
 
 If you are not already familiar with [@phiresky](https://github.com/phiresky/)/[sql.js-httpvfs](https://github.com/phiresky/sql.js-httpvfs), there is a brief presentation in the [Overview](#Overview) section.
 
-You can also check [`ol-mbtiles`](https://github.com/mmomtchev/ol-mbtiles) for an example project that uses this library - it implements remote rendering of HTTP-hosted `.mbtiles` in Openlayers.
+You can also check [`ol-mbtiles`](https://github.com/mmomtchev/ol-mbtiles) for an example project that uses this library - it implements remote rendering of HTTP-hosted `.mbtiles` in OpenLayers.
 
 ## Page size
 
@@ -109,7 +109,8 @@ const remoteURL =
 const pool = await createSQLiteHTTPPool({ workers: 8 });
 await pool.open(remoteURL);
 // This will automatically use a free thread from the pool
-const tile = await pool.exec('SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
+const tile = await pool.exec(
+    'SELECT zoom_level, tile_column, tile_row, tile_data FROM tiles ' +
     'WHERE zoom_level = 10 AND tile_column = $col AND tile_row = $row',
     { $col: 600, $row: 600 });
 console.log(tile[0].columnNames);
@@ -153,7 +154,7 @@ This module has been designed for being bundled with a modern web bundler - whic
 
 Also, if you bundler supports preloading, preloading the WASM chunk can greatly improve the initial loading times. You should check [`webpack.config.cjs`](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/webpack.config.cjs) for an example that uses preloading.
 
-## Apache httpd configuration fragment
+## Apache `httpd` configuration fragment
 
 These are all the options required for maximum performance:
 
@@ -163,7 +164,9 @@ Header always append Cross-Origin-Opener-Policy: "same-origin"
 AddOutputFilterByType DEFLATE application/wasm
 ```
 
-They must be set on the origin - the main entry point as it is displayed in the user's URL bar. When using an `iframe`, the `iframe` must have them **as well as all of its parents up to the origin**, as well as the special `iframe` attribute: `<iframe allow="cross-origin-isolated">`. Be careful as depending on the Apache version and its default configuration, setting `AddOutputFilterByType` in a `VirtualHost` might override (instead of extending) the default compression configuration.
+They must be set on the origin - the main entry point as it is displayed in the user's URL bar. When using an `iframe`, the `iframe` must have them **as well as all of its parents up to the origin**, as well as the special `iframe` attribute: `<iframe allow="cross-origin-isolated">`.
+
+Be careful as depending on the Apache version and its default configuration, setting `AddOutputFilterByType` in a `VirtualHost` might override (instead of extending) the default compression configuration.
 
 # Developer mode
 
@@ -187,13 +190,13 @@ SQLITE_DEBUG=vfs,threads,cache mocha
 
 # Overview
 
-[![Overview](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/docs/overview.png)](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/docs/overview.png)
+[![Overview](https://raw.githubusercontent.com/mmomtchev/sqlite-wasm-http/main/docs/overview.png)](https://github.com/mmomtchev/sqlite-wasm-http/blob/main/docs/overview.png)
 
 # Copyright
 
 ISC License
 
-Copyright (c) 2023, Momtchil Momtchev <momtchil@momtchev.com>
+Copyright (c) 2023-2024, Momtchil Momtchev <momtchil@momtchev.com>
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
