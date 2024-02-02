@@ -3,7 +3,7 @@ import { createSQLiteThread, createHttpBackend, VFSHTTP } from '../dist/index.js
 
 import { assert } from 'chai';
 
-const remoteURL = 'https://velivole.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles';
+const remoteURL = 'https://velivole.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles?query=data';
 
 const backTests = {
   shared: 'HTTP VFS (multiplexed)',
@@ -25,7 +25,7 @@ for (const back of Object.keys(backTests) as (keyof typeof backTests)[]) {
         .then((r) => {
           db = r;
           return db('open', {
-            filename: 'file:' + encodeURI(remoteURL),
+            filename: 'file:' + encodeURIComponent(remoteURL),
             vfs: 'http'
           });
         })
@@ -34,7 +34,7 @@ for (const back of Object.keys(backTests) as (keyof typeof backTests)[]) {
           assert.equal(msg.type, 'open');
           assert.isString(msg.messageId);
           assert.isString(msg.dbId);
-          assert.strictEqual(msg.result.filename, 'file:' + remoteURL);
+          assert.strictEqual(decodeURIComponent(msg.result.filename), 'file:' + remoteURL);
           assert.strictEqual(msg.result.vfs, 'http');
           done();
         })
