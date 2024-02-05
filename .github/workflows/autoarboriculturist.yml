@@ -1,0 +1,27 @@
+on:
+  schedule:
+    - cron: '30 5 * * *'
+  workflow_dispatch:
+
+
+jobs:
+  autoarboriculturist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Retrieve bonsai
+        uses: actions/checkout@v4
+      - name: Plant bonsai
+        run: npm ci
+      - name: Shape bonsai
+        uses: mmomtchev/autoarboriculturist@main
+        with:
+          userName: mmomtchev
+          userEmail: momtchil@momtchev.com
+          admin: mmomtchev
+          type: auto
+          path: .
+
