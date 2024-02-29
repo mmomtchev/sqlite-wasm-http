@@ -1,7 +1,7 @@
 // This is the entry point for an HTTP backend thread
 // It can serve multiple SQLite worker threads
 
-import LRUCache from 'lru-cache';
+import { LRUCache } from 'lru-cache';
 import * as VFSHTTP from './vfs-http-types.js';
 import { ntoh16 } from './endianness.js';
 import { debug } from './vfs-http-types.js';
@@ -200,7 +200,7 @@ const backendAsyncMethods:
       cache.set(cacheId, resp);
       // These point to the parent super-page and resolve at the same time as resp
       for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
-        cache.set(entry.id + '|' + i, resp.then(() => Number(page)));
+        cache.set(entry.id + '|' + i, resp.then(() => Number(page)) as Promise<number>);
       }
 
       data = await resp;
