@@ -107,7 +107,7 @@
     "webpack-dev-server": "^5.0.1"
   },
   "dependencies": {
-    "lru-cache": "^7.18.2"
+    "lru-cache": "^9.1.2"
   },
   "engines": {
     "node": ">=18.0.0"
