@@ -9,3 +9,8 @@ updates:
       eslint:
         patterns:
         - "*eslint*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 1
