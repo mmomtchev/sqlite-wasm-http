@@ -193,7 +193,7 @@ export function installSyncHttpVfs(sqlite3: SQLite3, options?: VFSHTTP.Options) 
           wasm.heap8u().set(data.subarray(pageOffset, pageOffset + n), dest);
         return capi.SQLITE_OK;
       } catch (e) {
-        console.error(e);
+        console.error(`Sync HTTP VFS: xRead failed for ${entry.url} (error: ${e})`);
         return capi.SQLITE_ERROR;
       }
     },
@@ -280,6 +280,7 @@ export function installSyncHttpVfs(sqlite3: SQLite3, options?: VFSHTTP.Options) 
       const url = wasm.cstrToJs(name);
 
       let valid = false;
+      let err: Error | null = null;
       try {
         const xhr = new XMLHttpRequest();
         xhr.open('HEAD', url, false);
@@ -306,11 +307,11 @@ export function installSyncHttpVfs(sqlite3: SQLite3, options?: VFSHTTP.Options) 
         };
         xhr.send();
       } catch (e) {
-        console.error('xOpen', e);
+        err = e as Error;
       }
 
       if (!valid) {
-        console.error('xOpen');
+        console.error(`Sync HTTP VFS: xOpen failed for ${url} (error: ${err})`);
         return capi.SQLITE_CANTOPEN;
       }
       wasm.poke(pOutFlags, capi.SQLITE_OPEN_READONLY, 'i32');

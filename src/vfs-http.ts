@@ -62,9 +62,12 @@ export function installHttpVfs(
       // be consumed
     } while (r === 'ok' && rc === VFSHTTP.SYNC.WORKMSG);
     if (r === 'timed-out') {
-      console.error('Backend timeout', r, lock, msg);
+      console.error(`Shared HTTP VFS: backend timeout on ${msg.msg} for ${msg.url} (code: ${r})`);
       return -1;
-    } 
+    }
+    if (rc != 0) {
+      console.warn(`Shared HTTP VFS: ${msg.msg} failed for ${msg.url} (code: ${r})`);
+    }
     return rc;
   };
 
