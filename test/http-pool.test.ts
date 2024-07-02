@@ -69,17 +69,22 @@ for (const type of ['sync', 'shared'] as const) {
     });
 
     it(`should handle opening errors gracefully (${type})`, (done) => {
+      const err = console.error;
+      console.error = () => undefined;
       createSQLiteHTTPPool({ workers: 1 })
         .then((pool) => pool.open('https://black.hole')
           .then(() => {
+            console.error = err;
             done('beyond the event horizon');
           })
           .catch((e) => {
+            console.error = err;
             pool.close();
             assert.include(e.result.message, 'sqlite3 result code 14: unable to open database file');
             done();
           })
           .catch((e) => {
+            console.error = err;
             // Obviously a major malfunction, the above code should never throw
             done(e);
           })
