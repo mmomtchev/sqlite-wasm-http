@@ -3,7 +3,7 @@ import { initSyncSQLite, createHttpBackend, VFSHTTP } from '../dist/index.js';
 
 import { assert } from 'chai';
 
-const remoteURL = 'https://velivole.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles';
+const remoteURL = 'https://orel.garga.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles';
 
 const backTests = {
   shared: 'HTTP VFS (multiplexed)',

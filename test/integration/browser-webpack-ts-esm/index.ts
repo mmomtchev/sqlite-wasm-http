@@ -16,7 +16,7 @@ it('test', async () => {
   await db('config-get', {});
 
   await db('open', {
-    filename: 'file:' + encodeURI('https://velivole.b-cdn.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles'),
+    filename: 'file:' + encodeURI('https://orel.garga.net/maptiler-osm-2017-07-03-v3.6.1-europe.mbtiles'),
     vfs: 'http'
   });
 
