@@ -171,16 +171,23 @@ const backendAsyncMethods:
       // This was the original page merging algorithm implemented by @phiresky
       let prev = page > 0 && cache.get(entry.id + '|' + (Number(page) - 1));
       if (prev) {
-        if (prev instanceof Promise)
+        if (prev instanceof Promise) {
+          debug['cache'](`previous page ${Number(page) - 1} still downloading`);
           prev = await prev;
-        if (typeof prev === 'number')
+        }
+        if (typeof prev === 'number') {
+          debug['cache'](`previous page ${Number(page) - 1} is a super page`);
           prev = cache.get(entry.id + '|' + prev) as Uint8Array;
-        if (prev instanceof Promise)
+          if (prev instanceof Promise)
+            debug['cache'](`previous superpage ${Number(page) - 1} is still downloading`);
           prev = await prev;
+        }
         if (prev instanceof Uint8Array) {
           // Valid superpage
           chunkSize = prev.byteLength * 2;
-          debug['cache'](`downloading super page of size ${chunkSize}`);
+          debug['cache'](`downloading super page of size ${chunkSize} starting at page ${Number(page)}`);
+        } else {
+          debug['cache'](`previous page disappeared: ${prev}`);
         }
       }
       const pages = chunkSize / entry.pageSize;
@@ -195,31 +202,44 @@ const backendAsyncMethods:
         }
       })
         .then((r) => r.arrayBuffer())
-        .then((r) => new Uint8Array(r));
+        .then((r) => {
+          const data = new Uint8Array(r);
+          cache.set(cacheId, data);
+          return data;
+        })
+        .catch((e) => {
+          cache.set(cacheId, undefined);
+          throw e;
+        });
       // We synchronously set a Promise in the cache in case another thread
       // tries to read the same segment
       cache.set(cacheId, resp);
       // These point to the parent super-page and resolve at the same time as resp
       for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
-        cache.set(entry.id + '|' + i, resp.then(() => Number(page)) as Promise<number>);
+        const id = entry.id + '|' + i;
+        cache.set(id, resp
+          .then(() => {
+            cache.set(id, Number(page));
+            return Number(page);
+          })
+          .catch(() => {
+            cache.set(id, undefined);
+            return undefined;
+          }) as Promise<number>);
       }
 
       data = await resp;
-      if (!(data instanceof Uint8Array) || data.length === 0)
+      if (!(data instanceof Uint8Array) || data.length === 0) {
+        cache.set(cacheId, undefined);
         throw new Error(`Invalid HTTP response received: ${JSON.stringify(resp)}`);
-
-      // In case of a multiple-page segment, this is the parent super-page
-      cache.set(cacheId, data);
-
-      // These point to the parent super-page
-      for (let i = Number(page) + 1; i < Number(page) + pages; i++) {
-        cache.set(entry.id + '|' + i, Number(page));
       }
     } else {
       debug['cache'](`cache hit for ${msg.url}:${page}`);
     }
 
     const pageOffset = Number(msg.offset - pageStart);
+    /*debug['cache'](`return data of ${data.length} length, pageOffset ${pageOffset}, ` + 
+      `msg.offset ${msg.offset}, msg.n ${msg.n}, pageStart ${pageStart}`);*/
     consumer.buffer.set(data.subarray(pageOffset, pageOffset + msg.n));
     return 0;
   },
@@ -238,7 +258,7 @@ const backendAsyncMethods:
   }
 };
 
-async function workMessage(this: Consumer, { data }: { data: VFSHTTP.Message }) {
+async function workMessage(this: Consumer, { data }: { data: VFSHTTP.Message; }) {
   debug['threads']('Received new work message', this, data);
   let r;
   try {
