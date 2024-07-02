@@ -1,6 +1,7 @@
 // This is the VFS layer for the shared backend
-// It run in each SQLite worker thread that uses it
+// It runs in each SQLite worker thread that uses it
 // and it is fully synchronous
+// It communicates with the single shared HTTP thread in vfs-http-worker.ts
 
 import * as VFSHTTP from './vfs-http-types.js';
 import { debug } from './vfs-http-types.js';

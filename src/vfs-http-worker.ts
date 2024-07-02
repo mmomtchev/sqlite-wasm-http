@@ -1,5 +1,6 @@
-// This is the entry point for an HTTP backend thread
+// This is the shared HTTP backend thread
 // It can serve multiple SQLite worker threads
+// (from vfs-http.ts)
 
 import { LRUCache } from 'lru-cache';
 import * as VFSHTTP from './vfs-http-types.js';
