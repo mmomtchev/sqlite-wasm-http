@@ -5,7 +5,6 @@
     "test/setup.ts"
   ],
   "reporter": "tap",
-  "retries": "5",
   "timeout": 360000,
   "loader": "ts-node/esm",
   "node-option": [
