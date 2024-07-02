@@ -62,11 +62,11 @@ export function installHttpVfs(
       // be consumed
     } while (r === 'ok' && rc === VFSHTTP.SYNC.WORKMSG);
     if (r === 'timed-out') {
-      console.error(`Shared HTTP VFS: backend timeout on ${msg.msg} for ${msg.url} (code: ${r})`);
+      console.error(`Shared HTTP VFS consumer: backend timeout on ${msg.msg} for ${msg.url}`);
       return -1;
     }
-    if (rc != 0) {
-      console.warn(`Shared HTTP VFS: ${msg.msg} failed for ${msg.url} (code: ${r})`);
+    if (rc !== 0) {
+      console.warn(`Shared HTTP VFS consumer: ${msg.msg} failed for ${msg.url} (lock: ${r})`);
     }
     return rc;
   };
@@ -124,7 +124,6 @@ export function installHttpVfs(
       }
       const r = sendAndWait({ msg: 'xRead', url: openFiles[fid].url, n, offset });
       if (r !== 0) {
-        console.error('xRead', r);
         return capi.SQLITE_IOERR;
       }
       wasm.heap8u().set(shm.subarray(0, n), dest);
@@ -161,7 +160,6 @@ export function installHttpVfs(
       const url = wasm.cstrToJs(name);
       const r = sendAndWait({ msg: 'xAccess', url });
       if (r !== 0) {
-        console.error('xAccess', r);
         return capi.SQLITE_IOERR;
       }
       const result = new Uint32Array(backend.shm, 0, 1)[0];
@@ -220,7 +218,6 @@ export function installHttpVfs(
 
       const r = sendAndWait({ msg: 'xOpen', url });
       if (r < 0) {
-        console.error('xOpen', r);
         return capi.SQLITE_IOERR;
       }
       if (r !== 0) {
