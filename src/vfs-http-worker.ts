@@ -267,7 +267,7 @@ async function workMessage(this: Consumer, { data }: { data: VFSHTTP.Message; })
     debug['threads']('operation successful', this, r);
     Atomics.store(this.lock, 0, r);
   } catch (e) {
-    console.error(`Shared HTTP VFS worker: ${data.msg} failed for ${data.url} (error: ${e})`);
+    console.error(`Shared HTTP VFS: ${data.msg} failed for ${data.url} (error: ${e})`);
     Atomics.store(this.lock, 0, 1);
   }
   Atomics.notify(this.lock, 0);

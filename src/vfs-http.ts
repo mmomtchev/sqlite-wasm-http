@@ -65,9 +65,6 @@ export function installHttpVfs(
       console.error(`Shared HTTP VFS consumer: backend timeout on ${msg.msg} for ${msg.url}`);
       return -1;
     }
-    if (rc !== 0) {
-      console.warn(`Shared HTTP VFS consumer: ${msg.msg} failed for ${msg.url} (lock: ${r})`);
-    }
     return rc;
   };
 
