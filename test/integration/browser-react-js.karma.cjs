@@ -29,14 +29,14 @@ module.exports = function (config) {
     preprocessors: {
     },
     proxies: {
-      '/static/': '/base/browser-react-js/build/static/',
+      '/static/': 'http://127.0.0.1:9876/base/browser-react-js/build/static/',
     },
     reporters: ['progress'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
     singleRun: true,
     concurrency: Infinity
   });
