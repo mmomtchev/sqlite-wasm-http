@@ -29,7 +29,7 @@ module.exports = function (config) {
     preprocessors: {
     },
     proxies: {
-      '/static/': '/base/browser-react-js/build/static/',
+      '/static/': 'http://localhost:9876/base/browser-react-js/build/static/',
     },
     reporters: ['progress'],
     port: 9876,
