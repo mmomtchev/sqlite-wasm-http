@@ -36,12 +36,13 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    browsers: ['Chrome'],
+    browsers: ['ChromeSlow'],
     customLaunchers: {
-      Chrome: {
-        browserNoActivityTimeout: 10000,
-        browserDisconnectTimeout: 10000,
-        pingTimeout: 10000
+      ChromeSlow: {
+        base: 'Chrome',
+        browserNoActivityTimeout: 60000,
+        browserDisconnectTimeout: 60000,
+        pingTimeout: 60000
       }
     },
     singleRun: true,
