@@ -7,7 +7,8 @@ if (typeof sqlite !== 'function')
 async function test() {
   const httpBackend = createHttpBackend({
     maxPageSize: 1024,
-    timeout: 10000
+    timeout: 10000,
+    backendType: 'sync'
   });
   const db = await createSQLiteThread({ http: httpBackend });
 
