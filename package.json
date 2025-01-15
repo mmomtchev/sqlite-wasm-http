@@ -96,7 +96,7 @@
     "karma": "^6.4.2",
     "karma-chrome-launcher": "^3.2.0",
     "karma-mocha": "^2.0.1",
-    "mocha": "^10.2.0",
+    "mocha": "^11.0.1",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
