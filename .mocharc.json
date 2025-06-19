@@ -1,14 +1,12 @@
 {
   "spec": "test/*.test.@(cjs|mjs|ts)",
   "require": [
-    "ts-node/register",
+    "tsx",
     "test/setup.ts"
   ],
   "reporter": "tap",
   "timeout": 600000,
-  "loader": "ts-node/esm",
   "node-option": [
-    "no-warnings",
-    "loader=ts-node/esm"
+    "no-warnings"
   ]
 }

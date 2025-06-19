@@ -19,7 +19,7 @@
         "<node_internals>/**"
       ],
       "env": {
-        "NODE_OPTIONS": "--loader ts-node/esm"
+        "NODE_OPTIONS": "--loader tsx"
       },
       "program": "${workspaceFolder}/node_modules/mocha/lib/cli/cli.js"
     }
