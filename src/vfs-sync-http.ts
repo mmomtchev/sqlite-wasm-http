@@ -96,6 +96,11 @@ export function installSyncHttpVfs(sqlite3: SQLite3, options?: VFSHTTP.Options) 
           return capi.SQLITE_IOERR;
         ntoh16(pageData);
         entry.pageSize = pageData[0];
+        if (entry.pageSize == 1) {
+          // From https://www.sqlite.org/fileformat2.html#database_header,
+          // a value of 1 represents a page size of 65536.
+          entry.pageSize = 65536;
+        }
         debug['vfs'](`page size is ${entry.pageSize}`);
         if (entry.pageSize != 1024) {
           // If the page size is not 1024 we can't keep this "page" in the cache
