@@ -287,17 +287,31 @@ export function installSyncHttpVfs(sqlite3: SQLite3, options?: VFSHTTP.Options) 
       let valid = false;
       let err: Error | null = null;
       try {
+        const openMethod = options?.openMethod ?? VFSHTTP.defaultOptions.openMethod;
         const xhr = new XMLHttpRequest();
-        xhr.open('HEAD', url, false);
+        xhr.open(openMethod, url, false);
+        if (openMethod === 'GET') {
+          // use Range to get file size without compression
+          xhr.setRequestHeader('Range', 'bytes=0-1');
+        }
         for (const h of Object.keys(options?.headers ?? VFSHTTP.defaultOptions.headers))
           xhr.setRequestHeader(h, (options?.headers ?? VFSHTTP.defaultOptions.headers)[h]);
         xhr.onload = () => {
+          const fileSize = (() => {
+            if (openMethod === 'GET') {
+              const contentRange = xhr.getResponseHeader('Content-Range') ?? '';
+              const rangeData = contentRange.split('/', 2);
+              return rangeData.length == 2 ? rangeData[1] : 0;
+            } else {
+              return xhr.getResponseHeader('Content-Length') ?? 0;
+            }
+          })();
           const fh = Object.create(null) as FileDescriptor;
           fh.fid = fid;
           fh.url = url;
           fh.sq3File = new sqlite3_file(fid);
           fh.sq3File.$pMethods = httpIoMethods.pointer;
-          fh.size = BigInt(xhr.getResponseHeader('Content-Length') ?? 0);
+          fh.size = BigInt(fileSize);
           fh.pageCache = new LRUCache({
             maxSize: (options?.cacheSize ?? VFSHTTP.defaultOptions.cacheSize) * 1024,
             sizeCalculation: (value) => (value as Uint8Array).byteLength ?? 4
