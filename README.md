@@ -54,6 +54,9 @@ INSERT INTO ftstable(ftstable) VALUES ('optimize');
 VACUUM;
 ```
 
+Note that you may not be able to change the page size of an existing database ("Runtime error: attempt to write a readonly database").
+In that case, `VACUUM INTO 'new-database.sqlite3';` instead.
+
 ## Using the SQLite API
 
 This method allows using the raw SQLite interface with the added support of an HTTP VFS.
