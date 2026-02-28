@@ -22,13 +22,19 @@ export interface Options {
    * Force the type of backend
    */
   backendType?: 'sync' | 'shared';
+  /**
+   * Open method to determine file size. Use GET if server uses
+   * compression for HEAD responses (e.g. GitHub)
+   */
+  openMethod?: 'GET' | 'HEAD';
 }
 
 export const defaultOptions = {
   timeout: 20000,
   maxPageSize: 4096,
   cacheSize: 1024,
-  headers: {} as Record<string, string>
+  headers: {} as Record<string, string>,
+  openMethod: 'HEAD'
 };
 
 export interface BackendChannel {
