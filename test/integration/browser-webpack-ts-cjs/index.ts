@@ -1,3 +1,5 @@
+/// <reference types="@types/mocha" />
+
 it('test', async () => {
   const { createSQLiteThread, createHttpBackend } = await import('sqlite-wasm-http');
   const httpBackend = createHttpBackend({
