@@ -3,19 +3,14 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "cron"
+      # node -p 'require("crypto").createHash("md5").update("sqlite-wasm-http").digest("buffer")[0] % 15'
+      cronjob: "0 5 12/15 * *"
     open-pull-requests-limit: 1
     groups:
-      eslint:
+      npm:
         patterns:
-        - "*eslint*"
-        exclude-patterns:
-        - "*typescript*"
-      typescript:
-        patterns:
-        - "*typescript*"
-    cooldown:
-      default-days: 15
+        - "*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
