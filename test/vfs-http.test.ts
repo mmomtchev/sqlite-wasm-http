@@ -195,6 +195,53 @@ for (const back of Object.keys(backTests) as (keyof typeof backTests)[]) {
         });
     });
 
+    it('should support GET open method', (done) => {
+      const githubURL = 'https://phiresky.github.io/world-development-indicators-sqlite/split-db/dbstat.sqlite3';
+
+      const backend = createHttpBackend({
+        backendType: back === 'sync' ? 'sync' : undefined,
+        openMethod: 'GET',
+      });
+      const dbGithubq = createSQLiteThread({ http: backend });
+      const rows: SQLite.ResultArray[] = [];
+      dbGithubq
+        .then((dbGithub) => dbGithub('open', {
+          filename: 'file:' + encodeURI(githubURL),
+          vfs: 'http'
+        })
+        .then(() => dbGithub))
+        .then((dbGithub) => dbGithub('exec', {
+          sql: 'select id, name from names ' +
+            'where name = $name',
+          bind: {$name: 'wdi_country'},
+          callback: (msg) => {
+            rows.push(msg);
+          }
+        }))
+        .then((msg) => {
+          assert.strictEqual(msg.type, 'exec');
+          assert.sameMembers(msg.result.columnNames, ['id', 'name']);
+          assert.lengthOf(rows, 2);
+          rows.forEach((row, idx) => {
+            assert.sameMembers(row.columnNames, ['id', 'name']);
+            if (row.row) {
+              assert.isAtMost(idx, 0);
+              assert.isNumber(row.rowNumber);
+              assert.strictEqual(row.row[0], 2);
+              assert.strictEqual(row.row[1], 'wdi_country');
+            } else {
+              assert.isNull(row.rowNumber);
+              assert.strictEqual(idx, 1);
+            }
+          });
+          done();
+        })
+        .catch(done)
+        .finally(() => {
+          dbGithubq.then((dbGithub) => dbGithub.close()).then(() => backend.close());
+        });
+    });
+
     it('should support object row mode', (done) => {
       const rows: SQLite.ResultObject[] = [];
       db('exec', {
