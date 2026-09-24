@@ -23,7 +23,8 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.tsx?$/,
-          use: 'ts-loader',
+          loader: 'ts-loader',
+          options: { reportFiles: ['examples/**/*.{ts,tsx}'] }
         },
         {
           test: /\.css$/i,

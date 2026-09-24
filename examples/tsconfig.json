@@ -3,17 +3,21 @@
     "module": "node16",
     "target": "es6",
     "lib": [
-      "webWorker", "dom"
+      "webWorker",
+      "dom"
     ],
     "esModuleInterop": true,
     "moduleResolution": "node16",
     "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": false,
     "paths": {
       "sqlite-wasm-http": [
         "./dist"
       ],
     },
-    "baseUrl": ".."
+    "baseUrl": "..",
+    "ignoreDeprecations": "6.0",
   },
   "include": [
     "."

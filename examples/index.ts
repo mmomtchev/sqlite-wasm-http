@@ -30,7 +30,7 @@ const pacman = new URL('./pacman.svg', import.meta.url);
 
   for (const ex of Array.from(document.getElementsByClassName('example-sql')))
     ex.addEventListener('click', (el) => {
-      elSql.value = el.target.innerText;
+      elSql.value = (el.target as HTMLDivElement).innerText;
   });
 
   btnGo.addEventListener('click', async () => {
@@ -56,7 +56,8 @@ const pacman = new URL('./pacman.svg', import.meta.url);
 
       const msgClose = await db('close', {});
       divMsg.innerHTML += JSON.stringify(msgClose, null, 4);
-    } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
       if (e.result?.message)
         divMsg.innerHTML = e.result.message;
       else
