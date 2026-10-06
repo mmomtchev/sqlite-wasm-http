@@ -56,17 +56,31 @@ const backendAsyncMethods:
       return 0;
 
     // Set a promise for the next opener of the same file to await upon
-    entry = fetch(msg.url, { method: 'HEAD', headers: { ...options?.headers } })
-      .then((head) => {
-        if (head.headers.get('Accept-Ranges') !== 'bytes') {
+    const method = options?.openMethod ?? VFSHTTP.defaultOptions.openMethod;
+    const headers = { ...options?.headers };
+    if (method === 'GET') {
+      headers['Range'] = 'bytes=0-1';
+    }
+    entry = fetch(msg.url, { method, headers })
+      .then((openResp) => {
+        if (openResp.headers.get('Accept-Ranges') !== 'bytes') {
           console.warn(`Server for ${msg.url} does not advertise 'Accept-Ranges'. ` +
             'If the server supports it, in order to remove this message, add "Accept-Ranges: bytes". ' +
             'Additionally, if using CORS, add "Access-Control-Expose-Headers: *".');
         }
+        const fileSize = (() => {
+          if (method === 'GET') {
+              const contentRange = openResp.headers.get('Content-Range') ?? '';
+              const rangeData = contentRange.split('/', 2);
+              return rangeData.length == 2 ? rangeData[1] : 0;
+            } else {
+              return openResp.headers.get('Content-Length') ?? 0;
+            }
+          })();
         return {
           url: msg.url,
           id: nextId++,
-          size: BigInt(head.headers.get('Content-Length') ?? 0),
+          size: BigInt(fileSize),
           // This will be determined on the first read
           pageSize: null
         };
